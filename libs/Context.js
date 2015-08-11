@@ -5,6 +5,7 @@ var Context = function (config) {
 };
 
 Context.prototype.services = {};
+Context.prototype.libs = {};
 Context.prototype.factories = {};
 
 Context.prototype.addService = function (name, path, attrs) {
@@ -19,6 +20,16 @@ Context.prototype.getService = function (name) {
     if (typeof this.services[name] === 'undefined')
         throw "Service " + name + " doesn't exist.";
     return this.services[name];
+};
+
+Context.prototype.addLib = function (name, path) {
+    this.libs[name] = require(path);
+};
+
+Context.prototype.getLib = function (name) {
+    if (typeof this.libs[name] === 'undefined')
+        throw "Lib " + name + " doesn't exist.";
+    return this.libs[name];
 };
 
 Context.prototype.addFactory = function (name, path) {
