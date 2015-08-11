@@ -23,12 +23,8 @@ Context.prototype.getService = function (name) {
     return this.services[name];
 };
 
-Context.prototype.addLib = function (name, lib) {
-    if (typeof lib === 'string') {
-        this.libs[name] = require(lib);
-    } else {
-        this.libs[name] = lib;
-    }
+Context.prototype.addLib = function (name, path) {
+    this.libs[name] = require(path);
 };
 
 Context.prototype.getLib = function (name) {
