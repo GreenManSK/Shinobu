@@ -2,6 +2,7 @@ var Context = function (config) {
     if (!(this instanceof Context)) {
         return new Context(config);
     }
+    this.config = config;
 };
 
 Context.prototype.services = {};
