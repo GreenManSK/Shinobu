@@ -16,9 +16,9 @@ Context.prototype.addService = function (name, path, attrs) {
 };
 
 Context.prototype.getService = function (name) {
-    if (typeof this.servies[name] === 'undefined')
+    if (typeof this.services[name] === 'undefined')
         throw "Service " + name + " doesn't exist.";
-    return this.servies[name];
+    return this.services[name];
 };
 
 Context.prototype.addFactory = function (name, path) {
