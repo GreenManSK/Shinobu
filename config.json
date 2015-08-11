@@ -1,0 +1,6 @@
+{
+    "port": 6464,
+    "cache": {
+        "tmpDir": "tmp"
+    }
+}

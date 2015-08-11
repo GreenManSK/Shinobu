@@ -1,11 +1,10 @@
 {
-  "name": "shinobu",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name" : "shinobu",
+  "version" : "1.0.0",
+  "main" : "./index.js",
+  "scripts" : {
+    "test" : "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Lukáš 'GreenMan' Kurčík",
-  "license": "ISC"
+  "author" : "Lukáš 'GreenMan' Kurčík",
+  "license" : "ISC"
 }
