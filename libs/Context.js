@@ -9,12 +9,16 @@ Context.prototype.services = {};
 Context.prototype.libs = {};
 Context.prototype.factories = {};
 
-Context.prototype.addService = function (name, path, attrs) {
-    if (attrs === undefined) {
-        attrs = [];
+Context.prototype.addService = function (name, service, attrs) {
+    if (typeof service === 'string') {
+        if (attrs === undefined) {
+            attrs = [];
+        }
+        attrs.unshift(this.config, this);
+        this.services[name] = require("../" + service).apply(null, attrs);
+    } else {
+        this.services[name] = service;
     }
-    attrs.unshift(this.config, this);
-    this.services[name] = require("../" + path).apply(null, attrs);
 };
 
 Context.prototype.getService = function (name) {
@@ -23,8 +27,12 @@ Context.prototype.getService = function (name) {
     return this.services[name];
 };
 
-Context.prototype.addLib = function (name, path) {
-    this.libs[name] = require(path);
+Context.prototype.addLib = function (name, lib) {
+    if (typeof lib === 'string') {
+        this.libs[name] = require(lib);
+    } else {
+        this.libs[name] = lib;
+    }
 };
 
 Context.prototype.getLib = function (name) {
