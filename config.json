@@ -1,6 +1,24 @@
 {
     "port": 6464,
+    "dataDir": "data",
     "cache": {
-        "tmpDir": "tmp"
+        "tmpDir": "tmp",
+        "less": false,
+        "js": false,
+        "templates": false,
+        "translation": false
+    },
+    "minify": {
+        "html": false,
+        "less": false
+    },
+    "defaultModul": "Example",
+    "lang": "en",
+    "loadingOnStart": {
+        "moduls": false,
+        "presenters": false
+    },
+    "ExampleModul": {
+        "birthday": "15.11"
     }
 }

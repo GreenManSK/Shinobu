@@ -1,0 +1,14 @@
+{
+    "title": "Example modul for Shinobu",
+    "name": "Maehara Shinobu",
+    "imgAlt": "Maehara Shinobu and Narusegawa Naru",
+    "birthday": {
+        "yes": "Today is her birthday!",
+        "no": "Today isn't her birthday :(",
+        "wish": "Happy Birthday!!!",
+        "real": "Her real birthday is %s"
+    },
+    "refresh": "Refresh",
+    "showDate": "Show date",
+    "greeting": "Konnichiwa!"
+}

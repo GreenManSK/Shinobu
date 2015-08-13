@@ -1,0 +1,12 @@
+{
+    "main": {
+        "title": "Shinobu"
+    },
+    "scripts": {
+        "loading": "Loading",
+        "saved": "Saved",
+        "saveError": "Error while saving!",
+        "error": "Error!",
+        "deleted": "Deleted"
+    }
+}
