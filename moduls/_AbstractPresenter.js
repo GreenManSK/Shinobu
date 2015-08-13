@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 function _AbstractPresenter(modul) {
     if (!(this instanceof _AbstractPresenter))
         return new _AbstractPresenter(modul);
@@ -30,14 +32,15 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
             if (err)
                 cb(err);
 
-            data._ = self.getTranslation();
+            if (fs.existsSync("moduls/" + self.modul.modulName + "/lang/"))
+                data._ = self.getTranslation();
             data.createLink = {
                 this: self.router,
                 func: self.router.createLink
             };
             data.modul = self.modul.modulName;
 
-            var presenterName = self.presenterName.replace(/^[A-Z]/, function($1) {
+            var presenterName = self.presenterName.replace(/^[A-Z]/, function ($1) {
                 return $1.toLowerCase();
             });
 

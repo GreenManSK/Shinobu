@@ -202,13 +202,14 @@ Compiler.prototype.compileTemplatesIn = function (modul, dir) {
     return templates;
 };
 
-Compiler.prototype.compileTemplate = function (modul, name) {
+Compiler.prototype.compileTemplate = function (modul, name, noLog) {
     var file = this._normalizeTemplateName(name);
 
     var path = this.modulDir + '/' + modul + '/' + this.tmpTemplatesDir + '/' + file;
 
     if (!fs.existsSync(path)) {
-        console.log(path + ' not exists');
+        if (!noLog)
+            console.log(path + ' not exists');
         return;
     }
 
@@ -219,14 +220,14 @@ Compiler.prototype.compileTemplate = function (modul, name) {
     return compiled;
 };
 
-Compiler.prototype.getTemplate = function (modul, name, data, cb) {
+Compiler.prototype.getTemplate = function (modul, name, data, cb, noLog) {
     if (!name)
         cb(false, '');
 
     var templateName = this.createTemplateName(modul, name);
 
     if (!this.config.get('cache.templates') || this.templateLoaded(templateName)) {
-        this.compileTemplate(modul, name);
+        this.compileTemplate(modul, name, noLog);
     }
 
     this.context.getLib('dust').render(templateName, data, cb);
@@ -234,7 +235,7 @@ Compiler.prototype.getTemplate = function (modul, name, data, cb) {
 
 Compiler.prototype.getTemplateNoNeed = function (modul, name, data, cb) {
     if (!this.config.get('cache.templates') || this.context.getLib('dust').cache[name]) {
-        this.getTemplate(modul, name, data, cb);
+        this.getTemplate(modul, name, data, cb, true);
     } else {
         cb(false, '');
     }

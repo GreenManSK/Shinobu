@@ -32,12 +32,18 @@ Translator.prototype.loadTranslation = function (modul, lang) {
         translation = JSON.parse(fs.readFileSync(file).toString());
     } else {
         console.log(lang + ' translation for ' + modul + ' doesn\'t exist');
-        var dirs = fs.readdirSync("moduls/" + modul + "/lang/");
-        if (dirs.length === 0) {
-            console.log('There isn\'t any translation for ' + modul);
-            return {};
+
+        if (fs.existsSync("moduls/" + modul + "/lang/")) {
+            var dirs = fs.readdirSync("moduls/" + modul + "/lang/");
+            if (dirs.length === 0) {
+                console.log('There isn\'t any translation for ' + modul);
+                translation = {};
+            } else {
+                translation = JSON.parse(fs.readFileSync("moduls/" + modul + "/lang/" + dirs[0]).toString());
+            }
         } else {
-            translation = JSON.parse(fs.readFileSync("moduls/" + modul + "/lang/" + dirs[0]).toString());
+            console.log('There isn\'t any translation for ' + modul);
+            translation = {};
         }
     }
 
