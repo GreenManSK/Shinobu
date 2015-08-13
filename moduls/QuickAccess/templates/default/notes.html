@@ -1,0 +1,19 @@
+<div class="info top">
+    <a href="#" title="{_.notes.addNote}" class="rightButton add"><i class="fa fa-plus"></i></a>
+    <div class="dropdown">
+        <a href="#" title="{_.notes.noteList}" class="leftButton dropdown-toggle{^noteTitle} hidden{/noteTitle}"><i class="fa fa-angle-double-down"></i></a>
+        <ul class="noteList hidden">
+            {#txts}<li>
+                <a title="{.}" href="#{.}"{@eq key=. value=noteTitle} class="active"{/eq}>{.}</a>
+            </li>{/txts}
+        </ul>
+    </div>
+    <span class="name">{noteTitle}</span>
+</div>
+<div class="note">
+    <textarea{^noteTitle} disabled{/noteTitle}>{noteText}</textarea>
+</div>
+<div class="info bottom">
+    <a href="#" class="rightButton delete{^noteTitle} hidden{/noteTitle}" title="{_.notes.deleteNote}"><i class="fa fa-trash"></i></a>
+    <span class="msgBar"></span>
+</div>

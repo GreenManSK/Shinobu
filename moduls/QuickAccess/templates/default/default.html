@@ -1,0 +1,20 @@
+<div class="iconGrid">
+    {@eq key=links.length value=0 type=number}
+    <a title="{_.default.addItem}" href="#" class="add">
+        <i class="fa fa-plus"></i>
+    </a>
+    {:else}
+    {#links}{>"quickaccess.helpers.link"/}{/links}
+    {/eq}
+</div>
+
+<div class="notes">
+    {>"quickaccess.default.notes"/}
+</div>
+
+<div class="ehm"></div>
+
+<div class="modal-box hidden">
+    <div class="modal">
+    </div>
+</div>

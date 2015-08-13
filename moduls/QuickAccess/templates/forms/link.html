@@ -1,0 +1,31 @@
+<form action="#" method="post">
+    <div class="preview">
+        {>"quickaccess.helpers.link"/}
+    </div>
+    <div class="form">
+        <div class="row">
+            <label>{_.forms.link.url}</label>
+            <input id="from_url" name="url" type="text" placeholder="{_.forms.link.url}"{?url} value="{url}"{/url}>
+        </div>
+        <div class="row">
+            <label>{_.forms.link.name}</label>
+            <input name="title" type="text" placeholder="{_.forms.link.name}"{?title} value="{title}"{/title}>
+        </div>
+        <div class="row group">
+            <input name="icon" type="text" placeholder="{_.forms.link.icon}"{?icon} value="{icon}"{/icon}>
+                   <a title="{_.forms.link.help}" target="_blank" href="http://fortawesome.github.io/Font-Awesome/icons/"><i class="fa fa-question"></i></a>
+        </div>
+        <div class="row">
+            <label>{_.forms.link.imgUpload}</label>
+            <input name="img" type="text" placeholder="{_.forms.link.imgUpload}"{?img} value="{img}"{/img}>
+        </div>
+        <div class="row">
+            <label>{_.forms.link.upload}</label>
+            <input id="pic" type="file" name="pic" accept="image/*">
+        </div>
+        <div class="row">
+            <input type="submit" name="send" {?url}value="Save" class="save"{:else}value="Add" class="add"{/url}>
+                   <a class="close" href="#" title="{_.forms.link.close}">{_.forms.link.close}</a>
+        </div>
+    </div>
+</form>

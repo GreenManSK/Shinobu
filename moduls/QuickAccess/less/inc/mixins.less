@@ -1,0 +1,101 @@
+.background-size(...) {
+    -webkit-background-size: @arguments;
+    -moz-background-size: @arguments;
+    -o-background-size: @arguments;
+    background-size: @arguments;
+}
+
+.transitions(...) {
+    transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -moz-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -webkit-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -o-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+}
+
+.border-radius(...) {
+    border-radius: @arguments;
+    -moz-border-radius: @arguments;
+    -webkit-border-radius: @arguments;
+}
+
+.box-shadow(...) {
+    box-shadow: @arguments;
+    -moz-box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+}
+
+.clearfix() {
+    &:after {
+        content: "."; 
+        display: block; 
+        height: 0; 
+        clear: both; 
+        visibility: hidden;
+    }
+    display: inline-table; display: block;
+}
+
+/*Flexbox*/
+.flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex(@values) {
+    -webkit-box-flex: @values;
+    -moz-box-flex:  @values;
+    -webkit-flex:  @values;
+    -ms-flex:  @values;
+    flex:  @values;
+}
+
+.order(@val) {
+    -webkit-box-ordinal-group: @val;  
+    -moz-box-ordinal-group: @val;     
+    -ms-flex-order: @val;     
+    -webkit-order: @val;  
+    order: @val;
+}
+
+.justify-content(@val) {
+    -webkit-justify-content: @val;
+    -moz-justify-content: @val;
+    justify-content: @val;
+}
+
+.align-items(@val) {
+    -webkit-align-items: @val;
+    align-items: @val;
+}
+
+.flex-flow(@val) {
+    -webkit-flex-flow: @val;
+    -moz-flex-flow: @val;
+    flex-flow: @val;
+}
+
+.flex-direction(@val) {
+    -webkit-flex-direction: @val;
+    -moz-flex-direction: @val;
+    flex-direction: @val;
+}
+
+.flex-wrap(@val) {
+    -webkit-flex-wrap: @val;
+    -moz-flex-wrap: @val;
+    flex-wrap: @val;
+}
+
+/* Buttons */
+.color-button(@color, @bg, @border) {
+    color: @color;
+    background: @bg;
+    border-color: @border;
+    &:hover, &:active, &:focus {
+        background:  darken(@bg, 10%);
+        border-color: darken(@border, 12%);
+    }
+}

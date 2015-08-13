@@ -1,0 +1,25 @@
+{
+    "forms": {
+        "link": {
+            "url": "URL",
+            "name": "Name",
+            "icon": "Icon",
+            "imgUpload": "IMG URL",
+            "upload": "Upload IMG",
+            "add": "Add",
+            "save": "Save",
+            "close": "Close",
+            "help": "Help"
+        }
+    },
+    "default": {
+        "addItem": "Pridať položku",
+        "editItem": "Upraviť položku",
+        "removeItem": "Odstrániť položku"
+    },
+    "notes": {
+        "noteList": "Notes list",
+        "addNote": "Add note",
+        "deleteNote": "Delete note"
+    }
+}

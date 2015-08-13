@@ -37,10 +37,14 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
             };
             data.modul = self.modul.modulName;
 
+            var presenterName = self.presenterName.replace(/^[A-Z]/, function($1) {
+                return $1.toLowerCase();
+            });
+
             if (isPresenter) {
                 self.context.getService('compiler').getTemplate(self.modul.modulName, 'head', data, function (err, head) {
                     self.context.getService('compiler').getTemplateNoNeed(self.modul.modulName, 'scripts', data, function (err, scripts) {
-                        self.context.getService('compiler').getTemplate(self.modul.modulName, self.presenterName + '.' + action, data, function (err, body) {
+                        self.context.getService('compiler').getTemplate(self.modul.modulName, presenterName + '.' + action, data, function (err, body) {
                             cb(false, {
                                 title: data.title,
                                 head: head,
@@ -51,7 +55,7 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
                     });
                 });
             } else {
-                self.context.getService('compiler').getTemplate(self.modul.modulName, self.presenterName + '.' + action, data, function (err, body) {
+                self.context.getService('compiler').getTemplate(self.modul.modulName, presenterName + '.' + action, data, function (err, body) {
                     cb(false, {
                         title: data.title,
                         body: body

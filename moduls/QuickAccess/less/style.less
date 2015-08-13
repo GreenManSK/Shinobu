@@ -1,0 +1,465 @@
+@import 'inc/mixins.less';
+@import 'inc/vars.less';
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background: @scrollbarColor;
+}
+
+::-webkit-scrollbar-thumb {
+    background: @scrollbarColor;
+}
+
+a {
+    .transitions(all @time, left 0s, top 0s, right 0s, bottom 0s);
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    font-size:62.5%;
+    font-family: @font;
+    padding: 0;
+    margin: 0;
+    background: #9acefc url(../bg.jpg) no-repeat center center fixed;
+    .background-size(100%, 100%);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#socketMessege {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    div {
+        &.error {
+            background: @socketMsgError;
+        }
+        margin: 0 auto;
+        text-align: center;
+        background: @socketMsgBackground;
+        color: @socketMsgColor;
+        font-size: 1.7em;
+        padding: 5px 0 10px;
+        max-width: @socketMsgMaxWidth;
+
+        i.fa {
+            vertical-align: text-bottom;
+        }
+    }
+}
+
+#content-snippet {
+    .flexbox();
+    .justify-content(space-between);
+    .align-items(center);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Grid Icons */
+@gridWidth: @gridIconCount*(@gridIconSize + 2*@gridMargin);
+.iconGrid {
+    .order(2);
+    max-width: @gridWidth;
+
+    .flexbox();
+    .flex-flow(row wrap);
+    .justify-content(center);
+    .align-items(center);
+}
+
+.iconGrid, .modal .preview {
+    a, .placeholder {
+        .flexbox();
+        .justify-content(space-around);
+        .align-items(center);
+
+        width: @gridIconSize;
+        height: @gridIconSize;
+        margin: @gridMargin;
+        padding: @gridPadding;
+
+        background: @gridBackground;
+
+        overflow:hidden;
+        font-size: 2.4em;
+        text-align: center;
+        text-decoration: none;
+        color: @gridColor;
+
+        &:hover, &:active, &:focus {
+            background: fade(@gridBackground, 20%);
+        }
+
+        img {
+            vertical-align: top;
+            max-width: 100%;
+        }
+        i {
+            font-size: 3.3em;
+        }
+    }
+
+    .placeholder, .add {
+        background: @gridBackground;
+        border: @gridPlaceholderBorder dotted fade(@gridBackground,20%);
+        max-height: @gridIconSize;
+    }
+}
+
+.notes {
+    .order(1);
+
+    width: @noteWidth;
+    height: 100%;
+    position: relative;
+
+    .info {
+        text-align: center;
+        width: 100%;
+        font-size: 1.7em;
+        min-height: @noteHeadHeight;
+
+        background: @noteHeadBackground;
+        color: @noteHeadColor;
+
+        .dropdown {
+            float: left;
+        }
+
+        a {
+            display: block;
+            width: @noteHeadHeight;
+            height: @noteHeadHeight;
+            padding: @noteHeadPadding;
+            text-align: center;
+
+            background: fade(@noteHeadBackground, 15%);
+            color: @noteHeadColor;
+            &.leftButton {
+                float: left;
+                margin-right: 5px;
+            }
+            &.rightButton {
+                float: right;
+                margin-left: 5px;
+            }
+
+            &:hover, &:active, &:focus {
+                background: @noteBottomBackground;
+            }
+        }
+        span.name, span.msgBar {
+            display: block;
+            padding-top: @noteHeadPadding;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-right: @noteHeadHeight;
+        }
+
+        input {
+            background: transparent;
+            color: @noteHeadColor;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            font-size: 1em;
+            font-family: @font;
+        }
+    }
+
+    .info.top {
+        .clearfix();
+    }
+
+    .info.bottom {
+        position: absolute;
+        bottom: 0;
+        background: @noteBottomBackground;
+        padding-left: 5px;
+        text-align: left;
+    }
+
+    .note {
+        textarea {
+            font-size: 1.722em;
+            width: 100%;
+            resize: none;
+            position: absolute;
+            top: @noteHeadHeight;
+            bottom: @noteHeadHeight;
+            left: 0;
+            padding: 5px 10px;
+
+            background: @noteBackground;
+            color: @noteHeadColor;
+            border: 0;
+        }
+    }
+
+    .noteList {
+        position: absolute;
+        z-index: 1;
+        top: @noteHeadHeight;
+        max-height: 500px;
+        overflow-y: scroll;
+        width: 100%;
+
+        &, & li {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        a {
+            display: block;
+            min-height: @noteHeadHeight;
+            height: auto;
+            width: 100%;
+
+            text-align: center;
+            text-decoration: none;
+            padding: @noteHeadPadding;
+
+            background: @noteBottomBackground;
+            color: @noteHeadColor;
+            border-bottom: 1px solid fade(@noteHeadColor, 30%);
+
+            &:hover, &:active, &:focus {
+                background: fade(@noteBottomBackground, 40%);
+            }
+
+            &.active {
+                background: fade(@noteBottomBackground, 35%);
+            }
+        }
+    }
+}
+
+#contextmenu {
+    &, & li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    position: absolute;
+    border: 1px solid fade(@noteHeadColor, 30%);
+
+    li {
+        .transitions(color @time, background @time);
+        display: block;
+        font-size: 1.3em;
+        height: auto;
+        width: auto;
+        text-align: left;
+        padding: 5px;
+        margin: 0;
+        cursor:pointer;
+
+        background: @noteBottomBackground;
+        color: @noteHeadColor;
+        border-bottom: 1px solid fade(@noteHeadColor, 30%);
+        &.hover, &:hover, &:active, &:focus {
+            background: fade(@noteBottomBackground, 40%);
+        }
+    }
+}
+
+/* Modal */
+.modal-box {
+    .flexbox();
+    .justify-content(center);
+    .align-items(center);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    background: @modalWebBackground;
+    z-index: 10;
+
+    .modal {
+        background: @modalBackground;
+        color: @modalColor;
+
+        padding: @modalRadius;
+        .border-radius(@modalRadius);
+
+        font-size: 1.6em;
+
+        .loading {
+            .flexbox();
+            .justify-content(center);
+            .align-items(center);
+            width: 200px;
+            height: 200px;
+        }
+
+        .preview {
+            font-size: .625em;
+            background: #888;
+            padding: 5px;
+
+            .flexbox();
+            .justify-content(space-around);
+            .align-items(center);
+        }
+
+        .form {
+            label {
+                display: none;
+            }
+
+            .row {
+                .flexbox();
+                .justify-content(space-around);
+                margin-top: 10px;
+
+                input, a {
+                    font-family: Arial;
+                    width: 100%;
+                    font-size: 1em;
+                    padding: @modalInputRadius;
+                    .border-radius(@modalInputRadius);
+                    border: 1px solid @modalInputBorder;
+                    outline: none;
+
+                    &:focus {
+                        border-color: @modalFocusColor;
+                        .box-shadow(0 0 5px 0 @modalFocusColor);
+
+                    }
+                }
+
+                a {
+                    text-decoration: none;
+                    display: block;
+                }
+
+                input[type=submit], button, a {
+                    width: auto;
+                    padding-left: 12px;
+                    padding-right: 12px;
+
+                    &:active {
+                        .box-shadow(inset 0 3px 5px rgba(0,0,0,@modalBtnShadow));
+                    }
+                    .color-button(@modalColor, @modalDefBtnBg, @modalInputBorder);
+
+                    &.add {
+                        .color-button(@modalAddBtnColor, @modalAddBtnBg, @modalAddBtnBorder);
+                    }
+                    &.save {
+                        .color-button(@modalSaveBtnColor, @modalSaveBtnBg, @modalSaveBtnBorder);
+                    }
+                    &.delete {
+                        .color-button(@modalDeleteBtnColor, @modalDeleteBtnBg, @modalDeleteBtnBorder);
+                    }
+                }
+
+                input[type=file] {
+                    border: none;
+                    .box-shadow(none);
+                }
+            }
+
+            .row.group {
+                a {
+                    background: darken(@modalDefBtnBg, 5%);
+                }
+                input, a {
+                    .border-radius(0);
+                    border-right-width: 0;
+
+                    &:first-child {
+                        .border-radius(@modalInputRadius 0 0 @modalInputRadius);
+                    }
+
+                    &:last-child {
+                        border-right-width: 1px;
+                        .border-radius(0 @modalInputRadius @modalInputRadius 0);
+                    }
+                }
+            }
+
+            .row.error {
+                input, a {
+                    border-color: @modalErrorBorder;
+
+                    &:focus {
+                        .box-shadow(0 0 5px 0 @modalErrorFocusColor);
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ehm {
+    .order(3);
+    width: @noteWidth;
+}
+
+@media (max-width: (@gridWidth + 2*@noteWidth + 10px)) {
+    #content-snippet {
+        .flex-flow(row wrap);
+        .justify-content(center);
+    }
+
+    .iconGrid {
+        .order(1);
+    }
+
+    .notes {
+        .order(2);
+
+        margin-top: 15px;
+        height: auto;
+        width: 100%;
+
+        .note, .info, textarea {
+            position: static !important;
+        }
+
+        .info {
+            height: @noteHeadHeight;
+        }
+
+        textarea {
+            height: 500px;
+            vertical-align: bottom;
+        }
+    }
+
+    .ehm {
+        .order(3);
+    }
+}

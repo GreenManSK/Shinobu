@@ -1,0 +1,11 @@
+<a title="{.title}" href="{.url}">
+    {@eq key=icon value="" type="boolean"}
+    {@eq key=img value="" type="boolean"}
+    {.title}
+    {:else}
+    <img title="{.title}" src="{.img}">
+    {/eq}
+    {:else}
+    <i class="fa {.icon}"></i>
+    {/eq}
+</a>{~n}
