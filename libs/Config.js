@@ -1,12 +1,19 @@
 var fs = require('fs');
 
-var Config = function (file) {
+var Config = function (data) {
     if (!(this instanceof Config)) {
-        return new Config(file);
+        return new Config(data);
     }
 
-    this._load(file);
+    if (typeof data === 'object') {
+        this.canSave = false;
+        this.config = data;
+    } else {
+        this._load(data);
+    }
 };
+
+Config.prototype.canSave = true;
 
 Config.prototype._load = function (file) {
     this.file = file;
@@ -94,7 +101,8 @@ Config.prototype.removeAndSave = function (property, value) {
 };
 
 Config.prototype.save = function () {
-    fs.writeFileSync(this.file, JSON.stringify(this.config, null, '    '));
+    if (this.canSave)
+        fs.writeFileSync(this.file, JSON.stringify(this.config, null, '    '));
 };
 
 module.exports = Config;
