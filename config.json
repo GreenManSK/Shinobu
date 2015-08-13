@@ -13,6 +13,7 @@
         "less": false
     },
     "defaultModul": "Example",
+    "errorModul": "Error",
     "lang": "en",
     "loadingOnStart": {
         "moduls": false,

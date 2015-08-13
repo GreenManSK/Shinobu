@@ -24,7 +24,7 @@ SocketHandler.prototype.createRouter = function () {
     this.router = this.context.getLib('router')();
 
     this.router.addRoute('[<modul>/][<presenter>/][<action>/]', this.config.get('defaultModul') + "::");
-//    this.router.addRoute('error/<err:\\d\\d\\d>/', "Errror:Default:default");
+    this.router.addRoute('error/<err:\\d\\d\\d>/', "Errror:Default:default");
 };
 
 SocketHandler.prototype.handleConnection = function (socket) {
@@ -41,7 +41,7 @@ SocketHandler.prototype.handleConnection = function (socket) {
                     'callback': query.callback
                 });
             } else {
-//                self.sendErrorPresenter(socket, 404);
+                self.sendErrorPresenter(socket, 404);
             }
         };
 
@@ -57,7 +57,7 @@ SocketHandler.prototype.handleConnection = function (socket) {
                     'callback': query.callback
                 });
             } else {
-//                self.sendErrorAction(socket, 404);
+                self.sendErrorAction(socket, 404);
             }
         };
 
@@ -111,6 +111,7 @@ SocketHandler.prototype._parseUrl = function (data, cb) {
         path += '/';
     }
     var dispatchedPath = this.router.dispatch(path);
+
     var handler = dispatchedPath.handler;
     if (!this.hasModul(handler.modul)) {
         handler.action = handler.presenter;
@@ -146,6 +147,31 @@ SocketHandler.prototype._parseUrl = function (data, cb) {
         var presenter = modul.createPresenterInstance(handler.presenter);
         cb(false, presenter, dispatchedPath.handler.action, query);
     }
+};
+
+SocketHandler.prototype.sendErrorPresenter = function (socket, error) {
+    var callback = function (err, data) {
+        socket.emit('presenter', {
+            'head': data.head,
+            'body': data.body,
+            'scripts': data.scripts
+        });
+    };
+
+    var modul = this.createModulInstance(this.config.get('errorModul'));
+    modul.createPresenterInstance('Default').getPresenter("default", {err: error}, callback);
+};
+
+SocketHandler.prototype.sendErrorAction = function (socket, error) {
+    var callback = function (err, data) {
+        socket.emit('action', {
+            'title': data.title,
+            'body': data.body
+        });
+    };
+
+    var modul = this.createModulInstance(this.config.get('errorModul'));
+    modul.createPresenterInstance('Default').getAction("default", {err: error}, callback);
 };
 
 /* Moduls */
