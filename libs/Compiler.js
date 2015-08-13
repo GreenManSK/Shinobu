@@ -37,15 +37,16 @@ Compiler.prototype.compileAll = function (cb) {
             self.compileAllLess(upCallback);
         upCallback();
     };
-    if (cbCalls > 0) {
-        this.createModulDirs(start);
-    } else {
-        start();
-    }
+    this.createModulDirs(start);
 };
 Compiler.prototype.createModulDirs = function (cb) {
     this.moduls = fs.readdirSync(this.modulDir);
     for (var i in this.moduls) {
+        var stats = fs.statSync(this.modulDir + '/' + this.moduls[i]);
+        if (!stats.isDirectory()) {
+            delete this.moduls[i];
+            continue;
+        }
         if (!fs.existsSync(this.tmpPath + this.moduls[i]))
             fs.mkdirSync(this.tmpPath + this.moduls[i]);
     }
@@ -61,13 +62,12 @@ Compiler.prototype.compileAllLess = function (cb) {
         dirs.push(this.moduls[i] + '/' + this.tmpLessDir);
     }
 
-    var cbCalls = dirs.length - 1;
+    var cbCalls = dirs.length;
     var upCallback = function () {
-        if (cbCalls === 0) {
+        cbCalls -= 1;
+        if (cbCalls >= 0) {
             console.log('Compiling less completed!');
             cb();
-        } else {
-            cbCalls -= 1;
         }
     };
 
@@ -150,13 +150,12 @@ Compiler.prototype.getLess = function (modul, file, cb) {
 Compiler.prototype.compileAllTemplates = function (cb) {
     console.log('Compiling templates...');
 
-    var cbCalls = this.moduls.length - 1;
+    var cbCalls = this.moduls.length;
     var upCallback = function () {
-        if (cbCalls === 0) {
+        cbCalls -= 1;
+        if (cbCalls >= 0) {
             console.log('Compiling templates completed!');
             cb();
-        } else {
-            cbCalls -= 1;
         }
     };
 
@@ -216,6 +215,7 @@ Compiler.prototype.compileTemplate = function (modul, name) {
     var data = fs.readFileSync(path, "utf8");
     var compiled = this.context.getLib('dust').compile(data, this.createTemplateName(modul, name));
     this.context.getLib('dust').loadSource(compiled);
+
     return compiled;
 };
 
@@ -228,6 +228,7 @@ Compiler.prototype.getTemplate = function (modul, name, data, cb) {
     if (!this.config.get('cache.templates') || this.templateLoaded(templateName)) {
         this.compileTemplate(modul, name);
     }
+
     this.context.getLib('dust').render(templateName, data, cb);
 };
 
@@ -248,13 +249,12 @@ Compiler.prototype.compileAllJs = function (cb) {
         dirs.push(this.moduls[i] + '/' + this.tmpJsDir);
     }
 
-    var cbCalls = dirs.length - 1;
+    var cbCalls = dirs.length;
     var upCallback = function () {
-        if (cbCalls === 0) {
+        cbCalls -= 1;
+        if (cbCalls >= 0) {
             console.log('Compiling javascript completed!');
             cb();
-        } else {
-            cbCalls -= 1;
         }
     };
     for (var d in dirs) {
