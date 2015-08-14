@@ -34,6 +34,7 @@ SocketHandler.prototype.createRouter = function () {
 };
 
 SocketHandler.prototype.findNewMain = function () {
+    this.sockets.hasMain = false;
     for (var i in this.sockets) {
         if (i !== 'hasMain') {
             if (this.sockets[i].modul === this.defaultModul) {
