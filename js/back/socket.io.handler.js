@@ -132,6 +132,9 @@ socket.emitSignal = function (url, data, cb, defMsgs) {
             case 'responseEvent':
                 query['_responseEvent'] = data[i];
                 break;
+            case 'mainTab':
+                query['_mainTab'] = data[i];
+                break;
             default:
                 query[i] = data[i];
         }

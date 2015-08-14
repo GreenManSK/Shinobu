@@ -39,6 +39,7 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
                 func: self.router.createLink
             };
             data.modul = self.modul.modulName;
+            data.mainTab = query.mainTab;
 
             var presenterName = self.presenterName.replace(/^[A-Z]/, function ($1) {
                 return $1.toLowerCase();
@@ -53,7 +54,7 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
                                 head: head,
                                 body: body,
                                 scripts: scripts
-                            });
+                            }, self.modul.modulName);
                         });
                     });
                 });
@@ -62,7 +63,7 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
                     cb(false, {
                         title: data.title,
                         body: body
-                    });
+                    }, self.modul.modulName);
                 });
             }
         });
@@ -76,6 +77,7 @@ _AbstractPresenter.prototype.doSignal = function (signal, query, cb) {
         return $1.toUpperCase( );
     });
 
+    var self = this;
     if (typeof this[functionName] !== "undefined") {
         this[functionName](query, function (err, data) {
             if (err)
@@ -84,7 +86,7 @@ _AbstractPresenter.prototype.doSignal = function (signal, query, cb) {
             if (data === null)
                 data = {};
 
-            cb(false, data);
+            cb(false, data, self.modul.modulName);
         });
     } else {
         cb(404);

@@ -5,3 +5,6 @@
 <button class="refresh" title="{_.refresh}">{_.refresh}</button>
 <button class="show" title="{_.showDate}">{_.showDate}</button><br>
 <em>{rand}</em>
+{mainTab}
+{?mainTab}<h3>{_.isMain}</h3>{:else}<br>{_.isNotMain}<br>{/mainTab}
+<em>{_.mainInfo}</em>

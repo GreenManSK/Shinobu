@@ -10,5 +10,8 @@
     },
     "refresh": "Refresh",
     "showDate": "Show date",
-    "greeting": "Konnichiwa!"
+    "greeting": "Konnichiwa!",
+    "isMain": "This is main tab.",
+    "isNotMain": "This isn't main tab.",
+    "mainInfo": "Only works in default modul."
 }

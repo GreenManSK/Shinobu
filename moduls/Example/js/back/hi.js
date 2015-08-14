@@ -17,3 +17,7 @@ $('body').on('click', '.show', function () {
         alert(data.msg);
     }, false);
 });
+
+socket.on('newMain', function () {
+    console.log('This is new main socket!');
+});
