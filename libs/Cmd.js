@@ -1,4 +1,6 @@
 var util = require('util');
+fs = require('fs');
+
 var Cmd = function (config, context) {
     if (!(this instanceof Cmd)) {
         return new Cmd(config, context);
@@ -8,13 +10,20 @@ var Cmd = function (config, context) {
     this.context = context;
     this._addCommands();
 };
+
 Cmd.prototype.history = [];
 Cmd.prototype.commands = {};
 Cmd.prototype.help = {};
+
 Cmd.prototype._addCommands = function () {
     this.addCmd(['help', '?', 'stop', 'close'], [this, this.showHelp], null, 'Shows list of commands');
+    this.addCmd(['clear'], [this, this.clearHistory], null, 'Clear console (only in browser)');
+    
+    this.addCmd(['script'], [this, this.callScript], 'name', 'Execute script located in scripts dir');
+    
     this.addCmd(['exit', 'end', 'stop', 'close'], process.exit, null, 'Stops program');
 };
+
 Cmd.prototype.addCmd = function (names, cb, params, description) {
     if (!util.isArray(names)) {
         names = [names];
@@ -32,6 +41,7 @@ Cmd.prototype.addCmd = function (names, cb, params, description) {
 
     this.help[namesString] = [params, description];
 };
+
 Cmd.prototype.showHelp = function () {
     console.log('-------Help-------');
     for (var cmd in this.help) {
@@ -40,6 +50,7 @@ Cmd.prototype.showHelp = function () {
 
     console.log('------------------');
 };
+
 Cmd.prototype.start = function () {
     var self = this;
     process.stdin.setEncoding('utf8');
@@ -51,8 +62,10 @@ Cmd.prototype.start = function () {
         self._addToHistory(data);
     });
 };
+
 Cmd.prototype.parse = function (data) {
-    data = data.toString().trim().match(/([^\s]+)/g);
+    this._addToHistory(data);
+    data = data.toString().trim().match(/([^\s]*)/g);
     if (data.length > 0) {
         var command = data[0].toLowerCase(), args = [];
         for (var i = 1; i < data.length; i++) {
@@ -71,6 +84,7 @@ Cmd.prototype.parse = function (data) {
         }
     }
 };
+
 Cmd.prototype.cleanArg = function (arg) {
     if (typeof arg === 'undefined')
         return null;
@@ -85,6 +99,7 @@ Cmd.prototype.cleanArg = function (arg) {
     }
     return arg;
 };
+
 Cmd.prototype._addToHistory = function (data) {
     this.history.push(data.toString().trim());
     var maxLength = this.config.get('cmd.maxLength', 50);
@@ -92,6 +107,7 @@ Cmd.prototype._addToHistory = function (data) {
         this.history.slice(this.history.length - maxLength, this.history.length);
     }
 };
+
 Cmd.prototype.getHistory = function (length) {
     if (length === undefined)
         return this.history;
@@ -102,4 +118,20 @@ Cmd.prototype.getHistory = function (length) {
 
     return this.history.slice(begin, end);
 };
+
+Cmd.prototype.clearHistory = function () {
+    this.history = [];
+};
+
+Cmd.prototype.callScript = function (name) {
+    name = name.replace(/\.\./g, '.').replace(/\.(\/|\\)/g);
+    if (name.match(/\.js$/i) === null)
+        name += '.js';
+    if (fs.existsSync('scripts/' + name)) {
+        require('../scripts/' + name)(this.context, this.config);
+    } else {
+        console.log('Script ' + name + ' dosen\' exist.');
+    }
+};
+
 module.exports = Cmd;

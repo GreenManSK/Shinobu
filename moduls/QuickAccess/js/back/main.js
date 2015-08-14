@@ -20,18 +20,22 @@ $('body').on('click.dropdown', '.dropdown a.dropdown-toggle', function (e) {
 
 /* Console */
 function addToConsole(data) {
-    var actualData = $('.console .content').text().split("\n");
-
     var $content = $('.console .content');
-    for (var i = 0; i <= actualData.length; i++) {
-        if (actualData.slice(i, actualData.length).join("\n") === data.slice(i, actualData.length).join("\n")) {
-            $('.console .content').append(document.createTextNode("\n" + data.slice(actualData.length, data.length).join("\n")));
-            $content.scrollTop($content.prop("scrollHeight"));
-            return;
+    if (data.length !== 0) {
+        var actualData = $content.text().split("\n");
+
+        for (var i = 0; i <= actualData.length; i++) {
+            if (actualData.slice(i, actualData.length).join("\n") === data.slice(i, actualData.length).join("\n")) {
+                $content.append(document.createTextNode("\n" + data.slice(actualData.length, data.length).join("\n")));
+                $content.scrollTop($content.prop("scrollHeight"));
+                return;
+            }
         }
+        $content.append(document.createTextNode("\n" + data.join("\n")));
+        $content.scrollTop($content.prop("scrollHeight"));
+    } else {
+        $content.text('');
     }
-    $('.console .content').append(document.createTextNode("\n" + data.join("\n")));
-    $content.scrollTop($content.prop("scrollHeight"));
 }
 
 new ResizeSensor($('.console'), function () {
@@ -39,13 +43,32 @@ new ResizeSensor($('.console'), function () {
     $content.scrollTop($content.prop("scrollHeight"));
 });
 
-$('body').on('keypress', '.console input[name=cmd]', function (e) {
-    if (e.type === 'keypress' && e.which === 13) {
-        var $this = $(this);
-        socket.emitSignal(parseCmd, {cmd: $this.val()}, function (data) {
+$('.console input[name=cmd]').data('usedCmds', []).data('actualCmd', -1);
+$('body').on('keyup', '.console input[name=cmd]', function (e) {
+    var $this = $(this);
+    if (e.which === 13) { //ENTER
+        var cmd = $this.val();
+
+        $this.data('usedCmds').push(cmd);
+        $this.data('actualCmd', $this.data('usedCmds').length);
+
+        socket.emitSignal(parseCmd, {cmd: cmd}, function (data) {
             $('.console .content').text(data.join("\n"));
             $this.val('');
             addToConsole(data);
         });
+    } else if (e.which === 38 && $this.data('actualCmd') > 0) { //UP
+
+        $this.data('actualCmd', $this.data('actualCmd') - 1);
+        $this.val($this.data('usedCmds')[$this.data('actualCmd')]);
+
+    } else if (e.which === 40) { //DOWN
+        if ($this.data('actualCmd') !== $this.data('usedCmds').length - 1) {
+            $this.data('actualCmd', $this.data('actualCmd') + 1);
+            $this.val($this.data('usedCmds')[$this.data('actualCmd')]);
+        } else {
+            $this.val('');
+            $this.data('actualCmd', $this.data('usedCmds').length);
+        }
     }
 });
