@@ -5,4 +5,5 @@
 #include libs/ResizeSensor.js
 #include grid.js
 #include note.js
+#include console.js
 #include main.js
