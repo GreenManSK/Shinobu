@@ -13,6 +13,8 @@ QuickAccess.prototype.updateContext = function () {
     this.getContext().addService('linksModel', 'moduls/' + this.modulName + '/libs/linksModel');
     this.getContext().addService('siteParser', 'moduls/' + this.modulName + '/libs/siteParser');
     this.getContext().addService('txtsModel', 'moduls/' + this.modulName + '/libs/txtsModel');
+
+    this.getContext().addService('cmd', this.context.getService("cmd"));
 };
 
 module.exports = QuickAccess;

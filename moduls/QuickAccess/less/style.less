@@ -11,6 +11,7 @@ html {
 
 ::-webkit-scrollbar {
     width: 4px;
+    height: 4px;
     background: @scrollbarColor;
 }
 
@@ -80,7 +81,7 @@ body {
 
 /* Grid Icons */
 @gridWidth: @gridIconCount*(@gridIconSize + 2*@gridMargin);
-.iconGrid {
+.iconGrid, .console {
     .order(2);
     max-width: @gridWidth;
 
@@ -290,6 +291,55 @@ body {
     }
 }
 
+/* Console */
+.console {
+    width: @gridWidth;
+    height: @gridWidth;
+    background: @consoleBackground;
+    color: @consoleColor;
+    font-family: monospace;
+    font-size: 14px;
+    position: relative;
+
+    .content {
+        padding: 5px;
+        display: block;
+        width: 100%;
+        white-space: pre;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: @consoleLineHeight;
+        overflow-y: scroll;
+    }
+
+    .line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .flexbox();
+        .justify-content(space-around);
+        .align-items(center);
+        text-align: left;
+        background: @consoleBackground;
+        padding: 0 0 0 5px;
+        input {
+            height: @consoleLineHeight;
+            margin-left: 5px;
+            background: transparent;
+            border: none;
+            font-family: monospace;
+            font-size: 14px;
+            color: @consoleColor;
+            padding: 5px;
+            outline: none;
+            width: 100%;
+        }
+    }
+}
+
 /* Modal */
 .modal-box {
     .flexbox();
@@ -434,8 +484,24 @@ body {
         .justify-content(center);
     }
 
-    .iconGrid {
+    .iconGrid, .console {
         .order(1);
+    }
+
+    .console {
+        width: auto;
+        height: auto;
+        .content, .line {
+            position: static;
+        }
+
+        .line {
+            width: 100%;
+        }
+
+        .content {
+            max-height: @gridWidth;
+        }
     }
 
     .notes {

@@ -1,3 +1,6 @@
+{?mainTab}
+<div class="console">{>"quickaccess.default.console"/}</div>
+{:else}
 <div class="iconGrid">
     {@eq key=links.length value=0 type=number}
     <a title="{_.default.addItem}" href="#" class="add">
@@ -7,6 +10,7 @@
     {#links}{>"quickaccess.helpers.link"/}{/links}
     {/eq}
 </div>
+{/mainTab}
 
 <div class="notes">
     {>"quickaccess.default.notes"/}

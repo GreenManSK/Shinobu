@@ -12,7 +12,7 @@
         "html": false,
         "less": false
     },
-    "defaultModul": "Example",
+    "defaultModul": "QuickAccess",
     "errorModul": "Error",
     "lang": "en",
     "loadingOnStart": {

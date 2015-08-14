@@ -21,5 +21,8 @@
         "noteList": "Notes list",
         "addNote": "Add note",
         "deleteNote": "Delete note"
+    },
+    "console": {
+        "console": "Console"
     }
 }
