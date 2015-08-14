@@ -65,7 +65,7 @@ Cmd.prototype.start = function () {
 
 Cmd.prototype.parse = function (data) {
     this._addToHistory(data);
-    data = data.toString().trim().match(/([^\s]*)/g);
+    data = data.toString().trim().match(/([^\s]+|^$)/g);
     if (data.length > 0) {
         var command = data[0].toLowerCase(), args = [];
         for (var i = 1; i < data.length; i++) {
