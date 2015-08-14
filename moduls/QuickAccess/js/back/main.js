@@ -72,3 +72,12 @@ $('body').on('keyup', '.console input[name=cmd]', function (e) {
         }
     }
 });
+
+function refreshConsole() {
+    socket.emitSignal(getConsole, {}, function (data) {
+        $('.console .content').text(data.join("\n"));
+        addToConsole(data);
+    }, false);
+    setTimeout(refreshConsole, 1000);
+}
+refreshConsole();
