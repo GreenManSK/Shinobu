@@ -18,9 +18,9 @@ Cmd.prototype.help = {};
 Cmd.prototype._addCommands = function () {
     this.addCmd(['help', '?', 'stop', 'close'], [this, this.showHelp], null, 'Shows list of commands');
     this.addCmd(['clear'], [this, this.clearHistory], null, 'Clear console (only in browser)');
-    
+
     this.addCmd(['script'], [this, this.callScript], 'name', 'Execute script located in scripts dir');
-    
+
     this.addCmd(['exit', 'end', 'stop', 'close'], process.exit, null, 'Stops program');
 };
 
@@ -128,6 +128,7 @@ Cmd.prototype.callScript = function (name) {
     if (name.match(/\.js$/i) === null)
         name += '.js';
     if (fs.existsSync('scripts/' + name)) {
+        delete require.cache[require.resolve('../scripts/' + name)];
         require('../scripts/' + name)(this.context, this.config);
     } else {
         console.log('Script ' + name + ' dosen\' exist.');
