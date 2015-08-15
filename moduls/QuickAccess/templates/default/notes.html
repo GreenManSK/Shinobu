@@ -2,7 +2,7 @@
     <a href="#" title="{_.notes.addNote}" class="rightButton add"><i class="fa fa-plus"></i></a>
     <div class="dropdown">
         <a href="#" title="{_.notes.noteList}" class="leftButton dropdown-toggle{^noteTitle} hidden{/noteTitle}"><i class="fa fa-angle-double-down"></i></a>
-        <ul class="noteList hidden">
+        <ul class="noteList dropdown-list  hidden">
             {#txts}<li>
                 <a title="{.}" href="#{.}"{@eq key=. value=noteTitle} class="active"{/eq}>{.}</a>
             </li>{/txts}

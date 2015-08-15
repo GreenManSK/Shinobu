@@ -16,9 +16,17 @@ Default.prototype.actionDefault = function (query, cb) {
             return;
         }
 
+        var notifications = self.context.getService("notify").getAll();
+        var notSeen = 0;
+        for (var i in notifications)
+            if (!notifications[i].seen)
+                notSeen++;
+
         var returnData = {
             links: self.context.getService('linksModel').getLinks(),
-            txts: txts
+            txts: txts,
+            notifications: notifications,
+            notSeen: notSeen
         };
 
         if (query.mainTab) {
@@ -98,6 +106,16 @@ Default.prototype.doGetConsole = function (query, cb) {
 Default.prototype.doParseCmd = function (query, cb) {
     this.context.getService("cmd").parse(query.cmd);
     cb(false, this.context.getService("cmd").getHistory());
+};
+
+/* Notifications */
+Default.prototype.doNotifyMakeSeen = function (query, cb) {
+    this.context.getService("notify").edit(query.id, {seen: true});
+    cb(false, {});
+};
+Default.prototype.doNotifyMakeSeenAll = function (query, cb) {
+    this.context.getService("notify").seenAll(query.id);
+    cb(false, {});
 };
 
 module.exports = Default;

@@ -1,0 +1,15 @@
+<{?.link}a href="{.link}"{:else}div{/.link} id="{.id}" class="item{^.seen} new{/.seen}">
+    <div class="icon"{?.color} style="background-color: {.color}"{/.color}>
+        {?.img}
+            <img src="{.img}" alt="{.title}">
+        {:else}
+            {?.icon}
+                <i class="fa fa-{.icon}" title="{.title}"></i>
+            {:else}
+                <img src="/files/icon_big.jpg" alt="{.title}">
+            {/.icon}
+        {/.img}
+    </div>
+    <strong>{.title}</strong>
+    {?.body}<p>{.body}</p>{/.body}
+</{?.link}a{:else}div{/.link}>{~n}

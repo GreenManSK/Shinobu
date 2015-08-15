@@ -47,6 +47,7 @@ context.addService("serverHandler", "libs/ServerHandler");
 context.addService("server", context.getService('server').createServer(context.getService('serverHandler').handleRequest.bind(context.getService('serverHandler'))));
 
 context.addService("socketHandler", "libs/SocketHandler");
+context.addService("notify", "libs/Notify");
 context.addService("socket", require('socket.io')(context.getService('server')));
 context.getService("socket").on('connection', function (socket) {
     context.getService('socketHandler').handleConnection(socket);

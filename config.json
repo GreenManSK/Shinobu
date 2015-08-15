@@ -15,6 +15,7 @@
     "defaultModul": "QuickAccess",
     "errorModul": "Error",
     "lang": "en",
+    "maxNotifications": 50,
     "loadingOnStart": {
         "moduls": false,
         "presenters": false

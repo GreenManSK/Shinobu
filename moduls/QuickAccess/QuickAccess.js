@@ -15,6 +15,7 @@ QuickAccess.prototype.updateContext = function () {
     this.getContext().addService('txtsModel', 'moduls/' + this.modulName + '/libs/txtsModel');
 
     this.getContext().addService('cmd', this.context.getService("cmd"));
+    this.getContext().addService('notify', this.context.getService("notify"));
 };
 
 module.exports = QuickAccess;

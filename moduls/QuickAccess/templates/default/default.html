@@ -16,7 +16,25 @@
     {>"quickaccess.default.notes"/}
 </div>
 
-<div class="ehm"></div>
+<div class="panel">
+    <ul class="menu">
+        <li class="dropdown">
+            <a class="dropdown-toggle notify" href="#">
+                {@eq key=notSeen value=0 type="Integer"}
+                <i title="{_.notify.notifications}" class="fa fa-optin-monster"></i>
+                {:else}
+                {notSeen}
+                {/eq}
+            </a>
+
+            <div class="dropdown-list list notifications hidden">
+                {#notifications}
+                {>"quickaccess.helpers.notification"/}
+                {/notifications}
+            </div>
+        </li>
+    </ul>
+</div>
 
 <div class="modal-box hidden">
     <div class="modal">

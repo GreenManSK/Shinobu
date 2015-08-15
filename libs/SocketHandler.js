@@ -23,7 +23,8 @@ var SocketHandler = function (config, context) {
 SocketHandler.prototype.modulsOnStart = false;
 SocketHandler.prototype.moduls = {};
 SocketHandler.prototype.sockets = {
-    hasMain: false
+    hasMain: false,
+    main: null
 };
 
 SocketHandler.prototype.createRouter = function () {
@@ -37,7 +38,7 @@ SocketHandler.prototype.findNewMain = function () {
     this.sockets.hasMain = false;
     this.sockets.main = null;
     for (var i in this.sockets) {
-        if (i !== 'hasMain' && i !== 'main' ) {
+        if (i !== 'hasMain' && i !== 'main') {
             if (this.sockets[i].modul === this.defaultModul) {
                 this.sockets.hasMain = true;
                 this.sockets.main = this.sockets[i];
@@ -60,6 +61,7 @@ SocketHandler.prototype.changeSocket = function (socket, modul) {
             if (!this.sockets.hasMain && s.modul === this.defaultModul) {
                 s.main = true;
                 this.sockets.hasMain = true;
+                this.sockets.main = socket;
             }
         }
     }

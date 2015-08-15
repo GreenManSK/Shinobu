@@ -23,6 +23,10 @@
         "deleteNote": "Delete note"
     },
     "console": {
-        "console": "Console"
+        "console": "Console",
+        "newMainTab": "This is now new main tab"
+    },
+    "notify": {
+        "notifications": "Notifications"
     }
 }

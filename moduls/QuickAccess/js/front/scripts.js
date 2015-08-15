@@ -6,4 +6,5 @@
 #include grid.js
 #include note.js
 #include console.js
+#include notifications.js
 #include main.js

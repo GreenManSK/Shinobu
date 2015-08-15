@@ -1,4 +1,6 @@
 <script>
+    var mainTab = {?mainTab}true{:else}false{/mainTab};
+    
     var parseUrl = '{@exec func="createLink" args="['QuickAccess:Default:parseUrl']" /}';
     var orderLink = '{@exec func="createLink" args="['QuickAccess:Default:order']" /}';
     var addLinkUrl = '{@exec func="createLink" args="['QuickAccess:Default:addLink']" /}';
@@ -12,6 +14,9 @@
     
     var getConsole = '{@exec func="createLink" args="['QuickAccess:Default:getConsole']" /}';
     var parseCmd = '{@exec func="createLink" args="['QuickAccess:Default:parseCmd']" /}';
+    
+    var notifyMakeSeen = '{@exec func="createLink" args="['QuickAccess:Default:notifyMakeSeen']" /}';
+    var notifyMakeSeenAll  = '{@exec func="createLink" args="['QuickAccess:Default:notifyMakeSeenAll']" /}';
 </script>
 <script src="/js/scripts.js" type="text/javascript"></script>
 <script src="/{modul}/translation.js" type="text/javascript"></script>

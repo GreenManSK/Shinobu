@@ -19,7 +19,7 @@ html {
     background: @scrollbarColor;
 }
 
-a {
+a, button, div.item {
     .transitions(all @time, left 0s, top 0s, right 0s, bottom 0s);
 }
 
@@ -473,9 +473,107 @@ body {
     }
 }
 
-.ehm {
+.panel {
     .order(3);
     width: @noteWidth;
+    position: relative;
+    height: 100%;
+
+    ul.menu, ul.menu li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.menu {
+        top: 0;
+        right: 0;
+
+        li {
+            float: right;
+
+            button, a {
+                display: block;
+                text-decoration: none;
+                border: none;
+                background: @notifyButtonBackground;
+                color: @notifyButtonColor;
+                font-size: 1.7em;
+                width: @noteHeadHeight;
+                height: @noteHeadHeight;
+                padding: @noteHeadPadding;
+                cursor: pointer;
+                text-align: center;
+
+                &:hover, &:focus, &:active {
+                    background: fadein(@notifyButtonBackground, 15%);
+                }
+            }
+        }
+    }
+
+    .list {
+        width: 100%;
+        position: absolute;
+        top: @noteHeadHeight;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        overflow-y: scroll;
+
+        .item {
+            &.new {
+                background: fadein(@notifyBackground,30%);
+            }
+            width: 100%;
+            text-decoration: none;
+            text-align: left;
+            .clearfix();
+            padding: 8px 8px 4px;
+            background: @notifyBackground;
+            color: @notifyColor;
+            display: inline-table;
+
+            strong, p {
+                font-size: 12px;
+                display: block;
+                margin: 0 0 0 (@notifyIconWidth + 8px);
+            }
+
+            .icon {
+                .flexbox();
+                .align-items(center);
+                .justify-content(center);
+                float: left;
+                width: @notifyIconWidth;
+                height: @notifyIconWidth;
+                text-align: center;
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+                i {
+                    font-size: 45px;
+                }
+            }
+        }
+
+        .item + .item {
+            border-top: 1px solid fade(#fff, 60%);
+        }
+
+        div.item {
+            &:active, &:focus, &:hover {
+                background: fadein(@notifyBackground,30%);
+            }
+        }
+
+        a.item {
+            &:active, &:focus, &:hover {
+                background: fadein(@notifyBackground,50%);
+            }
+        }
+    }
 }
 
 @media (max-width: (@gridWidth + 2*@noteWidth + 10px)) {
@@ -485,7 +583,7 @@ body {
     }
 
     .iconGrid, .console {
-        .order(1);
+        .order(2);
     }
 
     .console {
@@ -505,7 +603,7 @@ body {
     }
 
     .notes {
-        .order(2);
+        .order(3);
 
         margin-top: 15px;
         height: auto;
@@ -525,7 +623,21 @@ body {
         }
     }
 
-    .ehm {
-        .order(3);
+    .panel {
+        .order(1);
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+        ul.menu {
+            width: 100%;
+            position: static;
+            li, li button, li a {
+                width: 100%;
+            }
+        }
+        .list {
+            position: static;
+        }
     }
 }
