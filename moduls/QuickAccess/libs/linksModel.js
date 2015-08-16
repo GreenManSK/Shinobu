@@ -8,6 +8,7 @@ var LinksModel = function (config, context) {
     this.context = context;
 
     this.loadLinks();
+    this.context.getService("saver").add([this, this.saveLinks]);
 };
 
 LinksModel.prototype.links = [];
@@ -47,7 +48,6 @@ LinksModel.prototype.changeOrder = function (order, cb) {
     }
 
     this.links = newLinks;
-    this.saveLinks();
     cb(false, null);
 };
 
@@ -59,7 +59,6 @@ LinksModel.prototype.addLink = function (url, title, img, icon, cb) {
         img: img
     });
 
-    this.saveLinks();
     cb(false, null);
 };
 
@@ -77,7 +76,6 @@ LinksModel.prototype.editLink = function (index, url, title, img, icon, cb) {
         img: img
     };
 
-    this.saveLinks();
     cb(false, null);
 };
 
@@ -91,7 +89,6 @@ LinksModel.prototype.deleteLink = function (index, cb) {
     delete this.links[index];
     this.links.length = this.links.length - 1;
 
-    this.saveLinks();
     cb(false, null);
 };
 

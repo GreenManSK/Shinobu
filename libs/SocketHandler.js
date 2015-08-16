@@ -22,6 +22,7 @@ var SocketHandler = function (config, context) {
 
 SocketHandler.prototype.modulsOnStart = false;
 SocketHandler.prototype.moduls = {};
+SocketHandler.prototype.modulsInstances = {};
 SocketHandler.prototype.sockets = {
     hasMain: false,
     main: null
@@ -195,7 +196,7 @@ SocketHandler.prototype._parseUrl = function (data, cb) {
         handler.modul = this.defaultModul;
     }
 
-    var modul = this.createModulInstance(handler.modul);
+    var modul = this.getModulInstance(handler.modul);
 
     if (!modul || !modul.hasPresenter(handler.presenter)) {
         cb(404);
@@ -235,7 +236,7 @@ SocketHandler.prototype.sendErrorPresenter = function (socket, error) {
 
     this.changeSocket(socket, this.errorModul);
 
-    var modul = this.createModulInstance(this.errorModul);
+    var modul = this.getModulInstance(this.errorModul);
     modul.createPresenterInstance('Default').getPresenter("default", {err: error}, callback);
 };
 
@@ -247,7 +248,7 @@ SocketHandler.prototype.sendErrorAction = function (socket, error) {
         });
     };
 
-    var modul = this.createModulInstance(this.errorModul);
+    var modul = this.getModulInstance(this.errorModul);
     modul.createPresenterInstance('Default').getAction("default", {err: error}, callback);
 };
 
@@ -260,23 +261,26 @@ SocketHandler.prototype.hasModul = function (name) {
     }
 };
 
-SocketHandler.prototype.createModulInstance = function (name) {
+SocketHandler.prototype.getModulInstance = function (name) {
+    if (typeof this.modulsInstances[name] !== 'undefined')
+        return this.modulsInstances[name];
     if (this.modulsOnStart) {
         if (typeof this.moduls[name] === 'undefined') {
             console.log('Modul ' + name + ' doesn\'t exist');
             return false;
         } else {
-            return new this.moduls[name](this.config, this.context, this.router);
+            this.modulsInstances[name] = new this.moduls[name](this.config, this.context, this.router);
         }
     } else {
         if (fs.existsSync('moduls/' + name)) {
             var t = this._loadModul(name);
-            return new t(this.config, this.context, this.router);
+            this.modulsInstances[name] = new t(this.config, this.context, this.router);
         } else {
             console.log('Modul ' + name + ' doesn\'t exist');
             return false;
         }
     }
+    return this.modulsInstances[name];
 };
 
 SocketHandler.prototype.loadModuls = function () {

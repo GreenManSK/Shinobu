@@ -10,6 +10,7 @@ var Notify = function (config, context) {
     this.context = context;
 
     this.load();
+    this.context.getService("saver").add([this, this.save]);
 };
 
 Notify.prototype.notifications = {};
@@ -68,8 +69,6 @@ Notify.prototype.add = function (title, body, link, icon, img, color) {
     if (this.context.getService('socketHandler').sockets.hasMain) {
         this.context.getService('socketHandler').sockets.main.emit('notification', [id, this.notifications[id]]);
     }
-
-    this.save();
 };
 
 Notify.prototype.edit = function (id, data) {
@@ -78,14 +77,12 @@ Notify.prototype.edit = function (id, data) {
             if (typeof this.notifications[id][i] !== 'undefined')
                 this.notifications[id][i] = data[i];
         }
-        this.save();
     }
 };
 
 Notify.prototype.delete = function (id) {
     if (typeof this.notifications[id] !== 'undefined') {
         delete this.notifications[id];
-        this.save();
     }
 };
 
@@ -95,7 +92,6 @@ Notify.prototype.seenAll = function (id) {
         if (id === i)
             break;
     }
-    this.save();
 };
 
 module.exports = Notify;

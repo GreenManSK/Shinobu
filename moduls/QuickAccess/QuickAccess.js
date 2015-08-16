@@ -16,6 +16,7 @@ QuickAccess.prototype.updateContext = function () {
 
     this.getContext().addService('cmd', this.context.getService("cmd"));
     this.getContext().addService('notify', this.context.getService("notify"));
+    this.getContext().addService('saver', this.context.getService("saver"));
 };
 
 module.exports = QuickAccess;

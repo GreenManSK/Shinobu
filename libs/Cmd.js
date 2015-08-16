@@ -20,6 +20,7 @@ Cmd.prototype._addCommands = function () {
     this.addCmd(['clear'], [this, this.clearHistory], null, 'Clear console (only in browser)');
 
     this.addCmd(['script'], [this, this.callScript], 'name', 'Execute script located in scripts dir');
+    this.addCmd(['save'], [this.context.getService("saver"), this.context.getService("saver").saveAll], null, 'Save all data');
 
     this.addCmd(['exit', 'end', 'stop', 'close'], process.exit, null, 'Stops program');
 };

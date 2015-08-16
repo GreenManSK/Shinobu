@@ -16,6 +16,7 @@
     "errorModul": "Error",
     "lang": "en",
     "maxNotifications": 50,
+    "saveInterval": 1200000,
     "loadingOnStart": {
         "moduls": false,
         "presenters": false

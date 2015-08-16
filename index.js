@@ -5,6 +5,8 @@ context.addLib('config', '../libs/Config');
 context.addLib('context', '../libs/Context');
 
 context.addLib("intercept-stdout", "intercept-stdout");
+context.addService("saver", "libs/Saver");
+context.addService("scheduler", "libs/Scheduler");
 context.addService("cmd", "libs/Cmd");
 
 context.addLib("dust", "dustjs-linkedin");
