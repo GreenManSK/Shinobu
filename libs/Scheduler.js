@@ -12,6 +12,7 @@ var Scheduler = function (config, context) {
 Scheduler.prototype.refreshRate = 1000;
 Scheduler.prototype.tasks = {};
 Scheduler.prototype.persistent = {};
+Scheduler.prototype.delay = {};
 
 Scheduler.prototype.start = function () {
     this.loadPersistent();
@@ -84,14 +85,34 @@ Scheduler.prototype.do = function () {
 
     for (var i in this.tasks) {
         var task = this.tasks[i];
-        if (Math.round(now - task.last) >= task.next) {
-            task.fn();
-            if (task.once) {
-                delete this.tasks[i];
+        var execute = false;
+        if (typeof this.delay[i] !== 'undefined') {
+            execute = Math.round(now - this.delay[i].last) >= this.delay[i].next;
+        } else {
+            execute = Math.round(now - task.last) >= task.next;
+        }
+
+        if (execute) {
+            var r = task.fn();
+
+            if (r === false) {
+                if (typeof this.delay[i] === 'undefined')
+                    this.delay[i] = {x: 0};
+
+                this.delay[i].last = Date.now();
+                if (this.delay[i].x < 7)
+                    this.delay[i].x++;
+                this.delay[i].next = 2 * Math.exp(this.delay[i].x) * 1000;
             } else {
-                task.last = now;
-                if (task.persistent)
-                    this.persistent[i] = task.last;
+                if (typeof this.delay[i] !== 'undefined')
+                    delete this.delay[i];
+                if (task.once) {
+                    delete this.tasks[i];
+                } else {
+                    task.last = Date.now();
+                    if (task.persistent)
+                        this.persistent[i] = task.last;
+                }
             }
         }
     }
