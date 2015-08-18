@@ -50,6 +50,14 @@ ServerHandler.prototype.handleRequest = function (req, res) {
                 return;
         }
     }
+    
+    if (req.url.match(/\/(\?.*)?$/) === null) {
+        res.writeHead(301, {
+            'Location': req.url + '/'
+        });
+        res.end();
+        return;
+    }
 
     this._sendDefaultPage(res);
 };
