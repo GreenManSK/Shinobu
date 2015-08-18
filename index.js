@@ -11,6 +11,7 @@ context.addService("cmd", "libs/Cmd");
 
 context.addLib("dust", "dustjs-linkedin");
 context.addLib("dustjs-helpers", "dustjs-helpers");
+
 if (!config.get("minify.html", false)) {
     context.getLib("dust").optimizers.format = function (ctx, node) {
         return node;
@@ -48,8 +49,8 @@ context.addService("server", require('http'));
 context.addService("serverHandler", "libs/ServerHandler");
 context.addService("server", context.getService('server').createServer(context.getService('serverHandler').handleRequest.bind(context.getService('serverHandler'))));
 
-context.addService("socketHandler", "libs/SocketHandler");
 context.addService("notify", "libs/Notify");
+context.addService("socketHandler", "libs/SocketHandler");
 context.addService("socket", require('socket.io')(context.getService('server')));
 context.getService("socket").on('connection', function (socket) {
     context.getService('socketHandler').handleConnection(socket);
@@ -59,5 +60,6 @@ context.getService("socket").on('connection', function (socket) {
 context.getService('compiler').compileAll(function () {
     context.getService("server").listen(config.get('port', 6464));
     console.log('Server running!');
+    context.getService("scheduler").start();
     context.getService("cmd").start();
 });

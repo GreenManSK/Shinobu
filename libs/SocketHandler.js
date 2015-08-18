@@ -9,10 +9,7 @@ var SocketHandler = function (config, context) {
     this.config = config;
     this.context = context;
 
-    if (this.config.get('loadingOnStart.moduls')) {
-        this.modulsOnStart = true;
-        this.loadModuls();
-    }
+    this.loadModuls();
 
     this.defaultModul = this.config.get('defaultModul');
     this.errorModul = this.config.get('errorModul');
@@ -20,7 +17,6 @@ var SocketHandler = function (config, context) {
     this.createRouter();
 };
 
-SocketHandler.prototype.modulsOnStart = false;
 SocketHandler.prototype.moduls = {};
 SocketHandler.prototype.modulsInstances = {};
 SocketHandler.prototype.sockets = {
@@ -254,31 +250,17 @@ SocketHandler.prototype.sendErrorAction = function (socket, error) {
 
 /* Moduls */
 SocketHandler.prototype.hasModul = function (name) {
-    if (this.modulsOnStart) {
-        return typeof this.moduls[name] !== 'undefined';
-    } else {
-        return fs.existsSync('moduls/' + name);
-    }
+    return typeof this.moduls[name] !== 'undefined';
 };
 
 SocketHandler.prototype.getModulInstance = function (name) {
     if (typeof this.modulsInstances[name] !== 'undefined')
         return this.modulsInstances[name];
-    if (this.modulsOnStart) {
-        if (typeof this.moduls[name] === 'undefined') {
-            console.log('Modul ' + name + ' doesn\'t exist');
-            return false;
-        } else {
-            this.modulsInstances[name] = new this.moduls[name](this.config, this.context, this.router);
-        }
+    if (typeof this.moduls[name] === 'undefined') {
+        console.log('Modul ' + name + ' doesn\'t exist');
+        return false;
     } else {
-        if (fs.existsSync('moduls/' + name)) {
-            var t = this._loadModul(name);
-            this.modulsInstances[name] = new t(this.config, this.context, this.router);
-        } else {
-            console.log('Modul ' + name + ' doesn\'t exist');
-            return false;
-        }
+        this.modulsInstances[name] = new this.moduls[name](this.config, this.context, this.router);
     }
     return this.modulsInstances[name];
 };
@@ -287,8 +269,10 @@ SocketHandler.prototype.loadModuls = function () {
     var moduls = fs.readdirSync('moduls');
     for (var i in moduls) {
         var stats = fs.statSync('moduls/' + moduls[i]);
-        if (stats.isDirectory())
+        if (stats.isDirectory()) {
             this.moduls[moduls[i]] = this._loadModul(moduls[i]);
+            this.getModulInstance(moduls[i]);
+        }
     }
 };
 
