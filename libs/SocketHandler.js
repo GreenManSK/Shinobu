@@ -9,12 +9,11 @@ var SocketHandler = function (config, context) {
     this.config = config;
     this.context = context;
 
-    this.loadModuls();
-
     this.defaultModul = this.config.get('defaultModul');
     this.errorModul = this.config.get('errorModul');
 
     this.createRouter();
+    this.loadModuls();
 };
 
 SocketHandler.prototype.moduls = {};
