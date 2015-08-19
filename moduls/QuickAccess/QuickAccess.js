@@ -10,13 +10,13 @@ function QuickAccess() {
 util.inherits(QuickAccess, _AbstractModul);
 
 QuickAccess.prototype.updateContext = function () {
-    this.getContext().addService('linksModel', 'moduls/' + this.modulName + '/libs/linksModel');
-    this.getContext().addService('siteParser', 'moduls/' + this.modulName + '/libs/siteParser');
-    this.getContext().addService('txtsModel', 'moduls/' + this.modulName + '/libs/txtsModel');
-
     this.getContext().addService('cmd', this.context.getService("cmd"));
     this.getContext().addService('notify', this.context.getService("notify"));
     this.getContext().addService('saver', this.context.getService("saver"));
+
+    this.getContext().addService('linksModel', 'moduls/' + this.modulName + '/libs/linksModel');
+    this.getContext().addService('siteParser', 'moduls/' + this.modulName + '/libs/siteParser');
+    this.getContext().addService('txtsModel', 'moduls/' + this.modulName + '/libs/txtsModel');
 };
 
 module.exports = QuickAccess;
