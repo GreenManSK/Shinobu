@@ -30,6 +30,7 @@ function _AbstractModul(config, context, router) {
     this.modulConfig.set('dataDir', this.config.get('dataDir') + '/' + this.modulName);
 
     this.modulContext = this.context.getLib('context')(this.modulConfig);
+    this.modulContext.addService('compiler', this.context.getService('compiler'));
 }
 
 _AbstractModul.prototype.getConfig = function () {
