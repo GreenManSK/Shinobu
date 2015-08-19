@@ -229,6 +229,8 @@ SocketHandler.prototype.sendErrorPresenter = function (socket, error) {
         });
     };
 
+    error = !Number.isInteger(error) ? 500 : error;
+
     this.changeSocket(socket, this.errorModul);
 
     var modul = this.getModulInstance(this.errorModul);
