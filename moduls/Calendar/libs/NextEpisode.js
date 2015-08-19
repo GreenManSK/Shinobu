@@ -14,7 +14,7 @@ NextEpisode.prototype.searchUrl = 'site-search-%s.html';
 
 NextEpisode.prototype.getNext = function (name, cb) {
     var self = this;
-    this.madeRequest(name, function (err, source) {
+    this.madeRequest(encodeURIComponent(name), function (err, source) {
         if (err) {
             cb(err);
         } else {
@@ -25,7 +25,7 @@ NextEpisode.prototype.getNext = function (name, cb) {
 
 NextEpisode.prototype.search = function (name, cb) {
     var self = this;
-    this.madeRequest(this.searchUrl.replace(/%s/g, name), function (err, source) {
+    this.madeRequest(this.searchUrl.replace(/%s/g, encodeURIComponent(name)), function (err, source) {
         if (err) {
             cb(err);
         } else {
@@ -62,6 +62,7 @@ NextEpisode.prototype.madeRequest = function (path, cb) {
 
 NextEpisode.prototype.parse = function (source) {
     var $ = cheerio.load(source);
+
     var date = $('#next_episode').text().match(/Date:(.*?)$/mi);
     if (date === null)
         return null;

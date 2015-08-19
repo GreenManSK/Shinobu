@@ -19,6 +19,7 @@ Calendar.prototype.updateContext = function () {
     this.getContext().addService('aniDb', 'moduls/' + this.modulName + '/libs/AniDB');
 
     this.getContext().addService('musicModel', 'moduls/' + this.modulName + '/libs/MusicModel');
+    this.getContext().addService('showModel', 'moduls/' + this.modulName + '/libs/ShowModel');
 };
 
 Calendar.prototype.startTasks = function () {

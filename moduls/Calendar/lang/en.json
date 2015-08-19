@@ -23,12 +23,13 @@
     "edit": "Edit",
     "remvove": "Remove",
     "more": "Load more",
-    "unknown": "Unknown",
+    "unknow": "Unknown",
     "close": "Close",
     "name": "Name",
     "notifications": "Notifications",
     "releaseDate": "Release date",
     "releaseFile": "File released",
     "search": "Seach",
-    "optional": "Optional"
+    "optional": "Optional",
+    "setWatched": "Wached"
 }

@@ -31,6 +31,8 @@ _AbstractPresenter.prototype.callAction = function (isPresenter, action, query, 
         this[functionName](query, function (err, data) {
             if (err)
                 cb(err);
+            if (!data)
+                data = {};
 
             if (fs.existsSync("moduls/" + self.modul.modulName + "/lang/"))
                 data._ = self.getTranslation();
@@ -82,6 +84,8 @@ _AbstractPresenter.prototype.doSignal = function (signal, query, cb) {
         this[functionName](query, function (err, data) {
             if (err)
                 cb(err);
+            if (!data)
+                data = {};
 
             if (data === null)
                 data = {};
