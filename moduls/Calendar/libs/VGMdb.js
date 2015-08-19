@@ -2,6 +2,7 @@ var urlModule = require('url');
 var cheerio = require('cheerio');
 var util = require("util");
 var querystring = require('querystring');
+var moment = require('moment');
 
 function VGMdb(config, context) {
     if (!(this instanceof VGMdb))
@@ -22,7 +23,7 @@ VGMdb.prototype.searchPost = {
     'pubtype[0]': 1,
     'distype[0]': 1,
     'category[1]': 0,
-    'category[2]': 1,
+    'category[2]': 0,
     'category[4]': 0,
     'category[8]': 0,
     'category[16]': 0,
@@ -96,13 +97,17 @@ VGMdb.prototype.album = function (id, cb) {
 
 VGMdb.prototype.parseAlbum = function (source) {
     var $ = cheerio.load(source);
-    var date = null;
+    var data = {date: null};
+
     $('#album_infobit_large').find('a').each(function (i, elem) {
         var d = new Date($(this).text());
         if (d.toString() !== 'Invalid Date')
-            date = d;
+            data.date = d;
     });
-    return date;
+
+    data.title = $('.albumtitle').first().text();
+
+    return data;
 };
 
 VGMdb.prototype.parseSearch = function (source) {
@@ -115,6 +120,8 @@ VGMdb.prototype.parseSearch = function (source) {
             url: $this.find('a').attr('href'),
             date: new Date($($this.find('td').get(3)).text())
         };
+        td.id = td.url ? td.url.replace('http://vgmdb.net/album/', '') : null;
+        td.dateFormated = moment(td.date).format('DD.MM.YYYY');
         if (td.name)
             results.push(td);
     });

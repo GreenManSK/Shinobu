@@ -22,5 +22,9 @@
     },
     "ExampleModul": {
         "birthday": "15.11"
+    },
+    "CalendarModul": {
+        "httpClient": "shinobu",
+        "dataRefresh": [0, 0, 0, 1]
     }
 }

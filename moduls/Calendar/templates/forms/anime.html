@@ -1,0 +1,63 @@
+<form>
+    <div class="input">
+        <label>{_.name}</label> <input type="text" name="name" placeholder="{_.name}">
+    </div>
+    <div class="input">
+        <label>{_.anime.anidbId}</label> <input min="1" type="number" name="anidbId" placeholder="{_.anime.anidbId}">
+    </div>
+
+    <div class="whisper">
+        <div class="tip">
+            <div>
+                <h3><span class="name">Nishi no Yoki Majo: Astraea Testament</span> (a<span class="aid">4172</span>)</h3>
+                <h4>The Good Witch Of The West</h4>
+            </div>
+            <a href="http://anidb.net/a4172" target="_blank" title="Nishi no Yoki Majo: Astraea Testament na AniDB">AniDB</a>
+        </div>
+        <div class="tip">
+            <div>
+                <h3><span class="name">Baka to Test to Shoukanjuu</span> (a<span class="aid">6747</span>)</h3>
+                <h4>Baka and Test: Summon the Beasts</h4>
+            </div>
+            <a href="http://anidb.net/a6747" target="_blank" title="Baka to Test to Shoukanjuu na AniDB">AniDB</a>
+        </div>
+        <div class="tip">
+            <div>
+                <h3><span class="name">Sekai Meisaku Douwa: Manga Series</span> (a<span class="aid">7051</span>)</h3>
+                <h4>The World`s Greatest Fairy Tales</h4>
+            </div>
+            <a href="http://anidb.net/a7051" target="_blank" title="Sekai Meisaku Douwa: Manga Series na AniDB">AniDB</a>
+        </div>
+        <div class="tip">
+            <div>
+                <h3><span class="name">Baka to Test to Shoukanjuu: Matsuri</span> (a<span class="aid">8085</span>)</h3>
+                <h4>Baka and Test: Summon the Beasts - OVA</h4>
+            </div>
+            <a href="http://anidb.net/a8085" target="_blank" title="Baka to Test to Shoukanjuu: Matsuri na AniDB">AniDB</a>
+        </div>
+        <div class="tip">
+            <div>
+                <h3><span class="name">Baka to Test to Shoukanjuu Ni!</span> (a<span class="aid">8235</span>)</h3>
+                <h4>Baka and Test: Summon the Beasts (2)</h4>
+            </div>
+            <a href="http://anidb.net/a8235" target="_blank" title="Baka to Test to Shoukanjuu Ni! na AniDB">AniDB</a>
+        </div>
+        <div class="tip">
+            <div>
+                <h3><span class="name">Shinmai Maou no Testament</span> (a<span class="aid">10529</span>)</h3>
+                <h4>The Testament of Sister New Devil</h4>
+            </div>
+            <a href="http://anidb.net/a10529" target="_blank" title="Shinmai Maou no Testament na AniDB">AniDB</a>
+        </div>
+    </div>
+
+    <div class="input">
+        <label>{_.anime.nyaaQuery}</label> <input type="text" name="nyaaQuery" placeholder="{_.anime.nyaaQuery}">
+    </div>
+    <h3>{_.notifications}</h3>
+    <div class="checkbox">
+        <label><input type="checkbox" name="releaseDate"> {_.releaseDate}</label>
+        <label><input type="checkbox" name="releaseFile"> {_.releaseFile}</label>
+    </div>
+    <input type="submit" name="add" value="{_.add}">
+</form>

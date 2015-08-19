@@ -1,0 +1,20 @@
+{@eq key=music.length value=0 type=number}
+<a title="{_.add}" href="#" class="add">
+    <i class="fa fa-plus"></i>
+</a>
+{:else}
+<ul class="music">
+    {#music}
+    <li id="m{.id}" {?.released}class="released"{/.released}>
+        <div class="info">
+            <h2>{.name} {?.vgmid}<a title="VGMdb.net" href="vgmdb.net/album/{.vgmid}" class="badge">VGMdb.net</a>{/.vgmid}</h2>
+            {?.title}<span>{.title}</span>{/.title}
+        </div>
+        <div class="tools">
+            {?.date}<span class="date">{.date}</span>{:else}<span class="date unknown">{_.unknown}</span>{/.date}
+            <a href="#" title="{_.edit}" class="edit"><i class="fa fa-pencil"></i></a> / <a href="#" title="{_.remove}" class="delete"><i class="fa fa-trash-o"></i></a> 
+        </div>
+    </li>
+    {/music}
+</ul>
+{/eq}

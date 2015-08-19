@@ -10,29 +10,27 @@ function AniDB(config, context) {
     this.config = config;
     this.context = context;
 
+    this.configured = true;
+    this.httpClient = null;
+    this.animes = [];
+
     this.checkConfig();
 
     this.loadAnimes();
 }
 
 AniDB.prototype.version = 1;
-AniDB.prototype.configured = true;
-AniDB.prototype.httpClient = null;
-AniDB.prototype.udpClient = null;
 
 AniDB.prototype.animetitlesLink = 'http://localhost/animetitles.xml.gz';//'http://anidb.net/api/animetitles.xml.gz';
-AniDB.prototype.animes = [];
 
 AniDB.prototype.httpApi = 'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
 
 AniDB.prototype.checkConfig = function () {
     this.httpClient = this.config.get('httpClient', false);
-    this.udpClient = this.config.get('udpClient', false);
-
-    if (!this.httpClient || !this.udpClient) {
+    if (!this.httpClient) {
         this.configured = false;
         console.log('You need to properly configure Calendar\'s AniDB.');
-        console.log('You need to set httpClient and udpClient.');
+        console.log('You need to set httpClient.');
     }
 };
 

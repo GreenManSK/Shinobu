@@ -1,0 +1,82 @@
+@transTime: .5s;
+@borderRadius: 4px;
+@shadow: 2px 2px 8px rgba(0,0,0,.3);
+
+@red: #B63533;
+@blue: #3573A8;
+@green: #5c8230;
+@yellow: #d87f37;
+
+@kirinoWidth: 500px;
+@kirinoHeight: 497px;
+.kirinoSize(@size: 1) {
+    width: (@size*@kirinoWidth);
+    height: (@size*@kirinoHeight);
+}
+
+.clearfix() {
+    &:before,
+        &:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.transition(...) {
+    transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -moz-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -webkit-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -o-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+}
+
+
+.box-shadow(@shadow) {
+    -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+    box-shadow: @shadow;
+}
+
+.panelColor(@color) {
+    h1 {
+        background: @color;
+        a {
+            color: #fff;
+            &:hover, &:focus, &:active {
+                color: @color;
+                background: #fff;
+            }
+        }
+    }
+
+    .content {
+        border-color: @color;
+    }
+
+    a {
+        color: @color;
+        &:hover, &:focus, &:active {
+            color: #fff;
+            background: @color;
+        }
+    }
+
+    a.badge {
+        color: #fff;
+        background: darken(@color, 5%);
+        &:hover, &:focus, &:active {
+            background: @color;
+        }
+    }
+
+    input[type=submit], input[type=button] {
+        background: @color;
+        &:hover {
+            background: darken(@color, 5%);
+        }
+        &:focus, &:active {
+            background: darken(@color, 10%);
+        }
+    }
+}

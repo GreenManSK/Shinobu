@@ -1,0 +1,34 @@
+{
+    "title": "Calendar",
+    "music": {
+        "title": "Music",
+        "vgmdbId": "VGMdb.net ID"
+    },
+    "anime": {
+        "title": "Anime",
+        "searchNyaa": "Search on Nyaa.eu",
+        "anidbId": "AniDB ID",
+        "nyaaQuery": "Query for finding releases on Nyaa.eu",
+        "episode": "Episode ID"
+    },
+    "shows": {
+        "title": "TV Shows",
+        "nextEpisodeUrl": "URL on next-episode.net"
+    },
+    "ovas": {
+        "title": "Anime specials"
+    },
+    "refresh": "Refresh",
+    "add": "Add",
+    "edit": "Edit",
+    "remvove": "Remove",
+    "more": "Load more",
+    "unknown": "Unknown",
+    "close": "Close",
+    "name": "Name",
+    "notifications": "Notifications",
+    "releaseDate": "Release date",
+    "releaseFile": "File released",
+    "search": "Seach",
+    "optional": "Optional"
+}
