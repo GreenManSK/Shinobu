@@ -7,11 +7,11 @@ var LinksModel = function (config, context) {
     this.config = config;
     this.context = context;
 
+    this.links = [];
+
     this.loadLinks();
     this.context.getService("saver").add([this, this.saveLinks]);
 };
-
-LinksModel.prototype.links = [];
 
 LinksModel.prototype.saveLinks = function () {
     fs.writeFileSync("./" + this.config.get('dataDir') + "/links.json", JSON.stringify(this.links, null, '    '));
@@ -19,7 +19,7 @@ LinksModel.prototype.saveLinks = function () {
 
 LinksModel.prototype.loadLinks = function () {
     var content = '[]';
-    
+
     if (fs.existsSync("./" + this.config.get('dataDir') + "/links.json"))
         content = fs.readFileSync("./" + this.config.get('dataDir') + "/links.json").toString();
 

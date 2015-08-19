@@ -9,18 +9,18 @@ var SocketHandler = function (config, context) {
     this.config = config;
     this.context = context;
 
+    this.moduls = {};
+    this.modulsInstances = {};
+    this.sockets = {
+        hasMain: false,
+        main: null
+    };
+
     this.defaultModul = this.config.get('defaultModul');
     this.errorModul = this.config.get('errorModul');
 
     this.createRouter();
     this.loadModuls();
-};
-
-SocketHandler.prototype.moduls = {};
-SocketHandler.prototype.modulsInstances = {};
-SocketHandler.prototype.sockets = {
-    hasMain: false,
-    main: null
 };
 
 SocketHandler.prototype.createRouter = function () {

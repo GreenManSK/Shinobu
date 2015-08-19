@@ -7,12 +7,12 @@ var Scheduler = function (config, context) {
 
     this.config = config;
     this.context = context;
-};
 
-Scheduler.prototype.refreshRate = 1000;
-Scheduler.prototype.tasks = {};
-Scheduler.prototype.persistent = {};
-Scheduler.prototype.delay = {};
+    this.refreshRate = 1000;
+    this.tasks = {};
+    this.persistent = {};
+    this.delay = {};
+};
 
 Scheduler.prototype.start = function () {
     this.loadPersistent();

@@ -6,11 +6,11 @@ var Saver = function (config, context) {
     this.config = config;
     this.context = context;
 
+    this.cbs = [];
+
     setInterval(this.saveAll.bind(this), this.config.get('saveInterval'));
     process.on('exit', this.saveAll.bind(this));
 };
-
-Saver.prototype.cbs = [];
 
 Saver.prototype.saveAll = function () {
     console.log('Saving data...');

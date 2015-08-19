@@ -6,9 +6,9 @@ var Translator = function (config, context) {
 
     this.config = config;
     this.context = context;
-};
 
-Translator.prototype.translations = {};
+    this.translations = {};
+};
 
 Translator.prototype.getTranslation = function (modul, lang) {
     if (!this.config.get('cache.translation')) {

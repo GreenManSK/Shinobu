@@ -9,11 +9,11 @@ var Notify = function (config, context) {
     this.config = config;
     this.context = context;
 
+    this.notifications = {};
+
     this.load();
     this.context.getService("saver").add([this, this.save]);
 };
-
-Notify.prototype.notifications = {};
 
 Notify.prototype.load = function () {
     var content = '{}';

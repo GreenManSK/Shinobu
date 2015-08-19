@@ -3,11 +3,11 @@ var Context = function (config) {
         return new Context(config);
     }
     this.config = config;
-};
 
-Context.prototype.services = {};
-Context.prototype.libs = {};
-Context.prototype.factories = {};
+    this.services = {};
+    this.libs = {};
+    this.factories = {};
+};
 
 Context.prototype.addService = function (name, service, attrs) {
     if (typeof service === 'string') {

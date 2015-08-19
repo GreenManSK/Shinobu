@@ -8,12 +8,13 @@ var Cmd = function (config, context) {
 
     this.config = config;
     this.context = context;
+
+    this.history = [];
+    this.commands = {};
+    this.help = {};
+
     this._addCommands();
 };
-
-Cmd.prototype.history = [];
-Cmd.prototype.commands = {};
-Cmd.prototype.help = {};
 
 Cmd.prototype._addCommands = function () {
     this.addCmd(['help', '?', 'stop', 'close'], [this, this.showHelp], null, 'Shows list of commands');

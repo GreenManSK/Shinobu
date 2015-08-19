@@ -7,6 +7,12 @@ function _AbstractModul(config, context, router) {
     this.config = config;
     this.context = context;
 
+    this.presentersOnStart = false;
+    this.presenters = {};
+
+    this.modulConfig = null;
+    this.modulContext = null;
+
     this.router = router;
 
     this.modulName = this.constructor.name;
@@ -25,12 +31,6 @@ function _AbstractModul(config, context, router) {
 
     this.modulContext = this.context.getLib('context')(this.modulConfig);
 }
-
-_AbstractModul.prototype.presentersOnStart = false;
-_AbstractModul.prototype.presenters = {};
-
-_AbstractModul.prototype.modulConfig = null;
-_AbstractModul.prototype.modulContext = null;
 
 _AbstractModul.prototype.getConfig = function () {
     return this.modulConfig;
