@@ -1,60 +1,3 @@
-$('body').on('click', '.music .add', function (e) {
-    e.preventDefault();
-
-    $('.music h1 a').toggleClass('hidden');
-
-    dust.render("calendar.forms.music", {_: _}, function (err, html) {
-        $('.music .content').html(html);
-    });
-
-    return false;
-});
-
-
-$('body').on('click', '.music .edit', function (e) {
-    e.preventDefault();
-
-    var id = $(this).parents('li').attr('id').replace('m', '');
-
-    socket.emitSignal(getMusic, {id: id}, function (data) {
-        data._ = _;
-        dust.render("calendar.forms.music", data, function (err, html) {
-            $('.music h1 a').toggleClass('hidden');
-            $('.music .content').html(html);
-            $('.music .content form').data('item-id', id);
-        });
-    });
-
-    return false;
-});
-
-$('body').on('click', '.music .refresh', function (e) {
-    e.preventDefault();
-
-    socket.emitSignal(getAllMusic, {}, function (data) {
-        data._ = _;
-        dust.render("calendar.helpers.music", data, function (err, html) {
-            $('.music h1 a').toggleClass('hidden');
-            $('.music .content').html(html);
-        });
-    });
-
-    return false;
-});
-
-$('body').on('click', '.music .refreshData', function (e) {
-    e.preventDefault();
-
-    socket.emitSignal(refreshMusic, {}, function (data) {
-        data._ = _;
-        dust.render("calendar.helpers.music", data, function (err, html) {
-            $('.music .content').html(html);
-        });
-    });
-
-    return false;
-});
-
 $('body').onTyping('.music [name=search]', {
     stop: function (event, $elem) {
         socket.emitSignal(musicSearch, {search: $elem.val()}, function (data) {
@@ -63,7 +6,7 @@ $('body').onTyping('.music [name=search]', {
             });
         });
     },
-    delay: 400
+    delay: 600
 });
 
 $('body').on('click', '.music .whisper .tip div', function (e) {
@@ -111,18 +54,5 @@ $('body').on('submit', '.music form', function (e) {
     } else {
         $name.addClass('error');
     }
-    return false;
-});
-
-$('body').on('click', '.music .delete', function (e) {
-    e.preventDefault();
-
-    socket.emitSignal(deleteMusic, {id: $(this).parents('li').attr('id').replace('m', '')}, function (data) {
-        data._ = _;
-        dust.render("calendar.helpers.music", data, function (err, html) {
-            $('.music .content').html(html);
-        });
-    });
-
     return false;
 });

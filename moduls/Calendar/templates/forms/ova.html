@@ -1,36 +1,39 @@
 <form>
     <div class="input">
-        <label>{_.name}</label> <input type="text" name="name" placeholder="{_.name}">
+        <label>{_.name}</label> <input type="text" name="name" placeholder="{_.name}" value="{name}">
     </div>
     <div class="input">
-        <label>{_.anime.anidbId}</label> <input value="153" min="1" type="number" name="anidbId" placeholder="{_.anime.anidbId}">
-    </div>
-    <div class="input">
-        <label>{_.anime.episode}</label> <input value="153" min="1" type="number" name="episode" placeholder="{_.anime.episode}">
+        <label>{_.anime.anidbId}</label> <input value="{aid}" min="1" type="number" name="aid" placeholder="{_.anime.anidbId}">
     </div>
 
-    <div class="whisper">
-        <div class="tip">
-            <div>
-                <h3><span class="name">S1 Blablabla</span> (e<span class="aid">4172</span>)</h3>
-            </div>
-            <a href="http://anidb.net/a4172" target="_blank" title="Nishi no Yoki Majo: Astraea Testament na AniDB">AniDB</a>
-        </div>
-        <div class="tip">
-            <div>
-                <h3><span class="name">S2 Blablabla</span> (e<span class="aid">4172</span>)</h3>
-            </div>
-            <a href="http://anidb.net/a6747" target="_blank" title="Baka to Test to Shoukanjuu na AniDB">AniDB</a>
-        </div>
+    <div class="whisper animeWhisper">
+        {>"calendar.helpers.animeWhisper"/}
     </div>
 
     <div class="input">
-        <label>{_.anime.nyaaQuery}</label> <input type="text" name="nyaaQuery" placeholder="{_.anime.nyaaQuery}">
+        <label>{_.anime.episode}</label> <input value="{eid}" min="1" type="number" name="eid" placeholder="{_.anime.episode}">
     </div>
+
+    <div class="whisper ovaWhisper">
+        {>"calendar.helpers.ovaWhisper"/}
+    </div>
+
+    <div class="input">
+        <label>{_.anime.nyaaQuery}</label> <input type="text" name="nyaa" placeholder="{_.anime.nyaaQuery}" value="{nyaa}">
+    </div>
+
+    <div class="input">
+        <label>{_.releaseDate}</label> <input type="date" name="date" value="{dateForm}"> <span class="optional">({_.optional})</span>
+    </div>
+
     <h3>{_.notifications}</h3>
     <div class="checkbox">
-        <label><input type="checkbox" name="releaseDate"> {_.releaseDate}</label>
-        <label><input type="checkbox" name="releaseFile"> {_.releaseFile}</label>
+        <label><input type="checkbox" name="releaseDate"{?notifyDate} checked="checked"{/notifyDate}> {_.releaseDate}</label>
+        <label><input type="checkbox" name="releaseFile"{?notifyFile} checked="checked"{/notifyFile}> {_.releaseFile}</label>
     </div>
+    {?name}
+    <input type="submit" name="edit" value="{_.edit}">
+    {:else}
     <input type="submit" name="add" value="{_.add}">
+    {/name}
 </form>

@@ -1,0 +1,19 @@
+{@eq key=shows.length value=0 type=number}
+<a title="{_.add}" href="#" class="add">
+    <i class="fa fa-plus"></i>
+</a>
+{:else}
+<ul class="shows">
+    {#shows}
+    <li id="s{.id}" {?.released}class="released"{/.released}>
+        <div class="info">
+            <h2>{.name}</h2>
+        </div>
+        <div class="tools">
+            {?.date}<span class="date">{.date}</span>{:else}<span class="date unknown">{_.unknow}</span>{/.date} /
+            {?.released}<a href="#" title="{_.setWatched}" class="watched" date="{.dateForm}"><i class="fa fa-eye"></i></a> / {/.released}<a href="#" title="{_.edit}" class="edit"><i class="fa fa-pencil"></i></a> / <a href="#" title="{_.remove}" class="delete"><i class="fa fa-trash-o"></i></a> 
+        </div>
+    </li>
+    {/shows}
+</ul>
+{/eq}

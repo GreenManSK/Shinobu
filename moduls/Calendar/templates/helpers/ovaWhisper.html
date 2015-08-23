@@ -1,0 +1,9 @@
+{#whisper}
+<div class="tip">
+    <div id="e{.id}">
+        <h3><span class="name">{.epno} {.title[0]}</span> (e<span class="eid">{.id}</span>){?dateFormated} - {.dateFormated}{/dateFormated}</h3>
+        {?.title[1]}<h4>{.title[1]}</h4>{/.title[1]}
+    </div>
+    <a href="http://anidb.net/perl-bin/animedb.pl?show=ep&amp;eid={.id}" target="_blank" title="{.title[0]}">AniDB</a>
+</div>
+{/whisper}

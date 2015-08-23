@@ -10,7 +10,8 @@ util.inherits(Default, _AbstractPresenter);
 Default.prototype.actionDefault = function (query, cb) {
     cb(false, {
         music: this.context.getService('musicModel').getAll(),
-        shows: this.context.getService('showModel').getAll()
+        shows: this.context.getService('showModel').getAll(),
+        ova: this.context.getService('ovaModel').getAll()
     });
 };
 
@@ -59,6 +60,7 @@ Default.prototype.doDeletetMusic = function (query, cb) {
 };
 
 Default.prototype.doRefreshMusic = function (query, cb) {
+
     var self = this;
     this.context.getService('musicModel').dataRefresh(function (err) {
         if (err) {
@@ -133,6 +135,66 @@ Default.prototype.doRefreshShows = function (query, cb) {
             self.doGetAllShows(null, cb);
         }
     });
+};
+
+/* OVA */
+
+Default.prototype.doGetAllOva = function (query, cb) {
+    cb(false, {
+        ova: this.context.getService('ovaModel').getAll()
+    });
+};
+
+Default.prototype.doGetOva = function (query, cb) {
+    cb(false, util._extend({}, this.context.getService('ovaModel').get(query.id)));
+};
+
+Default.prototype.doAddOva = function (query, cb) {
+    var self = this;
+    this.context.getService('ovaModel').add(query.name, query.aid, query.eid, query.nyaa, query.date, query.notifyDate, query.notifyFile, function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllOva(null, cb);
+        }
+    });
+};
+
+Default.prototype.doEditOva = function (query, cb) {
+    var self = this;
+    this.context.getService('ovaModel').edit(query.id, query.name, query.aid, query.eid, query.nyaa, query.date, query.notifyDate, query.notifyFile, function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllOva(null, cb);
+        }
+    });
+};
+
+Default.prototype.doDeletetOva = function (query, cb) {
+    this.context.getService('ovaModel').delete(query.id);
+    this.doGetAllOva(null, cb);
+};
+
+Default.prototype.doRefreshOva = function (query, cb) {
+    var self = this;
+    this.context.getService('ovaModel').dataRefresh(function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllOva(null, cb);
+        }
+    });
+};
+
+Default.prototype.doOvaSearch = function (query, cb) {
+    this.context.getService('aniDb').getAnimeData(query.id, cb);
+};
+
+/* Anime */
+
+Default.prototype.doAnimeSearch = function (query, cb) {
+    cb(false, this.context.getService('aniDb').search(query.search));
 };
 
 module.exports = Default;

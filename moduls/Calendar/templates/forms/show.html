@@ -1,0 +1,22 @@
+<form>
+    <div class="input">
+        <label>{_.name}</label> <input type="text" name="name" placeholder="{_.name}" value="{name}">
+    </div>
+    <div class="input">
+        <label>{_.shows.nextEpisodeUrl}</label> <input type="text" name="nextEpisodeUrl" value="{link}" placeholder="{_.shows.nextEpisodeUrl}">
+    </div>
+
+    <div class="whisper">
+        {>"calendar.helpers.showWhisper"/}
+    </div>
+
+    <h3>{_.notifications}</h3>
+    <div class="checkbox">
+        <label><input type="checkbox" name="releaseDate"{?notify} checked="checked"{/notify}> {_.releaseDate}</label>
+    </div>
+    {?name}
+    <input type="submit" name="edit" value="{_.edit}">
+    {:else}
+    <input type="submit" name="add" value="{_.add}">
+    {/name}
+</form>
