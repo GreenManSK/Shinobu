@@ -174,6 +174,9 @@ ShowModel.prototype.dataRefresh = function (cb) {
             }
         }.bind(this.shows[i]));
     }
+    
+    if (this.shows.length === 0)
+        cb(false);
 };
 
 ShowModel.prototype.watch = function (id, date, cb) {

@@ -154,11 +154,15 @@ MusicModel.prototype.dataRefresh = function (cb) {
             m.title = album.title;
             m.date = album.date;
             c += 1;
+
             if (c === need.length) {
                 cb(false);
             }
         }.bind(need[i]));
     }
+    
+    if (need.length === 0)
+        cb(false);
 };
 
 module.exports = MusicModel;
