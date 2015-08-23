@@ -1,8 +1,9 @@
 var urlModule = require('url');
 var cheerio = require('cheerio');
 var fs = require('fs');
+var zlib = require('zlib');
+var moment = require('moment');
 var http = require('http');
-var gunzip = require('zlib').createGunzip();
 
 function AniDB(config, context) {
     if (!(this instanceof AniDB))
@@ -21,7 +22,7 @@ function AniDB(config, context) {
 
 AniDB.prototype.version = 1;
 
-AniDB.prototype.animetitlesLink = 'http://localhost/animetitles.xml.gz';//'http://anidb.net/api/animetitles.xml.gz';
+AniDB.prototype.animetitlesLink = 'http://anidb.net/api/animetitles.xml.gz';
 
 AniDB.prototype.httpApi = 'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
 
@@ -104,7 +105,7 @@ AniDB.prototype.parseTitles = function (cb) {
 
             self.animes = animes;
             self.saveAnimes();
-            cb(true);
+            cb(false);
         });
     });
 
@@ -133,8 +134,15 @@ AniDB.prototype.search = function (name) {
 };
 
 AniDB.prototype.getAnimeData = function (aid, cb) {
+    if (!this.configured) {
+        cb('You need to properly configure Calendar\'s AniDB.');
+        return;
+    }
+
     var self = this;
 
+    var gunzip = zlib.createGunzip();
+    
     var req = http.request(
             urlModule.parse(this.httpApi
                     .replace(/%httpClient/g, this.httpClient)
@@ -188,6 +196,7 @@ AniDB.prototype.getAnimeData = function (aid, cb) {
 
                                 if (ep.airdate === null && line.match(/^<airdate/i) !== null) {
                                     ep.airdate = new Date(line.match(/>(.*?)</)[1]);
+                                    ep.dateFormated = moment(ep.airdate).format('DD.MM.YYYY');
                                 } else if (ep.epno === null && line.match(/^<epno/i) !== null) {
                                     ep.epno = line.match(/>(.*?)</)[1];
                                 } else if (ep.title[0] === null && line.match(/^<title xml:lang="en">/i) !== null) {
@@ -200,6 +209,7 @@ AniDB.prototype.getAnimeData = function (aid, cb) {
                             parsedData.episodes.push(ep);
                         }
                     }
+
                     cb(false, parsedData);
                 });
             });
