@@ -86,8 +86,10 @@ LinksModel.prototype.deleteLink = function (index, cb) {
         return;
     }
 
-    delete this.links[index];
-    this.links.length = this.links.length - 1;
+    var p = this.links.indexOf(this.links[index]);
+    if (p !== -1) {
+        this.links.splice(p, 1);
+    }
 
     cb(false, null);
 };
