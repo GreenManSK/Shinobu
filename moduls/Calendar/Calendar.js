@@ -21,6 +21,7 @@ Calendar.prototype.updateContext = function () {
     this.getContext().addService('musicModel', 'moduls/' + this.modulName + '/libs/MusicModel');
     this.getContext().addService('showModel', 'moduls/' + this.modulName + '/libs/ShowModel');
     this.getContext().addService('ovaModel', 'moduls/' + this.modulName + '/libs/OvaModel');
+    this.getContext().addService('animeModel', 'moduls/' + this.modulName + '/libs/AnimeModel');
 };
 
 Calendar.prototype.startTasks = function () {

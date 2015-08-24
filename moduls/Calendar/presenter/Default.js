@@ -11,7 +11,8 @@ Default.prototype.actionDefault = function (query, cb) {
     cb(false, {
         music: this.context.getService('musicModel').getAll(),
         shows: this.context.getService('showModel').getAll(),
-        ova: this.context.getService('ovaModel').getAll()
+        ova: this.context.getService('ovaModel').getAll(),
+        anime: this.context.getService('animeModel').getAll()
     });
 };
 
@@ -195,6 +196,65 @@ Default.prototype.doOvaSearch = function (query, cb) {
 
 Default.prototype.doAnimeSearch = function (query, cb) {
     cb(false, this.context.getService('aniDb').search(query.search));
+};
+
+Default.prototype.doGetAllAnime = function (query, cb) {
+    cb(false, {
+        anime: this.context.getService('animeModel').getAll()
+    });
+};
+
+Default.prototype.doGetAnime = function (query, cb) {
+    cb(false, util._extend({}, this.context.getService('animeModel').get(query.id)));
+};
+
+Default.prototype.doAddAnime = function (query, cb) {
+    var self = this;
+    this.context.getService('animeModel').add(query.name, query.aid, query.nyaa, query.notifyDate, query.notifyFile, function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllAnime(null, cb);
+        }
+    });
+};
+
+Default.prototype.doEditAnime = function (query, cb) {
+    var self = this;
+    this.context.getService('animeModel').edit(query.id, query.name, query.aid, query.nyaa, query.notifyDate, query.notifyFile, function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllAnime(null, cb);
+        }
+    });
+};
+
+Default.prototype.doDeletetAnime = function (query, cb) {
+    this.context.getService('animeModel').delete(query.id);
+    this.doGetAllAnime(null, cb);
+};
+
+Default.prototype.doWatchAnime = function (query, cb) {
+    var self = this;
+    this.context.getService('animeModel').watch(query.id, query.date, function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllAnime(null, cb);
+        }
+    });
+};
+
+Default.prototype.doRefreshAnime = function (query, cb) {
+    var self = this;
+    this.context.getService('animeModel').dataRefresh(function (err) {
+        if (err) {
+            cb(err);
+        } else {
+            self.doGetAllAnime(null, cb);
+        }
+    });
 };
 
 module.exports = Default;

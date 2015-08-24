@@ -8,7 +8,7 @@ function ftu(str) {
     });
 }
 
-var types = ['music', 'show', 'ova'];
+var types = ['music', 'show', 'ova', 'anime'];
 
 for (var i in types) {
     var t = types[i];
