@@ -12,11 +12,11 @@ var Scheduler = function (config, context) {
     this.tasks = {};
     this.persistent = {};
     this.delay = {};
+    
+    this.loadPersistent();
 };
 
 Scheduler.prototype.start = function () {
-    this.loadPersistent();
-
     this.context.getService("saver").add([this, this.savePersistent]);
 
     setTimeout(this.do.bind(this), this.refreshRate);
@@ -57,6 +57,7 @@ Scheduler.prototype.every = function (name, fn, persistent, s, m, h, d) {
     if (!d)
         d = 0;
     var next = 1000 * (s + 60 * (m + 60 * (h + 24 * d)));
+
     this.add(name, fn, Date.now(), next, true, persistent);
 };
 
@@ -70,6 +71,7 @@ Scheduler.prototype.add = function (name, fn, last, next, repeat, persistent) {
     };
 
     if (task.persistent) {
+
         if (typeof this.persistent[name] !== 'undefined') {
             task.last = this.persistent[name];
         } else {
