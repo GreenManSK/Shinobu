@@ -43,14 +43,14 @@ _AbstractModel.prototype.getNextId = function () {
     return id + 1;
 };
 
-_AbstractModel.prototype.getAll = function (fnc) {
+_AbstractModel.prototype.getAll = function (fnc, fnc2) {
     var data = [];
 
     var now = new Date();
 
     for (var i in this.data) {
         var o = util._extend({}, this.data[i]);
-
+        
         if (typeof fnc === "function") {
             o = fnc(o);
         }
@@ -65,10 +65,18 @@ _AbstractModel.prototype.getAll = function (fnc) {
                 for (var j in o.dates) {
                     var _o = util._extend({}, o);
 
-                    _o.dateObject = new Date(o.dates[j]);
+                    _o.dateObject = new Date(o.dates[j][0]);
                     _o.released = now >= _o.dateObject;
-                    _o.dateForm = moment(o.dates[j]).format('YYYY-MM-DD');
-                    _o.date = moment(o.dates[j]).format('DD.MM.YYYY');
+                    _o.dateForm = moment(_o.dateObject).format('YYYY-MM-DD');
+                    _o.date = moment(_o.dateObject).format('DD.MM.YYYY');
+                    if (_o.name) {
+                        _o.name += ' ' + o.dates[j][1];
+                    }
+                    _o.epno = o.dates[j][1];
+
+                    if (typeof fnc2 === "function") {
+                        _o = fnc2(_o);
+                    }
 
                     data.push(_o);
                 }

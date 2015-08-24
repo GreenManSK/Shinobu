@@ -11,6 +11,27 @@ function AnimeModel(config, context) {
 }
 util.inherits(AnimeModel, _AbstractModel);
 
+AnimeModel.prototype.maxDates = 2;
+
+AnimeModel.prototype.getAll = function () {
+    var self = this;
+    return _AbstractModel.prototype.getAll.call(this, null, function (o) {
+        o.nyaa = o.nyaa.replace(/%e([+-]\d+)?/g, function ($1, m) {
+            var c = 0;
+            if (m !== undefined) {
+                c = parseInt(m);
+            }
+            return parseInt(o.epno) + c;
+        });
+        o.nyaaUrl = self.nyaaEncode(o.nyaa);
+        return o;
+    });
+};
+
+AnimeModel.prototype.nyaaEncode = function (str) {
+    return encodeURIComponent(str).replace(/%20/, '+');
+};
+
 AnimeModel.prototype.add = function (name, aid, nyaa, notifyDate, notifyFile, cb) {
     _AbstractModel.prototype.add.call(this, {
         name: name,
@@ -32,26 +53,26 @@ AnimeModel.prototype.edit = function (id, name, aid, nyaa, notifyDate, notifyFil
 };
 
 AnimeModel.prototype.getItemData = function (o, cb) {
-    if (o.aid && o.dates.length < 2) {
+    if (o.aid && o.dates.length < this.maxDates) {
         var maxDate = new Date();
         if (o.dates.length && o.dates.length > 0) {
             var now = maxDate;
             for (var i in o.dates) {
-                var d = new Date(o.dates[i]);
+                var d = new Date(o.dates[i][0]);
                 if (now < d) {
                     maxDate = d;
                 }
             }
         }
-
+        var self = this;
         this.context.getService('aniDb').getAnimeData(o.aid, function (err, data) {
             if (err) {
                 cb(err);
             } else {
                 for (var i in data.episodes) {
                     if (data.episodes[i].airdate > maxDate) {
-                        o.dates.push(data.episodes[i].airdate);
-                        if (o.dates.length >= 2)
+                        o.dates.push([data.episodes[i].airdate, data.episodes[i].epno]);
+                        if (o.dates.length >= self.maxDates)
                             break;
                     }
                 }
@@ -70,13 +91,13 @@ AnimeModel.prototype.watch = function (id, date, cb) {
     for (var i in this.data) {
         if (this.data[i].id === id) {
             for (var j in this.data[i].dates) {
-                if (new Date(this.data[i].dates[j]).toDateString() === date.toDateString()) {
+                if (new Date(this.data[i].dates[j][0]).toDateString() === date.toDateString()) {
                     var p = this.data[i].dates.indexOf(this.data[i].dates[j]);
                     if (p !== -1) {
                         this.data[i].dates.splice(p, 1);
                     }
 
-                    if (this.data[i].dates.length === 0) {
+                    if (this.data[i].dates.length < this.maxDates) {
                         this.edit(id, this.data[i].name, this.data[i].link, this.data[i].notify, cb);
                     } else {
                         cb(false);

@@ -67,11 +67,30 @@ NextEpisode.prototype.madeRequest = function (path, cb) {
 NextEpisode.prototype.parse = function (source) {
     var $ = cheerio.load(source);
 
-    var date = $('#next_episode').text().match(/Date:(.*?)$/mi);
+    var text = $('#next_episode').text();
+    var date = text.match(/Date:(.*?)$/mi);
     if (date === null)
         return null;
-    return new Date(date[1]);
+
+    var season = text.match(/Season:(\d+)/);
+    var number = text.match(/Episode:(\d+)/);
+    var episode = '';
+
+    if (season[1] && number[1]) {
+        episode += 'S' + this.pad(season[1], 2) + 'E' + this.pad(number[1], 2);
+    }
+
+    return {
+        date: new Date(date[1]),
+        episode: episode
+    };
 };
+
+NextEpisode.prototype.pad = function (str, max) {
+    str = str.toString();
+    return str.length < max ? this.pad("0" + str, max) : str;
+};
+
 
 NextEpisode.prototype.parseSearch = function (source) {
     var series = [];

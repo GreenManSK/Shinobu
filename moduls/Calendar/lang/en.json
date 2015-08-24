@@ -9,7 +9,8 @@
         "searchNyaa": "Search on Nyaa.eu",
         "anidbId": "AniDB ID",
         "nyaaQuery": "Query for finding releases on Nyaa.eu",
-        "episode": "Episode ID"
+        "episode": "Episode ID",
+        "nyaaInfo": "You can use %e for episode number. Also things as %e+2 or %e-1"
     },
     "shows": {
         "title": "TV Shows",
