@@ -25,11 +25,15 @@ NextEpisode.prototype.getNext = function (name, cb) {
 
 NextEpisode.prototype.search = function (name, cb) {
     var self = this;
-    this.madeRequest(this.searchUrl.replace(/%s/g, encodeURIComponent(name)), function (err, source) {
+    this.madeRequest(this.searchUrl.replace(/%s/g, encodeURIComponent(name)), function (err, source, location) {
         if (err) {
             cb(err);
         } else {
-            cb(false, self.parseSearch(source));
+            if (location) {
+                cb(false, location.replace(/\/$/, '').replace(/^(.*)\//, ''));
+            } else {
+                cb(false, self.parseSearch(source));
+            }
         }
     });
 };
@@ -49,7 +53,7 @@ NextEpisode.prototype.madeRequest = function (path, cb) {
         });
 
         respons.on('end', function () {
-            cb(false, source);
+            cb(false, source, respons.headers.location);
         });
     });
 

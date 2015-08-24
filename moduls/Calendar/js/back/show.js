@@ -1,9 +1,13 @@
 $('body').onTyping('.show [name=name]', {
     stop: function (event, $elem) {
         socket.emitSignal(showSearch, {search: $elem.val()}, function (data) {
-            dust.render("calendar.helpers.showWhisper", {_: _, whisper: data}, function (err, html) {
-                $('.show .whisper').html(html);
-            });
+            if (typeof data === 'string') {
+                $('[name="nextEpisodeUrl"]').val(data);
+            } else {
+                dust.render("calendar.helpers.showWhisper", {_: _, whisper: data}, function (err, html) {
+                    $('.show .whisper').html(html);
+                });
+            }
         });
     },
     delay: 600
