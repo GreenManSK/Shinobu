@@ -59,12 +59,14 @@ _AbstractModel.prototype.getAll = function (fnc) {
             if (o.dates.length === 0) {
                 o.released = false;
                 o.date = '';
+                o.dateObject = new Date(o.date);
                 data.push(o);
             } else {
                 for (var j in o.dates) {
                     var _o = util._extend({}, o);
 
-                    _o.released = now >= new Date(o.dates[j]);
+                    _o.dateObject = new Date(o.dates[j]);
+                    _o.released = now >= _o.dateObject;
                     _o.dateForm = moment(o.dates[j]).format('YYYY-MM-DD');
                     _o.date = moment(o.dates[j]).format('DD.MM.YYYY');
 
@@ -72,7 +74,8 @@ _AbstractModel.prototype.getAll = function (fnc) {
                 }
             }
         } else {
-            o.released = o.date && now >= new Date(o.date);
+            o.dateObject = new Date(o.date);
+            o.released = o.date && now >= o.dateObject;
             o.dateForm = o.date ? moment(o.date).format('YYYY-MM-DD') : '';
             o.date = o.date ? moment(o.date).format('DD.MM.YYYY') : '';
             data.push(o);
@@ -80,9 +83,9 @@ _AbstractModel.prototype.getAll = function (fnc) {
     }
 
     function compare(a, b) {
-        if (a.date < b.date)
+        if (a.dateObject < b.dateObject)
             return 1;
-        if (a.date > b.date)
+        if (a.dateObject > b.dateObject)
             return -1;
         return 0;
     }
