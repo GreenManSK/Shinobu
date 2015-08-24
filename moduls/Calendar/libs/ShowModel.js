@@ -20,7 +20,6 @@ ShowModel.prototype.add = function (name, link, notify, cb) {
 };
 
 ShowModel.prototype.edit = function (id, name, link, notify, cb) {
-    console.log('test');
     _AbstractModel.prototype.edit.call(this, id, {
         name: name,
         link: link,
