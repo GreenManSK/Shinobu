@@ -176,7 +176,8 @@ _AbstractModel.prototype.dataRefresh = function (cb) {
         cb(false);
         return;
     }
-
+    
+    console.log('Refreshing data for ' + this.fileName);
     var c = 0;
     var self = this;
 
@@ -188,6 +189,7 @@ _AbstractModel.prototype.dataRefresh = function (cb) {
             }
         });
     }
+    console.log('Data for ' + this.fileName + ' were refreshed');
 };
 
 

@@ -39,6 +39,7 @@ Calendar.prototype.startTasks = function () {
     for (var i in models) {
         scheduler.every('Calendar.' + models[i][0], models[i][1].dataRefresh.bind(models[i][1]), true, d[0], d[1], d[2], d[3]);
     }
+    
 };
 
 module.exports = Calendar;
