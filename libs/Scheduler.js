@@ -98,8 +98,10 @@ Scheduler.prototype.do = function () {
         if (execute && (typeof this.executing[i] === 'undefined' || this.executing[i] === false)) {
             var self = this;
             this.executing[i] = true;
+
             task.fn(function (err) {
-                var i = this;
+                var i = this[0];
+                var task = this[1];
                 if (err === false) {
                     if (typeof self.delay[i] !== 'undefined')
                         delete self.delay[i];
@@ -120,7 +122,7 @@ Scheduler.prototype.do = function () {
                     self.delay[i].next = 2 * Math.exp(self.delay[i].x) * 1000;
                 }
                 self.executing[i] = false;
-            }.bind(i));
+            }.bind([i, task]));
         }
     }
 
