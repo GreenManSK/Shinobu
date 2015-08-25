@@ -5,7 +5,7 @@
 {:else}
 <ul class="anime">
     {#ova}
-    <li id="s{.id}" {?.released}class="released"{/.released}>
+    <li id="o{.id}" {?.released}class="released"{/.released}>
         <div class="info">
             <h2>{.name} {?.eid}<a title="aniDB.net" href="http://anidb.net/perl-bin/animedb.pl?show=ep&amp;eid={.eid}" class="badge" target="_blank">aniDB.net</a>{/.eid}</h2>
             {?.nyaa}<span><a title="{_.searchNyaa}" href="https://www.nyaa.eu/?page=search&amp;cats=0_0&amp;filter=0&amp;term={.nyaaUrl}" target="_blank">[{.nyaa}]</a></span>{/.nyaa}
