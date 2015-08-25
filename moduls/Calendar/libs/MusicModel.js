@@ -31,8 +31,9 @@ MusicModel.prototype.edit = function (id, name, vgmid, date, notify, cb) {
 
 MusicModel.prototype.getItemData = function (o, cb) {
     var self = this;
-    if (o.id) {
-        this.context.getService('vgmDb').album(o.id, function (err, album) {
+
+    if (o.vgmid) {
+        this.context.getService('vgmDb').album(o.vgmid, function (err, album) {
             if (err) {
                 cb(err);
             } else {
