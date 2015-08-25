@@ -12,7 +12,8 @@ var Scheduler = function (config, context) {
     this.tasks = {};
     this.persistent = {};
     this.delay = {};
-    
+    this.executing = {};
+
     this.loadPersistent();
 };
 
@@ -94,28 +95,32 @@ Scheduler.prototype.do = function () {
             execute = Math.round(now - task.last) >= task.next;
         }
 
-        if (execute) {
-            var r = task.fn();
-
-            if (r === false) {
-                if (typeof this.delay[i] === 'undefined')
-                    this.delay[i] = {x: 0};
-
-                this.delay[i].last = Date.now();
-                if (this.delay[i].x < 7)
-                    this.delay[i].x++;
-                this.delay[i].next = 2 * Math.exp(this.delay[i].x) * 1000;
-            } else {
-                if (typeof this.delay[i] !== 'undefined')
-                    delete this.delay[i];
-                if (task.once) {
-                    delete this.tasks[i];
+        if (execute && (typeof this.executing[i] === 'undefined' || this.executing[i] === false)) {
+            var self = this;
+            this.executing[i] = true;
+            task.fn(function (err) {
+                var i = this;
+                if (err === false) {
+                    if (typeof self.delay[i] !== 'undefined')
+                        delete self.delay[i];
+                    if (task.once) {
+                        delete self.tasks[i];
+                    } else {
+                        task.last = Date.now();
+                        if (task.persistent)
+                            self.persistent[i] = task.last;
+                    }
                 } else {
-                    task.last = Date.now();
-                    if (task.persistent)
-                        this.persistent[i] = task.last;
+                    if (typeof self.delay[i] === 'undefined')
+                        self.delay[i] = {x: 0};
+
+                    self.delay[i].last = Date.now();
+                    if (self.delay[i].x < 7)
+                        self.delay[i].x++;
+                    self.delay[i].next = 2 * Math.exp(self.delay[i].x) * 1000;
                 }
-            }
+                self.executing[i] = false;
+            }.bind(i));
         }
     }
 
