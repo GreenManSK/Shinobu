@@ -29,7 +29,7 @@ AnimeModel.prototype.getAll = function () {
 };
 
 AnimeModel.prototype.nyaaEncode = function (str) {
-    return encodeURIComponent(str).replace(/%20/, '+');
+    return this.context.getService('nyaa').encode(str);
 };
 
 AnimeModel.prototype.add = function (name, aid, nyaa, notifyDate, notifyFile, cb) {

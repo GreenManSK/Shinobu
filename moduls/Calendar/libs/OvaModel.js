@@ -19,7 +19,7 @@ OvaModel.prototype.getAll = function () {
 };
 
 OvaModel.prototype.nyaaEncode = function (str) {
-    return encodeURIComponent(str).replace(/%20/, '+');
+    return this.context.getService('nyaa').encode(str);
 };
 
 OvaModel.prototype.add = function (name, aid, eid, nyaa, date, notifyDate, notifyFile, cb) {
