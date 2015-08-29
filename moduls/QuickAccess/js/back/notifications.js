@@ -38,7 +38,7 @@ if (("Notification" in window)) {
         var not = new Notification(n.title, options);
         not.onclick = function () {
             if (n.url) {
-                var w = window.open(n.url, '_blank');
+                var w = window.open(n.url.replace('%baseUrl%', window.location.origin), '_blank');
                 w.focus();
             } else {
                 window.focus();
