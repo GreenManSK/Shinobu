@@ -1,91 +1,92 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script data-main="js/kirino/main" src="libs/require.1.0.8.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js"></script>-->
-        <link rel="stylesheet/less" type="text/css" href="less/kirino.less" />
+        <meta charset="UTF-8">
+        <title>{_kirino} | {_kirinoCalendar}</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Kirino here!</h1>
+        <h1>{_kirinoHere}</h1>
         <div class="container">
             <div class="half">
-<!--                <div class="box blue">
-                    <div class="head">
-                        <i class="icon fa fa-wheelchair-alt" aria-hidden="true"></i>
-                        <img class="icon" src="icons/kirino/16.png">
-                        <h2>Music</h2>
-                        <div class="tools">
-                            <a href="#"><i class="fa fa-imdb" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <ul>
-                        <li class="actual">
-                            <div class="content">
-                                <div class="top">
-                                    <h3 class='title'>Naruto Shippuuden 489</h3>
-                                    <a title="aniDB.net - Naruto Shippuuden" href="http://anidb.net/perl-bin/animedb.pl?show=anime&amp;aid=4880" class="badge" target="_blank">aniDB.net</a>
-                                </div>
-                                <div class="text">
-                                    <a title="Search on Nyaa.eu" href="https://www.nyaa.eu/?page=search&amp;cats=0_0&amp;filter=0&amp;term=Gintama+318+%5B720p%5D+horriblesubs" target="_blank">[Gintama 318 [720p] horriblesubs]</a>
-                                </div>
-                            </div>
-                            <div class="info">
-                                <span class="date">12. 1. 2017</span>
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="content">
-                                <div class="top">
-                                    <h3 class='title'>Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name</h3>
-                                </div>
-                                <div class="text">
-                                    <a title="Search on Nyaa.eu" href="https://www.nyaa.eu/?page=search&amp;cats=0_0&amp;filter=0&amp;term=Gintama+318+%5B720p%5D+horriblesubs" target="_blank">[Gintama 318 [720p] horriblesubs]</a>
-                                </div>
-                            </div>
-                            <div class="info">
-                                <span class="date unknown">Unknown</span>
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="content">
-                                <div class="top">
-                                    <h3 class='title'>Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name</h3>
-                                    <a title="aniDB.net - Naruto Shippuuden" href="http://anidb.net/perl-bin/animedb.pl?show=anime&amp;aid=4880" class="badge" target="_blank">aniDB.net</a>
-                                </div>
-                                <div class="text">
-                                    Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name
-                                </div>
-                            </div>
-                            <div class="info">
-                                <span class="date unknown">Unknown</span>
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="content">
-                                <div class="top">
-                                    <h3 class='title'>Naruto Shippuuden 489</h3>
-                                </div>
-                                <div class="text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec turpis dignissim, venenatis odio nec, imperdiet quam. Cras venenatis finibus neque et ullamcorper. Phasellus sit.
-                                </div>
-                            </div>
-                            <div class="info">
-                                <span class="date unknown">Unknown</span>
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
-                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>-->
+                <!--                <div class="box blue">
+                                    <div class="head">
+                                        <i class="icon fa fa-wheelchair-alt" aria-hidden="true"></i>
+                                        <img class="icon" src="icons/kirino/16.png">
+                                        <h2>Music</h2>
+                                        <div class="tools">
+                                            <a href="#"><i class="fa fa-imdb" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li class="actual">
+                                            <div class="content">
+                                                <div class="top">
+                                                    <h3 class='title'>Naruto Shippuuden 489</h3>
+                                                    <a title="aniDB.net - Naruto Shippuuden" href="http://anidb.net/perl-bin/animedb.pl?show=anime&amp;aid=4880" class="badge" target="_blank">aniDB.net</a>
+                                                </div>
+                                                <div class="text">
+                                                    <a title="Search on Nyaa.eu" href="https://www.nyaa.eu/?page=search&amp;cats=0_0&amp;filter=0&amp;term=Gintama+318+%5B720p%5D+horriblesubs" target="_blank">[Gintama 318 [720p] horriblesubs]</a>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <span class="date">12. 1. 2017</span>
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="content">
+                                                <div class="top">
+                                                    <h3 class='title'>Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name</h3>
+                                                </div>
+                                                <div class="text">
+                                                    <a title="Search on Nyaa.eu" href="https://www.nyaa.eu/?page=search&amp;cats=0_0&amp;filter=0&amp;term=Gintama+318+%5B720p%5D+horriblesubs" target="_blank">[Gintama 318 [720p] horriblesubs]</a>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <span class="date unknown">Unknown</span>
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="content">
+                                                <div class="top">
+                                                    <h3 class='title'>Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name</h3>
+                                                    <a title="aniDB.net - Naruto Shippuuden" href="http://anidb.net/perl-bin/animedb.pl?show=anime&amp;aid=4880" class="badge" target="_blank">aniDB.net</a>
+                                                </div>
+                                                <div class="text">
+                                                    Hizamazuke Butadomo ga / Le●i (CV. Hiroshi Kamiya) from No Name
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <span class="date unknown">Unknown</span>
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="content">
+                                                <div class="top">
+                                                    <h3 class='title'>Naruto Shippuuden 489</h3>
+                                                </div>
+                                                <div class="text">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec turpis dignissim, venenatis odio nec, imperdiet quam. Cras venenatis finibus neque et ullamcorper. Phasellus sit.
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <span class="date unknown">Unknown</span>
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a> /
+                                                <a href="#" title="Wached" class="watched" date="2"><i class="fa fa-eye"></i></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>-->
             </div>
             <div class="half">
             </div>
@@ -113,5 +114,8 @@
                 </ul>
             </div>
         </div>
+
+        <script data-main="js/kirino/main" src="libs/require.1.0.8.js"></script>
+        <link rel="stylesheet/less" type="text/css" href="less/kirino.less" />
     </body>
 </html>

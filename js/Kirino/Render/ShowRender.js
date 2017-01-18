@@ -11,7 +11,7 @@ define(function (require) {
 
         editBox($box) {
             super.editBox($box);
-            $box.find("h2").text("TV Shows");
+            $box.find("h2").text(_("showsTitle"));
         }
         
         updateOther($elementTag, element) {

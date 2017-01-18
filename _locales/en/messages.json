@@ -1,0 +1,36 @@
+{
+    "extName": {
+        "message": "Shinobu",
+        "description": "Extension name."
+    },
+    "extDescription": {
+        "message": "Shinobu is extension for notifications about release of anime, tv shows and japanese music.",
+        "description": "Extension description."
+    },
+    "kirino": {
+        "message": "Kirino",
+        "description": "Name of one waifu"
+    },
+    "kirinoHere": {
+        "message": "Kirino here!"
+    },
+    "kirinoWelcome": {
+        "message": "こんにちは！始まるぜ！",
+        "description": "Welcome message from Kirino"
+    },
+    "kirinoCalendar": {
+        "message": "What's on air"
+    },
+    "animeTitle": {
+        "message": "Anime"
+    },
+    "showsTitle": {
+        "message": "TV Shows"
+    },
+    "musicTitle": {
+        "message": "Music"
+    },
+    "ovaTitle": {
+        "message": "OVA"
+    }
+}

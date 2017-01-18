@@ -1,9 +1,10 @@
 {
     "manifest_version": 2,
 
-    "name": "Shinobu v2",
-    "description": "",
+    "name": "__MSG_extName__ v2",
+    "description": "__MSG_extDescription__",
     "version": "2.0",
+    "default_locale": "en",
 
     "icons": {
         "16": "icons/shinobu/16.png",

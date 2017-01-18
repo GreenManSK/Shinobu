@@ -11,7 +11,7 @@ define(function (require) {
 
         editBox($box) {
             super.editBox($box);
-            $box.find("h2").text("Music");
+            $box.find("h2").text(_("musicTitle"));
         }
 
         updateTitle($elementTag, element) {

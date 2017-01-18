@@ -16,9 +16,11 @@ define(function (require) {
     var md5 = require("lib/md5");
     require("lib/jquery");
 
+    require("Base/Synchronized");
+    require("Base/Translator");
+    
     var KirinoBot = require("Kirino/KirinoBot");
 
-    require("Base/Synchronized");
     require("Kirino/Types/AEpisodic");
     var Anime = require("Kirino/Types/Anime");
     var Show = require("Kirino/Types/Show");
@@ -34,14 +36,9 @@ define(function (require) {
     var AnimeRender = require("Kirino/Render/AnimeRender");
 
     // Start
-    KirinoBot.say("こんにちは！始まるぜ！");
+    KirinoBot.say(_("kirinoWelcome"));
 
     var data = require("Kirino/data");
-
-/*
- * Only one || more
- * @type Array
- */
 
     var renders = [
         [
