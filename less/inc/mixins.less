@@ -1,0 +1,78 @@
+.prepare-body() {
+    font-size:62.5%;
+    font-family: @font;
+    .zero();
+}
+
+.zero() {
+    padding: 0;
+    margin: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.clearfix() {
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+    display: inline-table; display: block;
+}
+
+.prepareUl() {
+    &, li {
+        .zero();
+        list-style: none;
+    }
+}
+
+.colorBox(@color) {
+    .head {
+        background: @color;
+    }
+    .tools {
+        a {
+            &:hover, &:focus, &:active {
+                color: @color;
+            }
+        }
+    }
+    li a {
+        color: @color;
+        &:hover, &:focus, &:active {
+            background: @color;
+        }
+    }
+    
+    li .top .badge {
+        background: darken(@color, 5%);
+        &:hover, &:focus, &:active {
+        background: @color;
+        }
+    }
+}
+
+.colorBox(@color, @name) {
+    .box.@{name} {
+        .colorBox(@color);
+    }
+}
+
+.transitions(...) {
+    transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -moz-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -webkit-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+    -o-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+}
+
+.ativateTransitions() {
+    a, button, .box li, #kirino {
+        .transitions(all @time, left 0s, top 0s, right 0s, bottom 0s);
+    }
+}

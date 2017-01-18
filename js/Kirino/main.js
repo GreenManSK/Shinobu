@@ -1,26 +1,67 @@
 //RequireJs Configuration
 requirejs.config({
-	baseUrl: 'js', // Require starts in js directory
-	paths: {
-		lib: '../libs'
-	}
+    baseUrl: 'js', // Require starts in js directory
+    paths: {
+        lib: '../libs'
+    }
 });
 
 define(function (require) {
     "use strict";
-	
-	// Requires
-	var md5 = require("lib/md5");
-	require("Base/Synchronized");
-	var Anime = require("Kirino/Types/Anime");
-	var Show = require("Kirino/Types/Show");
-	var OVA = require("Kirino/Types/OVA");
-	var Music = require("Kirino/Types/Music");
-	var Episode = require("Kirino/Types/Episode");
-	
-	// Start
-	console.log("Hello");
-	
-	var data = {};
-	data["anime"] = [];
+
+    // Requires
+    require("https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js");
+    less.env = "development";
+    less.watch();
+    var md5 = require("lib/md5");
+    require("lib/jquery");
+
+    var KirinoBot = require("Kirino/KirinoBot");
+
+    require("Base/Synchronized");
+    require("Kirino/Types/AEpisodic");
+    var Anime = require("Kirino/Types/Anime");
+    var Show = require("Kirino/Types/Show");
+    var OVA = require("Kirino/Types/OVA");
+    var Music = require("Kirino/Types/Music");
+    var Episode = require("Kirino/Types/Episode");
+
+    var BasicRender = require("Kirino/Render/BasicRender");
+    require("Kirino/Render/Icon");
+    var MusicRender = require("Kirino/Render/MusicRender");
+    var OvaRender = require("Kirino/Render/OvaRender");
+    var ShowRender = require("Kirino/Render/ShowRender");
+    var AnimeRender = require("Kirino/Render/AnimeRender");
+
+    // Start
+    KirinoBot.say("こんにちは！始まるぜ！");
+
+    var data = require("Kirino/data");
+
+/*
+ * Only one || more
+ * @type Array
+ */
+
+    var renders = [
+        [
+            new MusicRender(MusicRender.Color.BLUE, MusicRender.Column.SECOND),
+            data.music
+        ],
+        [
+            new OvaRender(OvaRender.Color.PINK, OvaRender.Column.SECOND),
+            data.ova
+        ],
+        [
+            new AnimeRender(OvaRender.Color.RED, OvaRender.Column.FIRST),
+            data.anime
+        ],
+        [
+            new ShowRender(OvaRender.Color.GREEN, ShowRender.Column.FIRST),
+            data.shows
+        ]
+    ];
+    for (var k in renders) {
+        renders[k][0].render(renders[k][1]);
+    }
 });

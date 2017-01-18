@@ -1,20 +1,25 @@
 {
     "manifest_version": 2,
-	
+
     "name": "Shinobu v2",
     "description": "",
     "version": "2.0",
-	
+
     "icons": {
         "16": "icons/shinobu/16.png",
         "48": "icons/shinobu/48.png",
         "128": "icons/shinobu/128.png"
     },
-	
+
     "browser_action": {
         "default_icon": "icons/kirino/128.png",
-        "default_popup": "base.html"
+        "default_popup": "notification.html"
     },
-	
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+
+    "permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
 }
