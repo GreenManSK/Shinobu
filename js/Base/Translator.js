@@ -1,5 +1,8 @@
 function translate(name, subs) {
     let translation = chrome.i18n.getMessage(name, subs);
+    if (!translation) {
+        console.warn("Translator: Unknown text - " + name);
+    }
     return translation ? translation : name;
 }
 
