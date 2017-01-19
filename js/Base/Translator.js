@@ -19,11 +19,11 @@ function translateHtml(html) {
 }
 
 function translateWholeDom() {
-    var html = document.getElementsByTagName('html')[0];
-    html.innerHTML = translateHtml(html.innerHTML);
+    let translate = [
+        document.getElementsByTagName('body')[0],
+        document.getElementsByTagName('title')[0]
+    ];
+    for (let k in translate) {
+        translate[k].innerHTML = translateHtml(translate[k].innerHTML);
+    }
 }
-
-// $(function () {
-//     var html = document.getElementsByTagName('html')[0];
-//     html.innerHTML = translateHtml(html.innerHTML);
-// });
