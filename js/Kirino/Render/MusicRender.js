@@ -6,8 +6,8 @@ define(function (require) {
     var Icon = require("Kirino/Render/Icon");
 
     return class MusicRender extends require("Kirino/Render/BasicRender") {
-        constructor(color, column) {
-            super(ID, color, column, new Icon(Icon.Type.ICON, ICON_NAME));
+        constructor(color, column, settings) {
+            super(ID, color, column, new Icon(Icon.Type.ICON, ICON_NAME), settings);
         }
 
         editBox($box) {

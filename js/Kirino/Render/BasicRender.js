@@ -1,6 +1,6 @@
 var NAMESPACE = "Kirino/Render";
 define(function (require) {
-    var KIRINO_SPACE = "kirino.";
+    var KIRINO_SPACE = "Kirino.";
     var Data = require("Base/Data");
 
     var BOX_TEMPLATE = "#template .box";
@@ -10,7 +10,26 @@ define(function (require) {
     var ACTUAL_ITEM_CLASS = "actual";
     var UNKNOWN_DATE_CLASS = "unknown";
 
-    return class BasicRender {
+    var colorPicker = function (item, opt, root) {
+        var html = '<ul class="color-picker">';
+        for (var c in BasicRender.Color) {
+            html += '<li class="' + BasicRender.Color[c] + '"></li>';
+        }
+        html += '</ul>';
+
+        $(html)
+            .appendTo(this)
+            .on('click', 'li', function () {
+                item.box.changeColor($(this).attr('class'));
+                root.$menu.trigger('contextmenu:hide');
+            });
+
+        this.addClass('labels').on('contextmenu:focus', function (e) {
+            // setup some awesome stuff
+        });
+    };
+
+    class BasicRender {
         static get Color() {
             return {
                 RED: "red",
@@ -36,7 +55,7 @@ define(function (require) {
             return d.getTime();
         }
 
-        constructor(elementId, color, column, icon) {
+        constructor(elementId, color, column, icon, settings) {
             this.elementId = elementId;
             this.boxColor = color;
             this.boxColumn = column;
@@ -44,6 +63,7 @@ define(function (require) {
             this._create();
             this.itemTemplate = $(ITEM_TEMPLATE);
             this.$mainElement = $("#" + this.elementId + " ul");
+            this.settings = settings;
         }
 
         _create() {
@@ -55,6 +75,21 @@ define(function (require) {
             $box.addClass(this.boxColor).attr("id", this.elementId);
             this.editBox($box);
             $(COLUMN_SELECTOR).get(this.boxColumn).append($box.get(0));
+
+            $.contextMenu.types.colorPicker = colorPicker;
+            $.contextMenu({
+                selector: '#' + this.elementId + ' .head',
+                callback: function (key, options) {
+                    // var m = "clicked: " + key;
+                    // window.console && console.log(m) || alert(m);
+                },
+                items: {
+                    colorPicker: {type: "colorPicker", customName: "", box: this},
+                    "sep1": "---------",
+                    "move": {name: _("move"), icon: "fa-arrows"},
+
+                }
+            });
         }
 
         editBox($box) {
@@ -141,6 +176,12 @@ define(function (require) {
             return '<a title="' + text + '" href="' + link + '" class="badge" target="_blank">' + text + '</a>';
         }
 
+        changeColor(color) {
+            this.boxColor = color;
+            this.$mainElement.parent('.box').removeClass(Object.values(BasicRender.Color).join(" ")).addClass(color);
+            this.settings.updateColor(this.elementId, color);
+        }
+
         static dateCompare(a, b) {
             if (a.date == null) {
                 return 1;
@@ -158,5 +199,7 @@ define(function (require) {
         get elementClass() {
             console.error(this.constructor.name + " need to implement elementClass() method.");
         }
-    };
+    }
+
+    return BasicRender;
 });

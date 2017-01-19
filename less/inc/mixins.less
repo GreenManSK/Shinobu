@@ -62,6 +62,10 @@
     .box.@{name} {
         .colorBox(@color);
     }
+
+    .context-menu-list .color-picker li.@{name} {
+        background: lighten(@color, 5%);
+    }
 }
 
 .transitions(...) {

@@ -1,6 +1,8 @@
 @import "inc/vars.less";
 @import "inc/mixins.less";
 @import "fa/include.less";
+@import "context-menu/jquery.contextMenu.min.css";
+@import "context-menu/style.less";
 
 @width: 900px;
 @space: 20px;
@@ -122,7 +124,7 @@ h1 {
         .badge {
           display: inline-block;
           font-weight: 600;
-          border-radius: @boxRadius;
+          border-radius: (@boxRadius - 1px);
           padding: 0 @boxRadius;
           color: @boxBg;
         }

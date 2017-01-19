@@ -15,8 +15,10 @@ define(function (require) {
     less.watch();
     var md5 = require("lib/md5");
     require(["lib/jquery"], function () {
-        $(function () {
-            start();
+        require(["lib/ui.position.min", "lib/contextMenu.min"], function() {
+            $(function () {
+                start();
+            });
         });
     });
 
@@ -40,7 +42,9 @@ define(function (require) {
     var MusicRender = require("Kirino/Render/MusicRender");
     var OvaRender = require("Kirino/Render/OvaRender");
     var ShowRender = require("Kirino/Render/ShowRender");
-    var AnimeRender = require("Kirino/Render/AnimeRender");
+    var AnimeRender = require("Kirino/Render/AnimeRender")
+
+    var KirinoSettings = require("Kirino/Settings");
 
     // Start
     KirinoBot.say(_("kirinoWelcome"));
@@ -52,15 +56,6 @@ define(function (require) {
 
     function start() {
         translateWholeDom();
-
-        var renders = [
-            new MusicRender(MusicRender.Color.BLUE, MusicRender.Column.SECOND),
-            new OvaRender(OvaRender.Color.PINK, OvaRender.Column.SECOND),
-            new AnimeRender(OvaRender.Color.RED, OvaRender.Column.FIRST),
-            new ShowRender(OvaRender.Color.GREEN, ShowRender.Column.FIRST)
-        ];
-        for (var k in renders) {
-            renders[k].render();
-        }
+        KirinoSettings.start();
     }
 });

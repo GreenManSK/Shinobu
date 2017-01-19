@@ -6,8 +6,8 @@ define(function (require) {
     var Icon = require("Kirino/Render/Icon");
     
     return class AnimeRender extends require("Kirino/Render/EpisodicRender") {
-        constructor(color, column) {
-            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME));
+        constructor(color, column, settings) {
+            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME), settings);
         }
 
         editBox($box) {

@@ -5,9 +5,9 @@ define(function (require) {
     var ICON_NAME = "anidb.ico";
     var Icon = require("Kirino/Render/Icon");
 
-    return class MusicRender extends require("Kirino/Render/BasicRender") {
-        constructor(color, column) {
-            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME));
+    return class OvaRender extends require("Kirino/Render/BasicRender") {
+        constructor(color, column, settings) {
+            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME), settings);
         }
 
         editBox($box) {

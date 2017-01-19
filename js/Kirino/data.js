@@ -87,10 +87,10 @@ define(function (require) {
                     return Episode.create(new Anime(animeData[2]), 71, Date.now() - 500000000);
                 }).then(() => {
                     Data.storage.set({
-                        "kirino.music": musicElements,
-                        "kirino.ova": ovaData,
-                        "kirino.show": showData,
-                        "kirino.anime": animeData,
+                        "Kirino.music": musicElements,
+                        "Kirino.ova": ovaData,
+                        "Kirino.show": showData,
+                        "Kirino.anime": animeData,
                         dataInserted: true
                     }, function () {
                         cb(true);

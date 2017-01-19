@@ -1,0 +1,62 @@
+/* Context menu */
+@contextMenu-textColor: #fff;
+@contextMenu-bgColor: rgba(0, 0, 0, 0.7);
+@contextMenu-borderColor: rgba(255, 255, 255, 0.3);
+@contextMenu-fontSize: 1.5rem;
+@contextMenu-borderRadius: 5px;
+
+.context-menu-list {
+  font-size: @contextMenu-fontSize;
+  background-color: transparent;
+  border-color: @contextMenu-borderColor;
+  padding: 0;
+  border-radius: @contextMenu-borderRadius;
+}
+
+.context-menu-item {
+  background-color: @contextMenu-bgColor;
+  color: @contextMenu-textColor;
+}
+
+.context-menu-item:first-child {
+  border-radius: @contextMenu-borderRadius @contextMenu-borderRadius 0 0;
+  padding-top: 0.5rem;
+}
+
+.context-menu-item:last-child {
+  border-radius: 0 0 @contextMenu-borderRadius @contextMenu-borderRadius;
+  padding-bottom: 0.5rem;
+}
+
+.context-menu-item.context-menu-hover {
+  background-color: fade(@contextMenu-bgColor, 90%);
+}
+
+.context-menu-icon::before, .context-menu-icon.context-menu-icon--fa::before {
+  color: @contextMenu-textColor;
+}
+
+.context-menu-separator {
+  margin: 0;
+}
+
+
+/* Color picker */
+.context-menu-list .color-picker {
+  &, .li {
+    .prepareUl();
+  }
+
+  text-align: justify;
+
+  li {
+    display: inline-block;
+    clear: none;
+    background: #fff;
+    width: 2rem;
+    height: 2rem;
+    border-radius: .5em;
+    margin: 0 4px;
+    border: 1px solid @contextMenu-borderColor;
+  }
+}

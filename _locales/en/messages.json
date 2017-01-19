@@ -35,5 +35,8 @@
     },
     "unknown": {
         "message": "Unknown"
+    },
+    "move": {
+        "message": "Move"
     }
 }
