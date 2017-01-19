@@ -92,17 +92,42 @@ define(function (require) {
         }
 
         updateColor(name, color) {
+            this._update((items, cb) => {
+                items[this.settings][name]['color'] = color;
+                Data.set(items, () => {
+                    cb();
+                });
+            });
+        }
+
+        updatePlace(name, direction) {
+            this._update((items, cb) => {
+                let position = items[this.settings]['left'].indexOf(name) !== -1 ? 'left' : 'right';
+                let index = items[this.settings][position].indexOf(name);
+                if (direction == 'up' || direction == 'down') {
+                    let change = index + (direction == 'up' ? -1 : 1);
+                    if (change >= 0 && change < items[this.settings][position].length) {
+                        items[this.settings][position][index] = items[this.settings][position][change];
+                        items[this.settings][position][change] = name;
+                    }
+                } else if (position != direction) {
+                    items[this.settings][position].splice(index, 1);
+                    items[this.settings][direction].push(name);
+                }
+                Data.set(items, () => {
+                    cb();
+                });
+            });
+        }
+
+        _update(cb) {
             var THIS = this;
             this.updatePromise = this.updatePromise.then(() => {
-                return new Promise((cb) => {
+                return new Promise((promiseCb) => {
                     let get = {};
                     get[THIS.settings] = defaultSettings;
                     Data.get(get, (items) => {
-                        items[this.settings][name]['color'] = color;
-                        Data.set(items, () => {
-                            console.log(name + " " + color);
-                            cb();
-                        })
+                        cb(items, promiseCb);
                     });
                 });
             });

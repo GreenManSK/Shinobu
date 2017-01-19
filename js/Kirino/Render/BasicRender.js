@@ -23,10 +23,22 @@ define(function (require) {
                 item.box.changeColor($(this).attr('class'));
                 root.$menu.trigger('contextmenu:hide');
             });
+    };
 
-        this.addClass('labels').on('contextmenu:focus', function (e) {
-            // setup some awesome stuff
-        });
+    var placePicker = function (item, opt, root) {
+        var html = '<ul class="place-picker">';
+        html += '<li class="up"><i class="fa fa-chevron-up" aria-hidden="true"></i></li>';
+        html += '<li class="left"><i class="fa fa-chevron-left" aria-hidden="true"></i></li>';
+        html += '<li class="right"><i class="fa fa-chevron-right" aria-hidden="true"></i></li>';
+        html += '<li class="down"><i class="fa fa-chevron-down" aria-hidden="true"></i></li>';
+        html += '</ul>';
+
+        $(html)
+            .appendTo(this)
+            .on('click', 'li', function () {
+                item.box.move($(this).attr('class'));
+                root.$menu.trigger('contextmenu:hide');
+            });
     };
 
     class BasicRender {
@@ -74,19 +86,19 @@ define(function (require) {
             var $box = $(BOX_TEMPLATE).clone();
             $box.addClass(this.boxColor).attr("id", this.elementId);
             this.editBox($box);
+            this.$box = $box;
             $(COLUMN_SELECTOR).get(this.boxColumn).append($box.get(0));
 
             $.contextMenu.types.colorPicker = colorPicker;
+            $.contextMenu.types.placePicker = placePicker;
             $.contextMenu({
                 selector: '#' + this.elementId + ' .head',
                 callback: function (key, options) {
-                    // var m = "clicked: " + key;
-                    // window.console && console.log(m) || alert(m);
                 },
                 items: {
                     colorPicker: {type: "colorPicker", customName: "", box: this},
                     "sep1": "---------",
-                    "move": {name: _("move"), icon: "fa-arrows"},
+                    placePicker: {type: "placePicker", customName: "", box: this}
 
                 }
             });
@@ -178,8 +190,29 @@ define(function (require) {
 
         changeColor(color) {
             this.boxColor = color;
-            this.$mainElement.parent('.box').removeClass(Object.values(BasicRender.Color).join(" ")).addClass(color);
+            this.$box.removeClass(Object.values(BasicRender.Color).join(" ")).addClass(color);
             this.settings.updateColor(this.elementId, color);
+        }
+
+        move(direction) {
+            if (direction === 'left' && this.boxColumn != BasicRender.Column.FIRST) {
+                this.boxColumn = BasicRender.Column.FIRST;
+                $(COLUMN_SELECTOR).get(BasicRender.Column.FIRST).append(this.$box.get(0));
+            } else if (direction === 'right' && this.boxColumn != BasicRender.Column.SECOND) {
+                this.boxColumn = BasicRender.Column.SECOND;
+                $(COLUMN_SELECTOR).get(BasicRender.Column.SECOND).append(this.$box.get(0));
+            } else if (direction === 'up') {
+                var $prev = this.$box.prev();
+                if ($prev.length) {
+                    $prev.insertAfter(this.$box);
+                }
+            } else if (direction === 'down') {
+                var $next = this.$box.next();
+                if ($next.length) {
+                    $next.insertBefore(this.$box);
+                }
+            }
+            this.settings.updatePlace(this.elementId, direction);
         }
 
         static dateCompare(a, b) {

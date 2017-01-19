@@ -40,14 +40,11 @@
   margin: 0;
 }
 
-
 /* Color picker */
 .context-menu-list .color-picker {
   &, .li {
     .prepareUl();
   }
-
-  text-align: justify;
 
   li {
     display: inline-block;
@@ -58,5 +55,28 @@
     border-radius: .5em;
     margin: 0 4px;
     border: 1px solid @contextMenu-borderColor;
+  }
+}
+
+/* Place picker */
+.context-menu-list .place-picker {
+  &, .li {
+    .prepareUl();
+  }
+  width: 50px;
+  margin: 0 auto !important;
+  li {
+    display: block;
+  }
+  li.up, li.down {
+    margin: 4px auto;
+    text-align: center;
+    clear: both;
+  }
+  li.left {
+    float: left;
+  }
+  li.right {
+    float: right;
   }
 }
