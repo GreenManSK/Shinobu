@@ -1,42 +1,36 @@
-//namespace Kirino/Types
+var NAMESPACE = "Kirino/Types";
 define(function (require) {
-    var md5 = require("lib/md5");
-    var TYPE = "music-";
     return class Music extends require("Base/Synchronized") {
-        constructor(show, type) {
-            super();
-            this.show = show;
-            this.type = type;
-
-            this.title = null;
-            this.autor = null;
-            this.date = null;
-
-            this.anisonId = null;
-            this.vgmdbId = null;
-
-            this._searchText = null;
-
-            this.lastDateRefreh = 0;
-            this.lastSearchRefreh = 0;
+        static create(show,
+                      type,
+                      title = null,
+                      author = null,
+                      date = null,
+                      anisonId = null,
+                      vgmdbId = null,
+                      searchText = null,
+                      lastDateRefresh = null,
+                      lastSearchRefresh = null) {
+            return super.create().then((obj) => {
+                    return obj.set({
+                            show: show,
+                            type: type,
+                            title: title,
+                            author: author,
+                            date: date,
+                            anisonId: anisonId,
+                            vgmdbId: vgmdbId,
+                            searchText: searchText,
+                            lastDateRefresh: lastDateRefresh,
+                            lastSearchRefresh: lastSearchRefresh
+                        }
+                    );
+                }
+            );
         }
 
-        get searchText() {
-            return this._searchText;
+        static attributes() {
+            return ["show", "type", "title", "author", "date", "anisonId", "vgmdbId", "searchText", "lastDateRefresh", "lastSearchRefresh"];
         }
-        set searchText(searchText) {
-            this._searchText = true ? searchText : null;
-        }
-
-        get id() {
-            return TYPE + md5(this.show) + md5(this.type);
-        }
-        get dataHash() {
-            return md5(this.anisonId) + md5(this.vgmdbId) +
-                    md5(this.title) +
-                    md5(this.autor) +
-                    md5(this.date) +
-                    md5(this._searchText);
-        }
-    }
+    };
 });

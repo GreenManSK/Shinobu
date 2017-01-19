@@ -1,5 +1,8 @@
-//namespace Kirino/Render
+var NAMESPACE = "Kirino/Render";
 define(function (require) {
+    var KIRINO_SPACE = "kirino.";
+    var Data = require("Base/Data");
+
     var BOX_TEMPLATE = "#template .box";
     var ITEM_TEMPLATE = "#template .box li";
     var COLUMN_SELECTOR = ".half";
@@ -45,9 +48,9 @@ define(function (require) {
 
         _create() {
             console.log("Creating #" + this.elementId + "[" +
-                    this.boxColor + ", " +
-                    this.boxColumn +
-                    "]...");
+                this.boxColor + ", " +
+                this.boxColumn +
+                "]...");
             var $box = $(BOX_TEMPLATE).clone();
             $box.addClass(this.boxColor).attr("id", this.elementId);
             this.editBox($box);
@@ -59,10 +62,23 @@ define(function (require) {
             $box.find(".head").prepend(this.icon.html);
         }
 
-        render(elements) {
-            this.$mainElement.empty();
-            elements = elements.sort(BasicRender.dateCompare);
-            for (var key in elements) {
+        render() {
+            var THIS = this;
+            var STORAGE_PLACE = KIRINO_SPACE + this.elementId;
+            this.$mainElement.empty(); //@TODO: Add nice loading shit
+            Data.get(STORAGE_PLACE, function (ids) {
+                if (ids[STORAGE_PLACE] && ids[STORAGE_PLACE].length > 0) {
+                    THIS.elementClass.getAll(ids[STORAGE_PLACE]).then((elements) => {
+                        elements = Object.values(elements);
+                        THIS._render(elements);
+                    });
+                }
+            });
+        }
+
+        _render(elements) {
+            elements.sort(BasicRender.dateCompare);
+            for (let key in elements) {
                 this.renderOne(elements[key]);
             }
         }
@@ -70,10 +86,10 @@ define(function (require) {
         renderOne(element) {
             var selector = this.elementSelector(element);
 
-            var elementTag = this.$mainElement.find(selector).get(0);
+            var elementTag = this.$mainElement.find("#" + selector).get(0);
             if (!elementTag) {
                 this.createElement(element);
-                elementTag = this.$mainElement.find(selector).get(0);
+                elementTag = this.$mainElement.find("#" + selector).get(0);
             }
             var $elementTag = $(elementTag);
             this.updateTitle($elementTag, element);
@@ -84,12 +100,12 @@ define(function (require) {
         }
 
         elementSelector(element) {
-            return "li.e" + element.id;
+            return "e" + element.id.replace(/#/g, "-");
         }
 
         createElement(element) {
             var $item = this.itemTemplate.clone();
-            $item.addClass("e" + element.id);
+            $item.attr('id', this.elementSelector(element));
             this.$mainElement.append($item.get(0));
         }
 
@@ -106,7 +122,7 @@ define(function (require) {
             if (element.date && element.date <= BasicRender.TODAY) {
                 $elementTag.addClass(ACTUAL_ITEM_CLASS);
             }
-            $date.text(element.date ? date.toLocaleDateString() : "Unknown");
+            $date.text(element.date ? date.toLocaleDateString() : _("unknown"));
         }
 
         updateButtons($elementTag, element) {
@@ -137,6 +153,10 @@ define(function (require) {
             if (a.date > b.date)
                 return 1;
             return 0;
+        }
+
+        get elementClass() {
+            console.error(this.constructor.name + " need to implement elementClass() method.");
         }
     };
 });

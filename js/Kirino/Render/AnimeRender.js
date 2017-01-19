@@ -1,5 +1,6 @@
-//namespace Kirino/Render
+var NAMESPACE = "Kirino/Render";
 define(function (require) {
+    var Anime = require("Kirino/Types/Anime");
     var ID = "anime";
     var ICON_NAME = "anidb.ico";
     var Icon = require("Kirino/Render/Icon");
@@ -30,5 +31,9 @@ define(function (require) {
         
         static get ID() {return ID;}
         static get ICON() {return ICON;}
+
+        get elementClass() {
+            return Anime;
+        }
     };
 });

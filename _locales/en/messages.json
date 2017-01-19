@@ -32,5 +32,8 @@
     },
     "ovaTitle": {
         "message": "OVA"
+    },
+    "unknown": {
+        "message": "Unknown"
     }
 }

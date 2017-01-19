@@ -1,4 +1,5 @@
 define(function (require) {
+    var Data = require("Base/Data");
     var Anime = require("Kirino/Types/Anime");
     var Show = require("Kirino/Types/Show");
     var OVA = require("Kirino/Types/OVA");
@@ -12,97 +13,90 @@ define(function (require) {
         }
     }
 
-    var data = {
-        music: [],
-        ova: [],
-        shows: [],
-        anime: []
-    };
+    return new Promise((cb) => {
+        Data.storage.get(["dataInserted"], function (items) {
+            if (items["dataInserted"]) {
+                cb(false);
+            } else {
+                var musicElements = [];
+                var ovaData = [];
+                var showData = [];
+                var animeData = [];
 
-    //Music
-    {
-        var musicElements = [
-            new Music("Fuuka", "END"), //4
-            new Music("Fuuka", "OP"), //1
-            new Music("Bungou Stray Dogs", "OST"), //3
-            new Music("Test", "Test") //2
-        ];
-
-        musicElements[0].title = "Watashi no Sekai";
-        musicElements[0].author = "Nakajima Megumi";
-        musicElements[0].anisonId = 12345;
-        musicElements[0].vgmdbId = 6453;
-        musicElements[3].searchText = "Nyaa Nyaa Nyaa";
-        musicElements[3].date = Date.parse("March 25, 2012");
-        musicElements[1].date = Date.parse("March 21, 2012");
-        musicElements[2].date = Date.parse("March 21, 2018");
-        shuffle(musicElements);
-
-        data.music = musicElements;
-    }
-    
-    //OVA
-    {
-        var ovaData = [
-            new OVA("Code Geass: Boukoku no Akito"),
-            new OVA("Volume 1 - 1 - Gintama (2016) - Episode - AniDB"),
-            new OVA("Cold-Blooded Arc - 3 - Kizumonogatari ")
-        ];
-        
-        ovaData[0].anidbEpisodeId = 12345;
-        ovaData[0].date = Date.parse("March 25, 2012");
-        ovaData[0].searchText = "yolo 23";
-        
-        ovaData[1].anidbEpisodeId = 1234455;
-        ovaData[1].date = Date.parse("March 25, 2018");
-        
-        shuffle(ovaData);
-        data.ova = ovaData;
-    }
-    
-    //Show
-    {
-        var showData = [
-            new Show("bravest-warriors", "Bravest Warriors"),
-            new Show("adventure-time", "Adventure Time"),
-            new Show("star-vs.-the-forces-of-evil", "Star vs. the Forces of Evil")
-        ];
-        
-        new Episode(showData[0], 3001, Date.now());
-        new Episode(showData[0], 3002, Date.now()+500000000);
-        new Episode(showData[2], 8002, Date.now()+60000000);
-        new Episode(showData[2], 8003, Date.now()+70000000);
-        new Episode(showData[2], 7001, Date.now()-500000000);
-        
-        shuffle(showData);
-        data.shows = showData;
-    }
-    
-    //Anime
-    {
-        var animeData = [
-            new Anime(123456, "Naruto Shippuuden"),
-            new Anime(123457, "One Room"),
-            new Anime(123458, "Gintama (2017)"),
-            new Anime(123459, "3-gatsu no Lion")
-        ];
-        new Episode(animeData[0], 301, Date.now());
-        new Episode(animeData[0], 302, Date.now()+500000000);
-        new Episode(animeData[0], 303, Date.now()+50000002*3);
-        new Episode(animeData[2], 82, Date.now()+60000000);
-        new Episode(animeData[2], 83, Date.now()+70000000);
-        new Episode(animeData[2], 71, Date.now()-500000000);
-        for (var i = 1; i <= 5; i++) {
-        new Episode(animeData[3], i, Date.now()+50000000*i);
-        }
-        
-        animeData[2].searchText = "hsfa hskaf fhska sfhk a";
-        animeData[0].searchText = "Naruto Shippuuden 720p HorribleSubs";
-        animeData[1].searchText = "Naruto Shippuuden 720p HorribleSubs";
-        
-        shuffle(animeData);
-        data.anime = animeData;
-    }
-    
-    return data;
+                Music.create("Fuuka", "END", "Watashi no Sekai", "Nakajima Megumi", null, 12345, 6453).then((obj) => {
+                    musicElements.push(obj.id);
+                    return Music.create("Fuuka", "OP", null, null, Date.parse("March 21, 2012"));
+                }).then((obj) => {
+                    musicElements.push(obj.id);
+                    return Music.create("Bungou Stray Dogs", "OST", null, null, Date.parse("March 21, 2012"));
+                }).then((obj) => {
+                    musicElements.push(obj.id);
+                    return Music.create("Test", "Test", null, null, Date.parse("March 21, 2018"));
+                }).then((obj) => {
+                    musicElements.push(obj.id);
+                    return OVA.create("Code Geass: Boukoku no Akito", 12345, Date.parse("March 25, 2012"), "yolo 23")
+                }).then((obj) => {
+                    ovaData.push(obj.id);
+                    return OVA.create("Volume 1 - 1 - Gintama (2016) - Episode - AniDB", 1234455, Date.parse("March 25, 2018"), "yolo 23")
+                }).then((obj) => {
+                    ovaData.push(obj.id);
+                    return OVA.create("Cold-Blooded Arc - 3 - Kizumonogatari")
+                }).then((obj) => {
+                    ovaData.push(obj.id);
+                    return Show.create("bravest-warriors", "Bravest Warriors");
+                }).then((obj) => {
+                    showData.push(obj.id);
+                    return Show.create("adventure-time", "Adventure Time");
+                }).then((obj) => {
+                    showData.push(obj.id);
+                    return Show.create("star-vs.-the-forces-of-evil", "Star vs. the Forces of Evil");
+                }).then((obj) => {
+                    showData.push(obj.id);
+                    return Episode.create(new Show(showData[0]), 3001, Date.now());
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[0]), 3002, Date.now() + 500000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 8002, Date.now() + 60000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 8003, Date.now() + 70000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 7001, Date.now() - 500000000);
+                }).then((obj) => {
+                    return Anime.create(123456, "Naruto Shippuuden", "Naruto Shippuuden 720p HorribleSubs");
+                }).then((obj) => {
+                    animeData.push(obj.id);
+                    return Anime.create(123457, "One Room", "Naruto Shippuuden 720p HorribleSubs");
+                }).then((obj) => {
+                    animeData.push(obj.id);
+                    return Anime.create(123458, "Gintama (2017)", "hsfa hskaf fhska sfhk a");
+                }).then((obj) => {
+                    animeData.push(obj.id);
+                    return Anime.create(123459, "3-gatsu no Lion");
+                }).then((obj) => {
+                    animeData.push(obj.id);
+                    return Episode.create(new Anime(animeData[0]), 301, Date.now());
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[0]), 302, Date.now() + 500000000);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[0]), 303, Date.now() + 50000002 * 3);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[2]), 82, Date.now() + 60000000);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[2]), 83, Date.now() + 70000000);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[2]), 71, Date.now() - 500000000);
+                }).then(() => {
+                    Data.storage.set({
+                        "kirino.music": musicElements,
+                        "kirino.ova": ovaData,
+                        "kirino.show": showData,
+                        "kirino.anime": animeData,
+                        dataInserted: true
+                    }, function () {
+                        cb(true);
+                    });
+                });
+            }
+        });
+    });
 });

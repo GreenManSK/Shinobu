@@ -14,12 +14,19 @@ define(function (require) {
     less.env = "development";
     less.watch();
     var md5 = require("lib/md5");
-    require("lib/jquery");
+    require(["lib/jquery"], function () {
+        $(function () {
+            start();
+        });
+    });
 
+
+    var Data = require("Base/Data");
     require("Base/Synchronized");
     require("Base/Translator");
-    
+
     var KirinoBot = require("Kirino/KirinoBot");
+
 
     require("Kirino/Types/AEpisodic");
     var Anime = require("Kirino/Types/Anime");
@@ -38,27 +45,22 @@ define(function (require) {
     // Start
     KirinoBot.say(_("kirinoWelcome"));
 
-    var data = require("Kirino/data");
+    require("Kirino/data").then((inserted) => {
+        if (inserted)
+            KirinoBot.say("Data inserted, we can go!");
+    });
 
-    var renders = [
-        [
+    function start() {
+        translateWholeDom();
+
+        var renders = [
             new MusicRender(MusicRender.Color.BLUE, MusicRender.Column.SECOND),
-            data.music
-        ],
-        [
             new OvaRender(OvaRender.Color.PINK, OvaRender.Column.SECOND),
-            data.ova
-        ],
-        [
             new AnimeRender(OvaRender.Color.RED, OvaRender.Column.FIRST),
-            data.anime
-        ],
-        [
-            new ShowRender(OvaRender.Color.GREEN, ShowRender.Column.FIRST),
-            data.shows
-        ]
-    ];
-    for (var k in renders) {
-        renders[k][0].render(renders[k][1]);
+            new ShowRender(OvaRender.Color.GREEN, ShowRender.Column.FIRST)
+        ];
+        for (var k in renders) {
+            renders[k].render();
+        }
     }
 });

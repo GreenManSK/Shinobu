@@ -1,9 +1,10 @@
-//namespace Kirino/Render
+var NAMESPACE = "Kirino/Render";
 define(function (require) {
+    var Music = require("Kirino/Types/Music");
     var ID = "music";
     var ICON_NAME = "music";
     var Icon = require("Kirino/Render/Icon");
-    
+
     return class MusicRender extends require("Kirino/Render/BasicRender") {
         constructor(color, column) {
             super(ID, color, column, new Icon(Icon.Type.ICON, ICON_NAME));
@@ -32,7 +33,7 @@ define(function (require) {
             }
             $elementTag.find(".text").html(content);
         }
-        
+
         updateOther($elementTag, element) {
             if (element.anisonId) {
                 $elementTag.find(".top").append(this._createBadge("Anison", element.anisonId));
@@ -41,8 +42,17 @@ define(function (require) {
                 $elementTag.find(".top").append(this._createBadge("VGMdb.net", element.vgmdbId));
             }
         }
-        
-        static get ID() {return ID;}
-        static get ICON() {return ICON;}
+
+        static get ID() {
+            return ID;
+        }
+
+        static get ICON() {
+            return ICON;
+        }
+
+        get elementClass() {
+            return Music;
+        }
     };
 });

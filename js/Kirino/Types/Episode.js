@@ -1,34 +1,43 @@
-//namespace Kirino/Types
+var NAMESPACE = "Kirino/Types";
 define(function (require) {
-    var md5 = require("lib/md5");
+    var AEpisodic = require("Kirino/Types/AEpisodic");
     return class Episode extends require("Base/Synchronized") {
-        constructor(thing, number, date) {
-            super();
-            
-            this.thing = thing;
-            this.thing.episodes.push(this);
-            this.thing.lasSeenEpisode = Math.max(number, this.thing.lasSeenEpisode);
-            
-            this.number = number;
-            this.date = date;
-
-            this.lastSearchRefreh = 0;
-            this.found = false;
-            this.seen = false;
+        static create(thing,
+                      number,
+                      date,
+                      lastSearchRefresh = 0,
+                      found = false,
+                      seen = false) {
+            return super.create().then((obj) => {
+                    return obj.set({
+                            number: number,
+                            date: date,
+                            lastSearchRefresh: lastSearchRefresh,
+                            found: found,
+                            seen: seen
+                        }
+                    );
+                }
+            ).then((obj) => {
+                return obj.addThing(thing, number);
+            });
         }
 
-        get searchText() {
-            return this._searchText;
-        }
-        set searchText(searchText) {
-            this._searchText = true ? searchText : null;
+        addThing(thing, episodeNumber) {
+            return this.set({
+                "thing": thing.id
+            }).then((obj) => {
+                return thing.set({
+                    episodes: AEpisodic.arrayAdder(this.id),
+                    lastEpisode: (old) => Math.max(episodeNumber, old)
+                }).then((thingObj) => {
+                    return obj;
+                });
+            });
         }
 
-        get id() {
-            return this.thing.id + "-" + md5(this.number);
-        }
-        get dataHash() {
-            return md5(this.date) + md5(this.found);
+        static attributes() {
+            return super.attributes().concat(["number", "date", "lastSearchRefresh", "found", "seen", "thing"]);
         }
     };
 });
