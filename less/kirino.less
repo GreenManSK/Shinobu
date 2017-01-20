@@ -3,11 +3,9 @@
 @import "fa/include.less";
 @import "context-menu/jquery.contextMenu.min.css";
 @import "context-menu/style.less";
+@import "mainMenu.less";
 @import "notifications.less";
 
-@width: 900px;
-@space: 20px;
-@miniSpace: 1rem;
 @bg: #000;
 @boxBg: #fff;
 @boxRadius: 5px;
@@ -39,7 +37,7 @@ h1 {
 
 .container {
     .clearfix();
-    max-width: @width;
+    max-width: @responsiveWidth;
     margin: 0 auto;
 }
 
@@ -226,7 +224,7 @@ h1 {
 
 #kirino {
     position: fixed;
-    background: url(../img/kirino.png) no-repeat right bottom;
+    background: url(~'@{imgDir}kirino.png') no-repeat right bottom;
     background-size: 100% 100%;
     bottom: 0;
     right: 0;
@@ -253,7 +251,7 @@ h1 {
 }
 
 /* Small screen */
-@media (max-width: (@width + 2*@miniSpace - 1px)) {
+@media (max-width: (@responsiveWidth + 2*@miniSpace - 1px)) {
     body {
         padding-top: @miniSpace;
         padding-bottom: @miniSpace;
@@ -268,7 +266,7 @@ h1 {
     }
 
     #kirino {
-        background: url(../img/kirino2.png) no-repeat right bottom;
+        background: url(~'@{imgDir}kirino2.png') no-repeat right bottom;
         background-size: 100% 100%;
         position: static;
         height: auto;

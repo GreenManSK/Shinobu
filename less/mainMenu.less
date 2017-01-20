@@ -1,0 +1,80 @@
+@mainMenuBg: #000;
+@mainMenuColor: #fff;
+@mainMenuSize: 36px;
+@mainMenuIcon: 24px;
+
+#mainMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    &, .li {
+        .prepareUl();
+    }
+
+    li {
+        float: right;
+    }
+
+    a {
+        box-sizing: border-box;
+        font-size: 2rem;
+        width: @mainMenuSize;
+        height: @mainMenuSize;
+        text-align: center;
+        display: block;
+        color: @mainMenuColor;
+        text-decoration: none;
+        background: fade(@mainMenuBg, 60%);
+        @border: 1px solid fade(@mainMenuColor, 10%);
+        border: @border;
+        border-top: none;
+        border-right: none;
+        padding-top: 6px;
+        opacity: .5;
+
+        &:hover, &:active, &:focus {
+            opacity: 1;
+        }
+
+        &.icon::before {
+            content: ' ';
+            display: block;
+            width: @mainMenuIcon;
+            height: @mainMenuIcon;
+            margin: 0 auto 0;
+            background-size: cover;
+        }
+
+        &.kirino::before {
+            background-image: url(~'@{kirinoIcon}128.png');
+        }
+        &.shinobu::before {
+            background-image: url(~'@{shinobuIcon}128.png');
+        }
+    }
+}
+
+@media (max-width: (@responsiveWidth + 2*@miniSpace - 1px)) {
+    #mainMenu {
+        position: static;
+        text-align: center;
+        li, a {
+            display: inline-block;
+            float: none;
+            vertical-align: top;
+        }
+        a {
+            font-size: 5rem;
+            width: @mainMenuSize*2;
+            height: @mainMenuSize*2;
+            margin: 0 .3rem .6rem;
+
+            &.icon::before {
+                width: @mainMenuIcon*2.4;
+                height: @mainMenuIcon*2.4;
+                margin-top: 1px;
+            }
+        }
+    }
+}

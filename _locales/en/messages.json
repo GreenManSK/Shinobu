@@ -11,6 +11,10 @@
     "message": "Kirino",
     "description": "Name of one waifu"
   },
+  "shinobu": {
+    "message": "Shinobu",
+    "description": "Name of one waifu"
+  },
   "kirinoHere": {
     "message": "Kirino here!"
   },
@@ -41,5 +45,8 @@
   },
   "toggleOnlyFirst": {
     "message": "Toggle first/all"
+  },
+  "settings": {
+    "message": "Settings"
   }
 }
