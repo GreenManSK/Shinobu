@@ -5,7 +5,8 @@ define(function (require) {
             return super.create().then((obj) => {
                     return obj.set({
                             episodes: [],
-                            lastEpisode: 0
+                            lastEpisode: 0,
+                            showAll: false
                         }
                     );
                 }
@@ -17,7 +18,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return ["episodes", "lastEpisode"];
+            return ["episodes", "lastEpisode", "showAll"];
         }
     };
 });

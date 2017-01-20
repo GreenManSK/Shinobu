@@ -54,6 +54,7 @@ define(function (require) {
             KirinoBot.say("Data inserted, we can go!");
     });
 
+
     function start() {
         translateWholeDom();
         KirinoSettings.start();

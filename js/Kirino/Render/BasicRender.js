@@ -60,10 +60,10 @@ define(function (require) {
 
         static get TODAY() {
             var d = new Date();
-            d.setHours(0);
-            d.setMinutes(0);
-            d.setSeconds(0);
-            d.setMilliseconds(0);
+            d.setHours(23);
+            d.setMinutes(59);
+            d.setSeconds(59);
+            d.setMilliseconds(59);
             return d.getTime();
         }
 
@@ -148,6 +148,10 @@ define(function (require) {
 
         elementSelector(element) {
             return "e" + element.id.replace(/#/g, "-");
+        }
+
+        static elementIdFromSelector(selector) {
+            return selector.replace(/^e/, "").replace(/-/g, "#");
         }
 
         createElement(element) {

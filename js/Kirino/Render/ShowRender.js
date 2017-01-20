@@ -16,6 +16,7 @@ define(function (require) {
         }
 
         updateOther($elementTag, element) {
+            super.updateOther($elementTag, element);
             if (element.nextEpisodeId || (element.thing && element.thing.nextEpisodeId)) {
                 $elementTag.find(".top").append(this._createBadge("next.net", element.nextEpisodeId));
             }

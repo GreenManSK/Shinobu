@@ -99,7 +99,7 @@ define(function (require) {
         set(key, val) {
             var THIS = this;
             return new Promise((result) => {
-                if (val) {
+                if (typeof val !== 'undefined') {
                     let old = key;
                     key = {};
                     key[old] = val;
@@ -118,7 +118,7 @@ define(function (require) {
                 } else {
                     THIS.get(THIS._nullObject(key)).then((items) => {
                         let set = {};
-                        for (var k in items) {
+                        for (var k in key) {
                             if (typeof key[k] === 'function') {
                                 set[k] = key[k](items[k]);
                             } else {
@@ -175,7 +175,7 @@ define(function (require) {
                     var r = {};
                     for (var k in items) {
                         if (items[k])
-                        r[k] = items[k]["val"];
+                            r[k] = items[k]["val"];
                     }
                     return r;
                 }

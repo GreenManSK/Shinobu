@@ -62,6 +62,16 @@ define(function (require) {
                 }).then((obj) => {
                     return Episode.create(new Show(showData[2]), 7001, Date.now() - 500000000);
                 }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 7002, Date.now() - 250000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 6001, Date.now() - 1500000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 8004, Date.now() + 70000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 8005, Date.now() + 80000000);
+                }).then((obj) => {
+                    return Episode.create(new Show(showData[2]), 8006, Date.now() + 90000000);
+                }).then((obj) => {
                     return Anime.create(123456, "Naruto Shippuuden", "Naruto Shippuuden 720p HorribleSubs");
                 }).then((obj) => {
                     animeData.push(obj.id);
@@ -74,11 +84,19 @@ define(function (require) {
                     return Anime.create(123459, "3-gatsu no Lion");
                 }).then((obj) => {
                     animeData.push(obj.id);
+                    return Episode.create(new Anime(animeData[0]), 299, Date.now());
+                }).then((obj) => {
                     return Episode.create(new Anime(animeData[0]), 301, Date.now());
                 }).then((obj) => {
                     return Episode.create(new Anime(animeData[0]), 302, Date.now() + 500000000);
                 }).then((obj) => {
                     return Episode.create(new Anime(animeData[0]), 303, Date.now() + 50000002 * 3);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[0]), 304, Date.now() + 50000002 * 4);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[0]), 305, Date.now() + 50000002 * 5);
+                }).then((obj) => {
+                    return Episode.create(new Anime(animeData[0]), 306, Date.now() + 50000002 * 6);
                 }).then((obj) => {
                     return Episode.create(new Anime(animeData[2]), 82, Date.now() + 60000000);
                 }).then((obj) => {
