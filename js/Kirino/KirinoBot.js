@@ -1,6 +1,5 @@
 //namespace Kirino
 var DISABLE_LOG = false;
-var DISABLE_DEBUG = false;
 
 define(function (require) {
     var oldLog = console.log;
@@ -22,10 +21,6 @@ define(function (require) {
 
     console.log = KirinoBot.say;
     console.kirino = KirinoBot.say;
-    if (DISABLE_DEBUG)
-        console.debug = function() {};
-    
-    //@todo: Upozornuj na console.error
 
     return KirinoBot;
 });

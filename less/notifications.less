@@ -1,0 +1,77 @@
+body {
+    position: relative;
+}
+
+@notificationBgFade: 75%;
+@notificationBg: #272727;
+@notificationColor: #fff;
+
+@notificationError: rgba(139, 19, 14, 0.92);
+@notificationWarning: #c5a228;
+@notificationSuccess: #366c0b;
+
+#notifications {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    .notification {
+        padding: 1rem;
+        font-size: 1.7rem;
+        text-align: center;
+        color: @notificationColor;
+        background: fade(@notificationBg, @notificationBgFade);
+        border-bottom: 1px solid fade(@notificationColor, @notificationBgFade/2);
+        a {
+            color: @notificationColor;
+            &:hover, &:focus, &:active {
+                text-decoration: none;
+            }
+        }
+
+        &[data-repeat]:not([data-repeat=""])::after {
+            content: attr(data-repeat);
+            font-size: 1.3rem;
+            font-family: monospace;
+            vertical-align: top;
+            border-radius: 10px;
+            padding: 2px 5px;
+            margin-left: 5px;
+            color: @notificationBg;
+            background: @notificationColor;
+        }
+
+        &.error {
+            background: fade(@notificationError, @notificationBgFade);
+        }
+        &.warning {
+            background: fade(@notificationWarning, @notificationBgFade);
+        }
+        &.success {
+            background: fade(@notificationSuccess, @notificationBgFade);
+        }
+
+        /* Icons */
+        &.kirino, &.shinobu {
+            @size: 20px;
+            &::before {
+                content: '';
+                width: @size;
+                height: @size;
+                background: no-repeat right bottom;
+                background-size: cover;
+                display: inline-block;
+                margin: 0 5px -5px 0;
+            }
+        }
+
+        &.kirino::before {
+            background-image: url(../icons/kirino/48.png);
+        }
+
+        &.shinobu::before {
+            background-image: url(../icons/shinobu/48.png);
+        }
+    }
+}

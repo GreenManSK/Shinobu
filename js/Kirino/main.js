@@ -26,6 +26,7 @@ define(function (require) {
     var Data = require("Base/Data");
     require("Base/Synchronized");
     require("Base/Translator");
+    var Notifications = require("Base/Notifications");
 
     var KirinoBot = require("Kirino/KirinoBot");
 
@@ -57,6 +58,7 @@ define(function (require) {
 
     function start() {
         translateWholeDom();
+        Notifications.start();
         KirinoSettings.start();
     }
 });
