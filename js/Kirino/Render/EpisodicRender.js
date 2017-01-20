@@ -32,6 +32,11 @@ define(function (require) {
             });
         }
 
+        _cleanUp() {
+            super._cleanUp();
+            $('.context-menu' + this.elementId).remove();
+        }
+
         updateTitle($elementTag, element) {
             var title;
             if (element.thing) {
@@ -62,6 +67,7 @@ define(function (require) {
 
                 $.contextMenu({
                     selector: '#' + $elementTag.attr('id'),
+                    className: 'context-menu' + this.elementId,
                     callback: function (key, options) {
                         if (key === 'showAll') {
                             THIS.toggleVisibility.call($elementTag);

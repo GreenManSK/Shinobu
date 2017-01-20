@@ -112,15 +112,25 @@ define(function (require) {
         render() {
             var THIS = this;
             var STORAGE_PLACE = KIRINO_SPACE + this.elementId;
-            this.$mainElement.empty(); //@TODO: Add nice loading shit
+            this._cleanUp();
             Data.get(STORAGE_PLACE, function (ids) {
                 if (ids[STORAGE_PLACE] && ids[STORAGE_PLACE].length > 0) {
                     THIS.elementClass.getAll(ids[STORAGE_PLACE]).then((elements) => {
                         elements = Object.values(elements);
                         THIS._render(elements);
+                        THIS._finished();
                     });
                 }
             });
+        }
+
+        _cleanUp() {
+            this.$box.addClass("loading");
+            this.$mainElement.empty();
+        }
+
+        _finished() {
+            this.$box.removeClass("loading");
         }
 
         _render(elements) {
