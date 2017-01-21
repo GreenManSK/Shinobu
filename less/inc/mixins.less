@@ -58,16 +58,6 @@
     }
 }
 
-.colorBox(@color, @name) {
-    .box.@{name} {
-        .colorBox(@color);
-    }
-
-    .context-menu-list .color-picker li.@{name} {
-        background: lighten(@color, 5%);
-    }
-}
-
 .transitions(...) {
     transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
     -moz-transition: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
@@ -76,7 +66,10 @@
 }
 
 .ativateTransitions() {
-    a, button, .box li, #kirino {
+    a, button, .box li, #kirino, input, textarea {
         .transitions(all @time, left 0s, top 0s, right 0s, bottom 0s);
+    }
+    textarea {
+        .transitions(height 0s, all @time);
     }
 }

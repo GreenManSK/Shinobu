@@ -1,0 +1,133 @@
+.box form {
+    padding: 1rem 1.5rem;
+
+    .field {
+        margin-bottom: .8rem;
+    }
+
+    label {
+        display: none;
+    }
+
+    input:not([type=checkbox]):not([type=radio]), textarea, button, .help, select, .buttons a {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        font-size: 1.6rem;
+        padding: .5em;
+        border-radius: @boxRadius;
+        border: 1px solid darken(@boxBg, 40%);
+        outline: none;
+        color: @textColor;
+
+        &:disabled {
+            background: darken(#fff, 10%);
+        }
+    }
+
+    textarea {
+        resize: none;
+        font-family: inherit;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid darken(@boxBg, 40%);
+        margin: 1rem;
+    }
+
+    .field.group {
+        display: flex;
+
+        input, textarea {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .help {
+            width: auto;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+            cursor: help;
+            background: darken(#fff, 10%);
+        }
+
+        a.help {
+            cursor: pointer;
+        }
+    }
+
+    .field.error {
+        color: @red;
+        flex-flow: row wrap;
+
+        input:not([type=checkbox]):not([type=radio]), textarea, .help {
+            border-color: @red !important;
+            color: @red;
+
+            &:focus {
+                box-shadow: 0 0 5px 0 @red;
+            }
+        }
+
+        &.group {
+            input, textarea {
+                flex-basis: ~"calc(100% - 35px)";
+            }
+        }
+
+        .help {
+            background: fade(@red, 10%);
+        }
+
+        span:not(.help) {
+            page-break-before: always;
+            page-break-after: always;
+            display: block;
+            margin: .3rem .5rem 0;
+        }
+    }
+
+    .checkbox, .radio {
+        label {
+            display: block;
+        }
+
+        input {
+            vertical-align: bottom;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        input, button, a {
+            width: 100%;
+            margin: 0 1rem;
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .second {
+            background: darken(#fff, 10%);
+
+            &:hover {
+                background: darken(#fff, 7%);
+            }
+            &:active {
+                background: darken(#fff, 20%);
+            }
+        }
+
+        a {
+            text-decoration: none;
+            text-align: center;
+        }
+    }
+}

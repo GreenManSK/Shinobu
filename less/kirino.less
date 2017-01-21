@@ -1,23 +1,10 @@
-@import "inc/vars.less";
-@import "inc/mixins.less";
-@import "fa/include.less";
-@import "context-menu/jquery.contextMenu.min.css";
-@import "context-menu/style.less";
-@import "mainMenu.less";
-@import "notifications.less";
+@import "include.less";
 
 @bg: #000;
-@boxBg: #fff;
-@boxRadius: 5px;
-@boxColor: #777;
-@boxHeaderColor: #fff;
-
-@red: #B63533;
-@blue: #3573a8;
-@green: #5c8230;
-@yellow: #d87f37;
-@pink: #b03c6e;
-@purple: #473cb0;
+@kirinoWidth1: 500px;
+@kirinoHeight1: 497px;
+@kirinoWidth2: 1000px;
+@kirinoHeight2: 615px;
 
 .ativateTransitions();
 
@@ -50,173 +37,7 @@ h1 {
     float: right;
 }
 
-.box {
-    background: @boxBg;
-    border-radius: @boxRadius;
-    margin-bottom: @space;
-    box-shadow: @shadow;
-    .head {
-        .clearfix;
-        color: @boxHeaderColor;
-        border-radius: @boxRadius @boxRadius 0 0;
-        padding: (2*@boxRadius) (3*@boxRadius);
-
-        .icon {
-            float: left;
-            font-size: 1.75rem;
-            vertical-align: middle;
-            margin-right: .55rem;
-            display: inline-block;
-            padding-top: .2rem;
-        }
-
-        h2 {
-            .zero();
-            font-size: 1.75rem;
-            float: left;
-        }
-
-        .tools {
-            font-size: 1.6rem;
-            float: right;
-            a {
-                color: @boxHeaderColor;
-                display: inline-block;
-                padding: 0.05rem @boxRadius;
-                border-radius: @boxRadius;
-                &:hover, &:focus, &:active {
-                    background: @boxHeaderColor;
-                }
-            }
-
-            a + a {
-                margin-left: -0.2rem;
-            }
-        }
-    }
-
-    .fa-spinner {
-        display: none;
-    }
-    &.loading {
-        ul li {
-            display: none;
-        }
-        //text-align: center;
-        @size: 3rem;
-        padding-bottom: @size;
-        .fa-spinner {
-            font-size: @size;
-            display: block;
-            margin: @size auto 0;
-            color: fade(@textColor, 80%);
-        }
-    }
-
-    ul {
-        .prepareUl();
-        :last-child {
-            border-radius: 0 0 @boxRadius @boxRadius;
-        }
-        li {
-            .clearfix();
-            padding: 0.5rem 3rem 0.5rem 1.5rem;
-            font-size: 1.4rem;
-            background: darken(@boxBg, 7%);
-            border-bottom: 1px solid darken(@boxBg, 15%);
-            color: lighten(@textColor, 12%);
-
-            .content {
-                width: ~"calc(100% - 75px)";
-                float: left;
-            }
-
-            .top {
-                padding-bottom: 0.1rem;
-                h3 {
-                    .zero();
-                    font-size: 1.5rem;
-                    display: inline;
-                }
-                .badge {
-                    display: inline-block;
-                    font-weight: 600;
-                    border-radius: (@boxRadius - 1px);
-                    padding: 0 @boxRadius;
-                    color: @boxBg;
-                }
-
-                .badge + .badge {
-                    margin-left: 0.5rem;
-                }
-            }
-
-            a {
-                text-decoration: none;
-                &:hover, &:focus, &:active {
-                    color: darken(@boxBg, 7%);
-                }
-            }
-
-            .info {
-                float: right;
-                text-align: center;
-                .date {
-                    display: block;
-                    &.unknown {
-                        font-style: italic;
-                    }
-                }
-            }
-
-            .show-more {
-                clear: both;
-                text-align: center;
-                font-size: 1.2rem;
-                margin: 0 -3rem -0.5rem -1.5rem;
-                padding: 0 3rem 0 1.5rem;
-                background: fade(#000, 5%);
-                cursor: pointer;
-                &:hover {
-                    background: fade(#000, 3%);
-                }
-                &:focus, &:active {
-                    background: fade(#000, 10%);
-                }
-            }
-
-            &:hover, &:active {
-                background: darken(@boxBg, 4%);
-                color: @textColor;
-            }
-            &.actual {
-                background: @boxBg;
-                color: @textColor;
-                .date {
-                    font-weight: bold;
-                }
-            }
-        }
-    }
-}
-
-.box {
-    .colorBox(@boxColor);
-}
-
-.colorBox(@boxColor, gray);
-.colorBox(@red, red);
-.colorBox(@blue, blue);
-.colorBox(@green, green);
-.colorBox(@yellow, yellow);
-.colorBox(@pink, pink);
-.colorBox(@purple, purple);
-
 /* Kirino :3 */
-@kirinoWidth1: 500px;
-@kirinoHeight1: 497px;
-@kirinoWidth2: 1000px;
-@kirinoHeight2: 615px;
 .kirinoSize1(@size: 1) {
     width: (@size*@kirinoWidth1);
     height: (@size*@kirinoHeight1);
@@ -259,10 +80,6 @@ h1 {
 
     .half {
         width: 100%;
-    }
-
-    .box {
-        margin-bottom: @miniSpace;
     }
 
     #kirino {
