@@ -6,7 +6,7 @@ define(function (require) {
             text: 'settings',
             icon: 'fa-sliders',
             class: null,
-            link: '#settings'
+            link: 'settings.html'
         },
         kirino: {
             text: 'kirino',

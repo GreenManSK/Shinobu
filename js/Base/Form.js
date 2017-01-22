@@ -1,12 +1,14 @@
 var NAMESPACE = "Base";
 define(function (require) {
     var Data = require("Base/Data");
+    var Notifications = require("Base/Notifications");
 
     class Form {
         static get TYPE() {
             return {
                 TEXT: 'text',
                 PASSWORD: 'password',
+                NUMBER: 'number',
                 EMAIL: 'email',
                 TEXTAREA: 'textarea',
                 TIME: 'time',
@@ -44,6 +46,7 @@ define(function (require) {
 
         constructor(items, callback) {
             var THIS = this;
+            this._showLabels = false;
             THIS.nonValue = [
                 Form.TYPE.SUBMIT,
                 Form.TYPE.RESET,
@@ -61,6 +64,10 @@ define(function (require) {
             });
         }
 
+        showLabels(show) {
+            this._showLabels = show;
+        }
+
         _prepareGet(items) {
             var get = {};
             for (let key in items) {
@@ -74,6 +81,10 @@ define(function (require) {
 
             THIS.promise.then(() => {
                 var $form = $('<form></form>');
+
+                if (this._showLabels)
+                    $form.addClass("show-labels");
+
                 $form.on('submit', function (e) {
                     e.preventDefault();
                     var set = {};
@@ -93,7 +104,7 @@ define(function (require) {
                         }
                     }
                     Data.set(set, function () {
-                        console.log("Form submited");
+                        Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
                         if (THIS.callback) {
                             THIS.callback();
                         }
@@ -152,7 +163,12 @@ define(function (require) {
             var $label = $('<label for="' + this._nameToId(key) + '">' + _(item.label) + '</label>');
             $field.append($label);
 
-            var base = 'id="' + this._nameToId(key) + '" placeholder="' + _(item.label) + '" name="' + key + '"';
+            var base = 'id="' + this._nameToId(key) + '" placeholder="' + _(item.label) + '" title="' + _(item.label) + '" name="' + key + '"';
+            if (item.attrs) {
+                for (let i in item.attrs) {
+                    base += " " + i + "='" + item.attrs[i] + "'";
+                }
+            }
 
             let validator = function (e) {
                 let key = $(this).attr('name');
@@ -174,7 +190,7 @@ define(function (require) {
 
             if (item.type === Form.TYPE.CHECKBOX) {
                 $field.addClass('checkbox');
-                $input = $("<input " + base + " type='checkbox' "+(this.data[key] ? 'checked': '')+">");
+                $input = $("<input " + base + " type='checkbox' " + (this.data[key] ? 'checked' : '') + ">");
                 $label.text('');
                 $label.append($input);
                 $label.append(_(item.label));

@@ -21,12 +21,24 @@ define(function (require) {
             }
         }
 
+        get Type() {
+            return Notifications.Type;
+        }
+
+        get Voice() {
+            return Notifications.Voice;
+        }
+
         constructor() {
             this.fadeInterval = 4000;
             var THIS = this;
-            Data.get("notificationFadeTime", (items) => {
+            Data.get({
+                notificationFadeTime: 4000,
+                developerMode: false
+            }, (items) => {
                 if (items.fadeInterval)
                     THIS.fadeInterval = items.fadeInterval;
+                THIS.developerMode = items.developerMode;
             });
         }
 
@@ -49,10 +61,11 @@ define(function (require) {
                 THIS.notify(msg, Notifications.Type.ERROR, THIS.fadeInterval * 3);
                 oldError.apply(null, arguments)
             }
-            console.warn = function (msg) {
-                THIS.notify(msg, Notifications.Type.WARNING);
-                oldWarn.apply(null, arguments)
-            }
+            if (THIS.developerMode)
+                console.warn = function (msg) {
+                    THIS.notify(msg, Notifications.Type.WARNING);
+                    oldWarn.apply(null, arguments)
+                }
 
             chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
                 if (request.name && request.name === 'notification') {
@@ -66,7 +79,10 @@ define(function (require) {
                 timeout = this.fadeInterval;
             let $notify;
             let $same = this.$notifications.find('.notification:not(.noauto):contains("' + msg + '")');
-            if ($same.length > 0) {
+            if ($same.length > 0 && $same.text() !== msg) {
+                $same = null;
+            }
+            if ($same && $same.length > 0) {
                 clearTimeout($same.attr(DATA_END));
                 let repeats = $same.attr(DATA_REPEAT);
                 repeats = repeats ? parseInt(repeats) + 1 : 2;

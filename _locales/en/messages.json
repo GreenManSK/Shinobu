@@ -48,5 +48,35 @@
   },
   "settings": {
     "message": "Settings"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "developerMode": {
+    "message": "Developer mode"
+  },
+  "notificationFadeTime": {
+    "message": "Notification fade type"
+  },
+  "syncRefreshRate": {
+    "message": "Synchronization refresh rate"
+  },
+  "anisonRefreshRate": {
+    "message": "Aanison data refresh rate"
+  },
+  "vgmdbRefreshRate": {
+    "message": "VGMdb.net data refresh rate"
+  },
+  "nyaaRefreshRate": {
+    "message": "nyaa.eu data refresh rate"
+  },
+  "anidbRefreshRate": {
+    "message": "aniDB data refresh rate"
+  },
+  "formSubmitSuccess": {
+    "message": "Form was send successfully"
+  },
+  "maxEpisodesPerThing": {
+    "message": "Maximum numbers of episodes per one item"
   }
 }

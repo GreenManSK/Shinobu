@@ -9,6 +9,20 @@
         display: none;
     }
 
+    &.show-labels {
+        .field:not(.checkbox) {
+            label {
+                display: block;
+                font-weight: bold;
+                margin: 0 0 5px 5px;
+                font-size: 1.2rem;
+                &::after {
+                    content: ':';
+                }
+            }
+        }
+    }
+
     input:not([type=checkbox]):not([type=radio]), textarea, button, .help, select, .buttons a {
         box-sizing: border-box;
         display: block;
@@ -94,6 +108,9 @@
     .checkbox, .radio {
         label {
             display: block;
+            &::after {
+                content: '';
+            }
         }
 
         input {

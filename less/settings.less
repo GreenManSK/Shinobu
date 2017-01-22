@@ -1,0 +1,89 @@
+@import "include.less";
+
+@bg: #000;
+@shinobuMaidWidht: 257px;
+@shinobuMaidHeight: 362px;
+@kirinoMaidWidth: 201px;
+@kirinoMaidHeight: 288px;
+
+.ativateTransitions();
+
+html, body {
+    .prepare-body();
+}
+
+body {
+    background: @bg;
+    padding: @space @miniSpace 0;
+    color: @textColor;
+}
+
+h1 {
+    .hide();
+}
+
+.container {
+    .clearfix();
+    max-width: @responsiveWidth;
+    margin: 0 auto;
+}
+
+.box {
+    position: relative;
+}
+
+.box.shinobu::after, .box.kirino::after {
+    content: ' ';
+    display: block;
+    width: @shinobuMaidWidht;
+    height: @shinobuMaidHeight;
+    position: absolute;
+    top: 0;
+    right: (-@shinobuMaidWidht - 10px);
+    background: url(~'@{imgDir}shinobuMaid.png') left top no-repeat;
+    background-size: cover;
+}
+
+.box.kirino::after {
+    right: auto;
+    left: (-@kirinoMaidWidth - 10px);
+    width: @kirinoMaidWidth;
+    height: @kirinoMaidHeight;
+    background-image: url(~'@{imgDir}kirinoMaid.png');
+}
+
+@media (max-width: (@responsiveWidth + 2 * @shinobuMaidWidht - 1px)) {
+    .box.shinobu::after {
+        width: (@shinobuMaidWidht/2);
+        height: (@shinobuMaidHeight/2);
+        right: (-@shinobuMaidWidht/2 - 5px);
+    }
+}
+
+@media (max-width: (@responsiveWidth + 2 * @kirinoMaidWidth - 1px)) {
+    .box.kirino::after {
+        width: (@kirinoMaidWidth/2);
+        height: (@kirinoMaidHeight/2);
+        left: (-@kirinoMaidWidth/2 - 5px);
+    }
+}
+
+@media (max-width: (@responsiveWidth + @shinobuMaidWidht - 1px)) {
+    .box.shinobu::after {
+        display: none;
+    }
+}
+
+@media (max-width: (@responsiveWidth + @kirinoMaidWidth - 1px)) {
+    .box.kirino::after {
+        display: none;
+    }
+}
+
+/* Small screen */
+@media (max-width: (@responsiveWidth + 2*@miniSpace - 1px)) {
+    body {
+        padding-top: @miniSpace;
+        padding-bottom: @miniSpace;
+    }
+}
