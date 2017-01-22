@@ -35,6 +35,7 @@ define(function (require) {
         }
 
         updateOther($elementTag, element) {
+            super.updateOther($elementTag, element);
             if (element.anisonId) {
                 $elementTag.find(".top").append(this._createBadge("Anison", element.anisonId));
             }

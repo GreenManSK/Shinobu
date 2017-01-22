@@ -179,7 +179,9 @@ define(function (require) {
                     }
                     return r;
                 }
-                return items["val"];
+                if (items)
+                    return items["val"];
+                return null;
             });
         }
 

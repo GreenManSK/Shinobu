@@ -78,5 +78,11 @@
   },
   "maxEpisodesPerThing": {
     "message": "Maximum numbers of episodes per one item"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "deleteSuccess": {
+    "message": "Successfully deleted"
   }
 }

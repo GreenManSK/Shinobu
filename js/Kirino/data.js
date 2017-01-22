@@ -1,5 +1,7 @@
 define(function (require) {
     var Data = require("Base/Data");
+    var Synchronized = require("Base/Synchronized");
+    var KirinoSettings = require("Kirino/Settings");
     var Anime = require("Kirino/Types/Anime");
     var Show = require("Kirino/Types/Show");
     var OVA = require("Kirino/Types/OVA");
@@ -14,8 +16,9 @@ define(function (require) {
     }
 
     return new Promise((cb) => {
-        Data.storage.get(["dataInserted"], function (items) {
-            if (items["dataInserted"]) {
+        var kirino = new Synchronized(KirinoSettings.namespace);
+        kirino.get('dataInserted').then((dataInserted) => {
+            if (dataInserted) {
                 cb(false);
             } else {
                 var musicElements = [];
@@ -104,13 +107,13 @@ define(function (require) {
                 }).then((obj) => {
                     return Episode.create(new Anime(animeData[2]), 71, Date.now() - 500000000);
                 }).then(() => {
-                    Data.storage.set({
-                        "Kirino.music": musicElements,
-                        "Kirino.ova": ovaData,
-                        "Kirino.show": showData,
-                        "Kirino.anime": animeData,
+                    kirino.set({
+                        "music": musicElements,
+                        "ova": ovaData,
+                        "show": showData,
+                        "anime": animeData,
                         dataInserted: true
-                    }, function () {
+                    }).then(function () {
                         cb(true);
                     });
                 });

@@ -48,6 +48,7 @@ define(function (require) {
         }
 
         updateOther($elementTag, element) {
+            super.updateOther($elementTag, element);
             let THIS = this;
             let main = element.thing ? element.thing : element
             $elementTag.attr("thing-id", this.elementSelector(main));
@@ -77,6 +78,14 @@ define(function (require) {
                         showAll: {name: _("toggleOnlyFirst"), icon: "fa-eye-slash"}
                     }
                 });
+
+                // #Delete
+                let $delete = $elementTag.find('.delete');
+                $delete.off('click');
+                $delete.on('click', function (e) {
+                    e.preventDefault();
+                    THIS._delete(main);
+                });
             }
         }
 
@@ -91,6 +100,15 @@ define(function (require) {
 
             $("li[thing-id='" + thingSelector + "'], li[thing-id='" + thingSelector + "'] ." + SHOW_MORE_CLASS).toggleClass("hide").first().removeClass("hide");
             new AEpisodic(thingId).set("showAll", (v) => !v);
+        }
+
+        _delete(element) {
+            super._delete(element);
+            var THIS = this;
+            for (let i in element.episodes) {
+                let obj = new Episode(element.episodes[i]);
+                obj.delete();
+            }
         }
 
     };

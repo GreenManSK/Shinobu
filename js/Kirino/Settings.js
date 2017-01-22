@@ -1,5 +1,6 @@
-var NAMESPACE = "Kirino";
 define(function (require) {
+    var NAMESPACE = "Kirino";
+
     var Data = require("Base/Data");
     var BasicRender = require("Kirino/Render/BasicRender");
 
@@ -135,6 +136,10 @@ define(function (require) {
 
         static get namespace() {
             return NAMESPACE;
+        }
+
+        get namespace() {
+            return Settings.namespace;
         }
     }
     return new Settings();

@@ -2,6 +2,8 @@ var NAMESPACE = "Kirino/Render";
 define(function (require) {
     var KIRINO_SPACE = "Kirino.";
     var Data = require("Base/Data");
+    var Notifications = require("Base/Notifications");
+    var Synchronized = require("Base/Synchronized");
 
     var BOX_TEMPLATE = "#template .box";
     var ITEM_TEMPLATE = "#template .box li";
@@ -76,6 +78,7 @@ define(function (require) {
             this.itemTemplate = $(ITEM_TEMPLATE);
             this.$mainElement = $("#" + this.elementId + " ul");
             this.settings = settings;
+            this.kirino = new Synchronized(settings.namespace);
         }
 
         _create() {
@@ -111,26 +114,31 @@ define(function (require) {
 
         render() {
             var THIS = this;
-            var STORAGE_PLACE = KIRINO_SPACE + this.elementId;
             this._cleanUp();
-            Data.get(STORAGE_PLACE, function (ids) {
-                if (ids[STORAGE_PLACE] && ids[STORAGE_PLACE].length > 0) {
-                    THIS.elementClass.getAll(ids[STORAGE_PLACE]).then((elements) => {
-                        elements = Object.values(elements);
-                        THIS._render(elements);
-                        THIS._finished();
-                    });
-                }
+            this.kirino.get(this.elementId).then((ids) => {
+                THIS.elementClass.getAll(ids).then((elements) => {
+                    elements = Object.values(elements);
+                    THIS._render(elements);
+                    THIS._finished();
+                });
             });
         }
 
-        _cleanUp() {
+        _startLoading() {
             this.$box.addClass("loading");
+        }
+
+        _endLoading() {
+            this.$box.removeClass("loading");
+        }
+
+        _cleanUp() {
+            this._startLoading();
             this.$mainElement.empty();
         }
 
         _finished() {
-            this.$box.removeClass("loading");
+            this._endLoading();
         }
 
         _render(elements) {
@@ -195,7 +203,17 @@ define(function (require) {
         }
 
         updateOther($elementTag, element) {
+            let THIS = this;
+            let $info = $elementTag.find('.info');
+            let $delete = $('<a href="#delete"  class="delete" title="' + _('delete') + '"><i class="fa fa-trash-o"></i></a>');
 
+            // #Delete
+            $delete.on('click', function (e) {
+                e.preventDefault();
+                THIS._delete(element);
+            });
+
+            $info.append($delete);
         }
 
         _createBadge(text, link) {
@@ -206,6 +224,18 @@ define(function (require) {
             this.boxColor = color;
             this.$box.removeClass(Object.values(BasicRender.Color).join(" ")).addClass(color);
             this.settings.updateColor(this.elementId, color);
+        }
+
+        _delete(element) {
+            let THIS = this;
+            let obj = new THIS.elementClass(element.id);
+            THIS._startLoading()
+            obj.delete().then(() => {
+                THIS.kirino.set(this.elementId, Synchronized.arrayDeleter(element.id)).then(() => {
+                    Notifications.notify(_("deleteSuccess"), Notifications.Type.SUCCESS);
+                    THIS.render();
+                });
+            });
         }
 
         move(direction) {

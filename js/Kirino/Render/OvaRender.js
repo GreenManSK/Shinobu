@@ -28,6 +28,7 @@ define(function (require) {
         }
 
         updateOther($elementTag, element) {
+            super.updateOther($elementTag, element);
             if (element.anidbEpisodeId) {
                 $elementTag.find(".top").append(this._createBadge("aniDB.net", element.anidbEpisodeId));
             }
