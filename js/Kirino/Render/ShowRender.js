@@ -1,5 +1,5 @@
-var NAMESPACE = "Kirino/Render";
 define(function (require) {
+var NAMESPACE = "Kirino/Render";
     var Show = require("Kirino/Types/Show");
     var ID = "show";
     var ICON_NAME = "tv";

@@ -1,5 +1,5 @@
-var NAMESPACE = "Base";
 define(function (require) {
+var NAMESPACE = "Base";
     class Data {
         get storage() {
             return chrome.storage.local;

@@ -1,5 +1,5 @@
-var NAMESPACE = "Kirino/Render";
 define(function (require) {
+var NAMESPACE = "Kirino/Render";
     var Anime = require("Kirino/Types/Anime");
     var ID = "anime";
     var ICON_NAME = "anidb.ico";

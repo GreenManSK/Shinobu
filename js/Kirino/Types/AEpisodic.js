@@ -1,5 +1,5 @@
-var NAMESPACE = "Kirino/Types";
 define(function (require) {
+var NAMESPACE = "Kirino/Types";
     return class AEpisodic extends require("Base/Synchronized") {
         static create() {
             return super.create().then((obj) => {

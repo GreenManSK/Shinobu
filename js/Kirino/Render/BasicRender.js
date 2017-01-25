@@ -79,6 +79,13 @@ define(function (require) {
             this.$mainElement = $("#" + this.elementId + " ul");
             this.settings = settings;
             this.kirino = new Synchronized(settings.namespace);
+
+            let THIS = this;
+            chrome.extension.onMessage.addListener(function (request) {
+                if (request.name && request.name === settings.namespace + '.' + elementId + '.render') {
+                    THIS.render();
+                }
+            });
         }
 
         _create() {
@@ -205,7 +212,20 @@ define(function (require) {
         updateOther($elementTag, element) {
             let THIS = this;
             let $info = $elementTag.find('.info');
+            let $edit = $('<a href="#edit"  class="edit" title="' + _('edit') + '"><i class="fa fa-pencil"></i></a>');
             let $delete = $('<a href="#delete"  class="delete" title="' + _('delete') + '"><i class="fa fa-trash-o"></i></a>');
+
+            function popitup(url,windowName) {
+                newwindow=window.open(url,windowName,'height=200,width=150,menubar=0');
+                if (window.focus) {newwindow.focus()}
+                return false;
+            }
+            // #Edit
+            $edit.on('click', function (e) {
+                e.preventDefault();
+                popitup("settings.html", "Window name");
+            });
+
 
             // #Delete
             $delete.on('click', function (e) {
@@ -213,6 +233,8 @@ define(function (require) {
                 THIS._delete(element);
             });
 
+            $info.append($edit);
+            $info.append("&nbsp;/&nbsp;");
             $info.append($delete);
         }
 

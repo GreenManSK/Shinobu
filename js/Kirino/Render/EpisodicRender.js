@@ -1,5 +1,5 @@
-var NAMESPACE = "Kirino/Render";
 define(function (require) {
+var NAMESPACE = "Kirino/Render";
     var AEpisodic = require("Kirino/Types/AEpisodic");
     var Episode = require("Kirino/Types/Episode");
 
