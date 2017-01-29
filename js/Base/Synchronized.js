@@ -174,13 +174,15 @@ define(function (require) {
                 if (typeof key === 'object') {
                     var r = {};
                     for (var k in items) {
-                        if (items[k])
-                            r[k] = items[k]["val"];
+                        if (items[k]) {
+                            r[k] = items[k].hasOwnProperty("val") ? items[k]["val"] : items[k];
+                        }
                     }
                     return r;
                 }
-                if (items)
-                    return items["val"];
+                if (items) {
+                    return items.hasOwnProperty("val") ? items["val"] : items;
+                }
                 return null;
             });
         }
