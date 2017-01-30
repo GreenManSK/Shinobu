@@ -1,5 +1,5 @@
-var NAMESPACE = "Base";
 define(function (require) {
+    var NAMESPACE = "Base";
     var Data = require("Base/Data");
     var Notifications = require("Base/Notifications");
 
@@ -11,6 +11,7 @@ define(function (require) {
                 NUMBER: 'number',
                 EMAIL: 'email',
                 TEXTAREA: 'textarea',
+                DATE: 'date',
                 TIME: 'time',
                 CHECKBOX: 'checkbox',
                 SELECT: 'select',
@@ -45,35 +46,21 @@ define(function (require) {
         }
 
         constructor(items, callback) {
-            var THIS = this;
             this._showLabels = false;
-            THIS.nonValue = [
+            this.nonValue = [
                 Form.TYPE.SUBMIT,
                 Form.TYPE.RESET,
                 Form.TYPE.LINK_BUTTON,
                 Form.TYPE.CB_BUTTON
             ];
 
-            THIS.items = items;
-            THIS.callback = callback;
-            this.promise = new Promise((cb) => {
-                Data.get(THIS._prepareGet(THIS.items), function (items) {
-                    THIS.data = items;
-                    cb();
-                });
-            });
+            this.items = items;
+            this.callback = callback;
+            this.promise = this._getData(items);
         }
 
         showLabels(show) {
             this._showLabels = show;
-        }
-
-        _prepareGet(items) {
-            var get = {};
-            for (let key in items) {
-                get[key] = items[key].default ? items[key].default : null;
-            }
-            return get;
         }
 
         render(selector) {
@@ -87,28 +74,14 @@ define(function (require) {
 
                 $form.on('submit', function (e) {
                     e.preventDefault();
-                    var set = {};
-                    for (var key in THIS.items) {
-                        let item = THIS.items[key];
-                        if (THIS.nonValue.indexOf(item.type) !== -1)
-                            continue;
-                        let $input = $("#" + THIS._nameToId(key));
-                        if (THIS._validate(key) !== true) {
-                            $input.trigger('change');
-                            return;
-                        }
-                        if (item.type == Form.TYPE.CHECKBOX) {
-                            set[key] = $input.is(':checked');
-                        } else {
-                            set[key] = $input.val();
-                        }
-                    }
-                    Data.set(set, function () {
-                        Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
-                        if (THIS.callback) {
-                            THIS.callback();
-                        }
-                    });
+                    THIS._harvestValues()
+                        .then((values) => THIS._saveData(values))
+                        .then(() => {
+                            Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
+                            if (THIS.callback) {
+                                THIS.callback();
+                            }
+                        });
                 }).on('reset', function (e) {
                     $(this).find('input, select, textarea').trigger('change');
                 });
@@ -204,6 +177,10 @@ define(function (require) {
 
                 $field.append($input);
             } else {
+                if (item.type === Form.TYPE.DATE && this.data[key]) {
+                    let date = new Date(this.data[key]);
+                    this.data[key] = date.toString("yyyy-MM-dd");
+                }
                 if (item.type === Form.TYPE.TEXTAREA) {
                     $input = $('<textarea ' + base + (item.rows ? ' rows="' + item.rows + '"' : '') + '>' + (this.data[key] ? this.data[key] : '') + '</textarea>');
                 } else {
@@ -257,6 +234,53 @@ define(function (require) {
                 }
             }
             return true;
+        }
+
+        _getData(items) {
+            var get = {};
+            for (let key in items) {
+                get[key] = items[key].default ? items[key].default : null;
+            }
+            let THIS = this;
+            return new Promise((cb) => {
+                Data.get(get, function (items) {
+                    THIS.data = items;
+                    cb();
+                });
+            });
+        }
+
+        _harvestValues() {
+            let values = {};
+            let THIS = this;
+            for (let key in THIS.items) {
+                let item = THIS.items[key];
+                if (THIS.nonValue.indexOf(item.type) !== -1 || item.noSync)
+                    continue;
+                let $input = $("#" + THIS._nameToId(key));
+                if (THIS._validate(key) !== true) {
+                    $input.trigger('change');
+                    return;
+                }
+                if (item.type === Form.TYPE.CHECKBOX) {
+                    values[key] = $input.is(':checked');
+                } else {
+                    values[key] = $input.val();
+                }
+                if (item.type === Form.TYPE.DATE && values[key]) {
+                    let date = new Date(values[key]);
+                    values[key] = date.getTime();
+                }
+            }
+            return Promise.resolve(values);
+        }
+
+        _saveData(harvestedValues) {
+            return new Promise((cb) => {
+                Data.set(harvestedValues, function () {
+                    cb();
+                });
+            });
         }
     }
 

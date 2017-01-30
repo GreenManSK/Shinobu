@@ -32,32 +32,39 @@ define(function (require) {
             this.updatePromise = new Promise((cb) => cb());
         }
 
-        prepare() {
+        getData() {
             let THIS = this;
             let get = {};
             return new Promise((cb) => {
                 get[THIS.settings] = defaultSettings;
                 Data.get(get, (items) => {
-                    let left = items[THIS.settings]['left'];
-                    for (let k in left) {
-                        this.renders.push(THIS._create(
-                            left[k],
-                            BasicRender.Column.FIRST,
-                            items[THIS.settings][left[k]]['color']
-                        ));
-                    }
+                    cb(items[THIS.settings])
+                })
+            });
+        }
+
+        prepare() {
+            let THIS = this;
+            return this.getData().then((items) => {
+                let left = items['left'];
+                for (let k in left) {
+                    this.renders.push(THIS._create(
+                        left[k],
+                        BasicRender.Column.FIRST,
+                        items[left[k]]['color']
+                    ));
+                }
 
 
-                    let right = items[THIS.settings]['right'];
-                    for (let k in right) {
-                        this.renders.push(THIS._create(
-                            right[k],
-                            BasicRender.Column.SECOND,
-                            items[THIS.settings][right[k]]['color']
-                        ));
-                    }
-                    cb();
-                });
+                let right = items['right'];
+                for (let k in right) {
+                    this.renders.push(THIS._create(
+                        right[k],
+                        BasicRender.Column.SECOND,
+                        items[right[k]]['color']
+                    ));
+                }
+                return;
             });
         }
 

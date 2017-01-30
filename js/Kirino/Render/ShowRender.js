@@ -7,7 +7,7 @@ var NAMESPACE = "Kirino/Render";
 
     return class ShowRender extends require("Kirino/Render/EpisodicRender") {
         constructor(color, column, settings) {
-            super(ID, color, column, new Icon(Icon.Type.ICON, ICON_NAME), settings);
+            super(ID, color, column, ShowRender.ICON, settings);
         }
 
         editBox($box) {
@@ -27,7 +27,7 @@ var NAMESPACE = "Kirino/Render";
         }
 
         static get ICON() {
-            return ICON;
+            return new Icon(Icon.Type.ICON, ICON_NAME);
         }
 
         get elementClass() {

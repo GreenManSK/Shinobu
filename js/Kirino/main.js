@@ -31,6 +31,7 @@ define(function (require) {
 
     var KirinoBot = require("Kirino/KirinoBot");
 
+    require("Form/Linker");
 
     require("Kirino/Types/AEpisodic");
     var Anime = require("Kirino/Types/Anime");

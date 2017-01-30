@@ -4,6 +4,7 @@ define(function (require) {
     var Data = require("Base/Data");
     var Notifications = require("Base/Notifications");
     var Synchronized = require("Base/Synchronized");
+    var FormLinker = require("Form/Linker");
 
     var BOX_TEMPLATE = "#template .box";
     var ITEM_TEMPLATE = "#template .box li";
@@ -11,6 +12,9 @@ define(function (require) {
 
     var ACTUAL_ITEM_CLASS = "actual";
     var UNKNOWN_DATE_CLASS = "unknown";
+
+    let WINDOW_HEIGHT = 500;
+    let WINDOW_WIDTH = 600;
 
     var colorPicker = function (item, opt, root) {
         var html = '<ul class="color-picker">';
@@ -81,6 +85,7 @@ define(function (require) {
             this.kirino = new Synchronized(settings.namespace);
 
             let THIS = this;
+            console.log(settings.namespace + '.' + elementId + '.render');
             chrome.extension.onMessage.addListener(function (request) {
                 if (request.name && request.name === settings.namespace + '.' + elementId + '.render') {
                     THIS.render();
@@ -211,23 +216,20 @@ define(function (require) {
 
         updateOther($elementTag, element) {
             let THIS = this;
-            let $info = $elementTag.find('.info');
-            let $edit = $('<a href="#edit"  class="edit" title="' + _('edit') + '"><i class="fa fa-pencil"></i></a>');
-            let $delete = $('<a href="#delete"  class="delete" title="' + _('delete') + '"><i class="fa fa-trash-o"></i></a>');
 
-            function popitup(url,windowName) {
-                newwindow=window.open(url,windowName,'height=200,width=150,menubar=0');
-                if (window.focus) {newwindow.focus()}
-                return false;
-            }
+            let $info = $elementTag.find('.info');
+
             // #Edit
+            let editLink = FormLinker.createLink(FormLinker.FORM_MODULE + THIS.elementId, element.id);
+            let $edit = $('<a href="' + editLink + '"  class="edit" title="' + _('edit') + '"><i class="fa fa-pencil"></i></a>');
             $edit.on('click', function (e) {
                 e.preventDefault();
-                popitup("settings.html", "Window name");
+                BasicRender._popItUp(this.getAttribute("href"), _('edit'));
             });
 
 
             // #Delete
+            let $delete = $('<a href="#delete"  class="delete" title="' + _('delete') + '"><i class="fa fa-trash-o"></i></a>');
             $delete.on('click', function (e) {
                 e.preventDefault();
                 THIS._delete(element);
@@ -236,6 +238,23 @@ define(function (require) {
             $info.append($edit);
             $info.append("&nbsp;/&nbsp;");
             $info.append($delete);
+        }
+
+        static _popItUp(url, windowName) {
+            var dualScreenLeft = typeof window.screenLeft !== 'undefined' ? window.screenLeft : screen.left;
+            var dualScreenTop = typeof window.screenTop !== 'undefined' ? window.screenTop : screen.top;
+
+            var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+            var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+            var left = ((width / 2) - (WINDOW_HEIGHT / 2)) + dualScreenLeft;
+            var top = ((height / 2) - (WINDOW_WIDTH / 2)) + dualScreenTop;
+
+            let newwindow = window.open(url, windowName, 'height=' + WINDOW_HEIGHT + ',width=' + WINDOW_WIDTH + ', top=' + top + ', left=' + left);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
         }
 
         _createBadge(text, link) {
@@ -282,10 +301,10 @@ define(function (require) {
         }
 
         static dateCompare(a, b) {
-            if (a.date == null) {
+            if (a.date == false || a.date == null) {
                 return 1;
             }
-            if (b.date == null) {
+            if (b.date == false || b.date == null) {
                 return -1;
             }
             if (a.date < b.date)

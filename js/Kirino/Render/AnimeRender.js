@@ -7,7 +7,7 @@ var NAMESPACE = "Kirino/Render";
     
     return class AnimeRender extends require("Kirino/Render/EpisodicRender") {
         constructor(color, column, settings) {
-            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME), settings);
+            super(ID, color, column, AnimeRender.ICON, settings);
         }
 
         editBox($box) {
@@ -31,7 +31,9 @@ var NAMESPACE = "Kirino/Render";
         }
         
         static get ID() {return ID;}
-        static get ICON() {return ICON;}
+        static get ICON() {
+            return new Icon(Icon.Type.IMG, ICON_NAME);
+        }
 
         get elementClass() {
             return Anime;

@@ -1,18 +1,27 @@
 define(function (require) {
-var NAMESPACE = "Kirino/Render";
+    var NAMESPACE = "Kirino/Render";
     var OVA = require("Kirino/Types/OVA");
     var ID = "ova";
     var ICON_NAME = "anidb.ico";
     var Icon = require("Kirino/Render/Icon");
+    var FormLinker = require("Form/Linker");
 
     return class OvaRender extends require("Kirino/Render/BasicRender") {
         constructor(color, column, settings) {
-            super(ID, color, column, new Icon(Icon.Type.IMG, ICON_NAME), settings);
+            super(ID, color, column, OvaRender.ICON, settings);
         }
 
         editBox($box) {
             super.editBox($box);
             $box.find("h2").text(_("ovaTitle"));
+
+            let addLink = FormLinker.createLink(FormLinker.FORM_MODULE + this.elementId);
+            let $addButton = $('<a href="' + addLink + '" class="add" title="' + _('add') + '"><i class="fa fa-plus" aria-hidden="true"></i></a>');
+            $addButton.on('click', function (e) {
+                e.preventDefault();
+                OvaRender._popItUp(this.getAttribute("href"), _('add'));
+            });
+            $box.find('.tools').append($addButton);
         }
 
         updateTitle($elementTag, element) {
@@ -39,7 +48,7 @@ var NAMESPACE = "Kirino/Render";
         }
 
         static get ICON() {
-            return ICON;
+            return new Icon(Icon.Type.IMG, ICON_NAME);
         }
 
         get elementClass() {

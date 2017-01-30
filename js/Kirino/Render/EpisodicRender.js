@@ -1,7 +1,8 @@
 define(function (require) {
-var NAMESPACE = "Kirino/Render";
+    var NAMESPACE = "Kirino/Render";
     var AEpisodic = require("Kirino/Types/AEpisodic");
     var Episode = require("Kirino/Types/Episode");
+    var FormLinker = require("Form/Linker");
 
     var SHOW_MORE_CLASS = "show-more";
 
@@ -34,7 +35,6 @@ var NAMESPACE = "Kirino/Render";
 
         _cleanUp() {
             super._cleanUp();
-            $('.context-menu' + this.elementId).remove();
         }
 
         updateTitle($elementTag, element) {
@@ -65,19 +65,26 @@ var NAMESPACE = "Kirino/Render";
                     }
                 }
                 $elementTag.on('click', '.' + SHOW_MORE_CLASS, this.toggleVisibility);
-
-                $.contextMenu({
-                    selector: '#' + $elementTag.attr('id'),
-                    className: 'context-menu' + this.elementId,
-                    callback: function (key, options) {
-                        if (key === 'showAll') {
-                            THIS.toggleVisibility.call($elementTag);
+                $elementTag.addClass($elementTag.attr('id'));
+                THIS.contextMenus = THIS.contextMenus ? THIS.contextMenus : {};
+                if (!THIS.contextMenus[$elementTag.attr('id')])
+                    $.contextMenu({
+                        selector: '.' + $elementTag.attr('id'),
+                        callback: function (key, options) {
+                            if (key === 'showAll') {
+                                THIS.toggleVisibility.call($elementTag);
+                            }
+                        },
+                        items: {
+                            showAll: {name: _("toggleOnlyFirst"), icon: "fa-eye-slash"}
                         }
-                    },
-                    items: {
-                        showAll: {name: _("toggleOnlyFirst"), icon: "fa-eye-slash"}
-                    }
-                });
+                    });
+                THIS.contextMenus[$elementTag.attr('id')] = true;
+
+                // #Edit
+                let editLink = FormLinker.createLink(FormLinker.FORM_MODULE + THIS.elementId, main.id);
+                let $edit = $elementTag.find('.edit');
+                $edit.attr("href", editLink);
 
                 // #Delete
                 let $delete = $elementTag.find('.delete');

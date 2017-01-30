@@ -84,5 +84,47 @@
   },
   "deleteSuccess": {
     "message": "Successfully deleted"
+  },
+  "close": {
+    "message": "Close"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "add": {
+    "message": "Add"
+  },
+  "needToFill": {
+    "message": "Required field"
+  },
+  "searchText": {
+    "message": "Search text"
+  },
+  "date": {
+    "message": "Date"
+  },
+  "show": {
+    "message": "Show"
+  },
+  "type": {
+    "message": "Type"
+  },
+  "title": {
+    "message": "Title"
+  },
+  "author": {
+    "message": "Author"
+  },
+  "anisonId": {
+    "message": "Anison ID"
+  },
+  "vgmdbId": {
+    "message": "VGMdb.net ID"
+  },
+  "anidbId": {
+    "message": "aniDB.net ID"
+  },
+  "nextEpisodeId": {
+    "message": "next-episode.net ID"
   }
 }
