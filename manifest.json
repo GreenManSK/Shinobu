@@ -1,28 +1,27 @@
 {
-    "manifest_version": 2,
-
-    "name": "__MSG_extName__ v2",
-    "description": "__MSG_extDescription__",
-    "version": "2.0",
-    "default_locale": "en",
-
-    "icons": {
-        "16": "icons/shinobu/16.png",
-        "48": "icons/shinobu/48.png",
-        "128": "icons/shinobu/128.png"
-    },
-
-    "browser_action": {
-        "default_icon": "icons/kirino/128.png",
-        "default_popup": "notification.html"
-    },
-
-    "permissions": [
-        "http://*/*",
-        "https://*/*",
-        "storage",
-        "unlimitedStorage"
-    ],
-
-    "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
+  "manifest_version": 2,
+  "name": "__MSG_extName__ v2",
+  "description": "__MSG_extDescription__",
+  "version": "2.0",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/shinobu/16.png",
+    "48": "icons/shinobu/48.png",
+    "128": "icons/shinobu/128.png"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "icons/shinobu/128.png",
+    "default_popup": "notification.html"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
 }
