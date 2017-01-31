@@ -13,6 +13,7 @@ define(function (require) {
     require("Base/Translator");
 
     var dispatcher = require("Background/Messages/Dispatcher");
+    require("Background/Messages/Badge");
 
     dispatcher.start();
 });
