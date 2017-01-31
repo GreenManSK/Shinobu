@@ -73,3 +73,16 @@
         .transitions(height 0s, all @time);
     }
 }
+
+.scrollbar(@size: 2px, @bar: 10%, @bg: #000) {
+    ::-webkit-scrollbar {
+        width: @size;
+        height: @size;
+        background: @bg;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: @bg;
+        background: rgba(255,255,255,@bar);
+    }
+}
