@@ -14,6 +14,11 @@ define(function (require) {
 
     var dispatcher = require("Background/Messages/Dispatcher");
     require("Background/Messages/Badge");
+    require("Background/Messages/ExtensionNotifications");
 
     dispatcher.start();
+
+    chrome.runtime.onInstalled.addListener(function() {
+        dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
+    });
 });

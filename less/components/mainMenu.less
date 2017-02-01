@@ -57,24 +57,26 @@
 }
 
 @media (max-width: (@responsiveWidth + 2*@miniSpace - 1px)) {
-    #mainMenu {
-        position: static;
-        text-align: center;
-        li, a {
-            display: inline-block;
-            float: none;
-            vertical-align: top;
-        }
-        a {
-            font-size: 5rem;
-            width: @mainMenuSize*2;
-            height: @mainMenuSize*2;
-            margin: 0 .3rem .6rem;
+    body:not(.notifications) {
+        #mainMenu {
+            position: static;
+            text-align: center;
+            li, a {
+                display: inline-block;
+                float: none;
+                vertical-align: top;
+            }
+            a {
+                font-size: 5rem;
+                width: @mainMenuSize*2;
+                height: @mainMenuSize*2;
+                margin: 0 .3rem .6rem;
 
-            &.icon::before {
-                width: @mainMenuIcon*2.4;
-                height: @mainMenuIcon*2.4;
-                margin-top: 1px;
+                &.icon::before {
+                    width: @mainMenuIcon*2.4;
+                    height: @mainMenuIcon*2.4;
+                    margin-top: 1px;
+                }
             }
         }
     }

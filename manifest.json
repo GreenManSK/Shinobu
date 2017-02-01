@@ -21,7 +21,8 @@
     "http://*/*",
     "https://*/*",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "notifications"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
 }

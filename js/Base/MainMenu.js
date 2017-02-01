@@ -25,7 +25,7 @@ define(function (require) {
         constructor() {
         }
 
-        start() {
+        start(newWindow = false) {
             var $body = $('body');
 
             this.$menu = $('<ul></ul>').attr('id', ID);
@@ -36,6 +36,7 @@ define(function (require) {
                         'href="' + elem.link + '" ' +
                         'title="' + _(elem.text) + '" ' +
                         (elem.class ? 'class="icon ' + elem.class + '" ' : '') +
+                        (newWindow ? ' target="_blank"' : '')+
                         '>' +
                         (elem.icon ? '<i class="fa ' + elem.icon + '" aria-hidden="true"></i>' : '') +
                         '</a></li>');

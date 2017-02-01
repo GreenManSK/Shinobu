@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <title>{_notifications} | {_kirino}</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet/less" type="text/css" href="less/notification.less"/>
     </head>
-    <body>
-        <a href="kirino.html" target="_blank">Open Kirino :3</a><br>
-        <a href="settings.html" target="_blank">Settings</a>
-        <a href="form.html" target="_blank">Form</a>
+    <body class="notifications">
+        <h1>{_notifications}</h1>
+        <div class="add">
+            <!--<a href="#add">-->
+            <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
+            <!--Add-->
+            <!--</a>-->
+        </div>
+        <div class="notifications">
+
+        </div>
+        <div id="template" class="hide">
+            <div class="item">
+                <a href="#link">
+                    <div class="icon">
+
+                    </div>
+                    <div class="text">
+                        <h2></h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <script data-main="js/notification/main" src="libs/require.1.0.8.js"></script>
     </body>
 </html>

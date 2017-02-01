@@ -41,6 +41,19 @@ define(function (require) {
             type: Form.TYPE.CHECKBOX,
             label: "developerMode"
         },
+        maxNotificationNumber: {
+            type: Form.TYPE.NUMBER,
+            label: "maxNotificationNumber",
+            default: 20,
+            attrs: {
+                min: 1
+            }
+        },
+        notificationColor: {
+            type: Form.TYPE.TEXT,
+            label: "notificationColor",
+            default: "#3385AD"
+        },
         notificationFadeTime: {
             type: Form.TYPE.NUMBER,
             label: "notificationFadeTime",
@@ -58,6 +71,10 @@ define(function (require) {
             type: Form.TYPE.SUBMIT,
             label: "save"
         }
+    };
+
+    var shinobuCallback = function() {
+        chrome.runtime.sendMessage({name: "extensionNotifications.reload"}, null);
     };
 
     var kirinoSettings = {
@@ -100,7 +117,7 @@ define(function (require) {
         Notifications.start();
         MainMenu.start();
 
-        var shinobuForm = new Form(shinobuSettings);
+        var shinobuForm = new Form(shinobuSettings, shinobuCallback);
         var kirinoForm = new Form(kirinoSettings);
 
         shinobuForm.showLabels(true);

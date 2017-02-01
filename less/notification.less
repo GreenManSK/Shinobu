@@ -1,0 +1,144 @@
+@import "include.less";
+
+@notificationWidth: 300px;
+@notificationIcon: 65px;
+@notificationBg: #000;
+@notificationBorderColor: lighten(@notificationBg, 20%);
+@notificationColor: #fff;
+
+.ativateTransitions();
+
+.scrollbar(1px);
+
+html, body {
+    .prepare-body();
+    background: @notificationBg;
+}
+
+body {
+    width: @notificationWidth;
+    margin: 0 auto;
+}
+
+h1 {
+    display: none;
+}
+
+#mainMenu {
+    position: static;
+    text-align: center;
+    background: lighten(@notificationBg, 10%);
+    border-bottom: 1px solid @notificationBorderColor;
+    direction: rtl;
+    li {
+        float: none;
+        display: inline-block;
+        margin: 0 1px 0 0;
+
+        a {
+            @border: 1px solid fade(@mainMenuColor, 10%);
+            border: none;
+            opacity: .8;
+        }
+    }
+
+    li, a, a::before, i {
+        vertical-align: top;
+    }
+}
+
+.add {
+    a {
+        display: block;
+        color: @notificationColor;
+        background: lighten(@notificationBg, 10%);
+        border-bottom: 1px solid @notificationBorderColor;
+        text-decoration: none;
+        font-size: 1.5rem;
+        padding: 6px 5px;
+        padding-left: 4rem;
+        position: relative;
+
+        i {
+            position: absolute;
+            border-right: 1px solid @notificationBorderColor;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            font-size: 2rem;
+            padding: 5px 6px 0;
+            background: lighten(@notificationBg, 5%);
+        }
+
+        &:hover, &:focus, &:active {
+            background: lighten(@notificationBg, 13%);
+            i {
+                background: lighten(@notificationBg, 8%);
+            }
+        }
+    }
+}
+
+.notifications {
+    .item {
+        a {
+            text-decoration: none;
+            color: @notificationColor;
+            background: lighten(@notificationBg, 10%);
+            border-bottom: 1px solid @notificationBorderColor;
+            display: block;
+            padding: 5px;
+            .clearfix();
+        }
+
+        &:nth-child(odd) a {
+            background: lighten(@notificationBg, 8%);
+        }
+
+        &:not(.seen) {
+            a {
+                background: lighten(@notificationBg, 15%);
+            }
+
+            &:nth-child(odd) a {
+                background: lighten(@notificationBg, 13%);
+            }
+
+            a:hover, a:focus, a:active {
+                background: lighten(@notificationBg, 20%);
+            }
+        }
+
+        a:hover, a:focus, a:active {
+            background: lighten(@notificationBg, 15%);
+        }
+
+        .icon {
+            width: @notificationIcon;
+            height: @notificationIcon;
+            float: left;
+            text-align: center;
+
+            img {
+                max-width: 100%;
+            }
+
+            i {
+                font-size: 5rem;
+                margin-top: 0.8rem;
+            }
+        }
+
+        .text {
+            margin-left: (@notificationIcon + 6rem);
+            font-size: 1rem;
+            text-align: center;
+
+            h2 {
+                .zero();
+                font-weight: normal;
+                padding-top: 1rem;
+            }
+        }
+    }
+}

@@ -126,5 +126,14 @@
   },
   "nextEpisodeId": {
     "message": "next-episode.net ID"
+  },
+  "notifications": {
+    "message": "Notifications"
+  },
+  "maxNotificationNumber": {
+    "message": "Maximal number of notifications"
+  },
+  "notificationColor": {
+    "message": "Notification badge color"
   }
 }
