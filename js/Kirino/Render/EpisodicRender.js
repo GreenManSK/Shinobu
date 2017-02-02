@@ -2,7 +2,9 @@ define(function (require) {
     var NAMESPACE = "Kirino/Render";
     var AEpisodic = require("Kirino/Types/AEpisodic");
     var Episode = require("Kirino/Types/Episode");
+    var Synchronized = require("Base/Synchronized");
     var FormLinker = require("Form/Linker");
+    var BasicRender = require("Kirino/Render/BasicRender");
 
     var SHOW_MORE_CLASS = "show-more";
 
@@ -50,7 +52,7 @@ define(function (require) {
         updateOther($elementTag, element) {
             super.updateOther($elementTag, element);
             let THIS = this;
-            let main = element.thing ? element.thing : element
+            let main = element.thing ? element.thing : element;
             $elementTag.attr("thing-id", this.elementSelector(main));
 
             if (main.episodes.length > 0) {
@@ -81,6 +83,19 @@ define(function (require) {
                     });
                 THIS.contextMenus[$elementTag.attr('id')] = true;
 
+                // #Seen
+                if (element.date && element.date <= BasicRender.TODAY) {
+                    let $seen = $('<a href="#seen"  class="seen" title="' + _('seen') + '"><i class="fa fa-eye"></i></a>');
+                    $seen.on('click', function (e) {
+                        e.preventDefault();
+                        THIS._seen(element);
+                    });
+
+                    let $date = $elementTag.find('.info .date');
+                    $seen.insertAfter($date);
+                    $("<span>&nbsp;/&nbsp;</span>").insertAfter($seen);
+                }
+
                 // #Edit
                 let editLink = FormLinker.createLink(FormLinker.FORM_MODULE + THIS.elementId, main.id);
                 let $edit = $elementTag.find('.edit');
@@ -107,6 +122,22 @@ define(function (require) {
 
             $("li[thing-id='" + thingSelector + "'], li[thing-id='" + thingSelector + "'] ." + SHOW_MORE_CLASS).toggleClass("hide").first().removeClass("hide");
             new AEpisodic(thingId).set("showAll", (v) => !v);
+        }
+
+        _seen(element) {
+            let THIS = this;
+            let obj = new THIS.elementClass(element.id);
+            let main = new THIS.elementClass(element.thing.id);
+            THIS._startLoading();
+            obj.delete().then(() => {
+                main.set("episodes", Synchronized.arrayDeleter(element.id)).then(() => {
+                    THIS.render();
+                });
+                // THIS.kirino.set(this.elementId, Synchronized.arrayDeleter(element.id)).then(() => {
+                //     Notifications.notify(_("deleteSuccess"), Notifications.Type.SUCCESS);
+                //     THIS.render();
+                // });
+            });
         }
 
         _delete(element) {

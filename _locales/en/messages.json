@@ -135,5 +135,8 @@
   },
   "notificationColor": {
     "message": "Notification badge color"
+  },
+  "seen": {
+    "message": "Seen"
   }
 }

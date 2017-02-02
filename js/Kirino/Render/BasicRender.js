@@ -270,7 +270,7 @@ define(function (require) {
         _delete(element) {
             let THIS = this;
             let obj = new THIS.elementClass(element.id);
-            THIS._startLoading()
+            THIS._startLoading();
             obj.delete().then(() => {
                 THIS.kirino.set(this.elementId, Synchronized.arrayDeleter(element.id)).then(() => {
                     Notifications.notify(_("deleteSuccess"), Notifications.Type.SUCCESS);
