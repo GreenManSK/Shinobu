@@ -46,12 +46,9 @@ define(function (require) {
         static createUrlQuery(params) {
             let query = "?";
 
-            let first = true;
             for (let i in params) {
-                query += encodeURIComponent(i) + "=" + encodeURIComponent(params[i]);
-                if (first) {
-                    first = false;
-                } else {
+                if (typeof params[i] !== 'undefined') {
+                    query += encodeURIComponent(i) + "=" + encodeURIComponent(params[i]);
                     query += "&";
                 }
             }
