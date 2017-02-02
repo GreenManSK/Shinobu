@@ -39,7 +39,7 @@ define(function (require) {
                 Data.storage.get({
                     "_itterator": 0
                 }, function (items) {
-                    obj.id = "#" + (items["_itterator"] + 1) + "#" + Date.now();
+                    obj.id = "#" + (items["_itterator"] + 1) + "#" + Date.now().valueOf();
                     var set = {
                         "_itterator": items["_itterator"] + 1
                     };
