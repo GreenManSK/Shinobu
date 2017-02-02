@@ -22,7 +22,19 @@
     "https://*/*",
     "storage",
     "unlimitedStorage",
-    "notifications"
+    "notifications",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://anison.info/data/song/*.html"
+      ],
+      "js": [
+        "libs/require.1.0.8.js",
+        "js/Content/main.js"
+      ]
+    }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
 }

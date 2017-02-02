@@ -14,7 +14,7 @@ define(function (require) {
                         text: message.text
                     };
                     if (message.hasOwnProperty("tabId"))
-                        object[tabid] = message.tabId;
+                        object["tabId"] = sender.tab.id === true ? message.tabId : sender.tab.id;
                     chrome.browserAction.setBadgeText(object);
                     break;
                 case "color":

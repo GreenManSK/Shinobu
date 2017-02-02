@@ -25,8 +25,17 @@ define(function (require) {
     require("Base/Translator");
     var MainMenu = require("Base/MainMenu");
 
+    var BasicRender = require("Kirino/Render/BasicRender");
+
+    var Linker = require("Form/Linker");
+
+    let BaseParser = require("Parsers/BaseParser");
+    let Anison = require("Parsers/Anison");
+
     var Render = require("Notification/Render");
     let r = new Render();
+
+    r.addParser(Anison);
 
     function start() {
         translateWholeDom();
@@ -34,6 +43,7 @@ define(function (require) {
             if (items.developerMode)
                 MainMenu.start(true);
         });
+        r.renderAdd("div.add");
         r.render("div.notifications");
     }
 });

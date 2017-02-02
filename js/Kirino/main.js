@@ -33,6 +33,9 @@ define(function (require) {
 
     require("Form/Linker");
 
+    require("Parsers/BaseParser");
+    require("Parsers/Anison");
+
     require("Kirino/Types/AEpisodic");
     var Anime = require("Kirino/Types/Anime");
     var Show = require("Kirino/Types/Show");

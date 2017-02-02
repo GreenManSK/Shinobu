@@ -23,8 +23,8 @@ define(function (require) {
             return parsed;
         }
 
-        static createLink(module, id) {
-            return FORM_FILE + "#" + module + (id ? "#" + id : "");
+        static createLink(module, id, params = null) {
+            return FORM_FILE + (params ? this.createUrlQuery(params) : '')  +"#" + module + (id ? "#" + id : "");
         }
 
         static get FORM_MODULE() {
