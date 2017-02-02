@@ -1,9 +1,16 @@
 define(function (require) {
     var NAMESPACE = "Form";
     var BasicRender = require("Kirino/Render/BasicRender");
+    var Linker = require("Form/Linker");
 
     return class BoxEntityForm extends require("Base/EntityForm") {
         constructor(title, color, icon, id, items, callback) {
+            let GET = Linker.getUrlParams();
+            for (let i in items) {
+                if (GET.hasOwnProperty(i)) {
+                    items[i].default = GET[i];
+                }
+            }
             super(id, items, callback);
             this.title = title;
             this.color = color ? color : BasicRender.Color.GRAY;

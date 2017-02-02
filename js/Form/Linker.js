@@ -30,5 +30,33 @@ define(function (require) {
         static get FORM_MODULE() {
             return FORM_MODULE;
         }
+
+        static getUrlParams(url = window.location.search) {
+            let parts = url.match(/[?&]([^?&]*)/g);
+            let GET = {};
+
+            for (let i in parts) {
+                let m = parts[i].split("=");
+                GET[decodeURIComponent(m[0].replace(/^[?&]/, ""))] = decodeURIComponent(m[1]);
+            }
+
+            return GET;
+        }
+
+        static createUrlQuery(params) {
+            let query = "?";
+
+            let first = true;
+            for (let i in params) {
+                query += encodeURIComponent(i) + "=" + encodeURIComponent(params[i]);
+                if (first) {
+                    first = false;
+                } else {
+                    query += "&";
+                }
+            }
+
+            return query;
+        }
     }
 });

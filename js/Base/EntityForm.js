@@ -30,6 +30,9 @@ define(function (require) {
                 });
             } else {
                 this.data = {};
+                for (let i in items) {
+                    this.data[i] = items[i].default ? items[i].default : null;
+                }
             }
 
             return Promise.resolve();
