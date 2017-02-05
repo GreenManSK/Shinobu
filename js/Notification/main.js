@@ -32,12 +32,14 @@ define(function (require) {
     let BaseParser = require("Parsers/BaseParser");
     let Anison = require("Parsers/Anison");
     let AnidbAnime = require("Parsers/AnidbAnime");
+    let AnidbSong = require("Parsers/AnidbSong");
 
     var Render = require("Notification/Render");
     let r = new Render();
 
     r.addParser(Anison);
     r.addParser(AnidbAnime);
+    r.addParser(AnidbSong);
 
     function start() {
         translateWholeDom();

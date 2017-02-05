@@ -7,7 +7,7 @@ define(function (require) {
                       author = null,
                       date = null,
                       anisonId = null,
-                      vgmdbId = null,
+                      anidbId = null,
                       searchText = null,
                       lastDateRefresh = null,
                       lastSearchRefresh = null) {
@@ -19,7 +19,7 @@ define(function (require) {
                             author: author,
                             date: date,
                             anisonId: anisonId,
-                            vgmdbId: vgmdbId,
+                            anidbId: anidbId,
                             searchText: searchText,
                             lastDateRefresh: lastDateRefresh,
                             lastSearchRefresh: lastSearchRefresh

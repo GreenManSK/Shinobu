@@ -33,9 +33,9 @@ define(function (require) {
             type: Form.TYPE.NUMBER,
             label: 'anisonId'
         },
-        "vgmdbId": {
+        "anidbId": {
             type: Form.TYPE.NUMBER,
-            label: 'vgmdbId'
+            label: 'anidbId'
         },
         "date": {
             type: Form.TYPE.DATE,

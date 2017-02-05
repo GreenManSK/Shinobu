@@ -6,6 +6,7 @@ define(function (require) {
     var Icon = require("Kirino/Render/Icon");
     var FormLinker = require("Form/Linker");
     let Anison = require("Parsers/Anison");
+    let AnidbSong = require("Parsers/AnidbSong");
 
     return class MusicRender extends require("Kirino/Render/BasicRender") {
         constructor(color, column, settings) {
@@ -49,8 +50,8 @@ define(function (require) {
             if (element.anisonId) {
                 $elementTag.find(".top").append(this._createBadge("Anison", Anison.getUrl(element.anisonId)));
             }
-            if (element.vgmdbId) {
-                $elementTag.find(".top").append(this._createBadge("VGMdb.net", element.vgmdbId));
+            if (element.anidbId) {
+                $elementTag.find(".top").append(this._createBadge("aniDB.net", AnidbSong.getUrl(element.anidbId)));
             }
         }
 

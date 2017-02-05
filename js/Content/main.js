@@ -1,7 +1,12 @@
 let ANISON_REGEXP = new RegExp(/^https?:\/\/anison\.info\/data\/song\/(\d+)\.html/, 'i');
 let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=anime&aid=(\d+)/, 'i');
+let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=song&songid=(\d+)/, 'i');
 
-let regexs = [ANISON_REGEXP, ANIDB_ANIME_REGEXP];
+let regexs = [
+    ANISON_REGEXP,
+    ANIDB_ANIME_REGEXP,
+    ANIDB_SONG_REGEXP
+];
 
 let url = window.location.toString();
 for (let i in regexs) {
