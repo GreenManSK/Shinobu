@@ -5,6 +5,7 @@ define(function (require) {
     var ICON_NAME = "anidb.ico";
     var Icon = require("Kirino/Render/Icon");
     var FormLinker = require("Form/Linker");
+    var AnidbEpisode = require("Parsers/AnidbEpisode");
 
     return class OvaRender extends require("Kirino/Render/BasicRender") {
         constructor(color, column, settings) {
@@ -39,7 +40,7 @@ define(function (require) {
         updateOther($elementTag, element) {
             super.updateOther($elementTag, element);
             if (element.anidbEpisodeId) {
-                $elementTag.find(".top").append(this._createBadge("aniDB.net", element.anidbEpisodeId));
+                $elementTag.find(".top").append(this._createBadge("aniDB.net", AnidbEpisode.getUrl(element.anidbEpisodeId)));
             }
         }
 

@@ -30,7 +30,8 @@
       "matches": [
         "*://anison.info/data/song/*.html",
         "*://anidb.net/perl-bin/animedb.pl?show=anime&aid=*",
-        "*://anidb.net/perl-bin/animedb.pl?show=song&songid=*"
+        "*://anidb.net/perl-bin/animedb.pl?show=song&songid=*",
+        "*://anidb.net/perl-bin/animedb.pl?show=ep&eid=*"
       ],
       "js": [
         "libs/require.1.0.8.js",

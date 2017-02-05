@@ -6,7 +6,7 @@ requirejs.config({
     }
 });
 
-let AnidbSong;
+let AnidbEpisode;
 
 define(function (require) {
     "use strict";
@@ -21,5 +21,6 @@ define(function (require) {
     let BaseParser = require("Parsers/BaseParser");
     let Anison = require("Parsers/Anison");
     let AnidbAnime = require("Parsers/AnidbAnime");
-    AnidbSong = require("Parsers/AnidbSong");
+    let AnidbSong = require("Parsers/AnidbSong");
+    AnidbEpisode = require("Parsers/AnidbEpisode");
 });

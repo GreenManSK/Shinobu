@@ -32,7 +32,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return ["show", "type", "title", "author", "date", "anisonId", "vgmdbId", "searchText", "lastDateRefresh", "lastSearchRefresh"];
+            return ["show", "type", "title", "author", "date", "anisonId", "anidbId", "searchText", "lastDateRefresh", "lastSearchRefresh"];
         }
     };
 });
