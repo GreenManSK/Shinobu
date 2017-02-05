@@ -28,7 +28,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://anison.info/data/song/*.html"
+        "*://anison.info/data/song/*.html",
+        "*://anidb.net/perl-bin/animedb.pl?show=anime&aid=*"
       ],
       "js": [
         "libs/require.1.0.8.js",

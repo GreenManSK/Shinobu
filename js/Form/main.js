@@ -33,6 +33,9 @@ define(function (require) {
     require("Kirino/Render/Icon");
     require("Kirino/Settings");
 
+    require("Parsers/BaseParser");
+    require("Parsers/AnidbAnime");
+
     var Linker = require("Form/Linker");
     var BoxEntityForm = require("Form/BoxEntityForm");
 

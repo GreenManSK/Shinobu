@@ -1,6 +1,6 @@
 define(function (require) {
     var NAMESPACE = "Form/Entity";
-    var Synchronized = require("Base/Synchronized");
+    var OVAEntity = require("Kirino/Types/OVA");
     var BasicRender = require("Kirino/Render/BasicRender");
     var OvaRender = require("Kirino/Render/OvaRender");
     var KirinoSettings = require("Kirino/Settings");
@@ -42,15 +42,19 @@ define(function (require) {
             });
         }
 
-        _callback() {
+        get _getDataObject() {
+            return OVAEntity;
+        }
+
+        _callback(values) {
             let end = function () {
                 chrome.runtime.sendMessage({name: KirinoSettings.namespace + '.' + OvaRender.ID + '.render'}, null);
                 $(".close").click();
             };
             if (this.adding) {
-                var kirino = new Synchronized(KirinoSettings.namespace);
+                var kirino = new this._getDataObject(KirinoSettings.namespace);
                 kirino.set({
-                    ova: Synchronized.arrayAdder(this.id)
+                    ova: this._getDataObject.arrayAdder(values.id)
                 }).then(end);
             } else {
                 end();

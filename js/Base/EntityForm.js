@@ -12,10 +12,14 @@ define(function (require) {
             this.adding = id ? false : true;
         }
 
+        get _getDataObject() {
+            return Synchronized;
+        }
+
         _getData(items) {
             if (items && items.hasOwnProperty('id')) {
                 let THIS = this;
-                let object = new Synchronized(items['id']);
+                let object = new this._getDataObject(items['id']);
                 let get = {};
                 delete items['id'];
 
@@ -40,11 +44,11 @@ define(function (require) {
 
         _saveData(harvestedValues) {
             if (this.id) {
-                let object = new Synchronized(this.id);
+                let object = new this._getDataObject(this.id);
                 return object.set(harvestedValues);
             } else {
                 let THIS = this;
-                return Synchronized.create().then((object) => {
+                return this._getDataObject.create().then((object) => {
                     THIS.id = object.id;
                     return object.set(harvestedValues);
                 });
@@ -56,10 +60,13 @@ define(function (require) {
                 super._submitHandle(e, THIS);
             } else {
                 e.preventDefault();
-                let set = THIS._getValues();
-                let object = Synchronized.create();
+                let object = this._getDataObject.create();
                 object.then((object) => {
-                    object.set(set).then(() => {
+                    return new Promise((cb) => {
+                        THIS._harvestValues().then((values) => {
+                            object.set(values).then(cb());
+                        });
+                    }).then(() => {
                         Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
                         if (THIS.callback) {
                             THIS.callback(object);

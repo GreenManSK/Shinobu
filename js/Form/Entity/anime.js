@@ -1,10 +1,12 @@
 define(function (require) {
     var NAMESPACE = "Form/Entity";
-    var Synchronized = require("Base/Synchronized");
+    var AnimeEntity = require("Kirino/Types/Anime");
     var BasicRender = require("Kirino/Render/BasicRender");
     var AnimeRender = require("Kirino/Render/AnimeRender");
     var KirinoSettings = require("Kirino/Settings");
     var Form = require("Base/Form");
+    let BaseParser = require("Parsers/BaseParser");
+    let AnidbAnime = require("Parsers/AnidbAnime");
 
     var ITEMS = {
         "name": {
@@ -41,15 +43,21 @@ define(function (require) {
             });
         }
 
-        _callback() {
+        get _getDataObject() {
+            return AnimeEntity;
+        }
+
+        _callback(values) {
             let end = function () {
                 chrome.runtime.sendMessage({name: KirinoSettings.namespace + '.' + AnimeRender.ID + '.render'}, null);
                 $(".close").click();
             };
             if (this.adding) {
-                var kirino = new Synchronized(KirinoSettings.namespace);
+                var kirino = new this._getDataObject(KirinoSettings.namespace);
                 kirino.set({
-                    anime: Synchronized.arrayAdder(this.id)
+                    anime: this._getDataObject.arrayAdder(values.id)
+                }).then(() => {
+                    //@todo Send values.anidbId to load episodes message
                 }).then(end);
             } else {
                 end();

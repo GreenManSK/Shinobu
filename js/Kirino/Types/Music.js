@@ -24,7 +24,9 @@ define(function (require) {
                             lastDateRefresh: lastDateRefresh,
                             lastSearchRefresh: lastSearchRefresh
                         }
-                    );
+                    ).then(() => {
+                        return obj;
+                    });
                 }
             );
         }

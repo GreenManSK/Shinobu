@@ -1,6 +1,6 @@
 define(function (require) {
     var NAMESPACE = "Form/Entity";
-    var Synchronized = require("Base/Synchronized");
+    var MusicEntity = require("Kirino/Types/Music");
     var BasicRender = require("Kirino/Render/BasicRender");
     var MusicRender = require("Kirino/Render/MusicRender");
     var KirinoSettings = require("Kirino/Settings");
@@ -61,15 +61,19 @@ define(function (require) {
             });
         }
 
-        _callback() {
+        get _getDataObject() {
+            return MusicEntity;
+        }
+
+        _callback(object) {
             let end = function () {
                 chrome.runtime.sendMessage({name: KirinoSettings.namespace + '.' + MusicRender.ID + '.render'}, null);
                 $(".close").click();
             };
             if (this.adding) {
-                var kirino = new Synchronized(KirinoSettings.namespace);
+                var kirino = new this._getDataObject(KirinoSettings.namespace);
                 kirino.set({
-                    music: Synchronized.arrayAdder(this.id)
+                    music: this._getDataObject.arrayAdder(object.id)
                 }).then(end);
             } else {
                 end();

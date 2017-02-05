@@ -14,10 +14,15 @@ define(function (require) {
             console.error(this.constructor.name + " parser need to implement getUrl(id) method.");
         }
 
+        static _getDataUrl(id) {
+            return this.getUrl(id);
+        }
+
         static getData(id) {
             let THIS = this;
             return new Promise((cb) => {
-                let url = THIS.getUrl(id);
+                let url = THIS._getDataUrl(id);
+
                 let request = new XMLHttpRequest();
                 request.responseType = 'text';
 

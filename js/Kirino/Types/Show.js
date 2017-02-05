@@ -14,7 +14,9 @@ define(function (require) {
                             lastEpisodeRefresh: lastEpisodeRefresh,
                             lastSearchRefresh: lastSearchRefresh
                         }
-                    );
+                    ).then(() => {
+                        return obj;
+                    });
                 }
             );
         }

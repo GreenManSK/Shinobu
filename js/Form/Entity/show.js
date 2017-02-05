@@ -1,6 +1,6 @@
 define(function (require) {
     var NAMESPACE = "Form/Entity";
-    var Synchronized = require("Base/Synchronized");
+    var ShowEntity = require("Kirino/Types/Show");
     var BasicRender = require("Kirino/Render/BasicRender");
     var ShowRender = require("Kirino/Render/ShowRender");
     var KirinoSettings = require("Kirino/Settings");
@@ -38,15 +38,19 @@ define(function (require) {
             });
         }
 
-        _callback() {
+        get _getDataObject() {
+            return ShowEntity;
+        }
+
+        _callback(values) {
             let end = function () {
                 chrome.runtime.sendMessage({name: KirinoSettings.namespace + '.' + ShowRender.ID + '.render'}, null);
                 $(".close").click();
             };
             if (this.adding) {
-                var kirino = new Synchronized(KirinoSettings.namespace);
+                var kirino = new this._getDataObject(KirinoSettings.namespace);
                 kirino.set({
-                    show: Synchronized.arrayAdder(this.id)
+                    show: this._getDataObject.arrayAdder(values.id)
                 }).then(end);
             } else {
                 end();

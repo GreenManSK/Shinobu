@@ -74,14 +74,7 @@ define(function (require) {
 
                 $form.on('submit', function (e) {
                     e.preventDefault();
-                    THIS._harvestValues()
-                        .then((values) => THIS._saveData(values))
-                        .then(() => {
-                            Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
-                            if (THIS.callback) {
-                                THIS.callback();
-                            }
-                        });
+                    THIS._submitHandle(e, THIS);
                 }).on('reset', function (e) {
                     $(this).find('input, select, textarea').trigger('change');
                 });
@@ -281,6 +274,20 @@ define(function (require) {
                     cb();
                 });
             });
+        }
+
+        _submitHandle(e, THIS) {
+            THIS._harvestValues()
+                .then((values) => {
+                    THIS._saveData(values);
+                    return values;
+                })
+                .then((values) => {
+                    Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
+                    if (THIS.callback) {
+                        THIS.callback(values);
+                    }
+                });
         }
     }
 
