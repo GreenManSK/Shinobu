@@ -33,7 +33,8 @@ define(function (require) {
     let Anison = require("Parsers/Anison");
     let AnidbAnime = require("Parsers/AnidbAnime");
     let AnidbSong = require("Parsers/AnidbSong");
-    var AnidbEpisode = require("Parsers/AnidbEpisode");
+    let AnidbEpisode = require("Parsers/AnidbEpisode");
+    let TheTVDB = require("Parsers/TheTVDB");
 
     var Render = require("Notification/Render");
     let r = new Render();
@@ -42,6 +43,7 @@ define(function (require) {
     r.addParser(AnidbAnime);
     r.addParser(AnidbSong);
     r.addParser(AnidbEpisode);
+    r.addParser(TheTVDB);
 
     function start() {
         translateWholeDom();

@@ -39,7 +39,6 @@ define(function (require) {
             var $response = $(response);
             anime.anidbId = $response.get(1).id;
             anime.name = $response.find("title[type=main]").text();
-            console.log(anime);
 
             let episodes = $response.find("episode").toArray();
             for (let i in episodes) {

@@ -4,6 +4,7 @@ var NAMESPACE = "Kirino/Render";
     var ID = "show";
     var ICON_NAME = "tv";
     var Icon = require("Kirino/Render/Icon");
+    var TheTVDB = require("Parsers/TheTVDB");
 
     return class ShowRender extends require("Kirino/Render/EpisodicRender") {
         constructor(color, column, settings) {
@@ -17,8 +18,8 @@ var NAMESPACE = "Kirino/Render";
 
         updateOther($elementTag, element) {
             super.updateOther($elementTag, element);
-            if (element.nextEpisodeId || (element.thing && element.thing.nextEpisodeId)) {
-                $elementTag.find(".top").append(this._createBadge("next.net", element.nextEpisodeId));
+            if (element.thetvdbId || (element.thing && element.thing.thetvdbId)) {
+                $elementTag.find(".top").append(this._createBadge("thetvdb.com", TheTVDB.getUrl(element.thetvdbId)));
             }
         }
 

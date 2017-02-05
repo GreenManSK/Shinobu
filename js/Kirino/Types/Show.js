@@ -1,7 +1,7 @@
 var NAMESPACE = "Kirino/Types";
 define(function (require) {
     return class Show extends require("Kirino/Types/AEpisodic") {
-        static create(nextEpisodeId,
+        static create(thetvdbId,
                       name,
                       searchText = null,
                       lastEpisodeRefresh = null,
@@ -9,7 +9,7 @@ define(function (require) {
             return super.create().then((obj) => {
                     return obj.set({
                             name: name,
-                            nextEpisodeId: nextEpisodeId,
+                            thetvdbId: thetvdbId,
                             searchText: searchText,
                             lastEpisodeRefresh: lastEpisodeRefresh,
                             lastSearchRefresh: lastSearchRefresh
@@ -22,7 +22,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return super.attributes().concat(["name", "nextEpisodeId", "searchText", "lastEpisodeRefresh", "lastSearchRefresh"]);
+            return super.attributes().concat(["name", "thetvdbId", "searchText", "lastEpisodeRefresh", "lastSearchRefresh"]);
         }
 
         static decodeEpisodeNumber(number) {

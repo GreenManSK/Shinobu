@@ -127,6 +127,9 @@
   "nextEpisodeId": {
     "message": "next-episode.net ID"
   },
+  "thetvdbId": {
+    "message": "theTVDB.com ID"
+  },
   "notifications": {
     "message": "Notifications"
   },

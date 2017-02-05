@@ -14,9 +14,9 @@ define(function (require) {
                 [Form.VALIDATION.REQUIERED, "needToFill"]
             ]
         },
-        "nextEpisodeId": {
+        "thetvdbId": {
             type: Form.TYPE.TEXT,
-            label: 'nextEpisodeId'
+            label: 'thetvdbId'
         },
         "searchText": {
             type: Form.TYPE.TEXT,
@@ -51,6 +51,8 @@ define(function (require) {
                 var kirino = new this._getDataObject(KirinoSettings.namespace);
                 kirino.set({
                     show: this._getDataObject.arrayAdder(values.id)
+                }).then(() => {
+                    //@todo Send values.thetvdbId to load episodes message
                 }).then(end);
             } else {
                 end();
