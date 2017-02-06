@@ -21,7 +21,8 @@ define(function (require) {
             label: 'anidbId',
             validators: [
                 [Form.VALIDATION.REQUIERED, "needToFill"]
-            ]
+            ],
+            help: "http://anidb.net/perl-bin/animedb.pl?show=main"
         },
         "searchText": {
             type: Form.TYPE.TEXT,

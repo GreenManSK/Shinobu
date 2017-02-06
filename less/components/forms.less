@@ -52,10 +52,12 @@
 
     .field.group {
         display: flex;
+        flex-flow: row wrap;
 
         input, textarea {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
+            flex-basis: ~"calc(100% - 35px)";
         }
 
         .help {
@@ -71,6 +73,13 @@
 
         a.help {
             cursor: pointer;
+        }
+
+        label {
+            page-break-before: always;
+            page-break-after: always;
+            display: block;
+            //margin: .3rem .5rem 0;
         }
     }
 

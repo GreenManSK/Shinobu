@@ -16,7 +16,8 @@ define(function (require) {
         },
         "thetvdbId": {
             type: Form.TYPE.TEXT,
-            label: 'thetvdbId'
+            label: 'thetvdbId',
+            help: "http://www.thetvdb.com/"
         },
         "searchText": {
             type: Form.TYPE.TEXT,

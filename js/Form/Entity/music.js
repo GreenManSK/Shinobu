@@ -31,11 +31,13 @@ define(function (require) {
         },
         "anisonId": {
             type: Form.TYPE.NUMBER,
-            label: 'anisonId'
+            label: 'anisonId',
+            help: "http://anison.info/"
         },
         "anidbId": {
             type: Form.TYPE.NUMBER,
-            label: 'anidbId'
+            label: 'anidbId',
+            help: "http://anidb.net/perl-bin/animedb.pl?show=main"
         },
         "date": {
             type: Form.TYPE.DATE,

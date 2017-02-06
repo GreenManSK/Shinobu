@@ -16,7 +16,8 @@ define(function (require) {
         },
         "anidbEpisodeId": {
             type: Form.TYPE.NUMBER,
-            label: 'anidbId'
+            label: 'anidbId',
+            help: "http://anidb.net/perl-bin/animedb.pl?show=main"
         },
         "date": {
             type: Form.TYPE.DATE,
