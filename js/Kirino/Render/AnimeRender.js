@@ -5,6 +5,8 @@ define(function (require) {
     var ICON_NAME = "anidb.ico";
     var Icon = require("Kirino/Render/Icon");
     let AnidbAnime = require("Parsers/AnidbAnime");
+    var SearchGenerator = require("Kirino/Helpers/SearchGenerator");
+    var Nyaaeu = require("Parsers/Nyaaeu");
 
     return class AnimeRender extends require("Kirino/Render/EpisodicRender") {
         constructor(color, column, settings) {
@@ -19,7 +21,8 @@ define(function (require) {
         updateText($elementTag, element) {
             var content = "";
             if (element.thing && element.thing.searchText) {
-                content += "<a href='#seach'>[" + element.thing.searchText + "]</a>";
+                let search = SearchGenerator.generate(element.number, element.thing.searchText, AnimeRender.elementClass);
+                content += "<a target='_blank' href='" + Nyaaeu.getSearchUrl(search) + "'>[" + search + "]</a>";
             }
             $elementTag.find(".text").html(content);
         }

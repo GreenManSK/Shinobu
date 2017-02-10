@@ -26,10 +26,18 @@ define(function (require) {
         }
 
         static decodeEpisodeNumber(number) {
-            let text = "S" + Show.pad(Math.floor(number / 1000), 2);
-            text += "E" + Show.pad(number - Math.floor(number / 1000) * 1000, 2);
+            let text = "S" + Show.pad(Show.getEpisode(number), 2);
+            text += "E" + Show.pad(Show.getSeason(number), 2);
 
             return text;
+        }
+
+        static getEpisode(number) {
+            return Math.floor(number / 1000);
+        }
+
+        static getSeason(number) {
+            return number - Math.floor(number / 1000) * 1000;
         }
 
     };

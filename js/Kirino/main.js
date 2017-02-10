@@ -35,6 +35,7 @@ define(function (require) {
 
     require("Parsers/BaseParser");
     require("Parsers/Anison");
+    require("Parsers/Nyaaeu");
 
     require("Kirino/Types/AEpisodic");
     var Anime = require("Kirino/Types/Anime");
@@ -42,6 +43,8 @@ define(function (require) {
     var OVA = require("Kirino/Types/OVA");
     var Music = require("Kirino/Types/Music");
     var Episode = require("Kirino/Types/Episode");
+
+    var SearchGenerator = require("Kirino/Helpers/SearchGenerator");
 
     var BasicRender = require("Kirino/Render/BasicRender");
     require("Kirino/Render/Icon");
@@ -59,7 +62,6 @@ define(function (require) {
         if (inserted)
             KirinoBot.say("Data inserted, we can go!");
     });
-
 
     function start() {
         translateWholeDom();

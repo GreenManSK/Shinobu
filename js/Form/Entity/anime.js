@@ -26,7 +26,8 @@ define(function (require) {
         },
         "searchText": {
             type: Form.TYPE.TEXT,
-            label: 'searchText'
+            label: 'searchText',
+            help: "searchTextHelp"
         },
         "submit": {
             type: Form.TYPE.SUBMIT,

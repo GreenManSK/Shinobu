@@ -141,5 +141,8 @@
   },
   "seen": {
     "message": "Seen"
+  },
+  "searchTextHelp": {
+    "message": "You can use %n for episode number, %s and %e for series and episode in series.\nAlso things like %(n+12) or %(s-1).\nAnd for padding you can use %s_10 for 09 or %e_1000 for 0005 and so on."
   }
 }

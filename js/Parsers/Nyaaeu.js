@@ -15,7 +15,10 @@ define(function (require) {
         }
 
         static getUrl(id) {
-            return URL_TEMPALTE.replace("(.*)", encodeURIComponent(id.replace(/\s/g, '+')));
+            return URL_TEMPALTE.replace("(.*)", encodeURIComponent(id).replace(/%20/g, '+'));
+        }
+        static getSearchUrl(search) {
+            return "https://www.nyaa.se/?page=search&cats=0_0&filter=0&term=" + encodeURIComponent(search).replace(/%20/g, '+');
         }
 
         static _onLoad(cb, evt, response) {
