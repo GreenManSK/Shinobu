@@ -30,11 +30,12 @@ define(function (require) {
     var MainMenu = require("Base/MainMenu");
     var Form = require("Base/Form");
 
+    var BoxEntityForm = require("Form/BoxEntityForm");
+
     var BasicRender = require("Kirino/Render/BasicRender");
     require("Kirino/Render/Icon");
 
     var KirinoSettings = require("Kirino/Settings");
-
 
     var shinobuSettings = {
         developerMode: {
@@ -44,28 +45,24 @@ define(function (require) {
         maxNotificationNumber: {
             type: Form.TYPE.NUMBER,
             label: "maxNotificationNumber",
-            default: 20,
             attrs: {
                 min: 1
             }
         },
         notificationColor: {
             type: Form.TYPE.TEXT,
-            label: "notificationColor",
-            default: "#3385AD"
+            label: "notificationColor"
         },
         notificationFadeTime: {
             type: Form.TYPE.NUMBER,
             label: "notificationFadeTime",
-            default: 4000,
             attrs: {
                 min: 1000
             }
         },
         syncRefreshRate: {
             type: Form.TYPE.TIME,
-            label: "syncRefreshRate",
-            default: "01:02"
+            label: "syncRefreshRate"
         },
         submit: {
             type: Form.TYPE.SUBMIT,
@@ -81,30 +78,25 @@ define(function (require) {
         "maxEpisodes": {
             type: Form.TYPE.NUMBER,
             label: "maxEpisodesPerThing",
-            default: 4,
             attrs: {
                 min: 1
             }
         },
         anidbRefreshRate: {
             type: Form.TYPE.TIME,
-            label: "anidbRefreshRate",
-            default: "03:00"
+            label: "anidbRefreshRate"
         },
         nyaaRefreshRate: {
             type: Form.TYPE.TIME,
-            label: "nyaaRefreshRate",
-            default: "00:30"
+            label: "nyaaRefreshRate"
         },
         anisonRefreshRate: {
             type: Form.TYPE.TIME,
-            label: "anisonRefreshRate",
-            default: "06:00"
+            label: "anisonRefreshRate"
         },
-        vgmdbRefreshRate: {
+        tvdbRefreshRate: {
             type: Form.TYPE.TIME,
-            label: "vgmdbRefreshRate",
-            default: "06:00"
+            label: "tvdbRefreshRate"
         },
         submit: {
             type: Form.TYPE.SUBMIT,
@@ -117,8 +109,8 @@ define(function (require) {
         Notifications.start();
         MainMenu.start();
 
-        var shinobuForm = new Form(shinobuSettings, shinobuCallback);
-        var kirinoForm = new Form(kirinoSettings);
+        var shinobuForm = new BoxEntityForm("shinobu", BasicRender.Color.CYAN, null, "Shinobu", shinobuSettings, shinobuCallback);
+        var kirinoForm = new BoxEntityForm("kirino", BasicRender.Color.YELLOW, null, "Kirino", kirinoSettings);
 
         shinobuForm.showLabels(true);
         kirinoForm.showLabels(true);

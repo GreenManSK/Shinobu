@@ -21,7 +21,7 @@ define(function (require) {
     });
 
     var Data = require("Base/Data");
-    require("Base/Synchronized");
+    var Synchronized = require("Base/Synchronized");
     require("Base/Translator");
     var MainMenu = require("Base/MainMenu");
 
@@ -47,8 +47,8 @@ define(function (require) {
 
     function start() {
         translateWholeDom();
-        Data.get("developerMode", (items) => {
-            if (items.developerMode)
+        (new Synchronized("Shinobu")).get("developerMode").then((value) => {
+            if (value)
                 MainMenu.start(true);
         });
         r.renderAdd("div.add");

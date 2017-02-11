@@ -56,16 +56,16 @@
     "message": "Developer mode"
   },
   "notificationFadeTime": {
-    "message": "Notification fade type"
+    "message": "Notification fade time"
   },
   "syncRefreshRate": {
     "message": "Synchronization refresh rate"
   },
   "anisonRefreshRate": {
-    "message": "Aanison data refresh rate"
+    "message": "Anison data refresh rate"
   },
-  "vgmdbRefreshRate": {
-    "message": "VGMdb.net data refresh rate"
+  "tvdbRefreshRate": {
+    "message": "TheTVDB.com data refresh rate"
   },
   "nyaaRefreshRate": {
     "message": "nyaa.eu data refresh rate"

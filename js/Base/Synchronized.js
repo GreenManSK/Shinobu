@@ -158,10 +158,14 @@ define(function (require) {
             for (let k in data) {
                 newData[this._getStorageKey(k)] = {
                     val: data[k],
-                    timestamp: Data.timestamp()
+                    timestamp: this._timestamp()
                 };
             }
             return newData;
+        }
+
+        _timestamp() {
+            return Data.timestamp();
         }
 
         /**

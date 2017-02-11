@@ -1,7 +1,6 @@
 define(function (require) {
     var NAMESPACE = "Background/Messages";
     let dispatcher = require("Background/Messages/Dispatcher");
-    let Data = require("Base/Data");
     let Synchronized = require("Base/Synchronized");
 
     let DEFAULT_ICON = "icons/shinobu/128.png";
@@ -15,7 +14,10 @@ define(function (require) {
         _loadSettings() {
             let THIS = this;
             return new Promise((cb) => {
-                Data.get({"maxNotificationNumber": 20, "notificationColor": "#3385AD"}, (data) => {
+                (new Synchronized("Shinobu")).get({
+                    "maxNotificationNumber": 20,
+                    "notificationColor": "#3385AD"
+                }).then((data) => {
                     THIS.max = data["maxNotificationNumber"];
                     THIS.color = data["notificationColor"];
                     cb();

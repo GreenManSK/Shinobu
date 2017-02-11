@@ -56,7 +56,8 @@ define(function (require) {
                 YELLOW: "yellow",
                 PINK: "pink",
                 PURPLE: "purple",
-                GRAY: "gray"
+                GRAY: "gray",
+                CYAN: "cyan"
             };
         }
 

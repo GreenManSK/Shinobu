@@ -14,6 +14,7 @@ define(function (require) {
     require("Base/Synchronized");
     require("Base/Translator");
 
+    var DefualtSetter = require("Background/DefualtSetter");
     var dispatcher = require("Background/Messages/Dispatcher");
     require("Background/Messages/Badge");
     require("Background/Messages/ExtensionNotifications");
@@ -28,25 +29,27 @@ define(function (require) {
 
     var KirinoNotify = require("Background/Loops/KirinoNotify");
 
-    dispatcher.start();
+    DefualtSetter.set().then(() => {
+        dispatcher.start();
 
-    let notifiers = [
-        new KirinoNotify()
-    ];
-    chrome.alarms.onAlarm.addListener(function (alarm) {
-        if (alarm.name === MAIN_LOOP_ALARM) {
-            console.log("Main loop executions:" + new Date());
-            for (let i in notifiers) {
-                notifiers[i].start();
+        let notifiers = [
+            new KirinoNotify()
+        ];
+        chrome.alarms.onAlarm.addListener(function (alarm) {
+            if (alarm.name === MAIN_LOOP_ALARM) {
+                console.log("Main loop executions:" + new Date());
+                for (let i in notifiers) {
+                    notifiers[i].start();
+                }
             }
-        }
-    });
-
-    chrome.runtime.onInstalled.addListener(function () {
-        chrome.alarms.create(MAIN_LOOP_ALARM, {
-            when: Date.now() + 5 * 1000,
-            periodInMinutes: 30
         });
-        dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
+
+        chrome.runtime.onInstalled.addListener(function () {
+            chrome.alarms.create(MAIN_LOOP_ALARM, {
+                when: Date.now() + 5 * 1000,
+                periodInMinutes: 30
+            });
+            dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
+        });
     });
 });

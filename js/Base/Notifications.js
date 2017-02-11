@@ -1,6 +1,6 @@
 var NAMESPACE = "Base";
 define(function (require) {
-    var Data = require("Base/Data");
+    var Synchronized = require("Base/Synchronized");
     var ID = 'notifications';
     var DATA_REPEAT = "data-repeat";
     var DATA_END = "data-end";
@@ -32,10 +32,10 @@ define(function (require) {
         constructor() {
             this.fadeInterval = 4000;
             var THIS = this;
-            Data.get({
+            (new Synchronized("Shinobu")).get({
                 notificationFadeTime: 4000,
                 developerMode: false
-            }, (items) => {
+            }).then((items) => {
                 if (items.fadeInterval)
                     THIS.fadeInterval = items.fadeInterval;
                 THIS.developerMode = items.developerMode;
