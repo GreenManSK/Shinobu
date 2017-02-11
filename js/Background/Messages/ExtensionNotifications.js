@@ -54,12 +54,13 @@ define(function (require) {
             }
             this._chromeNotification(notification);
             let THIS = this;
-            this.promise.then(() => {
+            this.promise = this.promise.then(() => {
                 return THIS.shinobu.set({
                     "notifications": Synchronized.arrayAdder(notification)
                 });
             }).then(() => {
                 THIS.checkMax();
+                return true;
             });
         }
 
@@ -84,7 +85,7 @@ define(function (require) {
 
         seeAll() {
             let THIS = this;
-            this.promise.then(() => {
+            this.promise = this.promise.then(() => {
                 return THIS.shinobu.get({
                     "notifications": []
                 });
@@ -97,6 +98,7 @@ define(function (require) {
                     "notifications": notifications
                 }).then(() => {
                     THIS.reload();
+                    return true;
                 });
             });
         }
