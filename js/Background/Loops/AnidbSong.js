@@ -8,6 +8,7 @@ define(function (require) {
     var Music = require("Kirino/Types/Music");
 
     let LOOP_NAME = "anidbSongLoop";
+    let DELAY = 2 * 60 * 1000;
 
     return class AnidbSong extends require("Background/Loops/ALoop") {
         constructor() {
@@ -37,28 +38,31 @@ define(function (require) {
 
         _getDates(ids) {
             Music.getAll(ids).then((elements) => {
+                let k = 0;
                 for (let i in elements) {
                     let e = elements[i];
                     if (e.anidbId && !e.anisonId) {
-                        AnidbSongParser.getData(e.anidbId).then((data) => {
-                            let set = {};
-                            if (data.anisonId) {
-                                set["anidbId"] = data.anidbId;
-                            }
-                            if (data.date) {
-                                set["date"] = data.date.getTime();
-                            }
-                            if (!e.title && data.title) {
-                                set["title"] = data.title;
-                            }
-                            if (!e.author && data.author) {
-                                set["author"] = data.author;
-                            }
+                        setTimeout(() => {
+                            AnidbSongParser.getData(e.anidbId).then((data) => {
+                                let set = {};
+                                if (data.anisonId) {
+                                    set["anidbId"] = data.anidbId;
+                                }
+                                if (data.date) {
+                                    set["date"] = data.date.getTime();
+                                }
+                                if (!e.title && data.title) {
+                                    set["title"] = data.title;
+                                }
+                                if (!e.author && data.author) {
+                                    set["author"] = data.author;
+                                }
 
-                            if (Object.keys(set).length > 0) {
-                                (new Music(e.id)).set(set);
-                            }
-                        });
+                                if (Object.keys(set).length > 0) {
+                                    (new Music(e.id)).set(set);
+                                }
+                            });
+                        }, DELAY * k++);
                     }
                 }
             });

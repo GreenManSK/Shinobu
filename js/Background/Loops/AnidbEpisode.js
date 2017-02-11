@@ -8,6 +8,7 @@ define(function (require) {
     var OVA = require("Kirino/Types/OVA");
 
     let LOOP_NAME = "anidbEpisodeLoop";
+    let DELAY = 2.7 * 60 * 1000;
 
     return class AnidbEpisode extends require("Background/Loops/ALoop") {
         constructor() {
@@ -37,19 +38,22 @@ define(function (require) {
 
         _getDates(ids) {
             OVA.getAll(ids).then((elements) => {
+                let k = 0;
                 for (let i in elements) {
                     let e = elements[i];
                     if (e.anidbEpisodeId && !e.date) {
-                        AnidbEpisodeParser.getData(e.anidbEpisodeId).then((data) => {
-                                let set = {};
-                                if (data.date) {
-                                    set["date"] = data.date.getTime();
+                        setTimeout(() => {
+                            AnidbEpisodeParser.getData(e.anidbEpisodeId).then((data) => {
+                                    let set = {};
+                                    if (data.date) {
+                                        set["date"] = data.date.getTime();
+                                    }
+                                    if (Object.keys(set).length > 0) {
+                                        (new OVA(e.id)).set(set);
+                                    }
                                 }
-                                if (Object.keys(set).length > 0) {
-                                    (new OVA(e.id)).set(set);
-                                }
-                            }
-                        );
+                            );
+                        }, DELAY * k++);
                     }
                 }
             });
