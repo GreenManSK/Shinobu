@@ -7,14 +7,16 @@ define(function (require) {
                       date,
                       lastSearchRefresh = 0,
                       found = false,
-                      seen = false) {
+                      seen = false,
+                      notified = false) {
             return super.create().then((obj) => {
                     return obj.set({
                             number: number,
                             date: date,
                             lastSearchRefresh: lastSearchRefresh,
                             found: found,
-                            seen: seen
+                            seen: seen,
+                        notified: notified
                         }
                     );
                 }
@@ -37,7 +39,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return super.attributes().concat(["number", "date", "lastSearchRefresh", "found", "seen", "thing"]);
+            return super.attributes().concat(["number", "date", "lastSearchRefresh", "found", "seen", "thing", "notified"]);
         }
     };
 });
