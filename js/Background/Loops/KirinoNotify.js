@@ -9,19 +9,9 @@ define(function (require) {
     var Music = require("Kirino/Types/Music");
     var Episode = require("Kirino/Types/Episode");
 
-    let DEFAULT_ICON = "icons/kirino/128.png";
-
-    return class KirinoNotify {
-        static get TODAY() {
-            var d = new Date();
-            d.setHours(23);
-            d.setMinutes(59);
-            d.setSeconds(59);
-            d.setMilliseconds(59);
-            return d.getTime();
-        }
-
+    return class KirinoNotify extends require("Background/Loops/ALoop") {
         constructor() {
+            super();
             this.kirino = new Synchronized(KirinoSettings.namespace);
         }
 
@@ -88,16 +78,6 @@ define(function (require) {
                     }
                 }
             });
-        }
-
-        _notify(text, link = "kirino.html", icon = null) {
-            chrome.runtime.sendMessage({
-                name: "extensionNotifications.add",
-                "text": _(text),
-                "img": icon === null,
-                "icon": icon !== null ? icon : DEFAULT_ICON,
-                "link": link
-            }, null);
         }
     }
 });

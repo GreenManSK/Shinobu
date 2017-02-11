@@ -10,6 +10,8 @@ var MAIN_LOOP_ALARM = "mainLoop";
 
 define(function (require) {
     "use strict";
+    require("lib/jquery");
+
     var Data = require("Base/Data");
     require("Base/Synchronized");
     require("Base/Translator");
@@ -27,13 +29,25 @@ define(function (require) {
     var Music = require("Kirino/Types/Music");
     var Episode = require("Kirino/Types/Episode");
 
+    let BaseParser = require("Parsers/BaseParser");
+    let AnisonParser = require("Parsers/Anison");
+    let AnidbAnimeParser = require("Parsers/AnidbAnime");
+    let AnidbSongParser = require("Parsers/AnidbSong");
+    let AnidbEpisodeParser = require("Parsers/AnidbEpisode");
+    let TheTVDBParser = require("Parsers/TheTVDB");
+
+    require("Background/Loops/ALoop");
     var KirinoNotify = require("Background/Loops/KirinoNotify");
+    var Anison = require("Background/Loops/Anison");
+    var AnidbSong = require("Background/Loops/AnidbSong");
 
     DefualtSetter.set().then(() => {
         dispatcher.start();
 
         let notifiers = [
-            new KirinoNotify()
+            new KirinoNotify(),
+            new Anison(),
+            new AnidbSong()
         ];
         chrome.alarms.onAlarm.addListener(function (alarm) {
             if (alarm.name === MAIN_LOOP_ALARM) {

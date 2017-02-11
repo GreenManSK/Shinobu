@@ -39,7 +39,9 @@ define(function (require) {
             song.title = $response.find(":contains('Main Title')").parent('tr').find('.value span').text();
             song.author = $response.find(".creators .value").text();
 
-            song.anisonId = Anison.getIdFromUrl($response.find('.anison').attr('href'));
+            let anisonUrl = $response.find('.anison').attr('href');
+            if (anisonUrl)
+                song.anisonId = Anison.getIdFromUrl(anisonUrl);
 
             cb(song);
         }
