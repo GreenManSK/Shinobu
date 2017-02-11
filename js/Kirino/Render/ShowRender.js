@@ -19,7 +19,7 @@ var NAMESPACE = "Kirino/Render";
         updateOther($elementTag, element) {
             super.updateOther($elementTag, element);
             if (element.thetvdbId || (element.thing && element.thing.thetvdbId)) {
-                $elementTag.find(".top").append(this._createBadge("thetvdb.com", TheTVDB.getUrl(element.thetvdbId)));
+                $elementTag.find(".top").append(this._createBadge("TheTVDB.com", TheTVDB.getUrl((element.thing ? element.thing : element).thetvdbId)));
             }
         }
 
