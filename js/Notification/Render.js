@@ -63,7 +63,7 @@ define(function (require) {
                 $item.addClass(SEEN_CLASS);
             }
             if (notification.link) {
-                $item.find("a").attr("href", notification.link);
+                $item.find("a").attr("href", notification.link).attr('target', '_blank');
             }
             if (notification.img) {
                 $item.find(".icon").append($("<img src='" + notification.icon + "' />"));
