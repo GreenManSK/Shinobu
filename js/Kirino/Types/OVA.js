@@ -15,8 +15,6 @@ define(function (require) {
                             anidbEpisodeId: anidbEpisodeId,
                             date: date,
                             searchText: searchText,
-                            lastDateRefresh: lastDateRefresh,
-                            lastSearchRefresh: lastSearchRefresh,
                             notified: notified
                         }
                     ).then(() => {
@@ -27,7 +25,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return ["name", "anidbEpisodeId", "date", "searchText", "lastDateRefresh", "lastSearchRefresh", "notified"];
+            return ["name", "anidbEpisodeId", "date", "searchText", "notified"];
         }
     };
 });

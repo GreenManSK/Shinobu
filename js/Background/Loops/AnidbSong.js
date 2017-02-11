@@ -54,8 +54,7 @@ define(function (require) {
                             if (!e.author && data.author) {
                                 set["author"] = data.author;
                             }
-                            console.log(set);
-                            console.log(data);
+
                             if (Object.keys(set).length > 0) {
                                 (new Music(e.id)).set(set);
                             }

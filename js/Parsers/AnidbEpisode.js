@@ -28,7 +28,7 @@ define(function (require) {
             var $response = $(response);
 
             ova.name = $response.find("h1").text().replace("Episode: ", "");
-            let date = $response.find(".g_odd.date td").text().split(".");
+            let date = $response.find("#tab_1_pane .date td").text().split(".");
             if (date.length === 3) {
                 ova.date = new Date();
                 ova.date.setDate(date[0]);

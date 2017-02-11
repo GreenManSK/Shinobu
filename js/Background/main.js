@@ -40,6 +40,7 @@ define(function (require) {
     var KirinoNotify = require("Background/Loops/KirinoNotify");
     var Anison = require("Background/Loops/Anison");
     var AnidbSong = require("Background/Loops/AnidbSong");
+    var AnidbEpisode = require("Background/Loops/AnidbEpisode");
 
     DefualtSetter.set().then(() => {
         dispatcher.start();
@@ -47,7 +48,8 @@ define(function (require) {
         let notifiers = [
             new KirinoNotify(),
             new Anison(),
-            new AnidbSong()
+            new AnidbSong(),
+            new AnidbEpisode()
         ];
         chrome.alarms.onAlarm.addListener(function (alarm) {
             if (alarm.name === MAIN_LOOP_ALARM) {

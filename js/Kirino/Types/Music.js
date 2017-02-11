@@ -9,8 +9,6 @@ define(function (require) {
                       anisonId = null,
                       anidbId = null,
                       searchText = null,
-                      lastDateRefresh = null,
-                      lastSearchRefresh = null,
                       notified = false) {
             return super.create().then((obj) => {
                     return obj.set({
@@ -22,8 +20,6 @@ define(function (require) {
                             anisonId: anisonId,
                             anidbId: anidbId,
                             searchText: searchText,
-                            lastDateRefresh: lastDateRefresh,
-                            lastSearchRefresh: lastSearchRefresh,
                             notified: notified
                         }
                     ).then(() => {
@@ -34,7 +30,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return ["show", "type", "title", "author", "date", "anisonId", "anidbId", "searchText", "lastDateRefresh", "lastSearchRefresh", "notified"];
+            return ["show", "type", "title", "author", "date", "anisonId", "anidbId", "searchText", "notified"];
         }
     };
 });
