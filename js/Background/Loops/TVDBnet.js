@@ -46,6 +46,10 @@ define(function (require) {
             super._getEpisodes(ids, maxEpisodes);
         }
 
+        _parseEpisodeNumber(episode) {
+            return Show.createNumber(e.episode, e.season);
+        }
+
         _add(show, ids) {
             let start = new Promise((cb) => cb());
             let showObj = new Show(show.id);

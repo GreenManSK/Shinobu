@@ -30,6 +30,20 @@ define(function (require) {
                         this.loops[k].start(false, message.forced);
                     }
                     break;
+                case "anime":
+                    if (message.hasOwnProperty("fromDate")) {
+                        this.loops["anidb.anime"].getEpisodesFromDate(message.ids, message.fromDate, message.count);
+                    } else if (message.hasOwnProperty("fromEpisode")) {
+                        this.loops["anidb.anime"].getEpisodesFromNumber(message.ids, message.fromEpisode, message.count);
+                    }
+                    break;
+                case "show":
+                    if (message.hasOwnProperty("fromDate")) {
+                        this.loops["tvdbnet"].getEpisodesFromDate(message.ids, message.fromDate, message.count);
+                    } else if (message.hasOwnProperty("fromEpisode")) {
+                        this.loops["tvdbnet"].getEpisodesFromNumber(message.ids, message.fromEpisode, message.count);
+                    }
+                    break;
                 default:
                     if (this.loops.hasOwnProperty(message.name))
                         this.loops[message.name].start(message.ids, message.forced);

@@ -51,7 +51,7 @@ define(function (require) {
             let animeObj = new Anime(anime.id);
             for (let i in ids) {
                 let e = ids[i];
-                start.then(() => {
+                start = start.then(() => {
                     return Episode.create(animeObj, e.number, e.date.getTime());
                 });
             }

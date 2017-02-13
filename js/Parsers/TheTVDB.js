@@ -44,6 +44,16 @@ define(function (require) {
                 }
             }
 
+            function compare(a, b) {
+                if (a.number < b.number)
+                    return -1;
+                if (a.number > b.number)
+                    return 1;
+                return 0;
+            }
+
+            show.episodes.sort(compare);
+
             cb(show);
         }
 

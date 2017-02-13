@@ -53,11 +53,11 @@ define(function (require) {
                 get[THIS.REFRESH_RATE_NAME] = "00:00";
                 THIS.kirino.get(get).then((kirino) => {
                     if (ids) {
-                        THIS._getEpisodes(ids, kirino['maxEpisodes']);
+                        THIS._getNewEpisodes(ids, kirino['maxEpisodes']);
                         return;
                     }
                     if (forced || AEpisodeLoop.TODAY - last > THIS._timeToMs(kirino[THIS.REFRESH_RATE_NAME])) {
-                        THIS._getEpisodes(kirino[THIS.TYPE_NAME], kirino['maxEpisodes']);
+                        THIS._getNewEpisodes(kirino[THIS.TYPE_NAME], kirino['maxEpisodes']);
                         o[THIS.LOOP_NAME] = AEpisodeLoop.TODAY;
                         Data.set(o);
                     }
@@ -65,10 +65,107 @@ define(function (require) {
             });
         }
 
-        _getEpisodes(ids, maxEpisodes) {
+        _getNewEpisodes(ids, maxEpisodes) {
+            let THIS = this;
+            THIS._getShowsData(ids).then((object) => {
+                let data = object.data;
+                let shows = object.shows;
+                let k = 0;
+                for (let i in shows) {
+                    let show = shows[i];
+                    let getNew = maxEpisodes - data[i]['aired'];
+                    let last = data[i]['last'];
+                    if (getNew > 0) {
+                        setTimeout(() => {
+                            let add = [];
+                            THIS.PARSER_CLASS.getData(show[THIS.ID_KEY]).then((data) => {
+                                for (let i in data.episodes) {
+                                    let e = data.episodes[i];
+                                    if (e && e.date && typeof e.date === 'object' && last < e.date.getTime()) {
+                                        add.push(e);
+                                        getNew -= 1;
+                                        if (getNew <= 0)
+                                            break;
+                                    }
+                                }
+                                THIS._add(show, add);
+                            });
+                        }, THIS.DELAY * k++);
+                    }
+                }
+            });
+        }
+
+        getEpisodesFromDate(ids, date, count) {
+            let THIS = this;
+            THIS._getShowsData(ids).then((object) => {
+                let data = object.data;
+                let shows = object.shows;
+                let k = 0;
+                for (let i in shows) {
+                    let show = shows[i];
+                    let last = data[i]['last'];
+                    setTimeout(() => {
+                        let add = [];
+                        THIS.PARSER_CLASS.getData(show[THIS.ID_KEY]).then((data) => {
+                            let need = count;
+                            for (let i in data.episodes) {
+                                let e = data.episodes[i];
+                                if (e && e.date && typeof e.date === 'object' && date < e.date.getTime()) {
+                                    add.push(e);
+                                    need -= 1;
+                                    if (need <= 0)
+                                        break;
+                                }
+                            }
+                            THIS._add(show, add);
+                        });
+                    }, THIS.DELAY * k++);
+                }
+            });
+        }
+
+        getEpisodesFromNumber(ids, number, count) {
+            let THIS = this;
+            THIS._getShowsData(ids).then((object) => {
+                let data = object.data;
+                let shows = object.shows;
+                let k = 0;
+                for (let i in shows) {
+                    let show = shows[i];
+                    let last = data[i]['last'];
+                    setTimeout(() => {
+                        let add = [];
+                        THIS.PARSER_CLASS.getData(show[THIS.ID_KEY]).then((data) => {
+                            let need = count;
+                            for (let i in data.episodes) {
+                                let e = data.episodes[i];
+                                let eNum = THIS._parseEpisodeNumber(e);
+                                if (e && eNum && eNum > number) {
+                                    add.push(e);
+                                    need -= 1;
+                                    if (need <= 0)
+                                        break;
+                                }
+                            }
+                            THIS._add(show, add);
+                        });
+                    }, THIS.DELAY * k++);
+                }
+            });
+        }
+
+        _parseEpisodeNumber(episode) {
+            return episode.number;
+        }
+
+        _getShowsData(ids) {
             let THIS = this;
             let TODAY = AEpisodeLoop.TODAY;
-            THIS.THING_CLASS.getAll(ids).then((shows) => {
+            let _shows = null;
+            let _data = null;
+            return THIS.THING_CLASS.getAll(ids).then((shows) => {
+                _shows = shows;
                 let episodes = [];
                 let data = {};
                 for (let k in shows) {
@@ -78,40 +175,21 @@ define(function (require) {
                         last: TODAY
                     };
                 }
-                Episode.getAll(episodes).then((episodes) => {
-                    for (let i in episodes) {
-                        let e = episodes[i];
-                        if (e.date < TODAY) {
-                            data[e.thing]['aired'] += 1;
-                            data[e.thing]['last'] = e.date;
-                        }
+                _data = data;
+                return Episode.getAll(episodes);
+            }).then((episodes) => {
+                let data = _data;
+                for (let i in episodes) {
+                    let e = episodes[i];
+                    if (e.date < TODAY) {
+                        data[e.thing]['aired'] += 1;
+                        data[e.thing]['last'] = e.date;
                     }
-                    return data;
-                }).then((data) => {
-                    let k = 0;
-                    for (let i in shows) {
-                        let show = shows[i];
-                        let getNew = maxEpisodes - data[i]['aired'];
-                        let last = data[i]['last'];
-                        if (getNew > 0) {
-                            setTimeout(() => {
-                                let add = [];
-                                THIS.PARSER_CLASS.getData(show[THIS.ID_KEY]).then((data) => {
-                                    for (let i in data.episodes) {
-                                        let e = data.episodes[i];
-                                        if (e && e.date && typeof e.date === 'object' && last < e.date.getTime()) {
-                                            add.push(e);
-                                            getNew -= 1;
-                                            if (getNew <= 0)
-                                                break;
-                                        }
-                                    }
-                                    THIS._add(show, add);
-                                });
-                            }, THIS.DELAY * k++);
-                        }
-                    }
-                });
+                }
+                return {
+                    data: data,
+                    shows: _shows
+                };
             });
         }
 
