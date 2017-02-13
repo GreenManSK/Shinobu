@@ -5,7 +5,6 @@ define(function (require) {
         static create(thing,
                       number,
                       date,
-                      lastSearchRefresh = 0,
                       found = false,
                       seen = false,
                       notified = false) {
@@ -13,10 +12,9 @@ define(function (require) {
                     return obj.set({
                             number: number,
                             date: date,
-                            lastSearchRefresh: lastSearchRefresh,
                             found: found,
                             seen: seen,
-                        notified: notified
+                            notified: notified
                         }
                     );
                 }
@@ -39,7 +37,7 @@ define(function (require) {
         }
 
         static attributes() {
-            return super.attributes().concat(["number", "date", "lastSearchRefresh", "found", "seen", "thing", "notified"]);
+            return super.attributes().concat(["number", "date", "found", "seen", "thing", "notified"]);
         }
     };
 });

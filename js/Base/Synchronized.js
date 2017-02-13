@@ -10,6 +10,7 @@ define(function (require) {
          */
         constructor(id) {
             this.id = id;
+            this._setPromies = new Promise((cb) => cb());
         }
 
         set id(id) {
@@ -111,25 +112,31 @@ define(function (require) {
                         break;
                     }
                 }
-                if (!fun) {
-                    Data.storage.set(THIS._prepareForStorage(key), () => {
-                        result(THIS);
-                    });
-                } else {
-                    THIS.get(THIS._nullObject(key)).then((items) => {
-                        let set = {};
-                        for (var k in key) {
-                            if (typeof key[k] === 'function') {
-                                set[k] = key[k](items[k]);
-                            } else {
-                                set[k] = key[k];
-                            }
+                this._setPromies = this._setPromies.then(() => {
+                    return new Promise((cb) => {
+                        if (!fun) {
+                            Data.storage.set(THIS._prepareForStorage(key), () => {
+                                cb();
+                                result(THIS);
+                            });
+                        } else {
+                            THIS.get(THIS._nullObject(key)).then((items) => {
+                                let set = {};
+                                for (var k in key) {
+                                    if (typeof key[k] === 'function') {
+                                        set[k] = key[k](items[k]);
+                                    } else {
+                                        set[k] = key[k];
+                                    }
+                                }
+                                Data.storage.set(THIS._prepareForStorage(set), () => {
+                                    cb();
+                                    result(THIS);
+                                });
+                            });
                         }
-                        Data.storage.set(THIS._prepareForStorage(set), () => {
-                            result(THIS);
-                        });
                     });
-                }
+                });
             });
         }
 

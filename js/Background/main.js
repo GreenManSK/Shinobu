@@ -13,11 +13,12 @@ define(function (require) {
     require("lib/jquery");
 
     var Data = require("Base/Data");
-    require("Base/Synchronized");
+    var Synchronized = require("Base/Synchronized");
     require("Base/Translator");
 
     var DefualtSetter = require("Background/DefualtSetter");
     var dispatcher = require("Background/Messages/Dispatcher");
+    var KirinoDispatcher = require("Background/Messages/KirinoDispatcher");
     require("Background/Messages/Badge");
     require("Background/Messages/ExtensionNotifications");
 
@@ -37,35 +38,35 @@ define(function (require) {
     let TheTVDBParser = require("Parsers/TheTVDB");
 
     require("Background/Loops/ALoop");
+    require("Background/Loops/AEpisodeLoop");
     var KirinoNotify = require("Background/Loops/KirinoNotify");
     var Anison = require("Background/Loops/Anison");
     var AnidbSong = require("Background/Loops/AnidbSong");
     var AnidbEpisode = require("Background/Loops/AnidbEpisode");
+    var TVDBnet = require("Background/Loops/TVDBnet");
+    var AnidbAnime = require("Background/Loops/AnidbAnime");
 
     DefualtSetter.set().then(() => {
         dispatcher.start();
-
-        let notifiers = [
-            new KirinoNotify(),
-            new Anison(),
-            new AnidbSong(),
-            new AnidbEpisode()
-        ];
+        dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
         chrome.alarms.onAlarm.addListener(function (alarm) {
             if (alarm.name === MAIN_LOOP_ALARM) {
-                console.log("Main loop executions:" + new Date());
-                for (let i in notifiers) {
-                    notifiers[i].start();
-                }
+                let kirino = new Synchronized("Kirino");
+                kirino.get("getNewDataAuto").then((getNewDataAuto) => {
+                    if (getNewDataAuto) {
+                        console.log("Main loop executions:" + new Date());
+                        dispatcher._dispatchMessage({name: "kirino.all"});
+                    }
+                });
             }
         });
+    });
 
-        chrome.runtime.onInstalled.addListener(function () {
-            chrome.alarms.create(MAIN_LOOP_ALARM, {
-                when: Date.now() + 5 * 1000,
-                periodInMinutes: 30
-            });
-            dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
+    chrome.runtime.onInstalled.addListener(function () {
+        chrome.alarms.clearAll();
+        chrome.alarms.create(MAIN_LOOP_ALARM, {
+            when: Date.now() + 60 * 1000,
+            periodInMinutes: 30
         });
     });
 });

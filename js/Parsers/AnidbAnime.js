@@ -44,8 +44,23 @@ define(function (require) {
             for (let i in episodes) {
                 let $ep = $(episodes[i]);
                 let airdate = $ep.find("airdate").text();
-                anime.episodes[$ep.find("epno[type=1]").text()] = airdate ? new Date(airdate) : null;
+                let num = parseInt($ep.find("epno[type=1]").text());
+                if (!isNaN(num))
+                    anime.episodes.push({
+                        date: airdate ? new Date(airdate) : null,
+                        number: num
+                    });
             }
+
+            function compare(a, b) {
+                if (a.number < b.number)
+                    return -1;
+                if (a.number > b.number)
+                    return 1;
+                return 0;
+            }
+
+            anime.episodes.sort(compare);
 
             cb(anime);
         }

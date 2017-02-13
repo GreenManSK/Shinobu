@@ -16,7 +16,11 @@ define(function (require) {
             this.kirino = new Synchronized(KirinoSettings.namespace);
         }
 
-        start() {
+        start(ids, forced = false) {
+            if (ids) {
+                this._getDates(ids);
+                return;
+            }
             let THIS = this;
             let o = {};
             o[LOOP_NAME] = 0;
@@ -26,8 +30,7 @@ define(function (require) {
                     "music": [],
                     "anidbRefreshRate": "00:00"
                 }).then((kirino) => {
-                    if (AnidbSong.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
-                        console.log("Getting AnidbSong data: " + new Date());
+                    if (forced || AnidbSong.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
                         THIS._getDates(kirino['music']);
                         o[LOOP_NAME] = AnidbSong.TODAY;
                         Data.set(o);
@@ -37,6 +40,7 @@ define(function (require) {
         }
 
         _getDates(ids) {
+            console.log("Getting AnidbSong data: " + new Date(), ids);
             Music.getAll(ids).then((elements) => {
                 let k = 0;
                 for (let i in elements) {

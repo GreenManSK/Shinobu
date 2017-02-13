@@ -16,8 +16,8 @@ define(function (require) {
 
         }
 
-        start() {
-            console.error(this.constructor.name + " loop need to implement start() method.");
+        start(ids, forced = false) {
+            console.error(this.constructor.name + " loop need to implement start(ids, forced) method.");
         }
 
         _notify(text, link = "kirino.html", icon = null) {

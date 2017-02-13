@@ -11,6 +11,7 @@ define(function (require) {
     };
 
     let KIRINO_DEFAULTS = {
+        getNewDataAuto: true,
         maxEpisodes: 2,
         anidbRefreshRate: "06:00",
         nyaaRefreshRate: "01:00",

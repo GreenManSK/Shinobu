@@ -1,5 +1,6 @@
 define(function (require) {
     var NAMESPACE = "Background/Loops";
+    let dispatcher = require("Background/Messages/Dispatcher");
     var Data = require("Base/Data");
     var Synchronized = require("Base/Synchronized");
     var KirinoSettings = require("Kirino/Settings");
@@ -16,7 +17,11 @@ define(function (require) {
             this.kirino = new Synchronized(KirinoSettings.namespace);
         }
 
-        start() {
+        start(ids, forced = false) {
+            if (ids) {
+                this._getDates(ids);
+                return;
+            }
             let THIS = this;
             let o = {};
             o[LOOP_NAME] = 0;
@@ -26,8 +31,7 @@ define(function (require) {
                     "ova": [],
                     "anidbRefreshRate": "00:00"
                 }).then((kirino) => {
-                    if (AnidbEpisode.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
-                        console.log("Getting AnidbEpisode data: " + new Date());
+                    if (forced || AnidbEpisode.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
                         THIS._getDates(kirino['ova']);
                         o[LOOP_NAME] = AnidbEpisode.TODAY;
                         Data.set(o);
@@ -37,6 +41,7 @@ define(function (require) {
         }
 
         _getDates(ids) {
+            console.log("Getting AnidbEpisode data: " + new Date(), ids);
             OVA.getAll(ids).then((elements) => {
                 let k = 0;
                 for (let i in elements) {

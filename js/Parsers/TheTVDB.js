@@ -32,8 +32,16 @@ define(function (require) {
             let episodes = $response.find("#listtable tbody tr").toArray();
             for (let i in episodes) {
                 let $ep = $(episodes[i]);
-                let airdate = $ep.find(".odd:nth-child(3)").text().trim();
-                show.episodes[$ep.find(".odd:nth-child(1)").text().trim()] = airdate ? new Date(airdate) : null;
+                let airdate = $ep.find("td:nth-child(3)").text().trim();
+                let name = $ep.find("td:nth-child(1)").text().trim();
+                let split = name.split("x");
+                if (split.length > 1) {
+                    show.episodes.push({
+                        season: parseInt(split[0]),
+                        episode: parseInt(split[1]),
+                        date: airdate ? new Date(airdate) : null
+                    });
+                }
             }
 
             cb(show);

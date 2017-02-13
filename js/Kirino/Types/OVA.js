@@ -6,8 +6,6 @@ define(function (require) {
                       anidbEpisodeId = null,
                       date = null,
                       searchText = null,
-                      lastDateRefresh = 0,
-                      lastSearchRefresh = 0,
                       notified =  false) {
             return super.create().then((obj) => {
                     return obj.set({

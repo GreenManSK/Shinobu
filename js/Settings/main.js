@@ -75,6 +75,10 @@ define(function (require) {
     };
 
     var kirinoSettings = {
+        getNewDataAuto: {
+            type: Form.TYPE.CHECKBOX,
+            label: "getNewDataAuto"
+        },
         "maxEpisodes": {
             type: Form.TYPE.NUMBER,
             label: "maxEpisodesPerThing",

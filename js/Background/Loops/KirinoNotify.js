@@ -15,7 +15,7 @@ define(function (require) {
             this.kirino = new Synchronized(KirinoSettings.namespace);
         }
 
-        start() {
+        start(ids, forced = false) {
             let THIS = this;
             this.kirino.get({
                 "anime": [],
