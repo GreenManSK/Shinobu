@@ -58,11 +58,6 @@ define(function (require) {
     // Start
     KirinoBot.say(_("kirinoWelcome"));
 
-    require("Kirino/data").then((inserted) => {
-        if (inserted)
-            KirinoBot.say("Data inserted, we can go!");
-    });
-
     function start() {
         translateWholeDom();
         Notifications.start();
