@@ -8,6 +8,7 @@ define(function (require) {
     var AnidbEpisode = require("Background/Loops/AnidbEpisode");
     var TVDBnet = require("Background/Loops/TVDBnet");
     var AnidbAnime = require("Background/Loops/AnidbAnime");
+    var Nyaaeu = require("Background/Loops/Nyaaeu");
 
     class KirinoDispatcher {
         constructor() {
@@ -17,7 +18,8 @@ define(function (require) {
                 "anidb.song": new AnidbSong(),
                 "anidb.episode": new AnidbEpisode(),
                 "tvdbnet": new TVDBnet(),
-                "anidb.anime": new AnidbAnime()
+                "anidb.anime": new AnidbAnime(),
+                "nyaaeu": new Nyaaeu()
             };
         }
 

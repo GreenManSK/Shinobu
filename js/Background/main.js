@@ -36,6 +36,9 @@ define(function (require) {
     let AnidbSongParser = require("Parsers/AnidbSong");
     let AnidbEpisodeParser = require("Parsers/AnidbEpisode");
     let TheTVDBParser = require("Parsers/TheTVDB");
+    let NyaaeuParser = require("Parsers/Nyaaeu");
+
+    var SearchGenerator = require("Kirino/Helpers/SearchGenerator");
 
     require("Background/Loops/ALoop");
     require("Background/Loops/AEpisodeLoop");
@@ -45,6 +48,7 @@ define(function (require) {
     var AnidbEpisode = require("Background/Loops/AnidbEpisode");
     var TVDBnet = require("Background/Loops/TVDBnet");
     var AnidbAnime = require("Background/Loops/AnidbAnime");
+    var Nyaaeu = require("Background/Loops/Nyaaeu");
 
     DefualtSetter.set().then(() => {
         dispatcher.start();
