@@ -6,7 +6,7 @@ var NAMESPACE = "Base";
         }
 
         timestamp() {
-            return Date.now();
+            return Date.now().valueOf();
         }
 
         get(keys, callback) {

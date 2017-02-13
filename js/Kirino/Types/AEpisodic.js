@@ -6,7 +6,7 @@ var NAMESPACE = "Kirino/Types";
                     return obj.set({
                             episodes: [],
                             lastEpisode: 0,
-                            showAll: false
+                            showAll: true
                         }
                     );
                 }

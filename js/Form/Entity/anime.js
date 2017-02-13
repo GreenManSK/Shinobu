@@ -59,7 +59,11 @@ define(function (require) {
                 kirino.set({
                     anime: this._getDataObject.arrayAdder(values.id)
                 }).then(() => {
-                    //@todo Send values.anidbId to load episodes message
+                    chrome.runtime.sendMessage({
+                        name: "kirino.anidb.anime",
+                        "forced": true,
+                        "ids": [values.id]
+                    }, null);
                 }).then(end);
             } else {
                 end();

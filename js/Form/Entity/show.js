@@ -53,7 +53,11 @@ define(function (require) {
                 kirino.set({
                     show: this._getDataObject.arrayAdder(values.id)
                 }).then(() => {
-                    //@todo Send values.thetvdbId to load episodes message
+                    chrome.runtime.sendMessage({
+                        name: "kirino.tvdbnet",
+                        "forced": true,
+                        "ids": [values.id]
+                    }, null);
                 }).then(end);
             } else {
                 end();
