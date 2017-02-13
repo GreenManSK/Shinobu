@@ -21,6 +21,11 @@ define(function (require) {
                 return;
             }
             let match = message.name.match(/^([^.]*)\.(.*)$/);
+            if (match === null) {
+                if (sendResponse)
+                    sendResponse(false, "Invalid message name");
+                return;
+            }
             let namespace = match[1];
             message.name = match[2];
             if (!this.listen.hasOwnProperty(namespace)) {
