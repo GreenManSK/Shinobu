@@ -1,16 +1,20 @@
 define(function (require) {
     var NAMESPACE = "Parsers";
 
-    let URL_MATCH = new RegExp(/^https?:\/\/www\.thetvdb\.com\/\?tab=seasonall&id=(\d+)/, 'i');
-    let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\/i|\\|s\?)/g, "");
+    let URL_MATCH = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/\?tab=seasonall&id=(\d+)/, 'i');
+    let URL_MATCH2 = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/\?tab=series&id=(\d+)&lid=\d+/, 'i');
+    let URL_TEMPALTE = URL_MATCH.toString().replace(/\(\?:www\\\.\)\?/g,"www.").replace(/(\/\^|\/i|\\|s\?)/g, "");
 
     return class TheTVDB extends require("Parsers/BaseParser") {
         static doesUrlMatch(url) {
-            return url.match(URL_MATCH) !== null;
+            return url.match(URL_MATCH) !== null || url.match(URL_MATCH2) !== null;
         }
 
         static getIdFromUrl(url) {
-            let match = url.match(URL_MATCH);
+            var match = url.match(URL_MATCH);
+            if (match !== null)
+                return match[1];
+            match = url.match(URL_MATCH2);
             return match !== null ? match[1] : null;
         }
 

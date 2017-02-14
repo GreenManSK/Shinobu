@@ -2,14 +2,16 @@ let ANISON_REGEXP = new RegExp(/^https?:\/\/anison\.info\/data\/song\/(\d+)\.htm
 let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=anime&aid=(\d+)/, 'i');
 let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=song&songid=(\d+)/, 'i');
 let ANIDB_EPISODE_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=ep&eid=(\d+)/, 'i');
-let THETVDB_REGEXP = new RegExp(/^https?:\/\/(www\.)?thetvdb\.com\/\?tab=seasonall&id=(\d+)/, 'i');
+let THETVDB_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/\?tab=seasonall&id=(\d+)/, 'i');
+let THETVDB2_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/\?tab=series&id=(\d+)&lid=\d+/, 'i');
 
 let regexs = [
     ANISON_REGEXP,
     ANIDB_ANIME_REGEXP,
     ANIDB_SONG_REGEXP,
     ANIDB_EPISODE_REGEXP,
-    THETVDB_REGEXP
+    THETVDB_REGEXP,
+    THETVDB2_REGEXP
 ];
 
 let url = window.location.toString();
