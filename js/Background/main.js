@@ -70,7 +70,7 @@ define(function (require) {
         chrome.alarms.clearAll();
         chrome.alarms.create(MAIN_LOOP_ALARM, {
             when: Date.now() + 60 * 1000,
-            periodInMinutes: 30
+            periodInMinutes: 10
         });
     });
 });

@@ -47,7 +47,7 @@ define(function (require) {
         }
 
         _parseEpisodeNumber(episode) {
-            return Show.createNumber(e.episode, e.season);
+            return Show.createNumber(episode.episode, episode.season);
         }
 
         _add(show, ids) {
