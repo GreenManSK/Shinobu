@@ -1,6 +1,7 @@
 define(function (require) {
     var NAMESPACE = "Background/Loops";
     let DEFAULT_ICON = "icons/kirino/128.png";
+    var dispatcher = require("Background/Messages/Dispatcher");
 
     return class ALoop {
         static get TODAY() {
@@ -21,7 +22,7 @@ define(function (require) {
         }
 
         _notify(text, link = "kirino.html", icon = null) {
-            chrome.runtime.sendMessage({
+            dispatcher._dispatchMessage({
                 name: "extensionNotifications.add",
                 "text": text,
                 "img": icon === null,
