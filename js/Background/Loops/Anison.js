@@ -32,7 +32,7 @@ define(function (require) {
                 }).then((kirino) => {
                     if (forced || Anison.TODAY - last > THIS._timeToMs(kirino["anisonRefreshRate"])) {
                         THIS._getDates(kirino['music']);
-                        o[LOOP_NAME] = Anison.TODAY;
+                        o[LOOP_NAME] = Data.timestamp();
                         Data.set(o);
                     }
                 });
