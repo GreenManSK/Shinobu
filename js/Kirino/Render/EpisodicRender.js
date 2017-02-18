@@ -18,11 +18,13 @@ define(function (require) {
                 let newElements = [];
                 for (let k in elements) {
                     let show = elements[k];
+                    show.epObj = {};
                     if (show.episodes.length === 0) {
                         newElements.push(show);
                     } else {
                         for (let i in show.episodes) {
                             let epi = episodes[show.episodes[i]];
+                            show.epObj[epi.id] = epi;
                             epi.thing = show;
                             if (!epi.seen) {
                                 newElements.push(epi);
@@ -56,7 +58,19 @@ define(function (require) {
             $elementTag.attr("thing-id", this.elementSelector(main));
 
             if (main.episodes.length > 0) {
-                $elementTag.append($('<div class="' + SHOW_MORE_CLASS + ' ' +
+                if (!main.unseen) {
+                    main.unseen = "";
+                    let first = true;
+                    for (let i in main.episodes) {
+                        if (first) {
+                            first = false;
+                            continue;
+                        }
+                        let epi = main.epObj[main.episodes[i]];
+                        main.unseen += main.name + " " + main.class.decodeEpisodeNumber(epi.number) + "\n";
+                    }
+                }
+                $elementTag.append($('<div title="' + main.unseen + '" class="' + SHOW_MORE_CLASS + ' ' +
                     (main.showAll === false ? '' : 'hide') +
                     '"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></div>'));
                 if (main.showAll === false) {

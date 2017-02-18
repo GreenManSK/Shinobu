@@ -201,10 +201,14 @@ define(function (require) {
             if (!element.date) {
                 $date.addClass(UNKNOWN_DATE_CLASS);
             }
-            if (element.date && element.date <= BasicRender.TODAY) {
+            if (this._seenDate(element)) {
                 $elementTag.addClass(ACTUAL_ITEM_CLASS);
             }
             $date.text(element.date ? date.toLocaleDateString() : _("unknown"));
+        }
+
+        _seenDate(element) {
+            return element.date && element.date <= BasicRender.TODAY;
         }
 
         updateButtons($elementTag, element) {
