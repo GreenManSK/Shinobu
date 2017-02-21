@@ -41,9 +41,9 @@ define(function (require) {
             return "thetvdbId";
         }
 
-        _getEpisodes(ids, maxEpisodes) {
+        _getNewEpisodes(ids, maxEpisodes) {
             console.log("Getting TVDBnet data: " + new Date(), ids);
-            super._getEpisodes(ids, maxEpisodes);
+            super._getNewEpisodes(ids, maxEpisodes);
         }
 
         _parseEpisodeNumber(episode) {

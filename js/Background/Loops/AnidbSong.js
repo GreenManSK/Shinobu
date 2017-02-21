@@ -30,9 +30,9 @@ define(function (require) {
                     "music": [],
                     "anidbRefreshRate": "00:00"
                 }).then((kirino) => {
-                    if (forced || AnidbSong.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
+                    if (forced || AnidbSong.NOW - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
                         THIS._getDates(kirino['music']);
-                        o[LOOP_NAME] = Data.timestamp();
+                        o[LOOP_NAME] = AnidbSong.NOW;
                         Data.set(o);
                     }
                 });

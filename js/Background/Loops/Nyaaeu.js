@@ -33,9 +33,9 @@ define(function (require) {
                     "anime": [],
                     "nyaaRefreshRate": "00:00"
                 }).then((kirino) => {
-                    if (forced || Nyaaeu.TODAY - last > THIS._timeToMs(kirino["nyaaRefreshRate"])) {
+                    if (forced || Nyaaeu.NOW - last > THIS._timeToMs(kirino["nyaaRefreshRate"])) {
                         THIS._findTorrents(kirino['anime']);
-                        o[LOOP_NAME] = Data.timestamp();
+                        o[LOOP_NAME] = Nyaaeu.NOW;
                         Data.set(o);
                     }
                 });

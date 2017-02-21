@@ -41,9 +41,9 @@ define(function (require) {
             return "anidbId";
         }
 
-        _getEpisodes(ids, maxEpisodes) {
+        _getNewEpisodes(ids, maxEpisodes) {
             console.log("Getting AniDB Anime data: " + new Date(), ids);
-            super._getEpisodes(ids, maxEpisodes);
+            super._getNewEpisodes(ids, maxEpisodes);
         }
 
         _add(anime, ids) {

@@ -31,9 +31,9 @@ define(function (require) {
                     "ova": [],
                     "anidbRefreshRate": "00:00"
                 }).then((kirino) => {
-                    if (forced || AnidbEpisode.TODAY - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
+                    if (forced || AnidbEpisode.NOW - last > THIS._timeToMs(kirino["anidbRefreshRate"])) {
                         THIS._getDates(kirino['ova']);
-                        o[LOOP_NAME] = Data.timestamp();
+                        o[LOOP_NAME] = AnidbEpisode.NOW;
                         Data.set(o);
                     }
                 });

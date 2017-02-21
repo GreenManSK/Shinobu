@@ -2,6 +2,7 @@ define(function (require) {
     var NAMESPACE = "Background/Loops";
     let DEFAULT_ICON = "icons/kirino/128.png";
     var dispatcher = require("Background/Messages/Dispatcher");
+    var Data = require("Base/Data");
 
     return class ALoop {
         static get TODAY() {
@@ -11,6 +12,10 @@ define(function (require) {
             d.setSeconds(59);
             d.setMilliseconds(59);
             return d.getTime();
+        }
+
+        static get NOW() {
+            return  Data.timestamp();
         }
 
         constructor() {
@@ -33,7 +38,7 @@ define(function (require) {
 
         _timeToMs(time) {
             let parts = time.split(":");
-            return 1000 * (parseInt(parts[1] + 60 * parseInt(parts[0])));
+            return 1000 * 60 * (parseInt(parts[1] + 60 * parseInt(parts[0])));
         }
     };
 });
