@@ -147,5 +147,20 @@
   },
   "getNewDataAuto": {
     "message": "Get new data automatically"
+  },
+  "quickAccess": {
+    "message": "Quick Access"
+  },
+  "change": {
+    "message": "Change"
+  },
+  "fontSize": {
+    "message": "Font size"
+  },
+  "split": {
+    "message": "Split"
+  },
+  "join": {
+    "message": "Join"
   }
 }

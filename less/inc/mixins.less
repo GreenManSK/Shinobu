@@ -1,5 +1,5 @@
 .prepare-body() {
-    font-size:62.5%;
+    font-size: 62.5%;
     font-family: @font;
     .zero();
 }
@@ -22,7 +22,8 @@
         clear: both;
         height: 0;
     }
-    display: inline-table; display: block;
+    display: inline-table;
+    display: block;
 }
 
 .prepareUl() {
@@ -49,11 +50,11 @@
             background: @color;
         }
     }
-    
+
     li .top .badge {
         background: darken(@color, 5%);
         &:hover, &:focus, &:active {
-        background: @color;
+            background: @color;
         }
     }
 }
@@ -83,6 +84,14 @@
 
     ::-webkit-scrollbar-thumb {
         background: @bg;
-        background: rgba(255,255,255,@bar);
+        background: rgba(255, 255, 255, @bar);
     }
+}
+
+.maximize() {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

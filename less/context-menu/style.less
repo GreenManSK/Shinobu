@@ -6,77 +6,138 @@
 @contextMenu-borderRadius: 5px;
 
 .context-menu-list {
-  font-size: @contextMenu-fontSize;
-  background-color: transparent;
-  border-color: @contextMenu-borderColor;
-  padding: 0;
-  border-radius: @contextMenu-borderRadius;
+    font-size: @contextMenu-fontSize;
+    background-color: transparent;
+    border-color: @contextMenu-borderColor;
+    padding: 0;
+    border-radius: @contextMenu-borderRadius;
 }
 
 .context-menu-item {
-  background-color: @contextMenu-bgColor;
-  color: @contextMenu-textColor;
+    background-color: @contextMenu-bgColor;
+    color: @contextMenu-textColor;
 }
 
 .context-menu-item:first-child {
-  border-radius: @contextMenu-borderRadius @contextMenu-borderRadius 0 0;
-  padding-top: 0.5rem;
+    border-radius: @contextMenu-borderRadius @contextMenu-borderRadius 0 0;
+    padding-top: 0.5rem;
 }
 
 .context-menu-item:last-child {
-  border-radius: 0 0 @contextMenu-borderRadius @contextMenu-borderRadius;
-  padding-bottom: 0.5rem;
+    border-radius: 0 0 @contextMenu-borderRadius @contextMenu-borderRadius;
+    padding-bottom: 0.5rem;
 }
 
 .context-menu-item.context-menu-hover {
-  background-color: fade(@contextMenu-bgColor, 90%);
+    background-color: fade(@contextMenu-bgColor, 90%);
 }
 
 .context-menu-icon::before, .context-menu-icon.context-menu-icon--fa::before {
-  color: @contextMenu-textColor;
+    color: @contextMenu-textColor;
 }
 
 .context-menu-separator {
-  margin: 0;
+    margin: 0;
+}
+
+.context-menu-list {
+    input {
+        background: none;
+        border: none;
+        color: @contextMenu-textColor;
+        outline: none;
+        font-size: 1.4rem;
+    }
+
+    .active {
+        background: fade(@contextMenu-bgColor, 90%) !important;
+    }
+
+    .context-menu-disabled {
+        background: fadeout(@contextMenu-bgColor, 15%);
+    }
+
+    .fontSize {
+        color: @contextMenu-textColor;
+        label {
+            display: inline;
+            width: auto;
+        }
+        label span:after {
+            content: ":";
+        }
+        input {
+            display: inline !important;
+            width: 2rem!important;
+            text-align: right;
+            margin-left: .5rem;
+        }
+        &:after {
+            content: "px";
+        }
+    }
+
+    .joining {
+        width: 50%;
+        box-sizing: border-box;
+        float: left;
+        text-align: center;
+        font-size: 2rem;
+        &::before {
+            position: static !important;
+            text-align: center;
+        }
+        & + .joining {
+            float: none;
+            margin-left: 50%;
+        }
+        span {
+            display: none;
+        }
+    }
+}
+
+.context-menu-submenu:after {
+    border-left-color: @contextMenu-textColor;
 }
 
 /* Color picker */
 .context-menu-list .color-picker {
-  &, .li {
-    .prepareUl();
-  }
+    &, .li {
+        .prepareUl();
+    }
 
-  li {
-    display: inline-block;
-    clear: none;
-    background: #fff;
-    width: 2rem;
-    height: 2rem;
-    border-radius: .5em;
-    margin: 0 4px;
-    border: 1px solid @contextMenu-borderColor;
-  }
+    li {
+        display: inline-block;
+        clear: none;
+        background: #fff;
+        width: 2rem;
+        height: 2rem;
+        border-radius: .5em;
+        margin: 0 4px;
+        border: 1px solid @contextMenu-borderColor;
+    }
 }
 
 /* Place picker */
 .context-menu-list .place-picker {
-  &, .li {
-    .prepareUl();
-  }
-  width: 50px;
-  margin: 0 auto !important;
-  li {
-    display: block;
-  }
-  li.up, li.down {
-    margin: 4px auto;
-    text-align: center;
-    clear: both;
-  }
-  li.left {
-    float: left;
-  }
-  li.right {
-    float: right;
-  }
+    &, .li {
+        .prepareUl();
+    }
+    width: 50px;
+    margin: 0 auto !important;
+    li {
+        display: block;
+    }
+    li.up, li.down {
+        margin: 4px auto;
+        text-align: center;
+        clear: both;
+    }
+    li.left {
+        float: left;
+    }
+    li.right {
+        float: right;
+    }
 }
