@@ -196,9 +196,7 @@ define(function (require) {
                 if (typeof key === 'object') {
                     var r = {};
                     for (var k in items) {
-                        if (items[k]) {
-                            r[k] = items[k].hasOwnProperty("val") ? items[k]["val"] : items[k];
-                        }
+                        r[k] = typeof items[k] === 'object' && items[k] !== null && items[k].hasOwnProperty("val") ? items[k]["val"] : items[k];
                     }
                     return r;
                 }
