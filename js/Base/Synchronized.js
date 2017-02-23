@@ -3,6 +3,8 @@ var NAMESPACE = "Base";
 define(function (require) {
     var Data = require("Base/Data");
 
+    var subClasses = {};
+
     return class Synchronized {
         /**
          * Creates object from provided ID in database
@@ -30,6 +32,10 @@ define(function (require) {
             return [];
         }
 
+        static _registerClass(subClass) {
+            subClasses[subClass.name] = subClass;
+        }
+
         /**
          * Creates new object
          * @returns {Promise}
@@ -45,6 +51,7 @@ define(function (require) {
                         "_itterator": items["_itterator"] + 1
                     };
                     set[obj.id] = Data.timestamp();
+                    set[obj._getStorageKey("class")] = obj.constructor.name;
                     Data.storage.set(set, function () {
                         cb(obj);
                     });
@@ -64,6 +71,7 @@ define(function (require) {
 
                 let get = [];
                 let attrs = THIS.attributes();
+                attrs.push("class");
 
                 let objs = {};
 
@@ -76,11 +84,14 @@ define(function (require) {
                 Data.storage.get(get, function (items) {
                     var final = {};
                     for (let id in objs) {
+                        let className = items[objs[id]._getStorageKey("class")];
                         final[id] = {
                             id: id,
-                            class: THIS
+                            class: typeof subClasses[className] !== 'undefined' ? new subClasses[className](id) : THIS
                         };
                         for (let attr in attrs) {
+                            if (attrs[attr] === 'class')
+                                continue;
                             final[id][attrs[attr]] = items[objs[id]._getStorageKey(attrs[attr])];
                             final[id][attrs[attr]] = final[id][attrs[attr]] ? final[id][attrs[attr]]['val'] : final[id][attrs[attr]];
                         }

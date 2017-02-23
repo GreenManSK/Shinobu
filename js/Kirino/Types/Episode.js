@@ -1,7 +1,9 @@
-var NAMESPACE = "Kirino/Types";
 define(function (require) {
+    var NAMESPACE = "Kirino/Types";
+    var Synchronized = require("Base/Synchronized");
     var AEpisodic = require("Kirino/Types/AEpisodic");
-    return class Episode extends require("Base/Synchronized") {
+
+    class Episode extends Synchronized {
         static create(thing,
                       number,
                       date,
@@ -39,5 +41,9 @@ define(function (require) {
         static attributes() {
             return super.attributes().concat(["number", "date", "found", "seen", "thing", "notified"]);
         }
-    };
+    }
+
+    Synchronized._registerClass(Episode);
+
+    return Episode;
 });

@@ -1,7 +1,8 @@
-var NAMESPACE = "Kirino/Types";
 define(function (require) {
+    var NAMESPACE = "Kirino/Types";
+    var Synchronized = require("Base/Synchronized");
 
-    return class Anime extends require("Kirino/Types/AEpisodic") {
+    class Anime extends require("Kirino/Types/AEpisodic") {
         static create(anidbId,
                       name,
                       searchText = null,
@@ -29,5 +30,9 @@ define(function (require) {
         static decodeEpisodeNumber(number) {
             return number;
         }
-    };
+    }
+
+    Synchronized._registerClass(Anime);
+
+    return Anime;
 });

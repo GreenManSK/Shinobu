@@ -1,6 +1,8 @@
-var NAMESPACE = "Kirino/Types";
 define(function (require) {
-    return class Show extends require("Kirino/Types/AEpisodic") {
+    var NAMESPACE = "Kirino/Types";
+    var Synchronized = require("Base/Synchronized");
+
+    class Show extends require("Kirino/Types/AEpisodic") {
         static create(thetvdbId,
                       name,
                       searchText = null) {
@@ -40,5 +42,9 @@ define(function (require) {
             return season * 1000 + episode;
         }
 
-    };
+    }
+
+    Synchronized._registerClass(Show);
+
+    return Show;
 });

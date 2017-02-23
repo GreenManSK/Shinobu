@@ -3,7 +3,7 @@ define(function (require) {
     var NAMESPACE = "Shinobu/Types";
     var Shinobu = new Synchronized("Shinobu");
 
-    return class Note extends Synchronized {
+    class Note extends Synchronized {
         static get Color() {
             return {
                 RED: "red",
@@ -41,5 +41,9 @@ define(function (require) {
         static attributes() {
             return ["title", "text", "color", "fontSize"];
         }
-    };
+    }
+
+    Synchronized._registerClass(Note)
+
+    return Note;
 });

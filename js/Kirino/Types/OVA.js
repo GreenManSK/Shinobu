@@ -1,7 +1,8 @@
-var NAMESPACE = "Kirino/Types";
-
 define(function (require) {
-    return class OVA extends require("Base/Synchronized") {
+    var NAMESPACE = "Kirino/Types";
+    var Synchronized = require("Base/Synchronized");
+
+    class OVA extends Synchronized {
         static create(name,
                       anidbEpisodeId = null,
                       date = null,
@@ -25,5 +26,9 @@ define(function (require) {
         static attributes() {
             return ["name", "anidbEpisodeId", "date", "searchText", "notified"];
         }
-    };
+    }
+
+    Synchronized._registerClass(OVA);
+
+    return OVA;
 });

@@ -1,6 +1,8 @@
-var NAMESPACE = "Kirino/Types";
 define(function (require) {
-    return class Music extends require("Base/Synchronized") {
+    var NAMESPACE = "Kirino/Types";
+    var Synchronized = require("Base/Synchronized");
+
+    class Music extends Synchronized {
         static create(show,
                       type,
                       title = null,
@@ -32,5 +34,9 @@ define(function (require) {
         static attributes() {
             return ["show", "type", "title", "author", "date", "anisonId", "anidbId", "searchText", "notified"];
         }
-    };
+    }
+
+    Synchronized._registerClass(Music);
+
+    return Music;
 });
