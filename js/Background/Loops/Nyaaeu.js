@@ -55,7 +55,7 @@ define(function (require) {
                     let k = 0;
                     for (let i in episodes) {
                         let e = episodes[i];
-                        if (shows[e.thing].searchText && e.date < TODAY && !e.found) {
+                        if (shows[e.thing].searchText && e.date <= TODAY && !e.found) {
                             setTimeout(() => {
                                 let search = SearchGenerator.generate(e.number, shows[e.thing].searchText, Anime);
                                 NyaaeuParser.getData(search).then((items) => {
