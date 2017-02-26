@@ -18,7 +18,7 @@ define(function (require) {
         }
 
         static create(title = null,
-                      text = "",
+                      text = _("defaultNoteText"),
                       color = Note.Color.GRAY) {
             return super.create().then((obj) => {
                     if (!title) {
@@ -43,7 +43,7 @@ define(function (require) {
         }
     }
 
-    Synchronized._registerClass(Note)
+    Synchronized._registerClass(Note);
 
     return Note;
 });

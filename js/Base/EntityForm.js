@@ -42,6 +42,18 @@ define(function (require) {
             return Promise.resolve();
         }
 
+        _harvestValues() {
+            if (this.id) {
+                let THIS = this;
+                return super._harvestValues().then((values) => {
+                    values.id = THIS.id;
+                    return values;
+                });
+            } else {
+                return super._harvestValues();
+            }
+        }
+
         _saveData(harvestedValues) {
             if (this.id) {
                 let object = new this._getDataObject(this.id);
@@ -61,15 +73,18 @@ define(function (require) {
             } else {
                 e.preventDefault();
                 let object = this._getDataObject.create();
+                let vals = null;
                 object.then((object) => {
                     return new Promise((cb) => {
                         THIS._harvestValues().then((values) => {
+                            vals = values;
                             object.set(values).then(cb());
                         });
                     }).then(() => {
                         Notifications.notify(_("formSubmitSuccess"), Notifications.Type.SUCCESS);
+                        vals.id = object.id;
                         if (THIS.callback) {
-                            THIS.callback(object);
+                            THIS.callback(vals);
                         }
                     });
                 });

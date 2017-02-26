@@ -31,6 +31,8 @@ define(function (require) {
             this.panelNotes = [];
             this.contextMenus = {};
 
+            this._onDelete = [];
+
             this.$mainElement = $(this.divClass);
             $.contextMenu.types.colorPicker = colorPicker;
         }
@@ -115,24 +117,33 @@ define(function (require) {
             this.shinobu.set("panelNotes", this.panelNotes);
         }
 
-        add(index) {
+        add(index = null) {
             let THIS = this;
-            Note.create().then((note) => {
+            return Note.create().then((note) => {
                 THIS.noteObjs[note.id] = {
                     id: note.id,
                     title: note.id
                 };
-                THIS.panelNotes[index] = note.id;
                 THIS.notes.push(note.id);
-                THIS.shinobu.set("panelNotes", THIS.panelNotes);
-                Note.getAll(note.id).then((note) => {
-                    THIS._renderOne(index, note);
+                if (index !== null) {
+                    THIS.panelNotes[index] = note.id;
+                    THIS.shinobu.set("panelNotes", THIS.panelNotes);
+                }
+                return Note.getAll(note.id).then((note) => {
+                    THIS.noteObjs[note.id] = note;
+                    if (index !== null) {
+                        THIS._renderOne(index, note);
+                    }
+                    return note;
                 });
             });
         }
 
+        onDelete(callback) {
+            this._onDelete.push(callback);
+        }
+
         delete(id) {
-            //@todo: Remove notes from grid
             if (this.notes.length <= 1) {
                 return;
             }
@@ -147,6 +158,11 @@ define(function (require) {
                 }
             }
             delete this.noteObjs[id];
+
+            for (let i in this._onDelete) {
+                this._onDelete[i](id, replace);
+            }
+
             this.notes.splice(this.notes.indexOf(id), 1);
             (new Note(id)).delete().then(() => {
                 this.shinobu.set({
@@ -160,7 +176,7 @@ define(function (require) {
             let THIS = this;
             if (!this.contextMenus[note.id]) {
                 $.contextMenu({
-                    selector: "[note-id=" + this.elementSelector(note) + "]",
+                    selector: "[note-id=" + this.elementSelector(note) + "]:not(.noMenu)",
                     build: function ($elem) {
                         let index = $elem.data('index');
                         return {
@@ -309,24 +325,33 @@ define(function (require) {
             let $note = $("#note" + index);
             this._prepareMenu(note);
             if ($note.length <= 0) {
-                $note = $("<div class='note'></div>");
+                $note = this.createNote(note);
                 $note.data("index", index);
                 $note.attr('id', "note" + index);
 
-                $note.addClass(note.color);
-                $note.attr('note-id', this.elementSelector(note));
-
-                let $textarea = $("<textarea></textarea>");
-                this._prepareTextarea($textarea, note);
-
-                $note.append($textarea);
                 this.$mainElement.append($note);
             } else {
                 $note.removeClass(Object.values(Note.Color).join(" ")).addClass(note.color);
                 $note.attr('note-id', this.elementSelector(note));
+                $note.data("note", note);
                 this._prepareTextarea($note.find("textarea"), note);
             }
+        }
+
+        createNote(note) {
+            let $note = $("<div class='note'></div>");
+
+            $note.addClass(note.color);
+            $note.attr('note-id', this.elementSelector(note));
+            $note.data('note-id', note.id);
+
             $note.data("note", note);
+
+            let $textarea = $("<textarea></textarea>");
+            this._prepareTextarea($textarea, note);
+
+            $note.append($textarea);
+            return $note;
         }
 
         _prepareTextarea($textarea, note) {

@@ -162,5 +162,29 @@
   },
   "join": {
     "message": "Join"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "invalidUrl": {
+    "message": "Invalid URL"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "icon": {
+    "message": "Icon"
+  },
+  "addIcon": {
+    "message": "Add Icon"
+  },
+  "addNote": {
+    "message": "Add Note"
+  },
+  "defaultNoteText": {
+    "message": "Note text..."
+  },
+  "enableEdit": {
+    "message": "Enable Edit"
   }
 }

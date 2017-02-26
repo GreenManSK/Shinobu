@@ -66,7 +66,7 @@ define(function (require) {
         render(selector) {
             var THIS = this;
 
-            THIS.promise.then(() => {
+            THIS.promise = THIS.promise.then(() => {
                 var $form = $('<form></form>');
 
                 if (this._showLabels)

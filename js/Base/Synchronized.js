@@ -60,7 +60,7 @@ define(function (require) {
         }
 
         /**
-         * Return value of all atributes by provided ids
+         * Return value of all attributes by provided ids
          * @param {string|Array} id
          * @return {Promise}
          */
@@ -87,7 +87,7 @@ define(function (require) {
                         let className = items[objs[id]._getStorageKey("class")];
                         final[id] = {
                             id: id,
-                            class: typeof subClasses[className] !== 'undefined' ? new subClasses[className](id) : THIS
+                            class: typeof subClasses[className] !== 'undefined' ? new subClasses[className](id) : new THIS(id)
                         };
                         for (let attr in attrs) {
                             if (attrs[attr] === 'class')
@@ -97,6 +97,56 @@ define(function (require) {
                         }
                     }
                     result(Array.isArray(id) ? final : final[id]);
+                });
+            });
+        }
+
+        /**
+         * Return value of all attributes by provided ids of objects with different types.
+         * @param {string|Array} id
+         * @return {Promise}
+         */
+        static getAllInconsistent(id) {
+            let THIS = this;
+            return new Promise((result) => {
+                let ids = Array.isArray(id) ? id : [id];
+
+                let objs = {};
+                let classes = [];
+                for (let i in ids) {
+                    objs[ids[i]] = new THIS(ids[i]);
+                    classes.push(objs[ids[i]]._getStorageKey("class"));
+                }
+                Data.storage.get(classes, function (classes) {
+                    let get = [];
+                    for (let i in ids) {
+                        let id = ids[i];
+                        let className = classes[objs[id]._getStorageKey("class")];
+                        if (typeof className !== 'undefined' && typeof subClasses[className] !== 'undefined') {
+                            objs[id] = new subClasses[className](id);
+                        }
+
+                        let attrs = objs[id].constructor.attributes();
+                        for (let attr in attrs) {
+                            get.push(objs[id]._getStorageKey(attrs[attr]));
+                        }
+                    }
+
+                    Data.storage.get(get, function (items) {
+                        var final = {};
+                        for (let id in objs) {
+                            final[id] = {
+                                id: id,
+                                class: objs[id]
+                            };
+                            let attrs = objs[id].constructor.attributes();
+                            for (let attr in attrs) {
+                                final[id][attrs[attr]] = items[objs[id]._getStorageKey(attrs[attr])];
+                                final[id][attrs[attr]] = final[id][attrs[attr]] ? final[id][attrs[attr]]['val'] : final[id][attrs[attr]];
+                            }
+                        }
+                        result(Array.isArray(id) ? final : final[id]);
+                    });
                 });
             });
         }
