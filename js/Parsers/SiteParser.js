@@ -56,8 +56,6 @@ define(function (require) {
             }
 
             if (url !== "" && url.match(/^https?:\/\//) === null) {
-                console.log(url);
-                console.log(url.match(/^\/\//));
                 if (url.match(/^\/\//) !== null) {
                     url =  evt.target.responseURL.match('(https?:)')[0] + url;
                 } else {

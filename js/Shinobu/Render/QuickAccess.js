@@ -9,6 +9,7 @@ define(function (require) {
     var Icon = require("Shinobu/Types/Icon");
     var IconForm = require("Shinobu/Form/IconForm");
     var IconRender = require("Kirino/Render/Icon");
+    var Form = require("Base/Form");
 
     var ACTIVE_TAB_CLASS = "active";
     var ICON_ADD_BUTTON = '<a title="' + _("add") + '" href="#add" class="placeholder"><i class="fa fa-plus" aria-hidden="true"></i></a>';
@@ -64,13 +65,14 @@ define(function (require) {
         }
 
         _renderAll() {
-            this.renderTabs();
             if (this.activeTab === null)
                 this.activeTab = this.defaultTab;
+            this.renderTabs();
             this.renderIcons(this.activeTab);
         }
 
         renderTabs() {
+            this._prepareTabContextMenu();
             let $ul = $("<ul></ul>");
             for (let i in this.tabs) {
                 let tab = this.tabsObjs[this.tabs[i]];
@@ -81,12 +83,13 @@ define(function (require) {
                     href: "#" + tab.id,
                     title: tab.name
                 });
+                $a.data("tab-id", tab.id);
                 $a.html((new IconRender(
                     tab.img ? IconRender.Type.IMG : IconRender.Type.ICON,
                     tab.icon,
                     false)).html);
 
-                if (tab.id === this.defaultTab) {
+                if (tab.id === this.activeTab) {
                     $a.addClass(ACTIVE_TAB_CLASS);
                 }
 
@@ -99,7 +102,7 @@ define(function (require) {
 
         renderIcons(id) {
             this.$iconGrid.empty().data('tab-id', id);
-            this._prepareContextMenu();
+            this._prepareQuickAccessContextMenu();
             this._prepareSortable();
             this._prepareEvents();
 
@@ -181,12 +184,22 @@ define(function (require) {
                 $textarea.toggleClass(HIDE_CLASS);
                 $this.find(".text").text($textarea.val()).css('font-size', $textarea.css('font-size')).toggleClass(HIDE_CLASS);
             });
+
+            let THIS = this;
+            this.$tabs.on("click", "a", function(e) {
+                e.preventDefault();
+                let $this = $(this);
+                THIS.$tabs.find("a").removeClass(ACTIVE_TAB_CLASS);
+                $this.addClass(ACTIVE_TAB_CLASS);
+                THIS.activeTab = $this.data("tab-id");
+                THIS.renderIcons(THIS.activeTab);
+            })
         }
 
-        _prepareContextMenu() {
-            if (this.contextMenuPrepared)
+        _prepareQuickAccessContextMenu() {
+            if (this.quickAccessContextMenuPrepared)
                 return;
-            this.contextMenuPrepared = true;
+            this.quickAccessContextMenuPrepared = true;
             let THIS = this;
             $.contextMenu({
                 selector: this.iconGridSelector + ' a, ' + this.iconGridSelector + ' .note.noMenu',
@@ -234,6 +247,135 @@ define(function (require) {
                         items: items
                     };
                 }
+            });
+        }
+
+        _prepareTabContextMenu() {
+            if (this.tabContextMenuPrepared)
+                return;
+            this.tabContextMenuPrepared = true;
+            let THIS = this;
+            $.contextMenu({
+                selector: this.tabsSelector + " a",
+                build: function ($elem) {
+                    let tabId = $elem.data("tab-id");
+                    let tab = THIS.tabsObjs[tabId];
+                    return {
+                        items: {
+                            title: {
+                                type: "text",
+                                value: tab.name,
+                                className: "titleText",
+                                events: {
+                                    change: function (e) {
+                                        let val = $(this).val();
+                                        if (e.data.items.title.value !== val) {
+                                            e.data.items.title.value = val;
+                                            tab.name = val;
+                                            $elem.attr("title", val);
+                                            tab.class.set({
+                                                name: val
+                                            });
+                                        }
+                                    },
+                                    keyup: function (e) {
+                                        if (e.keyCode === 13) {
+                                            $(this).trigger("change");
+                                        }
+                                    }
+                                }
+                            },
+                            icon: {
+                                type: "text",
+                                value: tab.icon,
+                                className: "titleText",
+                                events: {
+                                    change: function (e) {
+                                        let val = $(this).val();
+                                        if (e.data.items.icon.value !== val) {
+                                            e.data.items.icon.value = val;
+                                            tab.icon = val;
+                                            tab.img = Form.VALIDATION.URL.validator(val);
+                                            THIS.renderTabs();
+                                            tab.class.set({
+                                                icon: val,
+                                                img: tab.img
+                                            });
+                                        }
+                                    },
+                                    keyup: function (e) {
+                                        if (e.keyCode === 13) {
+                                            $(this).trigger("change");
+                                        }
+                                    }
+                                }
+                            },
+                            default: {
+                                type: "checkbox",
+                                name: _("default"),
+                                selected: THIS.defaultTab === tab.id,
+                                disabled: THIS.tabs.length <= 1,
+                                events: {
+                                    change: function (e) {
+                                        let val = $(this).prop("checked");
+                                        if (val) {
+                                            THIS.defaultTab = tabId;
+                                            THIS.shinobu.set("defaultTab", tabId);
+                                        }
+                                    }
+                                }
+                            },
+                            "sep": "---------",
+                            add: {
+                                name: _("add"),
+                                icon: "fa-plus",
+                                callback: (key, option) => {
+                                    THIS.addTab();
+                                }
+                            },
+                            delete: {
+                                name: _("delete"),
+                                icon: "fa-trash",
+                                disabled: THIS.tabs.length <= 1 || THIS.defaultTab === tab.id,
+                                callback: (key, option) => {
+                                    THIS.deleteTab(tabId);
+                                }
+                            }
+                        }
+                    };
+                }
+            });
+        }
+
+        addTab() {
+            let THIS = this;
+            return Tab.create("", "th").then((tab) => {
+                Tab.getAll(tab.id).then((tab) => {
+                    THIS.tabsObjs[tab.id] = tab;
+                    THIS.tabs.push(tab.id);
+                    THIS.renderTabs();
+                });
+            });
+        }
+
+        deleteTab(id) {
+            let tab = this.tabsObjs[id];
+
+            let icons = tab.icons;
+            for (let i in icons) {
+                (new Icon(icons[i])).delete();
+            }
+            delete this.tabsObjs[id];
+            this.tabs.splice(this.tabs.indexOf(id), 1);
+            let THIS = this;
+            this.shinobu.set("tabs", Synchronized.arrayDeleter(id)).then(() => {
+                tab.class.delete();
+
+                if (id == this.activeTab) {
+                    this.activeTab = THIS.tabs[0];
+                }
+                THIS.renderTabs();
+                THIS.renderIcons(this.activeTab);
             });
         }
 

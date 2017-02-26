@@ -186,5 +186,8 @@
   },
   "enableEdit": {
     "message": "Enable Edit"
+  },
+  "default": {
+    "message": "Default"
   }
 }
