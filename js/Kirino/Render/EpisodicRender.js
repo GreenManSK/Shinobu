@@ -72,11 +72,11 @@ define(function (require) {
                     main.unseen = "";
                     let first = true;
                     for (let i in main.episodes) {
-                        if (first) {
+                        let epi = main.epObj[main.episodes[i]];
+                        if (first || epi.date > BasicRender.TODAY) {
                             first = false;
                             continue;
                         }
-                        let epi = main.epObj[main.episodes[i]];
                         main.unseen += main.name + " " + main.class.decodeEpisodeNumber(epi.number) + "\n";
                     }
                 }
