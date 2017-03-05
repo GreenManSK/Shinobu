@@ -9,6 +9,16 @@ define(function (require) {
     var SHOW_MORE_CLASS = "show-more";
 
     return class EpisodicRender extends require("Kirino/Render/BasicRender") {
+        constructor(elementId, color, column, icon, settings) {
+            super(elementId, color, column, icon, settings);
+            this.shinobu = new Synchronized("Shinobu");
+
+            let THIS = this;
+            this.shinobu.get("developerMode", false).then((val) => {
+                THIS.developerMode = val;
+            });
+        }
+
         _render(elements) {
             let episodes = [];
             for (let k in elements) {
@@ -108,6 +118,17 @@ define(function (require) {
                     let $date = $elementTag.find('.info .date');
                     $seen.insertAfter($date);
                     $("<span>&nbsp;/&nbsp;</span>").insertAfter($seen);
+                } else if (THIS.developerMode) { // #Delete episode
+					let $deleteEpisode = $('<a href="#deleteEpisode"  class="deleteEpisode" title="' + _('deleteEpisode') + '"><i class="fa fa-minus-square-o"></i></a>');
+					
+                   $deleteEpisode.on('click', function (e) {
+                        e.preventDefault();
+                        THIS._seen(element);
+                    });
+					
+                    let $edit = $elementTag.find('.info .edit');
+                    $deleteEpisode.insertBefore($edit);
+                    $("<span>&nbsp;/&nbsp;</span>").insertAfter($deleteEpisode);
                 }
 
                 // #Edit

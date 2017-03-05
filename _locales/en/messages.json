@@ -189,5 +189,8 @@
   },
   "default": {
     "message": "Default"
+  },
+  "deleteEpisode": {
+    "message": "Delete episode"
   }
 }
