@@ -17,6 +17,10 @@ var NAMESPACE = "Kirino/Types";
             return (value.toString().length < length) ? AEpisodic.pad("0" + value, length) : value;
         }
 
+        pad(value, length) {
+            return AEpisodic.pad(value, length);
+        }
+
         static attributes() {
             return ["episodes", "lastEpisode", "showAll"];
         }

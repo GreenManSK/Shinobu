@@ -186,7 +186,7 @@ define(function (require) {
             });
 
             let THIS = this;
-            this.$tabs.on("click", "a", function(e) {
+            this.$tabs.on("click", "a", function (e) {
                 e.preventDefault();
                 let $this = $(this);
                 THIS.$tabs.find("a").removeClass(ACTIVE_TAB_CLASS);
@@ -434,7 +434,10 @@ define(function (require) {
 
             $a.data("icon-id", icon.id);
 
-            $a.html((new IconRender(icon.img ? IconRender.Type.IMG : IconRender.Type.ICON, icon.icon, false)).html);
+            if (icon.icon)
+                $a.html((new IconRender(icon.img ? IconRender.Type.IMG : IconRender.Type.ICON, icon.icon, false)).html);
+            else
+                $a.text(icon.title);
 
             return $a;
         }

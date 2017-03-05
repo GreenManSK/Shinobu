@@ -42,6 +42,22 @@ define(function (require) {
             return season * 1000 + episode;
         }
 
+        decodeEpisodeNumber(number) {
+            return Show.decodeEpisodeNumber(number);
+        }
+
+        getEpisode(number) {
+            return Show.getEpisode(number);
+        }
+
+        getSeason(number) {
+            return Show.getSeason(number);
+        }
+
+        createNumber(episode, season) {
+            return Show.createNumber(episode, season);
+        }
+
     }
 
     Synchronized._registerClass(Show);

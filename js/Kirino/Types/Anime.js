@@ -30,6 +30,10 @@ define(function (require) {
         static decodeEpisodeNumber(number) {
             return number;
         }
+
+        decodeEpisodeNumber(number) {
+            return Anime.decodeEpisodeNumber(number);
+        }
     }
 
     Synchronized._registerClass(Anime);

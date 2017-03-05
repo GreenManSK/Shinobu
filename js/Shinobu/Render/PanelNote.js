@@ -301,7 +301,7 @@ define(function (require) {
 
         _prepareEvents() {
             let THIS = this;
-            this.$mainElement.onTyping('textarea', {
+            $("body").onTyping('.note textarea', {
                 stop: function (event, $elem) {
                     let id = THIS.elementIdFromSelector($elem.parent(".note").attr('note-id'));
                     THIS.noteObjs[id].text = $elem.val();

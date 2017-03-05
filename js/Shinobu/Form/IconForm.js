@@ -28,9 +28,9 @@ define(function (require) {
         "icon": {
             type: Form.TYPE.TEXT,
             label: 'icon',
-            validators: [
-                [Form.VALIDATION.REQUIERED, "needToFill"]
-            ],
+            // validators: [
+            //     [Form.VALIDATION.REQUIERED, "needToFill"]
+            // ],
             help: "http://fontawesome.io/"
         },
         "submit": {
