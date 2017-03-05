@@ -257,6 +257,7 @@ body {
     }
 
     #content {
+		position: relative;
         flex-direction: column;
 
         .iconGrid {
@@ -280,8 +281,11 @@ body {
             }
         }
 
-        .blank {
-            display: none;
+        .tabs {
+            position: absolute;
+			display: block;
+			right: 0;
+			top: 0;
         }
     }
 }
