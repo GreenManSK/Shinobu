@@ -1,3 +1,6 @@
 /nbproject/
 /.idea/
 Shinobu.iml
+/web/vendor/*
+/web/temp/cache/*
+/web/temp/sessions/*
