@@ -1,4 +1,5 @@
 var NAMESPACE = "Base";
+
 define(function (require) {
     var Synchronized = require("Base/Synchronized");
     var ID = 'notifications';
@@ -17,7 +18,8 @@ define(function (require) {
         static get Voice() {
             return {
                 KIRINO: "kirino",
-                SHINOBU: "shinobu"
+                SHINOBU: "shinobu",
+                GUMI: "gumi"
             }
         }
 
@@ -74,7 +76,7 @@ define(function (require) {
             });
         }
 
-        notify(msg, type, timeout) {
+        notify(msg, type, timeout, useCallback = false) {
             if (!timeout)
                 timeout = this.fadeInterval;
             let $notify;
@@ -92,7 +94,14 @@ define(function (require) {
                 $notify = this._createNotification(msg, type);
                 this._insertNotification($notify);
             }
-            $notify.attr(DATA_END, setTimeout(this._closingFunction($notify), timeout));
+            if (!useCallback)
+                $notify.attr(DATA_END, setTimeout(this._closingFunction($notify), timeout));
+            else {
+                let THIS = this;
+                return function() {
+                    THIS._closingFunction($notify)();
+                }
+            }
         }
 
         _closingFunction($notify) {
@@ -117,6 +126,7 @@ define(function (require) {
             $notify.fadeIn();
         }
     }
+
     return new Notifications();
 })
 ;
