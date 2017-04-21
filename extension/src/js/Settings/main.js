@@ -24,7 +24,7 @@ define(function (require) {
 
 
     var Data = require("Base/Data");
-    require("Base/Synchronized");
+    var Synchronized = require("Base/Synchronized");
     require("Base/Translator");
     var Notifications = require("Base/Notifications");
     var MainMenu = require("Base/MainMenu");
@@ -60,10 +60,10 @@ define(function (require) {
                 min: 1000
             }
         },
-        syncRefreshRate: {
-            type: Form.TYPE.TIME,
-            label: "syncRefreshRate"
-        },
+        // syncRefreshRate: {
+        //     type: Form.TYPE.TIME,
+        //     label: "syncRefreshRate"
+        // },
         submit: {
             type: Form.TYPE.SUBMIT,
             label: "save"
@@ -108,6 +108,45 @@ define(function (require) {
         }
     };
 
+    var gumiSettings = {
+        computerName: {
+            type: Form.TYPE.TEXT,
+            label: "computerName"
+        },
+        serverUrl: {
+            type: Form.TYPE.URL,
+            label: "serverUrl"
+        },
+        automaticBackup: {
+            type: Form.TYPE.CHECKBOX,
+            label: "automaticBackup"
+        },
+        backupRefreshRate: {
+            type: Form.TYPE.TIME,
+            label: "backupRefreshRate"
+        },
+        publicKey: {
+            type: Form.TYPE.TEXTAREA,
+            label: "publicKey",
+            rows: 5
+        },
+        submit: {
+            type: Form.TYPE.SUBMIT,
+            label: "save"
+        }
+    }
+
+    function showGumiDates() {
+        var Gumi = new Synchronized("Gumi");
+        Gumi.get({
+            backupDate: null,
+            syncDate: null
+        }).then((values) => {
+            $(".gumi .dates .backup span").text(values.backupDate != null ? new Date(values.backupDate) : _("never"));
+            $(".gumi .dates .sync span").text(values.syncDate != null ?  new Date(values.syncDate) : _("never"));
+        });
+    }
+
     function start() {
         translateWholeDom();
         Notifications.start();
@@ -115,11 +154,16 @@ define(function (require) {
 
         var shinobuForm = new BoxEntityForm("shinobu", BasicRender.Color.CYAN, null, "Shinobu", shinobuSettings, shinobuCallback);
         var kirinoForm = new BoxEntityForm("kirino", BasicRender.Color.YELLOW, null, "Kirino", kirinoSettings);
+        var gumiForm = new BoxEntityForm("gumi", BasicRender.Color.GREEN, null, "Gumi", gumiSettings)
 
         shinobuForm.showLabels(true);
         kirinoForm.showLabels(true);
+        gumiForm.showLabels(true);
 
         shinobuForm.render('.box.shinobu');
         kirinoForm.render('.box.kirino');
+        gumiForm.render('.box.gumi');
+
+        showGumiDates();
     }
 });

@@ -5,6 +5,8 @@
 @shinobuMaidHeight: 362px;
 @kirinoMaidWidth: 201px;
 @kirinoMaidHeight: 288px;
+@gumiWidth: 250px;
+@gumiHeight: 362px;
 
 .scrollbar();
 .ativateTransitions();
@@ -31,9 +33,21 @@ h1 {
 
 .box {
     position: relative;
+    .dates {
+        text-align: center;
+        font-size: 110%;
+        margin: .5rem 1.5rem 0;
+        span {
+            display: block;
+            margin: .2rem 0 0;
+            span {
+                display: inline;
+            }
+        }
+    }
 }
 
-.box.shinobu::after, .box.kirino::after {
+.box.shinobu::after, .box.kirino::after, .box.gumi::after {
     content: ' ';
     display: block;
     width: @shinobuMaidWidht;
@@ -53,6 +67,13 @@ h1 {
     background-image: url(~'@{imgDir}kirinoMaid.png');
 }
 
+.box.gumi::after {
+    right: (-@gumiWidth - 10px);
+    width: @gumiWidth;
+    height: @gumiHeight;
+    background-image: url(~'@{imgDir}gumiChibi.png');
+}
+
 @media (max-width: (@responsiveWidth + 2 * @shinobuMaidWidht - 1px)) {
     .box.shinobu::after {
         width: (@shinobuMaidWidht/2);
@@ -69,8 +90,22 @@ h1 {
     }
 }
 
+@media (max-width: (@responsiveWidth + 2 * @gumiWidth - 1px)) {
+    .box.gumi::after {
+        width: (@gumiWidth/2);
+        height: (@gumiHeight/2);
+        right: (-@gumiWidth/2 - 5px);
+    }
+}
+
 @media (max-width: (@responsiveWidth + @shinobuMaidWidht - 1px)) {
     .box.shinobu::after {
+        display: none;
+    }
+}
+
+@media (max-width: (@responsiveWidth + @gumiWidth - 1px)) {
+    .box.gumi::after {
         display: none;
     }
 }

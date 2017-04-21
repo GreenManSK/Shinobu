@@ -15,6 +15,10 @@
     "message": "Shinobu",
     "description": "Name of one waifu"
   },
+  "gumi": {
+    "message": "Gumi",
+    "description": "Name of one waifu"
+  },
   "kirinoHere": {
     "message": "Kirino here!"
   },
@@ -192,5 +196,32 @@
   },
   "deleteEpisode": {
     "message": "Delete episode"
+  },
+  "defaultComputerName": {
+    "message": "エロ奴隷"
+  },
+  "computerName": {
+    "message": "Computer name"
+  },
+  "serverUrl": {
+    "message": "Server URL"
+  },
+  "publicKey": {
+    "message": "Public key"
+  },
+  "backupRefreshRate": {
+    "message": "Backup refresh rate"
+  },
+  "automaticBackup": {
+    "message": "Automatic backup"
+  },
+  "lastBackup": {
+    "message": "Last automatic backup"
+  },
+  "lastSync": {
+    "message": "Last sync"
+  },
+  "never": {
+    "message": "Never"
   }
 }

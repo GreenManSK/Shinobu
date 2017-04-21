@@ -7,7 +7,7 @@ define(function (require) {
         maxNotificationNumber: 20,
         notificationColor: "#3385AD",
         notificationFadeTime: 4000,
-        syncRefreshRate: "01:02"
+        // syncRefreshRate: "01:02"
     };
 
     let KIRINO_DEFAULTS = {
@@ -23,11 +23,20 @@ define(function (require) {
         music: []
     };
 
+    let GUMI_DEFAULTS = {
+        computerName: _("defaultComputerName"),
+        serverUrl: "",
+        publicKey: "",
+        backupRefreshRate: "23:59",
+        automaticBackup: false
+    };
+
     return class DefualtSetter {
         static set() {
             return new Promise((cb) => {
                 let Shinobu = new Synchronized("Shinobu");
                 let Kirino = new Synchronized("Kirino");
+                let Gumi = new Synchronized("Gumi");
                 Shinobu._timestamp = () => {
                     return 0
                 };
@@ -41,6 +50,10 @@ define(function (require) {
                     return Kirino.get(KIRINO_DEFAULTS);
                 }).then((values) => {
                     return Kirino.set(values);
+                }).then(() => {
+                    return Gumi.get(GUMI_DEFAULTS)
+                }).then((values) => {
+                    return Gumi.set(values);
                 }).then(() => {
                     cb();
                 });
