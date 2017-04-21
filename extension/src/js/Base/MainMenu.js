@@ -8,6 +8,16 @@ define(function (require) {
             class: null,
             link: 'settings.html'
         },
+        gumi: {
+            text: 'gumi',
+            icon: null,
+            class: 'gumi',
+            link: "#gumi",
+            callback: function(e) {
+                e.preventDefault();
+                alert("Hello!");
+            }
+        },
         kirino: {
             text: 'kirino',
             icon: null,
@@ -40,6 +50,9 @@ define(function (require) {
                         '>' +
                         (elem.icon ? '<i class="fa ' + elem.icon + '" aria-hidden="true"></i>' : '') +
                         '</a></li>');
+                    if (elem.hasOwnProperty("callback")) {
+                        $li.on('click', elem.callback);
+                    }
                     this.$menu.append($li);
                 }
             }
