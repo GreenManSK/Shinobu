@@ -36,6 +36,12 @@ define(function (require) {
                         return url.match(/^(https?|ftp):\/\/[a-z0-9-]+(\.[a-z0-9-]+)+\/?([\/?].+)?$/) !== null;
                     }
                 },
+                URL_OR_EMPTY: {
+                    name: 'urlOrEmpty',
+                    validator: function (url) {
+                        return url.match(/^$|^(https?|ftp):\/\/[a-z0-9-]+(\.[a-z0-9-]+)+\/?([\/?].+)?$/) !== null;
+                    }
+                },
                 NUMERIC: {
                     name: 'numeric',
                     validator: function (value) {

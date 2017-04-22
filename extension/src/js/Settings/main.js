@@ -30,6 +30,9 @@ define(function (require) {
     var MainMenu = require("Base/MainMenu");
     var Form = require("Base/Form");
 
+    require("Gumi/Gumi");
+    require("Gumi/Alert");
+
     var BoxEntityForm = require("Form/BoxEntityForm");
 
     var BasicRender = require("Kirino/Render/BasicRender");
@@ -70,7 +73,7 @@ define(function (require) {
         }
     };
 
-    var shinobuCallback = function() {
+    var shinobuCallback = function () {
         chrome.runtime.sendMessage({name: "extensionNotifications.reload"}, null);
     };
 
@@ -111,11 +114,17 @@ define(function (require) {
     var gumiSettings = {
         computerName: {
             type: Form.TYPE.TEXT,
-            label: "computerName"
+            label: "computerName",
+            validators: [
+                [Form.VALIDATION.REQUIERED, "needToFill"]
+            ]
         },
         serverUrl: {
             type: Form.TYPE.URL,
-            label: "serverUrl"
+            label: "serverUrl",
+            validators: [
+                [Form.VALIDATION.URL_OR_EMPTY, "invalidUrl"]
+            ]
         },
         automaticBackup: {
             type: Form.TYPE.CHECKBOX,
@@ -136,6 +145,13 @@ define(function (require) {
         }
     }
 
+    var gumiCallbaclk = function () {
+        chrome.runtime.sendMessage({
+            name: "mainMenu.redraw"
+        }, null);
+        MainMenu.redraw();
+    };
+
     function showGumiDates() {
         var Gumi = new Synchronized("Gumi");
         Gumi.get({
@@ -143,7 +159,7 @@ define(function (require) {
             syncDate: null
         }).then((values) => {
             $(".gumi .dates .backup span").text(values.backupDate != null ? new Date(values.backupDate) : _("never"));
-            $(".gumi .dates .sync span").text(values.syncDate != null ?  new Date(values.syncDate) : _("never"));
+            $(".gumi .dates .sync span").text(values.syncDate != null ? new Date(values.syncDate) : _("never"));
         });
     }
 
@@ -154,7 +170,7 @@ define(function (require) {
 
         var shinobuForm = new BoxEntityForm("shinobu", BasicRender.Color.CYAN, null, "Shinobu", shinobuSettings, shinobuCallback);
         var kirinoForm = new BoxEntityForm("kirino", BasicRender.Color.YELLOW, null, "Kirino", kirinoSettings);
-        var gumiForm = new BoxEntityForm("gumi", BasicRender.Color.GREEN, null, "Gumi", gumiSettings)
+        var gumiForm = new BoxEntityForm("gumi", BasicRender.Color.GREEN, null, "Gumi", gumiSettings, gumiCallbaclk)
 
         shinobuForm.showLabels(true);
         kirinoForm.showLabels(true);

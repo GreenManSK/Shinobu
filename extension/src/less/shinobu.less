@@ -21,11 +21,6 @@
 @gridBackground: rgba(0, 0, 0, .1);
 @gridColor: #fff;
 
-/* Modal */
-@modalWebBackground: rgba(0, 0, 0, .7);
-@modalBackground: #fff;
-@modalRadius: 15px;
-
 .note(@color) {
     textarea, .text {
         color: @noteTextColor;
@@ -224,28 +219,6 @@ body {
                         padding-right: 1.3rem;
                     }
                 }
-            }
-        }
-    }
-}
-
-.modal-bg {
-    position: fixed;
-    z-index: 100;
-    background: @modalWebBackground;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .box {
-        min-width: 350px;
-        .preview {
-            background: fade(#000, 30%);
-            padding: @modalRadius*2/3 @modalRadius;
-            a {
-                margin: 0 auto;
             }
         }
     }

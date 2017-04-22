@@ -223,5 +223,14 @@
   },
   "never": {
     "message": "Never"
+  },
+  "gumiSyncAsk": {
+    "message": "Hello! What type of synchronization would you like?"
+  },
+  "syncToServer": {
+    "message": "To server"
+  },
+  "syncFromServer": {
+    "message": "From server"
   }
 }
