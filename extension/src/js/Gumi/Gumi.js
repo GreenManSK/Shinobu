@@ -3,6 +3,7 @@ define(function (require) {
     let Synchronized = require("Base/Synchronized");
     let Data = require("Base/Data");
     var forge = require("lib/forge.min");
+    var Notifications = require("Base/Notifications");
 
     let GumiSync = new Synchronized("Gumi");
 

@@ -10,9 +10,7 @@ define(function (require) {
         }
 
         onMessage(message, sender, sendResponse) {
-            console.log("a");
             if (message.name === "backup") {
-                console.log("b");
                 this.gumiSync.start();
             }
         }

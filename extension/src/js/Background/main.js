@@ -57,7 +57,7 @@ define(function (require) {
     DefualtSetter.set().then(() => {
         dispatcher.start();
         dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
-        // dispatcher._dispatchMessage({name: "gumi.backup"});
+        dispatcher._dispatchMessage({name: "gumi.backup"});
         chrome.alarms.onAlarm.addListener(function (alarm) {
             if (alarm.name === MAIN_LOOP_ALARM) {
                 dispatcher._dispatchMessage({name: "gumi.backup"});
