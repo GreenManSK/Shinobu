@@ -19,8 +19,11 @@ define(function (require) {
     var DefualtSetter = require("Background/DefualtSetter");
     var dispatcher = require("Background/Messages/Dispatcher");
     var KirinoDispatcher = require("Background/Messages/KirinoDispatcher");
+    var GumiDispatcher = require("Background/Messages/GumiDispatcher");
     require("Background/Messages/Badge");
     require("Background/Messages/ExtensionNotifications");
+
+    require("Gumi/Gumi");
 
     require("Kirino/Settings");
     require("Kirino/Types/AEpisodic");
@@ -49,12 +52,15 @@ define(function (require) {
     var TVDBnet = require("Background/Loops/TVDBnet");
     var AnidbAnime = require("Background/Loops/AnidbAnime");
     var Nyaaeu = require("Background/Loops/Nyaaeu");
+    var GumiSync = require("Background/Loops/GumiSync");
 
     DefualtSetter.set().then(() => {
         dispatcher.start();
         dispatcher._dispatchMessage({name: "extensionNotifications.reload"});
+        // dispatcher._dispatchMessage({name: "gumi.backup"});
         chrome.alarms.onAlarm.addListener(function (alarm) {
             if (alarm.name === MAIN_LOOP_ALARM) {
+                dispatcher._dispatchMessage({name: "gumi.backup"});
                 let kirino = new Synchronized("Kirino");
                 kirino.get("getNewDataAuto").then((getNewDataAuto) => {
                     if (getNewDataAuto) {

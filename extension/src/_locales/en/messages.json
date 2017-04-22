@@ -232,5 +232,17 @@
   },
   "syncFromServer": {
     "message": "From server"
+  },
+  "serverUrlNotSet": {
+    "message": "Server url is not set in settings for poor Gumi-chan!"
+  },
+  "syncStarted": {
+    "message": "Synchronization started. Please wait..."
+  },
+  "syncError": {
+    "message": "Synchronization error! But shit didn't break..."
+  },
+  "syncSuccess": {
+    "message": "Synchronization was successful! Yay!"
   }
 }

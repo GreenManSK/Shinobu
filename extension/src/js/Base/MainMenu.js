@@ -11,6 +11,12 @@ define(function (require) {
             class: null,
             link: 'settings.html'
         },
+        kirino: {
+            text: 'kirino',
+            icon: null,
+            class: 'kirino',
+            link: 'kirino.html'
+        },
         gumi: {
             text: 'gumi',
             icon: null,
@@ -20,12 +26,6 @@ define(function (require) {
                 e.preventDefault();
                 GumiAlert.show();
             }
-        },
-        kirino: {
-            text: 'kirino',
-            icon: null,
-            class: 'kirino',
-            link: 'kirino.html'
         },
         shinobu: {
             text: 'shinobu',

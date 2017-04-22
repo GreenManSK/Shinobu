@@ -35,6 +35,7 @@ define(function (require) {
                 let cb = Alert.createNotification();
                 Gumi.syncToServer(cb);
             });
+
             $fromServer.on("click", function(e) {
                 e.preventDefault();
                 Alert.closeModal();
@@ -58,7 +59,7 @@ define(function (require) {
         }
 
         static createNotification() {
-            let cb = Notifications.notify("hello", Notifications.Type.WARNING, null, true);
+            let cb = Notifications.notify(_("syncStarted"), Notifications.Type.WARNING, null, true);
             return function() {
                 cb();
             }

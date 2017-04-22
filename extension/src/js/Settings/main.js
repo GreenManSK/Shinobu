@@ -5,7 +5,7 @@ requirejs.config({
         lib: '../libs'
     }
 });
-
+var forge;
 define(function (require) {
     "use strict";
 
@@ -14,6 +14,8 @@ define(function (require) {
     less.env = "development";
     less.watch();
     var md5 = require("lib/md5");
+    forge = require("lib/forge.min");
+
     require(["lib/jquery"], function () {
         require(["lib/ui.position.min", "lib/contextMenu.min"], function () {
             $(function () {

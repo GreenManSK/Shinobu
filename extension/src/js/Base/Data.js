@@ -20,6 +20,10 @@ var NAMESPACE = "Base";
         remove(keys, callback) {
             this.storage.remove(keys, callback);
         }
+
+        clear(callback) {
+            this.storage.clear(callback);
+        }
     }
     return new Data();
 });

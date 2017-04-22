@@ -80,6 +80,8 @@ define(function (require) {
             if (!timeout)
                 timeout = this.fadeInterval;
             let $notify;
+            if (!this.$notifications)
+                return;
             let $same = this.$notifications.find('.notification:not(.noauto):contains("' + msg + '")');
             if ($same.length > 0 && $same.text() !== msg) {
                 $same = null;
