@@ -29,9 +29,10 @@ define(function (require) {
                         this._serverRequest({
                             code: code,
                             name: computerName,
-                            sing: sign,
+                            sign: sign,
                             data: data
                         }, function (success, response) {
+							console.log(response);
                             if (success && response === SYNC_SUCCESS_MSG) {
                                 GumiSync.set("syncDate", Date.now());
                                 Notifications.notify(_("syncSuccess"), Notifications.Type.SUCCESS);
@@ -54,7 +55,7 @@ define(function (require) {
                         this._serverRequest({
                             code: SYNC_DOWN,
                             name: computerName,
-                            sing: sign
+                            sign: sign
                         }, (success, response) => {
                             try {
                                 response = JSON.parse(response);
@@ -98,11 +99,10 @@ define(function (require) {
                 publicKey: null,
                 computerName: null
             }).then((values) => {
-                let md = forge.md.sha256.create();
-
-                md.update(this._signDate() + btoa(encodeURIComponent(values.computerName)) + values.publicKey.replace(/\r|\n/g, "") + btoa(encodeURIComponent(response.data)));
-                return response.sign == md.digest().toHex();
-            });
+				return this._sign(response.data);
+            }).then((sign) => {
+				return sign === response.sign;
+			});
         }
 
         _prepareData() {
@@ -116,13 +116,13 @@ define(function (require) {
                             delete data[i];
                         }
                     }
-                    cb([data, gumi]);
+                    cb([JSON.stringify(data), gumi]);
                 })
             });
         }
 
         _signDate() {
-            return Math.floor(Date.now() / 1000 / 60 / 60 / 24);
+            return Math.floor(Date.now() / 1000 / 60 / 60 / 24).toString();
         }
 
         _sign(data) {
@@ -131,7 +131,7 @@ define(function (require) {
                 computerName: null
             }).then((values) => {
                 let md = forge.md.sha256.create();
-                md.update(values.publicKey + this._signDate() + values.computerName + JSON.stringify(data));
+				md.update(this._signDate() + btoa(encodeURIComponent(values.computerName)) + values.publicKey.replace(/\r|\n/g, "") + btoa(encodeURIComponent(data)));
                 return md.digest().toHex();
             });
         }
