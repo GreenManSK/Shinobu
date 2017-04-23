@@ -27,9 +27,9 @@
     "tabs",
     "alarms"
   ],
-//  "chrome_url_overrides": {
-//    "newtab": "index.html"
-//  },
+ "chrome_url_overrides": {
+   "newtab": "index.html"
+ },
   "content_scripts": [
     {
       "matches": [
