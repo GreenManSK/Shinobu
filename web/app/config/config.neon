@@ -3,7 +3,8 @@
 # https://nette.org/security-warning
 #
 parameters:
-
+    hashCost: 12
+    maximumBackups: 10
 
 application:
 	errorPresenter: Error
@@ -16,8 +17,16 @@ session:
 
 
 services:
-	- App\Model\UserManager
+	- App\Model\Settings
+	-
+	    class: App\Model\UserManager
+	    setup:
+	        - setHashCost(%hashCost%)
+	-
+	    class: App\Model\BackupModel
+	    setup:
+	        - setMaximum(%maximumBackups%)
+	- App\Model\CryptoModel
 	- App\Forms\FormFactory
 	- App\Forms\SignInFormFactory
-	- App\Forms\SignUpFormFactory
 	router: App\RouterFactory::createRouter

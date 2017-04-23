@@ -6,12 +6,15 @@ use Nette;
 use App\Model;
 
 
-class HomepagePresenter extends BasePresenter
-{
+class HomepagePresenter extends BasePresenter {
 
-	public function renderDefault()
-	{
-		$this->template->anyVariable = 'any value';
-	}
+    /**
+     * @var Model\BackupModel @inject
+     */
+    public $backupModel;
+
+    public function renderDefault() {
+        $this->template->backups = $this->backupModel->getBackups();
+    }
 
 }
