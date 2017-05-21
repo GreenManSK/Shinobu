@@ -1,7 +1,8 @@
 define(function (require) {
     var NAMESPACE = "Parsers";
 
-    let URL_MATCH = new RegExp(/^https:\/\/www\.nyaa\.se\/\?page=rss&term=(.*)$/, 'i');
+    //let URL_MATCH = new RegExp(/^https:\/\/www\.nyaa\.se\/\?page=rss&term=(.*)$/, 'i');
+	let URL_MATCH = new RegExp(/^https:\/\/nyaa\.pantsu\.cat\/feed\?c=_&s=0&max=50&userID=0&q=(.*)$/, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\$|\/i|\\|s\?)/g, "");
 
     return class Nyaaeu extends require("Parsers/BaseParser") {
@@ -18,7 +19,8 @@ define(function (require) {
             return URL_TEMPALTE.replace("(.*)", encodeURIComponent(id).replace(/%20/g, '+'));
         }
         static getSearchUrl(search) {
-            return "https://www.nyaa.se/?page=search&cats=0_0&filter=0&term=" + encodeURIComponent(search).replace(/%20/g, '+');
+            //return "https://www.nyaa.se/?page=search&cats=0_0&filter=0&term=" + encodeURIComponent(search).replace(/%20/g, '+');
+			return "https://nyaa.pantsu.cat/search?c=_&s=0&max=50&userID=0&q=" + encodeURIComponent(search).replace(/%20/g, '+');
         }
 
         static _onLoad(cb, evt, response) {
