@@ -2,7 +2,7 @@ define(function (require) {
     var NAMESPACE = "Parsers";
 
     //let URL_MATCH = new RegExp(/^https:\/\/www\.nyaa\.se\/\?page=rss&term=(.*)$/, 'i');
-	let URL_MATCH = new RegExp(/^https:\/\/nyaa\.pantsu\.cat\/feed\?c=_&s=0&max=50&userID=0&q=(.*)$/, 'i');
+    let URL_MATCH = new RegExp(/^https:\/\/nyaa\.si\/\?page=rss&c=0_0&f=0&q=(.*)$/, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\$|\/i|\\|s\?)/g, "");
 
     return class Nyaaeu extends require("Parsers/BaseParser") {
@@ -20,7 +20,7 @@ define(function (require) {
         }
         static getSearchUrl(search) {
             //return "https://www.nyaa.se/?page=search&cats=0_0&filter=0&term=" + encodeURIComponent(search).replace(/%20/g, '+');
-			return "https://nyaa.pantsu.cat/search?c=_&s=0&max=50&userID=0&q=" + encodeURIComponent(search).replace(/%20/g, '+');
+            return "https://nyaa.si/?f=0&c=0_0&q=" + encodeURIComponent(search).replace(/%20/g, '+');
         }
 
         static _onLoad(cb, evt, response) {
@@ -36,7 +36,8 @@ define(function (require) {
                     link: $this.find("link").text(),
                     guid: $this.find("guid").text(),
                     description: $this.find("description").text(),
-                    pubDate: $this.find("pubDate").text()
+                    pubDate: $this.find("pubDate").text(),
+                    magnet: $this.find("torrent\\:magneturi").text()
                 });
             });
 

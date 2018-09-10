@@ -29,7 +29,7 @@ define(function (require) {
                 for (let k in elements) {
                     let show = elements[k];
                     show.epObj = {};
-                    if (show.episodes.length === 0) {
+                    if (!show.episodes || show.episodes.length === 0) {
                         newElements.push(show);
                     } else {
                         for (let i in show.episodes) {

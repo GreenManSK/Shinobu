@@ -23,6 +23,9 @@ define(function (require) {
             if (element.thing && element.thing.searchText) {
                 let search = SearchGenerator.generate(element.number, element.thing.searchText, AnimeRender.elementClass);
                 content += "<a target='_blank' href='" + Nyaaeu.getSearchUrl(search) + "'>[" + search + "]</a>";
+                if (element.hasOwnProperty("magnet")) {
+                    content += ' <a href="' + element.magnet + '"><i class="fa fa-magnet" aria-hidden="true"></i></a>';
+                }
             }
             $elementTag.find(".text").html(content);
         }

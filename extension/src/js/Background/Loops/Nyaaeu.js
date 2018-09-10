@@ -62,7 +62,7 @@ define(function (require) {
                                     if (items.length > 0) {
                                         THIS._notify(
                                             "Nyaa.eu: " + items[0].title,
-                                            items[0].guid,
+                                            items[0].magnet ? items[0].magnet : items[0].guid ,
                                             "download"
                                         );
                                         (new Episode(e.id)).set("found", true);
