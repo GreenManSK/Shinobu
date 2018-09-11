@@ -23,6 +23,13 @@ var NAMESPACE = "Kirino/Render";
             }
         }
 
+        updateText($elementTag, element) {
+            var content = "";
+            if (element.name)
+                content += element.name;
+            $elementTag.find(".text").html(content);
+        }
+
         static get ID() {
             return ID;
         }
