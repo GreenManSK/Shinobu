@@ -26,16 +26,17 @@ define(function (require) {
             };
 
             var $response = $(response);
+            show.name = $response.find("h2 a").first().text().trim();
 
-            show.name = $response.find("h1").text();
-
-            let episodes = $response.find("#translations tbody tr").toArray();
+            let episodes = $response.find("table[id=translations] tbody tr").toArray();
             for (let i in episodes) {
                 let $ep = $(episodes[i]);
                 let airdate = $ep.find("td:nth-child(3)").text().trim();
                 let name = $ep.find("td:nth-child(2) span").first().text().trim();
                 let seasonTitle = $ep.parents('table').prev().text();
                 let seasonNumber = seasonTitle.match(/(\d+)$/g);
+                if (seasonNumber === null)
+                    continue;
                 let epNum = $ep.find("td:nth-child(1)").text().trim();
                 show.episodes.push({
                     name: name,
@@ -54,7 +55,7 @@ define(function (require) {
             }
 
             show.episodes.sort(compare);
-
+            console.log(show);
             cb(show);
         }
 
