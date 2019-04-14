@@ -47,7 +47,7 @@ define(function (require) {
             Data.get(o, function (keys) {
                 let last = keys[THIS.LOOP_NAME] ? keys[THIS.LOOP_NAME] : 0;
                 let get = {
-                    maxEpisodes: 2
+                    maxEpisodes: 10
                 };
                 get[THIS.TYPE_NAME] = [];
                 get[THIS.REFRESH_RATE_NAME] = "00:00";
