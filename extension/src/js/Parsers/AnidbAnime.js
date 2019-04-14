@@ -5,7 +5,7 @@ define(function (require) {
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\/i|\\|s\?)/g, "");
 
     let HTTP_API = 'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
-    let CLIENTVER = 2;
+    let CLIENTVER = 3;
     let HTTP_CLIENT = 'shinobu';
     let API_URL = HTTP_API
         .replace(/%httpClient/g, HTTP_CLIENT)

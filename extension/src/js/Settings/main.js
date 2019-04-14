@@ -95,6 +95,13 @@ define(function (require) {
             type: Form.TYPE.TIME,
             label: "anidbRefreshRate"
         },
+        nyaaDomain: {
+            type: Form.TYPE.URL,
+            label: "nyaaUrl",
+            validators: [
+                [Form.VALIDATION.URL_OR_EMPTY, "invalidUrl"]
+            ]
+        },
         nyaaRefreshRate: {
             type: Form.TYPE.TIME,
             label: "nyaaRefreshRate"

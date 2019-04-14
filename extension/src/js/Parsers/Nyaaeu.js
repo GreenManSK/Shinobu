@@ -1,12 +1,22 @@
 define(function (require) {
     var NAMESPACE = "Parsers";
+    var Synchronized = require("Base/Synchronized");
 
-    //let URL_MATCH = new RegExp(/^https:\/\/www\.nyaa\.se\/\?page=rss&term=(.*)$/, 'i');
-    let URL_MATCH = new RegExp(/^https:\/\/nyaa\.si\/\?page=rss&c=0_0&f=0&q=(.*)$/, 'i');
+    let REGEX_END = '/\\?page=rss&c=0_0&f=0&q=(.*)$';
+    var URL_MATCH = new RegExp(REGEX_END, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\$|\/i|\\|s\?)/g, "");
+
+
+    let kirino = new Synchronized("Kirino"); //KirinoSettings.namespace
+    let nyaaDomain = '';
+    kirino.get({"nyaaDomain": ''}).then((kirino) => {
+        nyaaDomain = kirino["nyaaDomain"];
+        URL_MATCH = new RegExp('^' + nyaaDomain + REGEX_END, 'i');
+    });
 
     return class Nyaaeu extends require("Parsers/BaseParser") {
         static doesUrlMatch(url) {
+            conosle.log(nyaaDomain);
             return url.match(URL_MATCH) !== null;
         }
 
@@ -19,8 +29,7 @@ define(function (require) {
             return URL_TEMPALTE.replace("(.*)", encodeURIComponent(id).replace(/%20/g, '+'));
         }
         static getSearchUrl(search) {
-            //return "https://www.nyaa.se/?page=search&cats=0_0&filter=0&term=" + encodeURIComponent(search).replace(/%20/g, '+');
-            return "https://nyaa.si/?f=0&c=0_0&q=" + encodeURIComponent(search).replace(/%20/g, '+');
+            return nyaaDomain + "/?f=0&c=0_0&q=" + encodeURIComponent(search).replace(/%20/g, '+');
         }
 
         static _onLoad(cb, evt, response) {

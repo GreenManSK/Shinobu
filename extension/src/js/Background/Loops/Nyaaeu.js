@@ -20,30 +20,35 @@ define(function (require) {
         }
 
         start(ids, forced = false) {
-            if (ids) {
-                this._findTorrents(ids);
-                return;
-            }
             let THIS = this;
-            let o = {};
-            o[LOOP_NAME] = 0;
-            Data.get(o, function (keys) {
-                let last = keys[LOOP_NAME] ? keys[LOOP_NAME] : 0;
-                THIS.kirino.get({
-                    "anime": [],
-                    "nyaaRefreshRate": "00:00"
-                }).then((kirino) => {
-                    if (forced || Nyaaeu.NOW - last > THIS._timeToMs(kirino["nyaaRefreshRate"])) {
-                        THIS._findTorrents(kirino['anime']);
-                        o[LOOP_NAME] = Nyaaeu.NOW;
-                        Data.set(o);
-                    }
+            this.kirino.get({"nyaaDomain": ''}).then((kirino) => {
+                if (kirino["nyaaDomain"] === '') {
+                    return;
+                }
+                if (ids) {
+                    this._findTorrents(ids);
+                    return;
+                }
+                let o = {};
+                o[LOOP_NAME] = 0;
+                Data.get(o, function (keys) {
+                    let last = keys[LOOP_NAME] ? keys[LOOP_NAME] : 0;
+                    THIS.kirino.get({
+                        "anime": [],
+                        "nyaaRefreshRate": "00:00"
+                    }).then((kirino) => {
+                        if (forced || Nyaaeu.NOW - last > THIS._timeToMs(kirino["nyaaRefreshRate"])) {
+                            THIS._findTorrents(kirino['anime']);
+                            o[LOOP_NAME] = Nyaaeu.NOW;
+                            Data.set(o);
+                        }
+                    });
                 });
             });
         }
 
         _findTorrents(ids) {
-            console.log("Getting Nyaa.eu data: " + new Date(), ids);
+            console.log("Getting Nyaa data: " + new Date(), ids);
             let THIS = this;
             let TODAY = Nyaaeu.TODAY;
             Anime.getAll(ids).then((shows) => {
@@ -61,7 +66,7 @@ define(function (require) {
                                 NyaaeuParser.getData(search).then((items) => {
                                     if (items.length > 0) {
                                         THIS._notify(
-                                            "Nyaa.eu: " + items[0].title,
+                                            "Nyaa: " + items[0].title,
                                             items[0].magnet ? items[0].magnet : items[0].guid ,
                                             "download"
                                         );

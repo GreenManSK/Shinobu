@@ -72,7 +72,10 @@
     "message": "TheTVDB.com data refresh rate"
   },
   "nyaaRefreshRate": {
-    "message": "nyaa.eu data refresh rate"
+    "message": "nyaa data refresh rate"
+  },
+  "nyaaUrl": {
+    "message": "nyaa url"
   },
   "anidbRefreshRate": {
     "message": "aniDB data refresh rate"

@@ -149,5 +149,6 @@ define(function (require) {
             return Settings.namespace;
         }
     }
+    console.log(Settings.namespace);
     return new Settings();
 });
