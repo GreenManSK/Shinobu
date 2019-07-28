@@ -21,9 +21,9 @@
   "permissions": [
     "https://shinobu.greenmanov.net/sync/*",
     "*://anison.info/data/song/*.html",
-    "*://anidb.net/perl-bin/animedb.pl?show=anime&aid=*",
-    "*://anidb.net/perl-bin/animedb.pl?show=song&songid=*",
-    "*://anidb.net/perl-bin/animedb.pl?show=ep&eid=*",
+    "*://anidb.net/anime/*",
+    "*://anidb.net/song/*",
+    "*://anidb.net/episode/*",
     "*://www.thetvdb.com/series/*/seasons/all",
     "*://thetvdb.com/series/*/seasons/all",
     "storage",
@@ -39,9 +39,9 @@
     {
       "matches": [
         "*://anison.info/data/song/*.html",
-        "*://anidb.net/perl-bin/animedb.pl?show=anime&aid=*",
-        "*://anidb.net/perl-bin/animedb.pl?show=song&songid=*",
-        "*://anidb.net/perl-bin/animedb.pl?show=ep&eid=*",
+        "*://anidb.net/anime/*",
+        "*://anidb.net/song/*",
+        "*://anidb.net/episode/*",
         "*://www.thetvdb.com/series/*/seasons/all",
         "*://thetvdb.com/series/*/seasons/all"
       ],

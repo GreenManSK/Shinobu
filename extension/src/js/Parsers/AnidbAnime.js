@@ -1,7 +1,7 @@
 define(function (require) {
     var NAMESPACE = "Parsers";
 
-    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=anime&aid=(\d+)/, 'i');
+    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\/i|\\|s\?)/g, "");
 
     let HTTP_API = 'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';

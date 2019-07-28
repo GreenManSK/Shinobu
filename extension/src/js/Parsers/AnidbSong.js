@@ -2,7 +2,7 @@ define(function (require) {
     var NAMESPACE = "Parsers";
     let Anison = require("Parsers/Anison");
 
-    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=song&songid=(\d+)/, 'i');
+    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\/i|\\|s\?)/g, "");
 
     return class AnidbSong extends require("Parsers/BaseParser") {

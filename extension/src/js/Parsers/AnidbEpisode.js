@@ -1,7 +1,7 @@
 define(function (require) {
     var NAMESPACE = "Parsers";
 
-    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=ep&eid=(\d+)/, 'i');
+    let URL_MATCH = new RegExp(/^https?:\/\/anidb\.net\/episode\/(\d+)/, 'i');
     let URL_TEMPALTE = URL_MATCH.toString().replace(/(\/\^|\/i|\\|s\?)/g, "");
 
     return class AnidbEpisode extends require("Parsers/BaseParser") {

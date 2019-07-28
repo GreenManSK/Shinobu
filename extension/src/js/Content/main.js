@@ -1,7 +1,7 @@
 let ANISON_REGEXP = new RegExp(/^https?:\/\/anison\.info\/data\/song\/(\d+)\.html/, 'i');
-let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=anime&aid=(\d+)/, 'i');
-let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=song&songid=(\d+)/, 'i');
-let ANIDB_EPISODE_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/perl-bin\/animedb\.pl\?show=ep&eid=(\d+)/, 'i');
+let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i');
+let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
+let ANIDB_EPISODE_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/episode\/(\d+)/, 'i');
 let THETVDB_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/seasons\/all/, 'i');
 
 let regexs = [
