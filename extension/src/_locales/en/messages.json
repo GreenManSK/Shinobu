@@ -243,7 +243,7 @@
     "message": "Synchronization started. Please wait..."
   },
   "syncError": {
-    "message": "Synchronization error! But shit didn't break..."
+    "message": "Synchronization error! But things didn't break..."
   },
   "syncSuccess": {
     "message": "Synchronization was successful! Yay!"

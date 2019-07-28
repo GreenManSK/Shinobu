@@ -10,6 +10,12 @@ define(function (require) {
         // syncRefreshRate: "01:02"
     };
 
+    if (typeof _ === "undefined") {
+        function _(x) {
+            return x;
+        }
+    }
+
     let KIRINO_DEFAULTS = {
         getNewDataAuto: true,
         maxEpisodes: 2,
@@ -20,7 +26,8 @@ define(function (require) {
         show: [],
         ova: [],
         anime: [],
-        music: []
+        music: [],
+        nyaaDomain: ''
     };
 
     let GUMI_DEFAULTS = {
