@@ -5,6 +5,6 @@ export enum NoteColor {
   Orange,
   Pink,
   Purple,
-  Green,
+  Gray,
   Cyan
 }
