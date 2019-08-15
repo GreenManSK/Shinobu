@@ -1,8 +1,9 @@
 import {Savable} from '../../types/savable';
 
 export class Song implements Savable {
+  public id: number;
+
   constructor(
-    public id: number,
     public show: string,
     public type: string,
     public title: string,
@@ -10,5 +11,6 @@ export class Song implements Savable {
     public releaseDate: number,
     public anidbId: number,
     public anisonId: number
-  ) {}
+  ) {
+  }
 }
