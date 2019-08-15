@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Anime} from './kirino/types/anime';
+import {Episode} from './kirino/types/episode';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shinobu';
+
+  constructor() {
+    let test = new Episode("sfsaf asf ", Date.now());
+    console.log(test);
+    console.log(JSON.stringify(test));
+  }
 }
