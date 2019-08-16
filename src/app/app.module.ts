@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ShinobuComponent } from './shinobu/components/shinobu/shinobu.component';
+import { KirinoComponent } from './kirino/components/kirino/kirino.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ShinobuComponent,
+    KirinoComponent
   ],
   imports: [
     BrowserModule,
