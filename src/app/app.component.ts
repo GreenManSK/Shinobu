@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Anime} from './kirino/types/anime';
-import {Episode} from './kirino/types/episode';
+import { Component } from '@angular/core';
+import { Anime } from './kirino/types/anime';
+import { AnimeService } from "./kirino/services/anime.service";
 
 @Component({
   selector: 'app-root',
@@ -11,8 +11,12 @@ export class AppComponent {
   title = 'shinobu';
 
   constructor() {
-    let test = new Episode("sfsaf asf ", Date.now());
-    console.log(test);
-    console.log(JSON.stringify(test));
+    const animeService = new AnimeService(chrome.storage.local);
+    console.log(animeService);
+    animeService.save(new Anime('Anime1', 513))
+      .then(() => animeService.save(new Anime('Anime2', 513)))
+      .then(() => animeService.save(new Anime('Anime3', 513)))
+      .then(() => animeService.getAll())
+      .then((items) => console.log(items));
   }
 }

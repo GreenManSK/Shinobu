@@ -1,9 +1,4 @@
-import {Injectable} from '@angular/core';
-import {AChromeService} from '../../services/achrome.service';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { AChromeService } from '../../services/achrome.service';
 
 export class AnimeService extends AChromeService {
   protected getTypeName(): string {

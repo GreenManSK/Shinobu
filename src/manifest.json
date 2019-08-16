@@ -1,0 +1,15 @@
+{
+  "name": "Shinobu",
+  "version": "3.0",
+  "description": "Shinobu UwU",
+  "manifest_version": 2,
+  "page_action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "page": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}

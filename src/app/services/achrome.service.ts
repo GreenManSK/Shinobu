@@ -1,12 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Savable} from '../types/savable';
-import {IChromeService} from './ichrome-service';
+/// <reference types="chrome"/>
+
+import { Savable } from '../types/savable';
+import { IChromeService } from './ichrome-service';
 import StorageArea = chrome.storage.StorageArea;
 import lastError = chrome.runtime.lastError;
-
-@Injectable({
-  providedIn: 'root'
-})
 
 /**
  * Saves entities to storage under key {TypeName}#{EntityId} and list of all under key {TypeName}
@@ -100,7 +97,7 @@ export abstract class AChromeService implements IChromeService {
 
   private storageRemove(keys: string | string[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.storage.remove(keys, (items) => {
+      this.storage.remove(keys, () => {
         const error = this.checkError();
         if (error) {
           reject(error);
