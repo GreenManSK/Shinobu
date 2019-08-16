@@ -7,20 +7,20 @@ export interface IChromeService {
   /**
    * Get all entities
    */
-  getAll(callback: (result: Savable[]) => void): void;
+  getAll(): Promise<Savable[]>;
 
   /**
    * Get entity by id
    */
-  get(id: number, callback: (result: Savable) => void): void;
+  get(id: number): Promise<Savable>;
 
   /**
    * Add new entity to storage and generated its id, or replace the old one
    */
-  save(item: Savable, callback: (success: boolean) => void): void;
+  save(item: Savable): Promise<void>;
 
   /**
    * Deletes entity from storage based on the id
    */
-  delete(item: Savable, callback: (success: boolean) => void): void;
+  delete(item: Savable): Promise<void>;
 }
