@@ -5,8 +5,8 @@ import {AChromeService} from '../../services/achrome.service';
   providedIn: 'root'
 })
 
-export class NoteService extends AChromeService {
+export class ShowService extends AChromeService {
   protected getTypeName(): string {
-    return 'Note';
+    return 'Show';
   }
 }

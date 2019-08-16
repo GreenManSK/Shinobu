@@ -5,7 +5,7 @@ import {AChromeService} from '../../services/achrome.service';
   providedIn: 'root'
 })
 
-export abstract class TabService extends AChromeService {
+export class TabService extends AChromeService {
   protected getTypeName(): string {
     return 'Tab';
   }
