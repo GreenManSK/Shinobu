@@ -67,7 +67,7 @@ export abstract class AChromeServiceService implements IChromeService {
     });
   }
 
-  delete(item: Savable, callback: (success: boolean) => void): void {
+  public delete(item: Savable, callback: (success: boolean) => void): void {
     if (!item.id) {
       callback(false);
       return;
@@ -93,6 +93,45 @@ export abstract class AChromeServiceService implements IChromeService {
         this.storage.set(data, () => {
           callback(this.checkError());
         });
+      });
+    });
+  }
+
+  private storageGet(keys: string | string[]): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.storage.get(keys, (items) => {
+        const error = this.checkError();
+        if (error) {
+          reject(error);
+        } else {
+          resolve(items);
+        }
+      });
+    });
+  }
+
+  private storageSet(items: object): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
+      this.storage.set(items, () => {
+        const error = this.checkError();
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  private storageRemove(keys: string | string[]): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.storage.remove(keys, (items) => {
+        const error = this.checkError();
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
       });
     });
   }
