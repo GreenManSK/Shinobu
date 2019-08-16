@@ -3,9 +3,12 @@
   "version": "3.0",
   "description": "Shinobu UwU",
   "manifest_version": 2,
-  "page_action": {
-    "default_popup": "index.html"
+  "icons": {
+    "16": "assets/icons/shinobu/16.png",
+    "48": "assets/icons/shinobu/48.png",
+    "128": "assets/icons/shinobu/128.png"
   },
+  "options_page": "index.html",
   "background": {
     "page": "index.html"
   },
