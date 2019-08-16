@@ -1,0 +1,24 @@
+@import '~src/styles/variables';
+@import '~src/styles/mixins';
+
+$bgColor: #9acefc;
+$bgImg: $imgDir + "shinobuBg.jpg";
+$christmasBgImg: $imgDir + "shinobuBgCh.jpg";
+$colorTrans: 50%;
+$contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+$shinobuResponsive: 1111px;
+
+.ts-shibnou {
+  min-width: 100%;
+  min-height: 100%;
+  @include maximize;
+
+  background: $bgColor url($bgImg) no-repeat fixed center center;
+  background-size: 100% 100%;
+  color: $textColor;
+
+  &.christmas {
+    background-image: url($christmasBgImg);
+  }
+}

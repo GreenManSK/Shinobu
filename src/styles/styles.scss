@@ -1,0 +1,13 @@
+@import "variables";
+@import "mixins";
+
+html, body {
+  font-size: 62.5%;
+  font-family: $font;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  transition: color $time, background $time, opacity $time, padding $time;
+}
