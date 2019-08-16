@@ -11,7 +11,7 @@ import lastError = chrome.runtime.lastError;
 /**
  * Saves entities to storage under key {TypeName}#{EntityId} and list of all under key {TypeName}
  */
-export abstract class AChromeServiceService implements IChromeService {
+export abstract class AChromeService implements IChromeService {
   private static readonly DIVIDER = '#';
 
   public readonly storage: StorageArea;
@@ -112,7 +112,7 @@ export abstract class AChromeServiceService implements IChromeService {
   }
 
   private getStorageId(id: number): string {
-    return this.getTypeName() + AChromeServiceService.DIVIDER + id;
+    return this.getTypeName() + AChromeService.DIVIDER + id;
   }
 
   private generateId() {
