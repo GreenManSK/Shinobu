@@ -22,80 +22,51 @@ export abstract class AChromeServiceService implements IChromeService {
 
   protected abstract getTypeName(): string;
 
-  // // TODO: Add method for getting just the id list
-  //
-  // public getAll(callback: (result: Savable[]) => void): void {
-  //   // TODO: Fix to get all by IDS
-  //   this.storage.get(this.getTypeName, (items) => {
-  //     if (this.checkError()) {
-  //       callback(null);
-  //       return;
-  //     }
-  //     let result = items[this.getTypeName()];
-  //     if (!result) {
-  //       result = [];
-  //     }
-  //     callback(result);
-  //   });
-  // }
-  //
-  // public get(id: number, callback: (result: Savable) => void): void {
-  //   const storageId = this.getStorageId(id);
-  //   this.storage.get(storageId, (items) => {
-  //     callback(items[sorageId]);
-  //   });
-  // }
-  //
-  // public save(item: Savable, callback: (success: boolean) => void): void {
-  //   if (!item.id) {
-  //     item.id = this.generateId();
-  //   }
-  //   const storageId = this.getStorageId(item.id);
-  //   // TODO: Use just id list
-  //   this.getAll((items) => {
-  //     if (items == null) {
-  //       callback(false);
-  //       return;
-  //     }
-  //     items.push(storageId);
-  //     const data = {};
-  //     data[storageId] = item;
-  //     data[this.getTypeName()] = items;
-  //     this.storage.set(data, () => {
-  //       callback(this.checkError());
-  //     });
-  //   });
-  // }
-  //
-  // public delete(item: Savable, callback: (success: boolean) => void): void {
-  //   if (!item.id) {
-  //     callback(false);
-  //     return;
-  //   }
-  //   const storageId = this.getStorageId(item.id);
-  //   // TODO: Use just id list
-  //   this.getAll((items) => {
-  //     if (items == null) {
-  //       callback(false);
-  //       return;
-  //     }
-  //     this.storage.remove(storageId, () => {
-  //       if (this.checkError()) {
-  //         callback(false);
-  //         return;
-  //       }
-  //       const index = items.indexOf(storageId, 0);
-  //       if (index > -1) {
-  //         items.splice(index, 1);
-  //       }
-  //       const data = {};
-  //       data[this.getTypeName()] = items;
-  //       this.storage.set(data, () => {
-  //         callback(this.checkError());
-  //       });
-  //     });
-  //   });
-  // }
+  get(id: number): Promise<Savable> {
+    return this.storageGetOne(this.getStorageId(id));
+  }
+
+  getAll(): Promise<Savable[]> {
+    return this.getAllIds().then((keys) => this.storageGet(keys)).then(items => Object.values(items));
+  }
+
+  save(item: Savable): Promise<void> {
+    if (!item.id) {
+      item.id = this.generateId();
+    }
+    const storageId = this.getStorageId(item.id);
+    return this.getAllIds().then(keys => {
+      keys.push(storageId);
+      const data = {};
+      data[this.getTypeName()] = keys;
+      data[storageId] = item;
+      return this.storageSet(data);
+    });
+  }
+
+  delete(item: Savable): Promise<void> {
+    if (!item.id) {
+      return Promise.reject('Savable item do not have id');
+    }
+    const storageId = this.getStorageId(item.id);
+    return this.getAllIds().then(keys => {
+      const index = keys.indexOf(storageId, 0);
+      if (index > -1) {
+        keys.splice(index, 1);
+      }
+      const data = {};
+      data[this.getTypeName()] = keys;
+      return this.storageSet(data);
+    }).then(() => {
+      return this.storageRemove(storageId);
+    });
+  }
+
+  private getAllIds(): Promise<string[]> {
+    return this.storageGet(this.getTypeName()).then(items => {
+      return items[this.getTypeName()] ? items[this.getTypeName()] : [];
+    });
+  }
 
   private storageGet(keys: string | string[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -108,6 +79,10 @@ export abstract class AChromeServiceService implements IChromeService {
         }
       });
     });
+  }
+
+  private storageGetOne(key: string): Promise<any> {
+    return this.storageGet(key).then((items) => items[key]);
   }
 
   private storageSet(items: object): Promise<void> {
