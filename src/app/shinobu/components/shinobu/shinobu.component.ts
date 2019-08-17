@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShinobuComponent implements OnInit {
 
-  constructor() { }
+  public isChristmasTime: boolean;
+
+  constructor() {
+    this.checkChristmasTime();
+  }
 
   ngOnInit() {
   }
 
+  public checkChristmasTime(): void {
+    const today = new Date();
+    this.isChristmasTime = today.getMonth() === 11 || (today.getMonth() === 0 && today.getDay() < 10);
+  }
 }
