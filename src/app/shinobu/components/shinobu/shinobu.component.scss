@@ -4,10 +4,8 @@
 $bgColor: #9acefc;
 $bgImg: $imgDir + "shinobuBg.jpg";
 $christmasBgImg: $imgDir + "shinobuBgCh.jpg";
-$colorTrans: 50%;
+$colorTrans: $shinobuColorTransparency;
 $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
-
-$shinobuResponsive: 1111px;
 
 .ts-shibnou {
   min-width: 100%;
@@ -18,7 +16,7 @@ $shinobuResponsive: 1111px;
   background-size: 100% 100%;
   color: $textColor;
 
-  font: $contentFont;
+  font-family: $contentFont;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -26,11 +24,26 @@ $shinobuResponsive: 1111px;
   &.christmas {
     background-image: url($christmasBgImg);
   }
+
+  notes {
+    height: 100%;
+    width: 100%;
+    max-width: 25%;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: $shinobuResponsive) {
   .ts-shibnou {
     position: relative;
     flex-direction: column;
+
+    notes {
+      order: 2;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }

@@ -5,16 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShinobuComponent } from './shinobu/components/shinobu/shinobu.component';
 import { KirinoComponent } from './kirino/components/kirino/kirino.component';
+import { NotesComponent } from './shinobu/components/notes/notes.component';
+import { NoteComponent } from './shinobu/components/note/note.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     ShinobuComponent,
-    KirinoComponent
+    KirinoComponent,
+    NotesComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

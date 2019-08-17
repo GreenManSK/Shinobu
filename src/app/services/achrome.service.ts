@@ -1,21 +1,12 @@
-/// <reference types="chrome"/>
-
 import { Savable } from '../types/savable';
 import { IChromeService } from './ichrome-service';
-import StorageArea = chrome.storage.StorageArea;
-import lastError = chrome.runtime.lastError;
+import { StoragePromiseService } from './storage-promise.service';
 
 /**
  * Saves entities to storage under key {TypeName}#{EntityId} and list of all under key {TypeName}
  */
-export abstract class AChromeService implements IChromeService {
+export abstract class AChromeService extends StoragePromiseService implements IChromeService {
   private static readonly DIVIDER = '#';
-
-  public readonly storage: StorageArea;
-
-  constructor(storage: StorageArea) {
-    this.storage = storage;
-  }
 
   protected abstract getTypeName(): string;
 
@@ -65,59 +56,11 @@ export abstract class AChromeService implements IChromeService {
     });
   }
 
-  private storageGet(keys: string | string[]): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.storage.get(keys, (items) => {
-        const error = this.checkError();
-        if (error) {
-          reject(error);
-        } else {
-          resolve(items);
-        }
-      });
-    });
-  }
-
-  private storageGetOne(key: string): Promise<any> {
-    return this.storageGet(key).then((items) => items[key]);
-  }
-
-  private storageSet(items: object): Promise<void> {
-    return new Promise<any>((resolve, reject) => {
-      this.storage.set(items, () => {
-        const error = this.checkError();
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  private storageRemove(keys: string | string[]): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.storage.remove(keys, () => {
-        const error = this.checkError();
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
   private getStorageId(id: number): string {
     return this.getTypeName() + AChromeService.DIVIDER + id;
   }
 
   private generateId() {
     return ~~(Math.random() * 10000000);
-  }
-
-  private checkError() {
-    // TODO: Log errors
-    return lastError;
   }
 }
