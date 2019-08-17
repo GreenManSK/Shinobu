@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ShContextMenuModule } from 'ng2-right-click-menu';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { ColorPickerComponent } from './shinobu/components/color-picker/color-picker.component';
+import { TabsComponent } from './shinobu/components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ColorPickerComponent } from './shinobu/components/color-picker/color-pi
     KirinoComponent,
     NotesComponent,
     NoteComponent,
-    ColorPickerComponent
+    ColorPickerComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,

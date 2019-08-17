@@ -1,0 +1,12 @@
+<div class="ts-tabs">
+  <ul>
+    <li *ngFor="let tab of tabs">
+      <a href="#"
+        [title]="tab.title"
+        [ngClass]="{active: tab == activeTab}">
+        <fa *ngIf="!isImage(tab.icon)" [name]="tab.icon"></fa>
+        <img *ngIf="isImage(tab.icon)" [alt]="tab.title" [src]="tab.icon">
+      </a>
+    </li>
+  </ul>
+</div>

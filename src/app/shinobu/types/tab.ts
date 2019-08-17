@@ -7,7 +7,7 @@ export class Tab implements Savable {
   constructor(
     public title: string,
     public icon: string,
-    public tiles: Tile[]
+    public tiles: Tile[] = []
   ) {
   }
 }
