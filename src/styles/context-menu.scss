@@ -1,0 +1,28 @@
+$contextMenu-textColor: #fff;
+$contextMenu-bgColor: rgba(0, 0, 0, 0.7);
+$contextMenu-borderColor: rgba(255, 255, 255, 0.3);
+$contextMenu-fontSize: 1.5rem;
+
+body {
+  .sh-context-menu {
+    font-size: $contextMenu-fontSize;
+    border-color: $contextMenu-borderColor;
+    color: $contextMenu-textColor;
+    background-color: $contextMenu-bgColor;
+  }
+
+  .sh-context-menu--item.active,
+  .sh-context-menu--item:hover,
+  .sh-context-menu--item__sub-active {
+    background-color: opacify($contextMenu-bgColor, .9);
+  }
+
+  .sh-context-menu--item.sh-context-menu--item__divider:hover {
+    background-color: transparent;
+  }
+
+
+  .sh-sub-anchor:after {
+    border-left-color: $contextMenu-textColor;
+  }
+}

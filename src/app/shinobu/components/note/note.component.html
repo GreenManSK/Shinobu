@@ -1,4 +1,5 @@
 <div class="ts-note"
      [ngClass]="[color()]">
   <textarea [(ngModel)]="note.text" (keyup)="prepareSave()"></textarea>
+  <input class="text" [(ngModel)]="note.title" (keyup)="prepareSave()" type="text" />
 </div>

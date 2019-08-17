@@ -4,15 +4,17 @@
 $noteTextColor: #fff;
 $noteDefaultColor: #000;
 $noteFontSize: 17px;
+$noteTitleSize: 20px;
 
 @mixin note($color) {
   textarea, .text {
     color: $noteTextColor;
     background: transparentize(darken($color, 20%), $shinobuColorTransparency);
   }
-  &:not(:first-child) {
-    textarea, .text {
+  textarea, .text {
+    &:not(:first-child) {
       border-top: 1px solid transparentize($color, $shinobuColorTransparency*1.3);
+      background: opacify($color, $shinobuColorTransparency*1.3);
     }
   }
 }
@@ -23,7 +25,7 @@ $noteFontSize: 17px;
   }
 }
 
-@include scrollbar($bg: rgba(0,0,0,0.1));
+@include scrollbar($bg: rgba(0, 0, 0, 0.1));
 
 .ts-note {
   position: relative;
@@ -54,11 +56,22 @@ $noteFontSize: 17px;
     font-family: monospace;
   }
 
+  .text {
+    height: $noteTitleSize;
+    top: initial;
+    text-align: center;
+    font-size: $noteTitleSize;
+  }
+
+  textarea {
+    bottom: $noteTitleSize;
+  }
+
   @media (max-width: $shinobuResponsive) {
     height: auto;
 
     textarea, .text {
-      position: static;
+      position: initial;
       height: auto;
       min-height: 20rem;
     }

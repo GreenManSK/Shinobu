@@ -7,7 +7,9 @@ import { ShinobuComponent } from './shinobu/components/shinobu/shinobu.component
 import { KirinoComponent } from './kirino/components/kirino/kirino.component';
 import { NotesComponent } from './shinobu/components/notes/notes.component';
 import { NoteComponent } from './shinobu/components/note/note.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import { ShContextMenuModule } from 'ng2-right-click-menu';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormsModule } from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ShContextMenuModule,
+    Angular2FontawesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
