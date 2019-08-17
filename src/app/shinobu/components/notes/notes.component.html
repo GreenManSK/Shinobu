@@ -8,9 +8,7 @@
 
 <sh-context-menu #menu>
   <ng-template shContextMenuItem let-data>
-    <div>
-      Kolor piker
-    </div>
+    <color-picker [note]="activeNote" [noteService]="noteService"></color-picker>
   </ng-template>
   <ng-template shContextMenuItem [divider]="true"></ng-template>
   <ng-template shContextMenuItem (click)="addNote()">

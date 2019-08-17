@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Note } from '../../types/note';
-import { NoteColor } from "../../types/note-color.enum";
-import { NoteService } from "../../services/note.service";
+import { NoteColor } from '../../types/note-color.enum';
+import { NoteService } from '../../services/note.service';
 
 @Component({
   selector: 'note',
