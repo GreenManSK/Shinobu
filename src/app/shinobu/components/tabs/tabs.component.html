@@ -3,10 +3,37 @@
     <li *ngFor="let tab of tabs">
       <a href="#"
         [title]="tab.title"
-        [ngClass]="{active: tab == activeTab}">
+        [ngClass]="{active: tab == activeTab}"
+         [shAttachMenu]="menu"
+         [shMenuData]="tab">
         <fa *ngIf="!isImage(tab.icon)" [name]="tab.icon"></fa>
         <img *ngIf="isImage(tab.icon)" [alt]="tab.title" [src]="tab.icon">
       </a>
     </li>
   </ul>
 </div>
+
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="addTab()">
+    <div>
+      <fa [name]="'plus'"></fa>
+      Add
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem (click)="editTab($event)">
+    <div>
+      <fa [name]="'pencil'"></fa>
+      Edit
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem let-data *ngIf="tabs && tabs.length > 1" (click)="deleteTab($event)">
+    <div>
+      <fa [name]="'trash'"></fa>
+      Delete
+    </div>
+  </ng-template>
+
+</sh-context-menu>

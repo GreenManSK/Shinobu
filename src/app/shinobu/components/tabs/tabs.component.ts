@@ -4,6 +4,7 @@ import { TabService } from '../../services/tab.service';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { LocalPreferenceService } from '../../../services/local-preference.service';
 import validator from 'validator';
+import { ShContextMenuClickEvent } from '../../../../../node_modules/ng2-right-click-menu/lib/sh-context-menu.models';
 
 @Component({
   selector: 'tabs',
@@ -49,13 +50,19 @@ export class TabsComponent implements OnInit {
     this.createTab().then(( tab ) => this.activeTab = tab);
   }
 
+  public editTab( event: ShContextMenuClickEvent ): void {
+    const tab = event.data as Tab;
+    console.log(tab);
+  }
+
   public changeActiveTab( tab: Tab ): void {
     this.activeTab = tab;
     this.localPreference.get(TabsComponent.ACTIVE_TAB_KEY, tab.id);
     this.tabChanged.emit(tab);
   }
 
-  public deleteTab( tab: Tab ): void {
+  public deleteTab( event: ShContextMenuClickEvent ): void {
+    const tab = event.data as Tab;
     if (this.tabs.length <= 1) {
       return;
     }
@@ -70,7 +77,7 @@ export class TabsComponent implements OnInit {
     });
   }
 
-  public isImage(icon: string): boolean {
+  public isImage( icon: string ): boolean {
     return validator.isURL(icon);
   }
 
