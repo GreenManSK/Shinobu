@@ -1,6 +1,32 @@
 <div class="ts-quick-access" *ngIf="tab">
   <tile *ngIf="!tab.tiles.length" class="add" [tile]="addTile" (click)="addNewTile($event)"></tile>
-  <tile *ngFor="let tile of tab.tiles" [tile]="tile"></tile>
+  <tile *ngFor="let tile of tab.tiles"
+        [tile]="tile"
+        [shAttachMenu]="menu"
+        [shMenuData]="tile"></tile>
 </div>
 
 <quick-access-modal [service]="tabService" [tab]="tab" [tile]="activeTile" [(visible)]="showModal"></quick-access-modal>
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="addNewTile()">
+    <div>
+      <fa [name]="'plus'"></fa>
+      Add
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem (click)="editTile($event)">
+    <div>
+      <fa [name]="'pencil'"></fa>
+      Edit
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem let-data (click)="deleteTile($event)">
+    <div>
+      <fa [name]="'trash'"></fa>
+      Delete
+    </div>
+  </ng-template>
+</sh-context-menu>
