@@ -1,5 +1,6 @@
 <div class="ts-shibnou"
   [ngClass]="{'christmas': isChristmasTime}">
+  <quick-access [tab]="tab"></quick-access>
   <notes></notes>
-  <tabs></tabs>
+  <tabs (tabChanged)="onTabChanged($event)"></tabs>
 </div>

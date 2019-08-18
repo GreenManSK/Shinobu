@@ -2,10 +2,11 @@
   <ul>
     <li *ngFor="let tab of tabs">
       <a href="#"
-        [title]="tab.title"
-        [ngClass]="{active: tab == activeTab}"
+         [title]="tab.title"
+         [ngClass]="{active: tab == activeTab}"
          [shAttachMenu]="menu"
-         [shMenuData]="tab">
+         [shMenuData]="tab"
+         (click)="changeActiveTab(tab)">
         <fa *ngIf="!isImage(tab.icon)" [name]="tab.icon"></fa>
         <img *ngIf="isImage(tab.icon)" [alt]="tab.title" [src]="tab.icon">
       </a>

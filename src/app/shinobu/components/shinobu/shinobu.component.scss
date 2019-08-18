@@ -25,7 +25,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     background-image: url($christmasBgImg);
   }
 
-  notes, tabs {
+  notes, tabs, quick-access {
     height: 100%;
     width: 100%;
     max-width: 25%;
@@ -44,12 +44,25 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     justify-content: center;
     align-items: flex-end;
   }
+
+  quick-access {
+    order: 2;
+    flex: 2;
+    max-width: 4*(2*$gridMargin + $gridIconSize);
+    display: flex;
+  }
 }
 
 @media (max-width: $shinobuResponsive) {
   .ts-shibnou {
     position: relative;
     flex-direction: column;
+
+    .quick-access {
+      order: 1;
+      margin: 0 auto;
+      padding: 1rem;
+    }
 
     notes {
       order: 2;

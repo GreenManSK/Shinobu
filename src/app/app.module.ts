@@ -13,6 +13,8 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { ColorPickerComponent } from './shinobu/components/color-picker/color-picker.component';
 import { TabsComponent } from './shinobu/components/tabs/tabs.component';
 import { QuickAccessModalComponent } from './shinobu/components/quick-access-modal/quick-access-modal.component';
+import { QuickAccessComponent } from './shinobu/components/quick-access/quick-access.component';
+import { TileComponent } from './shinobu/components/tile/tile.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { QuickAccessModalComponent } from './shinobu/components/quick-access-mod
     NoteComponent,
     ColorPickerComponent,
     TabsComponent,
-    QuickAccessModalComponent
+    QuickAccessModalComponent,
+    QuickAccessComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,

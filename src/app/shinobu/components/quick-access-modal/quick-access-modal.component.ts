@@ -60,6 +60,10 @@ export class QuickAccessModalComponent implements OnInit {
     return this.tile ? this.tile : this._tab;
   }
 
+  public get previewTile(): Tile {
+    return new Tile(this.title, this.url, this.icon);
+  }
+
   public hide(): void {
     this.visible = false;
     this.visibleChange.emit(false);
@@ -73,11 +77,17 @@ export class QuickAccessModalComponent implements OnInit {
     if (this.url) {
       this.tile.link = this.url;
     }
+    if (this._tile && this._tab.tiles.indexOf(this._tile) < 0) {
+      this._tab.tiles.push(this._tile);
+    }
     this.service.save(this._tab).then(() => this.hide());
   }
 
   private updateValues(): void {
     const editItem = this.editItem;
+    if (!editItem) {
+      return;
+    }
     this.title = editItem.title;
     this.icon = editItem.icon;
     this.url = this.tile ? this.tile.link : null;

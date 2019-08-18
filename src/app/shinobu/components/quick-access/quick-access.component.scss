@@ -1,0 +1,18 @@
+@import '~src/styles/variables';
+
+.ts-quick-access {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+::ng-deep {
+  tile.add {
+    a {
+      border: 5px dashed fade-in($gridBackground, .3);
+    }
+  }
+}

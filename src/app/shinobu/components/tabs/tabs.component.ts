@@ -46,6 +46,7 @@ export class TabsComponent implements OnInit {
       if (!this.activeTab) {
         this.activeTab = this.tabs[0];
       }
+      this.tabChanged.emit(this.activeTab);
     });
   }
 

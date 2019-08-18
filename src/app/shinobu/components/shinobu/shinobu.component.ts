@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Tab } from '../../types/tab';
 
 @Component({
   selector: 'app-shinobu',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class ShinobuComponent implements OnInit {
 
   public isChristmasTime: boolean;
+
+  public tab: Tab;
 
   constructor() {
     this.checkChristmasTime();
@@ -19,5 +22,9 @@ export class ShinobuComponent implements OnInit {
   public checkChristmasTime(): void {
     const today = new Date();
     this.isChristmasTime = today.getMonth() === 11 || (today.getMonth() === 0 && today.getDay() < 10);
+  }
+
+  public onTabChanged( tab: Tab ): void {
+    this.tab = tab;
   }
 }
