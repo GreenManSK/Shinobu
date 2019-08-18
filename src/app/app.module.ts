@@ -16,6 +16,7 @@ import { QuickAccessModalComponent } from './shinobu/components/quick-access-mod
 import { QuickAccessComponent } from './shinobu/components/quick-access/quick-access.component';
 import { TileComponent } from './shinobu/components/tile/tile.component';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SortablejsModule } from 'ngx-sortablejs';
     TabsComponent,
     QuickAccessModalComponent,
     QuickAccessComponent,
-    TileComponent
+    TileComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

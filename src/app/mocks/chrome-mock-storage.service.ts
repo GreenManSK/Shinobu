@@ -18,7 +18,17 @@ export class ChromeMockStorageService implements StorageArea {
   get( callback: ( items: { [p: string]: any } ) => void ): void;
   get( keys: string | string[] | object | null, callback: ( items: { [p: string]: any } ) => void ): void;
   get( keys: (( items: { [p: string]: any } ) => void) | string | string[] | object | null, callback?: ( items: { [p: string]: any } ) => void ): void {
-    callback(this.items);
+    if (typeof keys === 'string') {
+      const result = {};
+      result[keys] = this.items[keys];
+      callback(result);
+    } else {
+      const result = {};
+      for (const key of (keys as string[])) {
+        result[key] = this.items[key];
+      }
+      callback(result);
+    }
   }
 
   getBytesInUse( callback: ( bytesInUse: number ) => void ): void;

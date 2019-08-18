@@ -1,13 +1,17 @@
 $font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $time: 0.5s;
 $textColor: #333;
-$shadow: 2px 2px 8px rgba(0,0,0,.3);
+$shadow: 2px 2px 8px rgba(0, 0, 0, .3);
 $responsiveWidth: 900px;
 $space: 20px;
-$miniSpace: 1rem;
+$miniSpace: 10px;
 
 $imgDir: '/assets/img/';
 $iconDir: '/assets/icons/';
+
+$kirinoIcon: $iconDir + 'kirino/';
+$shinobuIcon: $iconDir + 'shinobu/';
+$gumiIcon: $iconDir + 'gumi/';
 
 $gray: #9a9a9a;
 $red: #B63533;
