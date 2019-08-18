@@ -15,6 +15,7 @@ import { TabsComponent } from './shinobu/components/tabs/tabs.component';
 import { QuickAccessModalComponent } from './shinobu/components/quick-access-modal/quick-access-modal.component';
 import { QuickAccessComponent } from './shinobu/components/quick-access/quick-access.component';
 import { TileComponent } from './shinobu/components/tile/tile.component';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TileComponent } from './shinobu/components/tile/tile.component';
     AppRoutingModule,
     FormsModule,
     ShContextMenuModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    SortablejsModule.forRoot({ animation: 150 })
   ],
   providers: [],
   bootstrap: [AppComponent]

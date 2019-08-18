@@ -1,4 +1,4 @@
-<div class="ts-quick-access" *ngIf="tab">
+<div class="ts-quick-access" *ngIf="tab" [sortablejs]="tab.tiles" [sortablejsOptions]="{onUpdate: saveOrder()}">
   <tile *ngIf="!tab.tiles.length" class="add" [tile]="addTile" (click)="addNewTile($event)"></tile>
   <tile *ngFor="let tile of tab.tiles"
         [tile]="tile"

@@ -12,13 +12,12 @@ import { ShContextMenuClickEvent } from "../../../../../node_modules/ng2-right-c
 })
 export class QuickAccessComponent implements OnInit {
 
-  @Input()
-  public tab: Tab;
-
+  private _tab: Tab;
   private addTile = new Tile('Add', '#', 'plus');
   private activeTile: Tile;
   private showModal = false;
   private tabService: TabService;
+  private oldOrder: Tile[] = [];
 
   constructor(
     chromeStorage: ChromeMockStorageService
@@ -27,6 +26,18 @@ export class QuickAccessComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  @Input('tab')
+  public set tab( tab: Tab ) {
+    if (tab) {
+      this.oldOrder = Object.assign([], tab.tiles);
+    }
+    this._tab = tab;
+  }
+
+  public get tab(): Tab {
+    return this._tab;
   }
 
   public addNewTile( event: MouseEvent = null ): void {
@@ -48,6 +59,13 @@ export class QuickAccessComponent implements OnInit {
     if (index > -1) {
       this.tab.tiles.splice(index, 1);
     }
+  }
+
+  public saveOrder(): void {
+    if (JSON.stringify(this.oldOrder) === JSON.stringify(this.tab.tiles)) {
+      return;
+    }
+    this.oldOrder = Object.assign([], this.tab.tiles);
     this.tabService.save(this.tab);
   }
 }
