@@ -12,6 +12,7 @@ import { ShContextMenuModule } from 'ng2-right-click-menu';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { ColorPickerComponent } from './shinobu/components/color-picker/color-picker.component';
 import { TabsComponent } from './shinobu/components/tabs/tabs.component';
+import { QuickAccessModalComponent } from './shinobu/components/quick-access-modal/quick-access-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TabsComponent } from './shinobu/components/tabs/tabs.component';
     NotesComponent,
     NoteComponent,
     ColorPickerComponent,
-    TabsComponent
+    TabsComponent,
+    QuickAccessModalComponent
   ],
   imports: [
     BrowserModule,

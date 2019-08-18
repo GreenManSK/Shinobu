@@ -22,6 +22,9 @@ export class TabsComponent implements OnInit {
   private tabs: Tab[];
   private activeTab: Tab;
 
+  private showModal = false;
+  private editedTab: Tab;
+
   constructor(
     public localPreference: LocalPreferenceService,
     chromeStorage: ChromeMockStorageService
@@ -51,8 +54,8 @@ export class TabsComponent implements OnInit {
   }
 
   public editTab( event: ShContextMenuClickEvent ): void {
-    const tab = event.data as Tab;
-    console.log(tab);
+    this.editedTab = event.data as Tab;
+    this.showModal = true;
   }
 
   public changeActiveTab( tab: Tab ): void {
