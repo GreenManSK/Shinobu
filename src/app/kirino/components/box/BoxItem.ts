@@ -6,6 +6,7 @@ export class BoxItem {
     public text: string,
     public date: Date,
     public parentKey: any = null,
+    public data: any = null,
     public icons: BoxLink[] = [],
     public buttons: BoxLink[] = [],
     public link: BoxLink = null
