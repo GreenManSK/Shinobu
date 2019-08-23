@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Note} from '../../../shinobu/types/note';
 import {BoxItem} from './data/BoxItem';
 import {LocalPreferenceService} from '../../../services/local-preference.service';
 
