@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BoxItem} from './data/BoxItem';
 import {LocalPreferenceService} from '../../../services/local-preference.service';
+import {BoxColor} from './box-color.enum';
 
 @Component({
   selector: 'box',
@@ -16,6 +17,12 @@ export class BoxComponent implements OnInit {
 
   @Input()
   public localPreferenceKey: string;
+
+  @Input()
+  public color: BoxColor = BoxColor.Gray;
+
+  @Input()
+  public enableHiding = false;
 
   private _items: BoxItem[];
   private hiddenKeys: Set<any>;
@@ -45,7 +52,7 @@ export class BoxComponent implements OnInit {
     if (this.hiddenKeys.has(item.groupKey)) {
       this.hiddenKeys.delete(item.groupKey);
     } else {
-      this.hiddenKeys.add(item.groupKey;
+      this.hiddenKeys.add(item.groupKey);
     }
     this.localPreference.set(this.localPreferenceKey + BoxComponent.HIDDEN_KEYS, Array.from(this.hiddenKeys.values())).then(() => {
       this.prepareRenderedItems();
