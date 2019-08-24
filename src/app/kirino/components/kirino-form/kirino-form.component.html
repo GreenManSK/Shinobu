@@ -1,3 +1,4 @@
 <div class="ts-kirino-form">
-  <anime-form [id]="id"></anime-form>
+  <anime-form *ngIf="isAnime()" [id]="id"></anime-form>
+  <show-form *ngIf="isShow()" [id]="id"></show-form>
 </div>

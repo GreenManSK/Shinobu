@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnimeFormComponent } from "../anime-form/anime-form.component";
+import { ShowFormComponent } from "../show-form/show-form.component";
 
 @Component({
   selector: 'kirino-form',
@@ -21,5 +23,13 @@ export class KirinoFormComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.type = this.route.snapshot.params.type;
+  }
+
+  public isAnime(): boolean {
+    return this.type === AnimeFormComponent.TYPE;
+  }
+
+  public isShow(): boolean {
+    return this.type === ShowFormComponent.TYPE;
   }
 }

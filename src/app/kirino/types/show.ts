@@ -7,7 +7,7 @@ export class Show implements Episodic {
   constructor(
     public title: string,
     public tvdbId: number,
-    public url: string,
+    public url: string = null,
     public episodes: Episode[] = []
   ) {
 

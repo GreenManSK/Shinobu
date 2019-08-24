@@ -8,6 +8,9 @@ import { Episode } from '../../types/episode';
 import { Show } from '../../types/show';
 import { BoxLink } from '../item-box/data/BoxLink';
 import { MessageService } from '../../../services/message.service';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { PopUpService } from '../../../services/pop-up.service';
+import { ShowFormComponent } from '../show-form/show-form.component';
 
 type DataBag = {
   show: Show,
@@ -21,9 +24,10 @@ type DataBag = {
 })
 export class ShowsBoxComponent implements OnInit {
 
+  public static readonly SYNC_KEY = 'ShowBox';
 
   public readonly color = BoxColor.Green;
-  public readonly syncKey = 'ShowBox';
+  public readonly syncKey = ShowsBoxComponent.SYNC_KEY;
 
   private service: ShowService;
   public items: BoxItem[] = [];
@@ -34,7 +38,10 @@ export class ShowsBoxComponent implements OnInit {
     new BoxButton('Delete', 'trash-o', this.deleteShow.bind(this))
   ];
 
+  public addButton = new BoxButton('Add', 'plus', this.addShow.bind(this));
+
   constructor(
+    public popUpService: PopUpService,
     private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
@@ -45,19 +52,6 @@ export class ShowsBoxComponent implements OnInit {
         this.reloadItems();
       });
     });
-
-    // TODO: Remove mocks
-    const shows = [
-      new Show('Dumbbell Nan Kilo Moteru?', 555, 'searh me', [
-        new Episode('12', 1566642691787),
-        new Episode('13', 1566742691787),
-        new Episode('14', 1566842691787),
-        new Episode('15', 1566942691787),
-      ])
-    ];
-    for (const show of shows) {
-      this.service.save(show);
-    }
   }
 
   ngOnInit() {
@@ -79,9 +73,22 @@ export class ShowsBoxComponent implements OnInit {
     });
   }
 
+  public addShow(): void {
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(ShowFormComponent.TYPE),
+      'Add',
+      ShowFormComponent.WIDTH,
+      ShowFormComponent.HEIGHT
+    );
+  }
+
   public editShow( item: DataBag ): void {
-    // TODO
-    console.log('edit');
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(ShowFormComponent.TYPE, item.show.id),
+      'Edit',
+      ShowFormComponent.WIDTH,
+      ShowFormComponent.HEIGHT
+    );
   }
 
   public deleteShow( item: DataBag ): void {
