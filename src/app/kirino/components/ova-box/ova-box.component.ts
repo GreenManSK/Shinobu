@@ -65,7 +65,7 @@ export class OvaBoxComponent implements OnInit {
   private toBoxItem( ova: Ova ): BoxItem {
     return new BoxItem(
       ova.title,
-      ova.title,
+      null,
       new Date(ova.airdate),
       null,
       ova.id,

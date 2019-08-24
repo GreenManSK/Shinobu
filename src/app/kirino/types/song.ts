@@ -9,8 +9,8 @@ export class Song implements Savable {
     public title: string,
     public author: string,
     public releaseDate: number,
-    public anidbId: number,
-    public anisonId: number
+    public anidbId: number = null,
+    public anisonId: number = null
   ) {
   }
 }
