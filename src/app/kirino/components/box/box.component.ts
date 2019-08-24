@@ -1,5 +1,6 @@
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { BoxColor } from './box-color.enum';
+import { BoxButton } from '../item-box/data/BoxButton';
 
 @Component({
   selector: 'box',
@@ -20,6 +21,9 @@ export class BoxComponent implements OnInit {
   @ContentChild(TemplateRef, {static: false})
   @Input() contentTemplate: TemplateRef<any>;
 
+  @Input()
+  public headerButton: BoxButton;
+
   constructor() {
   }
 
@@ -38,4 +42,8 @@ export class BoxComponent implements OnInit {
     return BoxComponent.getColorClass(this.color);
   }
 
+  public headerButtonClick( event: MouseEvent ): void {
+    event.preventDefault();
+    this.headerButton.callback(null);
+  }
 }

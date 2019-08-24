@@ -55,6 +55,24 @@
         font-size: 1.75rem;
         float: left;
       }
+
+      .tools {
+        font-size: 1.6rem;
+        float: right;
+        a {
+          color: $boxHeaderColor;
+          display: inline-block;
+          padding: 0.05rem $boxRadius;
+          border-radius: $boxRadius;
+          &:hover, &:focus, &:active {
+            background: $boxHeaderColor;
+          }
+        }
+
+        a + a {
+          margin-left: -0.2rem;
+        }
+      }
     }
 
     ul {

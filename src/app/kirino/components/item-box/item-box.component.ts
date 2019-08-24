@@ -31,6 +31,9 @@ export class ItemBoxComponent implements OnInit {
   @Input()
   public enableHiding = false;
 
+  @Input()
+  public headerButton: BoxButton;
+
   private _items: BoxItem[];
   private hiddenKeys: Set<any>;
   public hiddenGroups: object;

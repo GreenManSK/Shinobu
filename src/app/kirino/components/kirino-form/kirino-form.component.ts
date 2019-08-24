@@ -14,7 +14,7 @@ export class KirinoFormComponent implements OnInit {
   constructor( private route: ActivatedRoute ) {
   }
 
-  public static getUrl( type: string, id: number ): string {
+  public static getUrl( type: string, id: number = null ): string {
     return 'index.html#/kirino-form/' + type + (id ? '/' + id : '');
   }
 

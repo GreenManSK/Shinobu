@@ -38,6 +38,8 @@ export class AnimeBoxComponent implements OnInit {
     new BoxButton('Delete', 'trash-o', this.deleteAnime.bind(this))
   ];
 
+  public addButton = new BoxButton('Add', 'plus', this.addAnime.bind(this));
+
   constructor(
     public popUpService: PopUpService,
     private zone: NgZone,
@@ -82,6 +84,15 @@ export class AnimeBoxComponent implements OnInit {
     this.service.save(item.anime).then(() => {
       this.reloadItems();
     });
+  }
+
+  public addAnime(): void {
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(AnimeFormComponent.TYPE),
+      'Add',
+      AnimeFormComponent.WIDTH,
+      AnimeFormComponent.HEIGHT
+    );
   }
 
   public editAnime( item: DataBag ): void {
