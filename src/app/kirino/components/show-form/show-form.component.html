@@ -2,7 +2,7 @@
      [title]="'Show'"
      [icon]="'tv'">
   <ng-template>
-    <form *ngIf="show" class="nice" [ngClass]="[colorClass]">
+    <form *ngIf="show" class="nice show-labels" [ngClass]="[colorClass]">
       <div class="field">
         <label for="form-title">Title</label>
         <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="show.title">

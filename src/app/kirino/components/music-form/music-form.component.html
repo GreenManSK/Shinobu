@@ -2,7 +2,7 @@
      [title]="'Music'"
      [icon]="'note'">
   <ng-template>
-    <form *ngIf="song" class="nice" [ngClass]="[colorClass]">
+    <form *ngIf="song" class="nice show-labels" [ngClass]="[colorClass]">
       <div class="field">
         <label for="form-show">Show</label>
         <input type="text" id="form-show" placeholder="Show" name="show" [(ngModel)]="song.show">
