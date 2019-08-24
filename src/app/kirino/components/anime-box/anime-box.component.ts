@@ -4,10 +4,9 @@ import { BoxItem } from '../box/data/BoxItem';
 import { BoxButton } from '../box/data/BoxButton';
 import { AnimeService } from '../../services/anime.service';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
-import { Ova } from '../../types/ova';
 import { Anime } from '../../types/anime';
-import { Episode } from "../../types/episode";
-import { BoxLink } from "../box/data/BoxLink";
+import { Episode } from '../../types/episode';
+import { BoxLink } from '../box/data/BoxLink';
 
 @Component({
   selector: 'anime-box',

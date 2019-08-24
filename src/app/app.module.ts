@@ -22,6 +22,7 @@ import { OvaBoxComponent } from './kirino/components/ova-box/ova-box.component';
 import { KirinoImageComponent } from './kirino/components/kirino-image/kirino-image.component';
 import { MusicBoxComponent } from './kirino/components/music-box/music-box.component';
 import { AnimeBoxComponent } from './kirino/components/anime-box/anime-box.component';
+import { ShowsBoxComponent } from './kirino/components/shows-box/shows-box.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AnimeBoxComponent } from './kirino/components/anime-box/anime-box.compo
     OvaBoxComponent,
     KirinoImageComponent,
     MusicBoxComponent,
-    AnimeBoxComponent
+    AnimeBoxComponent,
+    ShowsBoxComponent
   ],
   imports: [
     BrowserModule,
