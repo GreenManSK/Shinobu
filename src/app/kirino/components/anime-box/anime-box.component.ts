@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { BoxColor } from '../box/box-color.enum';
 import { BoxItem } from '../item-box/data/BoxItem';
 import { BoxButton } from '../item-box/data/BoxButton';
@@ -7,8 +7,10 @@ import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.ser
 import { Anime } from '../../types/anime';
 import { Episode } from '../../types/episode';
 import { BoxLink } from '../item-box/data/BoxLink';
-import { MessageService } from "../../../services/message.service";
-import { PopUpService } from "../../../services/pop-up.service";
+import { MessageService } from '../../../services/message.service';
+import { PopUpService } from '../../../services/pop-up.service';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { AnimeFormComponent } from '../anime-form/anime-form.component';
 
 type DataBag = {
   anime: Anime,
@@ -22,11 +24,13 @@ type DataBag = {
 })
 export class AnimeBoxComponent implements OnInit {
 
-  private readonly color = BoxColor.Red;
-  private readonly syncKey = 'AnimeBox';
+  public static readonly SYNC_KEY = 'AnimeBox';
+
+  public readonly color = BoxColor.Red;
+  public readonly syncKey = AnimeBoxComponent.SYNC_KEY;
 
   private service: AnimeService;
-  private items: BoxItem[] = [];
+  public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'eye', this.seenEpisode.bind(this)),
@@ -36,12 +40,15 @@ export class AnimeBoxComponent implements OnInit {
 
   constructor(
     public popUpService: PopUpService,
+    private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
     this.service = new AnimeService(chromeStorage);
     messageService.onMessage(this.syncKey, () => {
-      this.reloadItems();
+      this.zone.run(() => {
+        this.reloadItems();
+      });
     });
 
     // TODO: Remove mocks
@@ -78,9 +85,12 @@ export class AnimeBoxComponent implements OnInit {
   }
 
   public editAnime( item: DataBag ): void {
-    // TODO
-    console.log('edit');
-    this.popUpService.openPopUp('/#/kirino-form/sfaafs/555', 'Form', 500, 500);
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(AnimeFormComponent.TYPE, item.anime.id),
+      'Edit',
+      AnimeFormComponent.WIDTH,
+      AnimeFormComponent.HEIGHT
+    );
   }
 
   public deleteAnime( item: DataBag ): void {

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { BoxColor } from '../box/box-color.enum';
 import { BoxItem } from '../item-box/data/BoxItem';
 import { BoxButton } from '../item-box/data/BoxButton';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { BoxLink } from '../item-box/data/BoxLink';
 import { SongService } from '../../services/song.service';
-import { Song } from "../../types/song";
-import { MessageService } from "../../../services/message.service";
+import { Song } from '../../types/song';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'music-box',
@@ -15,11 +15,11 @@ import { MessageService } from "../../../services/message.service";
 })
 export class MusicBoxComponent implements OnInit {
 
-  private readonly color = BoxColor.Blue;
-  private readonly syncKey = 'MusicBox';
+  public readonly color = BoxColor.Blue;
+  public readonly syncKey = 'MusicBox';
 
   private service: SongService;
-  private items: BoxItem[] = [];
+  public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
     new BoxButton('Edit', 'pencil', this.editMusic.bind(this)),
@@ -27,12 +27,15 @@ export class MusicBoxComponent implements OnInit {
   ];
 
   constructor(
+    private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
     this.service = new SongService(chromeStorage);
     messageService.onMessage(this.syncKey, () => {
-      this.reloadItems();
+      this.zone.run(() => {
+        this.reloadItems();
+      });
     });
     // TODO: Remove mocks
     const songs = [

@@ -13,9 +13,9 @@ export class NotesComponent implements OnInit {
 
   private static readonly ACTIVE_NOTE_KEY = 'activeNote';
 
-  private noteService: NoteService;
-  private notes: Note[];
-  private activeNote: Note;
+  public noteService: NoteService;
+  public notes: Note[];
+  public activeNote: Note;
 
   constructor(
     public localPreference: LocalPreferenceService,

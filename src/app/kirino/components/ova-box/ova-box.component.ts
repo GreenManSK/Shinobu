@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { BoxColor } from '../box/box-color.enum';
 import { BoxItem } from '../item-box/data/BoxItem';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { OvaService } from '../../services/ova.service';
 import { Ova } from '../../types/ova';
-import { BoxLink } from "../item-box/data/BoxLink";
-import { BoxButton } from "../item-box/data/BoxButton";
-import { MessageService } from "../../../services/message.service";
+import { BoxLink } from '../item-box/data/BoxLink';
+import { BoxButton } from '../item-box/data/BoxButton';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'ova-box',
@@ -15,11 +15,11 @@ import { MessageService } from "../../../services/message.service";
 })
 export class OvaBoxComponent implements OnInit {
 
-  private readonly color = BoxColor.Pink;
-  private readonly syncKey = 'OvaBox';
+  public readonly color = BoxColor.Pink;
+  public readonly syncKey = 'OvaBox';
 
   private service: OvaService;
-  private items: BoxItem[] = [];
+  public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
     new BoxButton('Edit', 'pencil', this.editOva.bind(this)),
@@ -27,12 +27,15 @@ export class OvaBoxComponent implements OnInit {
   ];
 
   constructor(
+    private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
     this.service = new OvaService(chromeStorage);
     messageService.onMessage(this.syncKey, () => {
-      this.reloadItems();
+      this.zone.run(() => {
+        this.reloadItems();
+      });
     });
 
     // TODO: Remove mocks

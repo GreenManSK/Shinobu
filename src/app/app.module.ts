@@ -25,6 +25,7 @@ import { AnimeBoxComponent } from './kirino/components/anime-box/anime-box.compo
 import { ShowsBoxComponent } from './kirino/components/shows-box/shows-box.component';
 import { BoxComponent } from './kirino/components/box/box.component';
 import { KirinoFormComponent } from './kirino/components/kirino-form/kirino-form.component';
+import { AnimeFormComponent } from './kirino/components/anime-form/anime-form.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { KirinoFormComponent } from './kirino/components/kirino-form/kirino-form
     AnimeBoxComponent,
     ShowsBoxComponent,
     BoxComponent,
-    KirinoFormComponent
+    KirinoFormComponent,
+    AnimeFormComponent
   ],
   imports: [
     BrowserModule,

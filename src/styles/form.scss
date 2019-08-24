@@ -2,7 +2,7 @@
   &#{$selector} {
     input:not([type=checkbox]):not([type=radio]), button, textarea, .help, select, .buttons a {
       &:focus, &:focus + .help, &:active, &:active + .help {
-        border-color: fade($color, 90%);
+        border-color: rgba($color, 90%);
         box-shadow: 0 0 5px 0 $color;
       }
     }
@@ -14,7 +14,7 @@
     input[type=submit], button, .buttons a {
       cursor: pointer;
       &:hover {
-        border-color: fade($color, 90%);
+        border-color: rgba($color, 90%);
         box-shadow: 0 0 5px 0 $color;
       }
 
@@ -142,7 +142,7 @@ form.nice {
     }
 
     .help {
-      background: fade($red, 10%);
+      background: rgba($red, 10%);
     }
 
     span:not(.help) {

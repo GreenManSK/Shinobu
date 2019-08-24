@@ -33,9 +33,9 @@ export class ItemBoxComponent implements OnInit {
 
   private _items: BoxItem[];
   private hiddenKeys: Set<any>;
-  private hiddenGroups: object;
-  private renderedItems: BoxItem[] = [];
-  private now: Date;
+  public hiddenGroups: object;
+  public renderedItems: BoxItem[] = [];
+  public now: Date;
 
   constructor(
     public localPreference: LocalPreferenceService

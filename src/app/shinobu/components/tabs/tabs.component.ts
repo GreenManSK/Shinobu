@@ -18,12 +18,12 @@ export class TabsComponent implements OnInit {
   @Output()
   public tabChanged = new EventEmitter<Tab>();
 
-  private tabService: TabService;
-  private tabs: Tab[];
-  private activeTab: Tab;
+  public tabService: TabService;
+  public tabs: Tab[];
+  public activeTab: Tab;
 
-  private showModal = false;
-  private editedTab: Tab;
+  public showModal = false;
+  public editedTab: Tab;
 
   constructor(
     public localPreference: LocalPreferenceService,

@@ -9,7 +9,7 @@ export class MessageService {
   }
 
   public sendMessage( address: string, message: any ): void {
-    if (!chrome.runtime) {
+    if (!chrome.runtime || !chrome.runtime.sendMessage) {
       return;
     }
     chrome.runtime.sendMessage({

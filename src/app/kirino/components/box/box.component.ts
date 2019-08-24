@@ -23,6 +23,10 @@ export class BoxComponent implements OnInit {
   constructor() {
   }
 
+  public static getColorClass( color: BoxColor ): string {
+    return ('' + BoxColor[color]).toLocaleLowerCase();
+  }
+
   ngOnInit() {
   }
 
@@ -31,7 +35,7 @@ export class BoxComponent implements OnInit {
   }
 
   public get colorClass() {
-    return ('' + BoxColor[this.color]).toLocaleLowerCase();
+    return BoxComponent.getColorClass(this.color);
   }
 
 }

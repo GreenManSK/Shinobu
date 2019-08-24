@@ -8,7 +8,8 @@ import { KirinoFormComponent } from './kirino/components/kirino-form/kirino-form
 const routes: Routes = [
   {path: '', component: ShinobuComponent},
   {path: 'kirino', component: KirinoComponent},
-  {path: 'kirino-form/:type/:id', component: KirinoFormComponent}
+  {path: 'kirino-form/:type', component: KirinoFormComponent},
+  {path: 'kirino-form/:type/:id', component: KirinoFormComponent},
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { BoxColor } from '../box/box-color.enum';
 import { BoxItem } from '../item-box/data/BoxItem';
 import { BoxButton } from '../item-box/data/BoxButton';
@@ -7,7 +7,7 @@ import { ShowService } from '../../services/show.service';
 import { Episode } from '../../types/episode';
 import { Show } from '../../types/show';
 import { BoxLink } from '../item-box/data/BoxLink';
-import { MessageService } from "../../../services/message.service";
+import { MessageService } from '../../../services/message.service';
 
 type DataBag = {
   show: Show,
@@ -22,11 +22,11 @@ type DataBag = {
 export class ShowsBoxComponent implements OnInit {
 
 
-  private readonly color = BoxColor.Green;
-  private readonly syncKey = 'ShowBox';
+  public readonly color = BoxColor.Green;
+  public readonly syncKey = 'ShowBox';
 
   private service: ShowService;
-  private items: BoxItem[] = [];
+  public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'eye', this.seenShow.bind(this)),
@@ -35,12 +35,15 @@ export class ShowsBoxComponent implements OnInit {
   ];
 
   constructor(
+    private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
     this.service = new ShowService(chromeStorage);
     messageService.onMessage(this.syncKey, () => {
-      this.reloadItems();
+      this.zone.run(() => {
+        this.reloadItems();
+      });
     });
 
     // TODO: Remove mocks

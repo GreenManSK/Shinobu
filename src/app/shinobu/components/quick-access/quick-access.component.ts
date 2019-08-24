@@ -13,10 +13,10 @@ import { ShContextMenuClickEvent } from "../../../../../node_modules/ng2-right-c
 export class QuickAccessComponent implements OnInit {
 
   private _tab: Tab;
-  private addTile = new Tile('Add', '#', 'plus');
-  private activeTile: Tile;
-  private showModal = false;
-  private tabService: TabService;
+  public addTile = new Tile('Add', '#', 'plus');
+  public activeTile: Tile;
+  public showModal = false;
+  public tabService: TabService;
   private oldOrder: Tile[] = [];
 
   constructor(

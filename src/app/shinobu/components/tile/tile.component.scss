@@ -20,7 +20,7 @@
   background: $gridBackground;
 
   &:hover, &:active, &:focus {
-    background: fade($gridBackground, 20%);
+    background: rgba($gridBackground, 20%);
   }
 
   img {
