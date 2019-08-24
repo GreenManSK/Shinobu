@@ -7,6 +7,9 @@ import { Ova } from '../../types/ova';
 import { BoxLink } from '../item-box/data/BoxLink';
 import { BoxButton } from '../item-box/data/BoxButton';
 import { MessageService } from '../../../services/message.service';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { PopUpService } from '../../../services/pop-up.service';
+import { OvaFormComponent } from '../ova-form/ova-form.component';
 
 @Component({
   selector: 'ova-box',
@@ -15,8 +18,10 @@ import { MessageService } from '../../../services/message.service';
 })
 export class OvaBoxComponent implements OnInit {
 
+  public static readonly SYNC_KEY = 'OvaBox';
+
   public readonly color = BoxColor.Pink;
-  public readonly syncKey = 'OvaBox';
+  public readonly syncKey = OvaBoxComponent.SYNC_KEY;
 
   private service: OvaService;
   public items: BoxItem[] = [];
@@ -26,7 +31,10 @@ export class OvaBoxComponent implements OnInit {
     new BoxButton('Delete', 'trash-o', this.deleteOva.bind(this))
   ];
 
+  public addButton = new BoxButton('Add', 'plus', this.addOva.bind(this));
+
   constructor(
+    public popUpService: PopUpService,
     private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
@@ -57,9 +65,22 @@ export class OvaBoxComponent implements OnInit {
     // TODO
   }
 
+  public addOva(): void {
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(OvaFormComponent.TYPE),
+      'Add',
+      OvaFormComponent.WIDTH,
+      OvaFormComponent.HEIGHT
+    );
+  }
+
   public editOva( ova: Ova ): void {
-    // TODO
-    console.log('edit');
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(OvaFormComponent.TYPE, ova.id),
+      'Edit',
+      OvaFormComponent.WIDTH,
+      OvaFormComponent.HEIGHT
+    );
   }
 
   public deleteOva( ova: Ova ): void {

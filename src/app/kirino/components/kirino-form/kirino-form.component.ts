@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeFormComponent } from "../anime-form/anime-form.component";
-import { ShowFormComponent } from "../show-form/show-form.component";
+import { AnimeFormComponent } from '../anime-form/anime-form.component';
+import { ShowFormComponent } from '../show-form/show-form.component';
+import { OvaFormComponent } from '../ova-form/ova-form.component';
 
 @Component({
   selector: 'kirino-form',
@@ -31,5 +32,9 @@ export class KirinoFormComponent implements OnInit {
 
   public isShow(): boolean {
     return this.type === ShowFormComponent.TYPE;
+  }
+
+  public isOva(): boolean {
+    return this.type === OvaFormComponent.TYPE;
   }
 }
