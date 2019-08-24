@@ -19,6 +19,7 @@ import { SortablejsModule } from 'ngx-sortablejs';
 import { MenuComponent } from './components/menu/menu.component';
 import {BoxComponent} from './kirino/components/box/box.component';
 import { OvaBoxComponent } from './kirino/components/ova-box/ova-box.component';
+import { KirinoImageComponent } from './kirino/components/kirino-image/kirino-image.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { OvaBoxComponent } from './kirino/components/ova-box/ova-box.component';
     TileComponent,
     MenuComponent,
     BoxComponent,
-    OvaBoxComponent
+    OvaBoxComponent,
+    KirinoImageComponent
   ],
   imports: [
     BrowserModule,

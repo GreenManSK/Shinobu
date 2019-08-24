@@ -1,4 +1,5 @@
 import {BoxLink} from './BoxLink';
+import { BoxButton } from "./BoxButton";
 
 export class BoxItem {
   constructor(
@@ -7,8 +8,8 @@ export class BoxItem {
     public date: Date,
     public groupKey: any = null,
     public data: any = null,
-    public icons: BoxLink[] = [],
-    public buttons: BoxLink[] = [],
+    public badges: BoxLink[] = [],
+    public buttons: BoxButton[] = [],
     public link: BoxLink = null
   ) {
 

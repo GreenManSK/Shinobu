@@ -1,3 +1,54 @@
-<div>
-  Hello, Box!
+<div class="ts-box" [ngClass]="[colorClass]">
+  <div class="head">
+    <fa class="icon" *ngIf="!isImage(icon)" [name]="icon"></fa>
+    <img class="icon" *ngIf="isImage(icon)" [src]="icon">
+    <h2>{{title}}</h2>
+  </div>
+  <ul class="data">
+    <li *ngFor="let item of renderedItems"
+        [ngClass]="{actual: now.getTime() >= item.date.getTime()}"
+        [shAttachMenu]="menu"
+        [shMenuData]="item">
+      <div class="content">
+        <div class="top">
+          <h3 class="title">{{item.title}}</h3>
+          <a *ngFor="let badge of item.badges" [title]="badge.text" [href]="badge.url" class="badge" target="_blank">{{badge.text}}</a>
+        </div>
+        <div class="text">
+          <a *ngIf="item.link" [href]="item.link.url" [title]="item.link.text">[{{item.link.text}}]</a><br
+          *ngIf="item.link">
+          {{item.text}}
+        </div>
+      </div>
+      <div class="info">
+        <span class="date">{{item.date | date:'yyyy/M/d'}}</span>
+        <ng-container *ngFor="let button of item.buttons; let isLast=last">
+          <a href="#" [title]="button.title" (click)="onButtonClicked($event, item, button)">
+            <fa [name]="button.icon"></fa>
+          </a>
+          <span *ngIf="!isLast">&nbsp;/&nbsp;</span>
+        </ng-container>
+      </div>
+      <div *ngIf="hiddenGroups[item.groupKey] && hiddenGroups[item.groupKey].length > 0"
+           class="show-more"
+           [title]="hiddenGroups[item.groupKey].length + ' more episodes'"
+           (click)="hideItemGroup(item)">
+        <fa name="ellipsis-h"></fa>
+      </div>
+    </li>
+  </ul>
 </div>
+
+
+<sh-context-menu #menu>
+  <ng-template *ngIf="enableHiding" shContextMenuItem (click)="hideItemGroup($event.data)">
+    <div>
+      <fa name="eye-slash"></fa> Toggle first/all
+    </div>
+  </ng-template>
+  <ng-template *ngIf="syncFunction" shContextMenuItem (click)="syncFunction($event.data)">
+    <div>
+      <fa name="refresh"></fa> Sync data
+    </div>
+  </ng-template>
+</sh-context-menu>

@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {BoxItem} from './data/BoxItem';
-import {LocalPreferenceService} from '../../../services/local-preference.service';
-import {BoxColor} from './box-color.enum';
+import { Component, Input, OnInit } from '@angular/core';
+import { BoxItem } from './data/BoxItem';
+import { LocalPreferenceService } from '../../../services/local-preference.service';
+import { BoxColor } from './box-color.enum';
+import { BoxButton } from "./data/BoxButton";
 
 @Component({
   selector: 'box',
@@ -13,7 +14,7 @@ export class BoxComponent implements OnInit {
   private static readonly HIDDEN_KEYS = '_HIDDEN';
 
   @Input()
-  public syncFunction: (item: BoxItem) => void;
+  public syncFunction: ( item: BoxItem ) => void;
 
   @Input()
   public localPreferenceKey: string;
@@ -22,16 +23,24 @@ export class BoxComponent implements OnInit {
   public color: BoxColor = BoxColor.Gray;
 
   @Input()
+  public title: string;
+
+  @Input()
+  public icon: string = '';
+
+  @Input()
   public enableHiding = false;
 
   private _items: BoxItem[];
   private hiddenKeys: Set<any>;
   private hiddenGroups: object;
   private renderedItems: BoxItem[] = [];
+  private now: Date;
 
   constructor(
     public localPreference: LocalPreferenceService
   ) {
+    this.now = new Date();
   }
 
   ngOnInit() {
@@ -39,16 +48,20 @@ export class BoxComponent implements OnInit {
   }
 
   @Input('items')
-  public set items(items: BoxItem[]) {
+  public set items( items: BoxItem[] ) {
     this._items = items;
     this.prepareRenderedItems();
   }
 
-  public syncItem(item: BoxItem): void {
+  public get colorClass() {
+    return ('' + BoxColor[this.color]).toLocaleLowerCase();
+  }
+
+  public syncItem( item: BoxItem ): void {
     this.syncFunction(item);
   }
 
-  public hideItemGroup(item: BoxItem): void {
+  public hideItemGroup( item: BoxItem ): void {
     if (this.hiddenKeys.has(item.groupKey)) {
       this.hiddenKeys.delete(item.groupKey);
     } else {
@@ -59,10 +72,19 @@ export class BoxComponent implements OnInit {
     });
   }
 
+  public onButtonClicked( event: MouseEvent, item: BoxItem, button: BoxButton ): void {
+    event.preventDefault();
+    button.callback(item.data);
+  }
+
+  public isImage( icon: string ): boolean {
+    return icon.indexOf('/') >= 0;
+  }
+
   private prepareRenderedItems(): void {
     this.hiddenGroups = {};
     this.renderedItems = [...this._items]
-      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .sort(( a, b ) => a.date.getTime() - b.date.getTime())
       .filter(i => {
         if (!this.hiddenKeys.has(i.groupKey)) {
           return true;
