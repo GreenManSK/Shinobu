@@ -6,6 +6,8 @@
     @include clearfix;
     max-width: $responsiveWidth;
     margin: 0 auto;
+    z-index: 10;
+    position: relative;
   }
 
   .half {

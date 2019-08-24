@@ -15,7 +15,6 @@ $kirinoHeight: 497px;
   background-size: 100% 100%;
   bottom: 0;
   right: 0;
-  z-index: -1;
   @include kirino-size(1);
 
   @media (max-width: 1600px) {
