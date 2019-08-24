@@ -8,6 +8,7 @@ import { Anime } from '../../types/anime';
 import { Episode } from '../../types/episode';
 import { BoxLink } from '../item-box/data/BoxLink';
 import { MessageService } from "../../../services/message.service";
+import { PopUpService } from "../../../services/pop-up.service";
 
 type DataBag = {
   anime: Anime,
@@ -34,6 +35,7 @@ export class AnimeBoxComponent implements OnInit {
   ];
 
   constructor(
+    public popUpService: PopUpService,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
@@ -78,6 +80,7 @@ export class AnimeBoxComponent implements OnInit {
   public editAnime( item: DataBag ): void {
     // TODO
     console.log('edit');
+    this.popUpService.openPopUp('/#/kirino-form/sfaafs/555', 'Form', 500, 500);
   }
 
   public deleteAnime( item: DataBag ): void {
