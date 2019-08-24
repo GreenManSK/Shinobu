@@ -7,6 +7,7 @@ import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.ser
 import { Anime } from '../../types/anime';
 import { Episode } from '../../types/episode';
 import { BoxLink } from '../box/data/BoxLink';
+import { MessageService } from "../../../services/message.service";
 
 type DataBag = {
   anime: Anime,
@@ -33,9 +34,13 @@ export class AnimeBoxComponent implements OnInit {
   ];
 
   constructor(
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    messageService: MessageService
   ) {
     this.service = new AnimeService(chromeStorage);
+    messageService.onMessage(this.syncKey, () => {
+      this.reloadItems();
+    });
 
     // TODO: Remove mocks
     const animes = [

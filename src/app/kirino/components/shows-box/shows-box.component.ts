@@ -7,6 +7,7 @@ import { ShowService } from '../../services/show.service';
 import { Episode } from '../../types/episode';
 import { Show } from '../../types/show';
 import { BoxLink } from '../box/data/BoxLink';
+import { MessageService } from "../../../services/message.service";
 
 type DataBag = {
   show: Show,
@@ -34,9 +35,13 @@ export class ShowsBoxComponent implements OnInit {
   ];
 
   constructor(
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    messageService: MessageService
   ) {
     this.service = new ShowService(chromeStorage);
+    messageService.onMessage(this.syncKey, () => {
+      this.reloadItems();
+    });
 
     // TODO: Remove mocks
     const shows = [

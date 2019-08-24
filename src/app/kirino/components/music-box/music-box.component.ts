@@ -6,6 +6,7 @@ import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.ser
 import { BoxLink } from '../box/data/BoxLink';
 import { SongService } from '../../services/song.service';
 import { Song } from "../../types/song";
+import { MessageService } from "../../../services/message.service";
 
 @Component({
   selector: 'music-box',
@@ -26,10 +27,13 @@ export class MusicBoxComponent implements OnInit {
   ];
 
   constructor(
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    messageService: MessageService
   ) {
     this.service = new SongService(chromeStorage);
-
+    messageService.onMessage(this.syncKey, () => {
+      this.reloadItems();
+    });
     // TODO: Remove mocks
     const songs = [
       new Song('Naruto', 'END', 'bla bla bla', 'otor', 1566642691787),

@@ -6,6 +6,7 @@ import { OvaService } from '../../services/ova.service';
 import { Ova } from '../../types/ova';
 import { BoxLink } from "../box/data/BoxLink";
 import { BoxButton } from "../box/data/BoxButton";
+import { MessageService } from "../../../services/message.service";
 
 @Component({
   selector: 'ova-box',
@@ -26,9 +27,13 @@ export class OvaBoxComponent implements OnInit {
   ];
 
   constructor(
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    messageService: MessageService
   ) {
     this.service = new OvaService(chromeStorage);
+    messageService.onMessage(this.syncKey, () => {
+      this.reloadItems();
+    });
 
     // TODO: Remove mocks
     const ovas = [
