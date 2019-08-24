@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BoxColor } from '../box/box-color.enum';
-import { BoxItem } from '../box/data/BoxItem';
+import { BoxColor } from '../item-box/box-color.enum';
+import { BoxItem } from '../item-box/data/BoxItem';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { OvaService } from '../../services/ova.service';
 import { Ova } from '../../types/ova';
-import { BoxLink } from "../box/data/BoxLink";
-import { BoxButton } from "../box/data/BoxButton";
+import { BoxLink } from "../item-box/data/BoxLink";
+import { BoxButton } from "../item-box/data/BoxButton";
 import { MessageService } from "../../../services/message.service";
 
 @Component({

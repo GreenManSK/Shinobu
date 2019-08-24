@@ -5,11 +5,11 @@ import { BoxColor } from './box-color.enum';
 import { BoxButton } from "./data/BoxButton";
 
 @Component({
-  selector: 'box',
-  templateUrl: './box.component.html',
-  styleUrls: ['./box.component.scss']
+  selector: 'item-box',
+  templateUrl: './item-box.component.html',
+  styleUrls: ['./item-box.component.scss']
 })
-export class BoxComponent implements OnInit {
+export class ItemBoxComponent implements OnInit {
 
   private static readonly HIDDEN_KEYS = '_HIDDEN';
 
@@ -44,7 +44,7 @@ export class BoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.localPreference.get(this.localPreferenceKey + BoxComponent.HIDDEN_KEYS, []).then(keys => this.hiddenKeys = new Set<any>(keys));
+    this.localPreference.get(this.localPreferenceKey + ItemBoxComponent.HIDDEN_KEYS, []).then(keys => this.hiddenKeys = new Set<any>(keys));
   }
 
   @Input('items')
@@ -67,7 +67,7 @@ export class BoxComponent implements OnInit {
     } else {
       this.hiddenKeys.add(item.groupKey);
     }
-    this.localPreference.set(this.localPreferenceKey + BoxComponent.HIDDEN_KEYS, Array.from(this.hiddenKeys.values())).then(() => {
+    this.localPreference.set(this.localPreferenceKey + ItemBoxComponent.HIDDEN_KEYS, Array.from(this.hiddenKeys.values())).then(() => {
       this.prepareRenderedItems();
     });
   }

@@ -19,7 +19,7 @@ export class MessageService {
   }
 
   public onMessage( address: string, callback: ( data: any ) => void ): void {
-    if (!chrome.runtime) {
+    if (!chrome.runtime || !chrome.runtime.onMessage) {
       return;
     }
     chrome.runtime.onMessage.addListener(( data ) => {

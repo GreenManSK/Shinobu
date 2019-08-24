@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BoxColor } from '../box/box-color.enum';
-import { BoxItem } from '../box/data/BoxItem';
-import { BoxButton } from '../box/data/BoxButton';
+import { BoxColor } from '../item-box/box-color.enum';
+import { BoxItem } from '../item-box/data/BoxItem';
+import { BoxButton } from '../item-box/data/BoxButton';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { ShowService } from '../../services/show.service';
 import { Episode } from '../../types/episode';
 import { Show } from '../../types/show';
-import { BoxLink } from '../box/data/BoxLink';
+import { BoxLink } from '../item-box/data/BoxLink';
 import { MessageService } from "../../../services/message.service";
 
 type DataBag = {
