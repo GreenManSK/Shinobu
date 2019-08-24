@@ -21,14 +21,24 @@ export class OvaBoxComponent implements OnInit {
   private items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
-    new BoxButton('Edit', 'pencil', this.editOva),
-    new BoxButton('Delete', 'trash-o', this.deleteOva)
+    new BoxButton('Edit', 'pencil', this.editOva.bind(this)),
+    new BoxButton('Delete', 'trash-o', this.deleteOva.bind(this))
   ];
 
   constructor(
     chromeStorage: ChromeMockStorageService
   ) {
     this.service = new OvaService(chromeStorage);
+
+    // TODO: Remove mocks
+    const ovas = [
+      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1866642691787),
+      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1566642691787),
+      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1766642691787)
+    ];
+    for (const show of ovas) {
+      this.service.save(show);
+    }
   }
 
   ngOnInit() {
@@ -39,23 +49,19 @@ export class OvaBoxComponent implements OnInit {
     // TODO
   }
 
-  public editOva( id: number ): void {
+  public editOva( ova: Ova ): void {
     // TODO
     console.log('edit');
   }
 
-  public deleteOva( id: number ): void {
-    // TODO
-    console.log('delete');
+  public deleteOva( ova: Ova ): void {
+    this.service.delete(ova).then(() => {
+      this.reloadItems();
+    });
   }
 
   private reloadItems(): void {
     this.service.getAll().then(( ovas: Ova[] ) => {
-      ovas = [
-        new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1866642691787),
-        new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1566642691787),
-        new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1766642691787)
-      ];
       const items = [];
       ovas.forEach(ova => items.push(this.toBoxItem(ova)));
       this.items = items;
@@ -68,7 +74,7 @@ export class OvaBoxComponent implements OnInit {
       null,
       new Date(ova.airdate),
       null,
-      ova.id,
+      ova,
       [new BoxLink('aniDB.net', '#url')], // TODO: Add real url
       this.buttons
     );

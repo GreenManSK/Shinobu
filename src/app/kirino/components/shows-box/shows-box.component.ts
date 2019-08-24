@@ -4,10 +4,14 @@ import { BoxItem } from '../box/data/BoxItem';
 import { BoxButton } from '../box/data/BoxButton';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { ShowService } from '../../services/show.service';
-import { Anime } from '../../types/anime';
 import { Episode } from '../../types/episode';
 import { Show } from '../../types/show';
-import { BoxLink } from "../box/data/BoxLink";
+import { BoxLink } from '../box/data/BoxLink';
+
+type DataBag = {
+  show: Show,
+  episode: Episode
+};
 
 @Component({
   selector: 'shows-box',
@@ -24,15 +28,28 @@ export class ShowsBoxComponent implements OnInit {
   private items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'eye', this.seenShow),
-    new BoxButton('Edit', 'pencil', this.editShow),
-    new BoxButton('Delete', 'trash-o', this.deleteShow)
+    new BoxButton('Mark as seen', 'eye', this.seenShow.bind(this)),
+    new BoxButton('Edit', 'pencil', this.editShow.bind(this)),
+    new BoxButton('Delete', 'trash-o', this.deleteShow.bind(this))
   ];
 
   constructor(
     chromeStorage: ChromeMockStorageService
   ) {
     this.service = new ShowService(chromeStorage);
+
+    // TODO: Remove mocks
+    const shows = [
+      new Show('Dumbbell Nan Kilo Moteru?', 555, 'searh me', [
+        new Episode('12', 1566642691787),
+        new Episode('13', 1566742691787),
+        new Episode('14', 1566842691787),
+        new Episode('15', 1566942691787),
+      ])
+    ];
+    for (const show of shows) {
+      this.service.save(show);
+    }
   }
 
   ngOnInit() {
@@ -43,31 +60,30 @@ export class ShowsBoxComponent implements OnInit {
     // TODO
   }
 
-  public seenShow( item: BoxItem ): void {
-    // TODO
-    console.log('seen');
+  public seenShow( item: DataBag ): void {
+    const index = item.show.episodes.indexOf(item.episode);
+    if (index < 0) {
+      return;
+    }
+    item.show.episodes.splice(index, 1);
+    this.service.save(item.show).then(() => {
+      this.reloadItems();
+    });
   }
 
-  public editShow( item: BoxItem ): void {
+  public editShow( item: DataBag ): void {
     // TODO
     console.log('edit');
   }
 
-  public deleteShow( item: BoxItem ): void {
-    // TODO
-    console.log('delete');
+  public deleteShow( item: DataBag ): void {
+    this.service.delete(item.show).then(() => {
+      this.reloadItems();
+    });
   }
 
   private reloadItems(): void {
     this.service.getAll().then(( shows: Show[] ) => {
-      shows = [
-        new Show('Dumbbell Nan Kilo Moteru?', 555, 'searh me', [
-          new Episode('12', 1566642691787),
-          new Episode('13', 1566742691787),
-          new Episode('14', 1566842691787),
-          new Episode('15', 1566942691787),
-        ])
-      ];
       const items = [];
       shows.forEach(show => items.push(...this.toEpisodeItems(show)));
       this.items = items;
