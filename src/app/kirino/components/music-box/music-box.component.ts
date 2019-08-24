@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BoxColor } from '../item-box/box-color.enum';
+import { BoxColor } from '../box/box-color.enum';
 import { BoxItem } from '../item-box/data/BoxItem';
 import { BoxButton } from '../item-box/data/BoxButton';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';

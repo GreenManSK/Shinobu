@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BoxItem } from './data/BoxItem';
 import { LocalPreferenceService } from '../../../services/local-preference.service';
-import { BoxColor } from './box-color.enum';
-import { BoxButton } from "./data/BoxButton";
+import { BoxColor } from '../box/box-color.enum';
+import { BoxButton } from './data/BoxButton';
 
 @Component({
   selector: 'item-box',
@@ -53,10 +53,6 @@ export class ItemBoxComponent implements OnInit {
     this.prepareRenderedItems();
   }
 
-  public get colorClass() {
-    return ('' + BoxColor[this.color]).toLocaleLowerCase();
-  }
-
   public syncItem( item: BoxItem ): void {
     this.syncFunction(item);
   }
@@ -75,10 +71,6 @@ export class ItemBoxComponent implements OnInit {
   public onButtonClicked( event: MouseEvent, item: BoxItem, button: BoxButton ): void {
     event.preventDefault();
     button.callback(item.data);
-  }
-
-  public isImage( icon: string ): boolean {
-    return icon.indexOf('/') >= 0;
   }
 
   private prepareRenderedItems(): void {

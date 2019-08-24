@@ -23,6 +23,7 @@ import { KirinoImageComponent } from './kirino/components/kirino-image/kirino-im
 import { MusicBoxComponent } from './kirino/components/music-box/music-box.component';
 import { AnimeBoxComponent } from './kirino/components/anime-box/anime-box.component';
 import { ShowsBoxComponent } from './kirino/components/shows-box/shows-box.component';
+import { BoxComponent } from './kirino/components/box/box.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ShowsBoxComponent } from './kirino/components/shows-box/shows-box.compo
     KirinoImageComponent,
     MusicBoxComponent,
     AnimeBoxComponent,
-    ShowsBoxComponent
+    ShowsBoxComponent,
+    BoxComponent
   ],
   imports: [
     BrowserModule,
