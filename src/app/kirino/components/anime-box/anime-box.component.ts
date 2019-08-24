@@ -52,19 +52,6 @@ export class AnimeBoxComponent implements OnInit {
         this.reloadItems();
       });
     });
-
-    // TODO: Remove mocks
-    const animes = [
-      new Anime('Dumbbell Nan Kilo Moteru?', 555, 'searh me', [
-        new Episode('12', 1566642691787),
-        new Episode('13', 1566742691787),
-        new Episode('14', 1566842691787),
-        new Episode('15', 1566942691787),
-      ])
-    ];
-    for (const show of animes) {
-      this.service.save(show);
-    }
   }
 
   ngOnInit() {
