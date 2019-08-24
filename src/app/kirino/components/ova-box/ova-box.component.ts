@@ -45,16 +45,6 @@ export class OvaBoxComponent implements OnInit {
         this.reloadItems();
       });
     });
-
-    // TODO: Remove mocks
-    const ovas = [
-      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1866642691787),
-      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1566642691787),
-      new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 12345, 1766642691787)
-    ];
-    for (const show of ovas) {
-      this.service.save(show);
-    }
   }
 
   ngOnInit() {
