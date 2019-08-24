@@ -4,8 +4,8 @@ import { Anime } from '../../types/anime';
 import { AnimeService } from '../../services/anime.service';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { BoxComponent } from '../box/box.component';
-import { MessageService } from "../../../services/message.service";
-import { AnimeBoxComponent } from "../anime-box/anime-box.component";
+import { MessageService } from '../../../services/message.service';
+import { AnimeBoxComponent } from '../anime-box/anime-box.component';
 
 @Component({
   selector: 'anime-form',

@@ -28,6 +28,7 @@ import { KirinoFormComponent } from './kirino/components/kirino-form/kirino-form
 import { AnimeFormComponent } from './kirino/components/anime-form/anime-form.component';
 import { ShowFormComponent } from './kirino/components/show-form/show-form.component';
 import { OvaFormComponent } from './kirino/components/ova-form/ova-form.component';
+import { MusicFormComponent } from './kirino/components/music-form/music-form.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { OvaFormComponent } from './kirino/components/ova-form/ova-form.componen
     KirinoFormComponent,
     AnimeFormComponent,
     ShowFormComponent,
-    OvaFormComponent
+    OvaFormComponent,
+    MusicFormComponent
   ],
   imports: [
     BrowserModule,

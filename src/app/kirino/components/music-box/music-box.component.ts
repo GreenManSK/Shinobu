@@ -7,6 +7,9 @@ import { BoxLink } from '../item-box/data/BoxLink';
 import { SongService } from '../../services/song.service';
 import { Song } from '../../types/song';
 import { MessageService } from '../../../services/message.service';
+import { PopUpService } from '../../../services/pop-up.service';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { MusicFormComponent } from '../music-form/music-form.component';
 
 @Component({
   selector: 'music-box',
@@ -15,8 +18,10 @@ import { MessageService } from '../../../services/message.service';
 })
 export class MusicBoxComponent implements OnInit {
 
+  public static readonly SYNC_KEY = 'MusicBox';
+
   public readonly color = BoxColor.Blue;
-  public readonly syncKey = 'MusicBox';
+  public readonly syncKey = MusicBoxComponent.SYNC_KEY;
 
   private service: SongService;
   public items: BoxItem[] = [];
@@ -26,7 +31,10 @@ export class MusicBoxComponent implements OnInit {
     new BoxButton('Delete', 'trash-o', this.deleteMusic.bind(this))
   ];
 
+  public addButton = new BoxButton('Add', 'plus', this.addMusic.bind(this));
+
   constructor(
+    public popUpService: PopUpService,
     private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
@@ -37,16 +45,6 @@ export class MusicBoxComponent implements OnInit {
         this.reloadItems();
       });
     });
-    // TODO: Remove mocks
-    const songs = [
-      new Song('Naruto', 'END', 'bla bla bla', 'otor', 1566642691787),
-      new Song('Naruto', 'END', 'bla bla bla', 'otor', 1566642691787, 555),
-      new Song('Naruto', 'END', 'bla bla bla', 'otor', 1566642691787, null, 567),
-      new Song('Naruto', 'END', 'bla bla bla', 'otor', 1666642691787, 1, 2),
-    ];
-    for (const show of songs) {
-      this.service.save(show);
-    }
   }
 
   ngOnInit() {
@@ -57,9 +55,22 @@ export class MusicBoxComponent implements OnInit {
     // TODO
   }
 
+  public addMusic(): void {
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(MusicFormComponent.TYPE),
+      'Add',
+      MusicFormComponent.WIDTH,
+      MusicFormComponent.HEIGHT
+    );
+  }
+
   public editMusic( song: Song ): void {
-    // TODO
-    console.log('edit');
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(MusicFormComponent.TYPE, song.id),
+      'Edit',
+      MusicFormComponent.WIDTH,
+      MusicFormComponent.HEIGHT
+    );
   }
 
   public deleteMusic( song: Song ): void {
