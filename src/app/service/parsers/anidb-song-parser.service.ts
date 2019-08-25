@@ -22,6 +22,11 @@ export class AnidbSongParserService implements SiteParser {
     return AnidbSongParserService.URL_REGEX.toString().replace('(d+)', id.toString());
   }
 
+  public static getId( url: string ): number {
+    const match = url.match(AnidbSongParserService.URL_REGEX);
+    return match !== null ? +match[1] : null;
+  }
+
   public getData( url: string ): Promise<any> {
     return new Promise(( resolve, reject ) => {
       this.http.get(url, {responseType: 'text'}).subscribe(( html ) => {
@@ -32,7 +37,7 @@ export class AnidbSongParserService implements SiteParser {
 
   private parseData( url: string, html: string ): Song {
     const song = new Song();
-    song.anidbId = this.getId(url);
+    song.anidbId = AnidbSongParserService.getId(url);
 
     const $site = $(html);
 
@@ -54,11 +59,6 @@ export class AnidbSongParserService implements SiteParser {
     }
 
     return song;
-  }
-
-  private getId( url: string ): number {
-    const match = url.match(AnidbSongParserService.URL_REGEX);
-    return match !== null ? +match[1] : null;
   }
 
   public getFormUrl( data: any ): string {

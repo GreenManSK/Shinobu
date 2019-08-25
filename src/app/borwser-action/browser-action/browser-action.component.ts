@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AnidbSongParserService } from '../../service/parsers/anidb-song-parser.service';
 import { SiteParser } from '../../service/parsers/site-parser';
 import { PopUpService } from '../../services/pop-up.service';
+import { AnisonParserService } from '../../service/parsers/anison-parser.service';
 
 @Component({
   selector: 'app-browser-action',
@@ -17,10 +18,12 @@ export class BrowserActionComponent implements OnInit {
 
   constructor(
     public popUpService: PopUpService,
-    anidbSongParser: AnidbSongParserService
+    anidbSongParser: AnidbSongParserService,
+    anisonParser: AnisonParserService
   ) {
     this.parsers = [
-      anidbSongParser
+      anidbSongParser,
+      anisonParser
     ];
   }
 

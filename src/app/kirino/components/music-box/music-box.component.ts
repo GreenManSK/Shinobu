@@ -11,6 +11,7 @@ import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
 import { AnidbSongParserService } from '../../../service/parsers/anidb-song-parser.service';
+import { AnisonParserService } from '../../../service/parsers/anison-parser.service';
 
 @Component({
   selector: 'music-box',
@@ -92,10 +93,10 @@ export class MusicBoxComponent implements OnInit {
   private toBoxItem( song: Song ): BoxItem {
     const badges = [];
     if (song.anidbId) {
-      badges.push(new BoxLink('aniDB.net', AnidbSongParserService.getUrl(song.id)));
+      badges.push(new BoxLink('aniDB.net', AnidbSongParserService.getUrl(song.anidbId)));
     }
     if (song.anisonId) {
-      badges.push(new BoxLink('Anison', '')); // TODO: Add real url
+      badges.push(new BoxLink('Anison', AnisonParserService.getUrl(song.anisonId)));
     }
     return new BoxItem(
       song.show + ' - ' + song.type,
