@@ -31,6 +31,7 @@ import { OvaFormComponent } from './kirino/components/ova-form/ova-form.componen
 import { MusicFormComponent } from './kirino/components/music-form/music-form.component';
 import { BackgroundComponent } from './background/components/background/background.component';
 import { BrowserActionComponent } from './borwser-action/browser-action/browser-action.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { BrowserActionComponent } from './borwser-action/browser-action/browser-
     FormsModule,
     ShContextMenuModule,
     Angular2FontawesomeModule,
-    SortablejsModule.forRoot({ animation: 150 })
+    SortablejsModule.forRoot({ animation: 150 }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

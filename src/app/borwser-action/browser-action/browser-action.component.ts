@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnidbSongParserService } from '../../service/parsers/anidb-song-parser.service';
 
 @Component({
   selector: 'app-browser-action',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowserActionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private anidbSongParser: AnidbSongParserService
+  ) {
+
+    anidbSongParser.getData('http://anidb.net/song/102177').then(console.log);
+  }
 
   ngOnInit() {
   }
