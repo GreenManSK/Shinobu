@@ -3,6 +3,7 @@ import { AnidbSongParserService } from '../../service/parsers/anidb-song-parser.
 import { SiteParser } from '../../service/parsers/site-parser';
 import { PopUpService } from '../../services/pop-up.service';
 import { AnisonParserService } from '../../service/parsers/anison-parser.service';
+import { TheTVDBParserService } from '../../service/parsers/the-tvdbparser.service';
 
 @Component({
   selector: 'app-browser-action',
@@ -19,11 +20,13 @@ export class BrowserActionComponent implements OnInit {
   constructor(
     public popUpService: PopUpService,
     anidbSongParser: AnidbSongParserService,
-    anisonParser: AnisonParserService
+    anisonParser: AnisonParserService,
+    theTVDBParser: TheTVDBParserService,
   ) {
     this.parsers = [
       anidbSongParser,
-      anisonParser
+      anisonParser,
+      theTVDBParser
     ];
   }
 

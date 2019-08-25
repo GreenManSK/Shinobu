@@ -11,6 +11,7 @@ import { MessageService } from '../../../services/message.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { PopUpService } from '../../../services/pop-up.service';
 import { ShowFormComponent } from '../show-form/show-form.component';
+import { TheTVDBParserService } from '../../../service/parsers/the-tvdbparser.service';
 
 type DataBag = {
   show: Show,
@@ -117,7 +118,7 @@ export class ShowsBoxComponent implements OnInit {
           show,
           episode
         },
-        [new BoxLink('TheTVDB.com', '#url')], // TODO: Add real url
+        [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
         this.buttons,
         show.url ? new BoxLink(show.url, show.url) : null
       ));
