@@ -30,6 +30,7 @@ import { ShowFormComponent } from './kirino/components/show-form/show-form.compo
 import { OvaFormComponent } from './kirino/components/ova-form/ova-form.component';
 import { MusicFormComponent } from './kirino/components/music-form/music-form.component';
 import { BackgroundComponent } from './background/components/background/background.component';
+import { BrowserActionComponent } from './borwser-action/browser-action/browser-action.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { BackgroundComponent } from './background/components/background/backgrou
     ShowFormComponent,
     OvaFormComponent,
     MusicFormComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    BrowserActionComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,6 @@ export class AppComponent {
   }
 
   public showMenu(): boolean {
-    return !this.router.url.startsWith('/kirino-form');
+    return !this.router.url.startsWith('/kirino-form') && !this.router.url.startsWith('/browser-action');
   }
 }
