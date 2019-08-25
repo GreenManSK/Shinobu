@@ -48,8 +48,8 @@ export class OvaFormComponent implements OnInit {
     } else {
       this.ova = new Ova(
         this.route.snapshot.queryParams[OvaFormComponent.TITLE_PARAM],
-        this.route.snapshot.queryParams[OvaFormComponent.ANIDB_ID_PARAM],
-        this.route.snapshot.queryParams[OvaFormComponent.DATE_PARAM]
+        +this.route.snapshot.queryParams[OvaFormComponent.ANIDB_ID_PARAM],
+        +this.route.snapshot.queryParams[OvaFormComponent.DATE_PARAM]
       );
     }
   }

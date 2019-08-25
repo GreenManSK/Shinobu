@@ -47,7 +47,7 @@ export class AnimeFormComponent implements OnInit {
     } else {
       this.anime = new Anime(
         this.route.snapshot.queryParams[AnimeFormComponent.TITLE_PARAM],
-        this.route.snapshot.queryParams[AnimeFormComponent.ANIDB_ID_PARAM]
+        +this.route.snapshot.queryParams[AnimeFormComponent.ANIDB_ID_PARAM]
       );
     }
   }

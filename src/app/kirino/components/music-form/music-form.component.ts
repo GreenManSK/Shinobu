@@ -55,9 +55,9 @@ export class MusicFormComponent implements OnInit {
         this.route.snapshot.queryParams[MusicFormComponent.TYPE_PARAM],
         this.route.snapshot.queryParams[MusicFormComponent.TITLE_PARAM],
         this.route.snapshot.queryParams[MusicFormComponent.AUTHOR_PARAM],
-        this.route.snapshot.queryParams[MusicFormComponent.DATE_PARAM],
-        this.route.snapshot.queryParams[MusicFormComponent.ANIDB_ID_PARAM],
-        this.route.snapshot.queryParams[MusicFormComponent.ANISON_ID_PARAM],
+        +this.route.snapshot.queryParams[MusicFormComponent.DATE_PARAM],
+        +this.route.snapshot.queryParams[MusicFormComponent.ANIDB_ID_PARAM],
+        +this.route.snapshot.queryParams[MusicFormComponent.ANISON_ID_PARAM],
       );
     }
   }
