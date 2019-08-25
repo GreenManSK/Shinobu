@@ -6,6 +6,7 @@ import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.ser
 import { BoxComponent } from '../box/box.component';
 import { MessageService } from '../../../services/message.service';
 import { AnimeBoxComponent } from '../anime-box/anime-box.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'anime-form',
@@ -18,6 +19,9 @@ export class AnimeFormComponent implements OnInit {
   public static readonly WIDTH = 600;
   public static readonly HEIGHT = 500;
 
+  public static readonly TITLE_PARAM = 'title';
+  public static readonly ANIDB_ID_PARAM = 'anidbId';
+
   public readonly color = BoxColor.Red;
   private service: AnimeService;
 
@@ -26,7 +30,8 @@ export class AnimeFormComponent implements OnInit {
 
   constructor(
     chromeStorage: ChromeMockStorageService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private route: ActivatedRoute,
   ) {
     this.service = new AnimeService(chromeStorage);
   }
@@ -38,9 +43,12 @@ export class AnimeFormComponent implements OnInit {
   public set id( id: number ) {
     this._id = id;
     if (id) {
-      this.service.get(id).then((anime: Anime) => this.anime = anime);
+      this.service.get(id).then(( anime: Anime ) => this.anime = anime);
     } else {
-      this.anime = new Anime('', null);
+      this.anime = new Anime(
+        this.route.snapshot.queryParams[AnimeFormComponent.TITLE_PARAM],
+        this.route.snapshot.queryParams[AnimeFormComponent.ANIDB_ID_PARAM]
+      );
     }
   }
 

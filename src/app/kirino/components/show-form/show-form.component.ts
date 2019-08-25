@@ -6,6 +6,7 @@ import { BoxComponent } from '../box/box.component';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { MessageService } from '../../../services/message.service';
 import { ShowsBoxComponent } from '../shows-box/shows-box.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'show-form',
@@ -18,6 +19,9 @@ export class ShowFormComponent implements OnInit {
   public static readonly WIDTH = 600;
   public static readonly HEIGHT = 500;
 
+  public static readonly TITLE_PARAM = 'title';
+  public static readonly TVDB_ID_PARAM = 'tvdbId';
+
   public readonly color = BoxColor.Green;
   private service: ShowService;
 
@@ -26,7 +30,8 @@ export class ShowFormComponent implements OnInit {
 
   constructor(
     chromeStorage: ChromeMockStorageService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private route: ActivatedRoute,
   ) {
     this.service = new ShowService(chromeStorage);
   }
@@ -38,9 +43,12 @@ export class ShowFormComponent implements OnInit {
   public set id( id: number ) {
     this._id = id;
     if (id) {
-      this.service.get(id).then((show: Show) => this.show = show);
+      this.service.get(id).then(( show: Show ) => this.show = show);
     } else {
-      this.show = new Show('', null);
+      this.show = new Show(
+        this.route.snapshot.queryParams[ShowFormComponent.TITLE_PARAM],
+        this.route.snapshot.queryParams[ShowFormComponent.TVDB_ID_PARAM]
+      );
     }
   }
 

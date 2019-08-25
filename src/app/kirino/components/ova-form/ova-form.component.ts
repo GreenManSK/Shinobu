@@ -6,6 +6,7 @@ import { BoxComponent } from '../box/box.component';
 import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { MessageService } from '../../../services/message.service';
 import { OvaBoxComponent } from '../ova-box/ova-box.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ova-form',
@@ -18,6 +19,10 @@ export class OvaFormComponent implements OnInit {
   public static readonly WIDTH = 600;
   public static readonly HEIGHT = 500;
 
+  public static readonly TITLE_PARAM = 'title';
+  public static readonly ANIDB_ID_PARAM = 'anidbId';
+  public static readonly DATE_PARAM = 'date';
+
   public readonly color = BoxColor.Pink;
   private service: OvaService;
 
@@ -26,7 +31,8 @@ export class OvaFormComponent implements OnInit {
 
   constructor(
     chromeStorage: ChromeMockStorageService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private route: ActivatedRoute,
   ) {
     this.service = new OvaService(chromeStorage);
   }
@@ -40,7 +46,11 @@ export class OvaFormComponent implements OnInit {
     if (id) {
       this.service.get(id).then(( ova: Ova ) => this.ova = ova);
     } else {
-      this.ova = new Ova('', null, Date.now());
+      this.ova = new Ova(
+        this.route.snapshot.queryParams[OvaFormComponent.TITLE_PARAM],
+        this.route.snapshot.queryParams[OvaFormComponent.ANIDB_ID_PARAM],
+        this.route.snapshot.queryParams[OvaFormComponent.DATE_PARAM]
+      );
     }
   }
 

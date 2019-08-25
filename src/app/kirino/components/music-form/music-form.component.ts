@@ -6,6 +6,7 @@ import { BoxColor } from '../box/box-color.enum';
 import { SongService } from '../../services/song.service';
 import { Song } from '../../types/song';
 import { MusicBoxComponent } from '../music-box/music-box.component';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'music-form',
@@ -18,6 +19,14 @@ export class MusicFormComponent implements OnInit {
   public static readonly WIDTH = 600;
   public static readonly HEIGHT = 500;
 
+  public static readonly SHOW_PARAM = 'show';
+  public static readonly TYPE_PARAM = 'type';
+  public static readonly TITLE_PARAM = 'title';
+  public static readonly AUTHOR_PARAM = 'author';
+  public static readonly DATE_PARAM = 'date';
+  public static readonly ANIDB_ID_PARAM = 'anidbId';
+  public static readonly ANISON_ID_PARAM = 'anisonId';
+
   public readonly color = BoxColor.Blue;
   private service: SongService;
 
@@ -26,7 +35,8 @@ export class MusicFormComponent implements OnInit {
 
   constructor(
     chromeStorage: ChromeMockStorageService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private route: ActivatedRoute,
   ) {
     this.service = new SongService(chromeStorage);
   }
@@ -40,7 +50,15 @@ export class MusicFormComponent implements OnInit {
     if (id) {
       this.service.get(id).then(( song: Song ) => this.song = song);
     } else {
-      this.song = new Song(null, null, null, null, Date.now());
+      this.song = new Song(
+        this.route.snapshot.queryParams[MusicFormComponent.SHOW_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.TYPE_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.TITLE_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.AUTHOR_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.DATE_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.ANIDB_ID_PARAM],
+        this.route.snapshot.queryParams[MusicFormComponent.ANISON_ID_PARAM],
+      );
     }
   }
 
