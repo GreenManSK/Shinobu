@@ -10,6 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
+import { AnidbSongParserService } from '../../../service/parsers/anidb-song-parser.service';
 
 @Component({
   selector: 'music-box',
@@ -91,7 +92,7 @@ export class MusicBoxComponent implements OnInit {
   private toBoxItem( song: Song ): BoxItem {
     const badges = [];
     if (song.anidbId) {
-      badges.push(new BoxLink('aniDB.net', '')); // TODO: Add real url
+      badges.push(new BoxLink('aniDB.net', AnidbSongParserService.getUrl(song.id)));
     }
     if (song.anisonId) {
       badges.push(new BoxLink('Anison', '')); // TODO: Add real url
