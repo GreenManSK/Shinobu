@@ -14,9 +14,9 @@
       <div class="field group">
         <label for="form-search">Search text</label>
         <input type="text" id="form-search" placeholder="Search text" name="search" [(ngModel)]="anime.nyaaSearch">
-        <span class="help" title="You can use %n for episode number, %s and %e for series and episode in series.
-Also things like %(n+12) or %(s-1).
-And for padding you can use %s_10 for 09 or %e_1000 for 0005 and so on.">
+        <span class="help" title="You can use %n for episode number.
+Also things like %(n+12) or %(n-1).
+And for padding you can use %n_10 for 09 or %n_1000 for 0005 and so on.">
           <fa [name]="'question'"></fa>
         </span>
       </div>

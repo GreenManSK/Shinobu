@@ -12,6 +12,7 @@ import { PopUpService } from '../../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import {AnidbParserService} from '../../../../services/parsers/anidb-parser.service';
+import {NyaaSearchService} from '../../services/nyaa-search.service';
 
 type DataBag = {
   anime: Anime,
@@ -44,6 +45,7 @@ export class AnimeBoxComponent implements OnInit {
   constructor(
     public popUpService: PopUpService,
     private zone: NgZone,
+    private nyaaSearch: NyaaSearchService,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService
   ) {
@@ -109,6 +111,11 @@ export class AnimeBoxComponent implements OnInit {
   private toEpisodeItems( anime: Anime ): BoxItem[] {
     const episodes = [];
     for (const episode of anime.episodes) {
+      let nyaaSearch: BoxLink = null;
+      if (anime.nyaaSearch) {
+        const searchText = this.nyaaSearch.generateSearchText(anime, episode);
+        nyaaSearch = new BoxLink(searchText, this.nyaaSearch.getSearchUrl(searchText));
+      }
       episodes.push(new BoxItem(
         anime.title + ' [' + episode.episodeNumber + ']',
         null,
@@ -120,7 +127,7 @@ export class AnimeBoxComponent implements OnInit {
         },
         [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id))],
         this.buttons,
-        anime.nyaaSearch ? new BoxLink(anime.nyaaSearch, anime.nyaaSearch) : null // TODO: Make real
+        nyaaSearch
       ));
     }
     return episodes;
