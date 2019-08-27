@@ -1,14 +1,40 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {SiteParser} from './site-parser';
+import {Anime} from '../../kirino/types/anime';
+import {AnimeFormComponent} from '../../kirino/components/anime-form/anime-form.component';
+import {KirinoFormComponent} from '../../kirino/components/kirino-form/kirino-form.component';
+import {HttpClient} from '@angular/common/http';
+import * as $ from 'jquery';
+import {Episode} from '../../kirino/types/episode';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AnidbParserService {
+export class AnidbParserService implements SiteParser {
 
-  constructor() {
+  private static readonly URL_REGEX = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i');
+  private static readonly URL_TEMPLATE = AnidbParserService.toString().replace(/(\/\^|\/i|\\|s\?)/g, '');
+
+  private static readonly HTTP_API =
+    'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
+  private static readonly CLIENT_VER = '4'; // TODO: Add new version to anidb
+  private static readonly HTTP_CLIENT = 'shinobu';
+  private static readonly API_URL = AnidbParserService.HTTP_API
+    .replace(/%httpClient/g, AnidbParserService.HTTP_CLIENT)
+    .replace(/%clientver/g, AnidbParserService.CLIENT_VER);
+
+  constructor(private http: HttpClient) {
   }
 
-  public static anidbDateToTimestamp( dateString: string ): number {
+  public static getUrl(id: number): string {
+    return AnidbParserService.URL_TEMPLATE.replace('(d+)', id.toString());
+  }
+
+  public static getApiUrl(id: number): string {
+    return AnidbParserService.API_URL.replace(/%aid/g, id.toString());
+  }
+
+  public static anidbDateToTimestamp(dateString: string): number {
     if (!dateString) {
       return null;
     }
@@ -21,5 +47,48 @@ export class AnidbParserService {
     dateObj.setMonth((+date[1]) - 1);
     dateObj.setFullYear(+date[2]);
     return dateObj.getTime();
+  }
+
+  getData(url: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(url, {responseType: 'text'}).subscribe((html) => {
+        resolve(this.parseData(url, html));
+      });
+    });
+  }
+
+  private parseData(url: string, html: string): Anime {
+    const anime = new Anime();
+
+    const $site = $(html);
+    anime.anidbId = +$site.get(1).id;
+    anime.title = $site.find('title[type=main]').text();
+
+    const episodes = $site.find('episode').toArray();
+    for (const episode of episodes) {
+      const $ep = $(episode);
+      const airdate = $ep.find('airdate').text();
+      const num = +$ep.find('epno[type=1]').text();
+      if (!isNaN(num)) {
+        anime.episodes.push(new Episode(
+          num.toString(),
+          airdate ? new Date(airdate).getTime() : null
+        ));
+      }
+    }
+    anime.episodes.sort((a, b) => (a.airdate - b.airdate));
+
+    return anime;
+  }
+
+  getFormUrl(data: any): string {
+    const anime = data as Anime;
+    return KirinoFormComponent.getUrl(AnimeFormComponent.TYPE) + '?' +
+      AnimeFormComponent.TITLE_PARAM + '=' + encodeURIComponent(anime.title) + '&' +
+      AnimeFormComponent.ANIDB_ID_PARAM + '=' + encodeURIComponent(anime.anidbId);
+  }
+
+  match(url: string): boolean {
+    return url.match(AnidbParserService.URL_REGEX) !== null;
   }
 }

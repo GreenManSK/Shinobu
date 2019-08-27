@@ -5,8 +5,8 @@ export class Anime implements Episodic {
   public id: number;
 
   constructor(
-    public title: string,
-    public anidId: number,
+    public title: string = null,
+    public anidbId: number = null,
     public nyaaSearch: string = null,
     public episodes: Episode[] = []
   ) {

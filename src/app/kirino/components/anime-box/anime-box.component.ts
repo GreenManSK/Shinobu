@@ -11,6 +11,7 @@ import { MessageService } from '../../../services/message.service';
 import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
+import {AnidbParserService} from '../../../services/parsers/anidb-parser.service';
 
 type DataBag = {
   anime: Anime,
@@ -117,7 +118,7 @@ export class AnimeBoxComponent implements OnInit {
           anime,
           episode
         },
-        [new BoxLink('aniDB.net', '#url')], // TODO: Add real url
+        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id))],
         this.buttons,
         anime.nyaaSearch ? new BoxLink(anime.nyaaSearch, anime.nyaaSearch) : null // TODO: Make real
       ));
