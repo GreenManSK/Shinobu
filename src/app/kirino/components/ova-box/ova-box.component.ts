@@ -10,6 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { PopUpService } from '../../../services/pop-up.service';
 import { OvaFormComponent } from '../ova-form/ova-form.component';
+import {AnidbEpisodeParserService} from '../../../services/parsers/anidb-episode-parser.service';
 
 @Component({
   selector: 'ova-box',
@@ -94,7 +95,7 @@ export class OvaBoxComponent implements OnInit {
       new Date(ova.airdate),
       null,
       ova,
-      [new BoxLink('aniDB.net', '#url')], // TODO: Add real url
+      [new BoxLink('aniDB.net', AnidbEpisodeParserService.getUrl(ova.anidbId))],
       this.buttons
     );
   }
