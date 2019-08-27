@@ -49,12 +49,21 @@ export class AnidbParserService implements SiteParser {
     return dateObj.getTime();
   }
 
-  getData(url: string): Promise<any> {
+  public getData(url: string): Promise<any> {
+    if (this.match(url)) {
+      const id = this.getId(url);
+      url = AnidbParserService.getApiUrl(id);
+    }
     return new Promise((resolve, reject) => {
       this.http.get(url, {responseType: 'text'}).subscribe((html) => {
         resolve(this.parseData(url, html));
       });
     });
+  }
+
+  private getId(url: string): number {
+    const match = url.match(AnidbParserService.URL_REGEX);
+    return match !== null ? +match[1] : null;
   }
 
   private parseData(url: string, html: string): Anime {
@@ -69,7 +78,7 @@ export class AnidbParserService implements SiteParser {
       const $ep = $(episode);
       const airdate = $ep.find('airdate').text();
       const num = +$ep.find('epno[type=1]').text();
-      if (!isNaN(num)) {
+      if (num > 0 && !isNaN(num)) {
         anime.episodes.push(new Episode(
           num.toString(),
           airdate ? new Date(airdate).getTime() : null
@@ -81,14 +90,14 @@ export class AnidbParserService implements SiteParser {
     return anime;
   }
 
-  getFormUrl(data: any): string {
+  public getFormUrl(data: any): string {
     const anime = data as Anime;
     return KirinoFormComponent.getUrl(AnimeFormComponent.TYPE) + '?' +
       AnimeFormComponent.TITLE_PARAM + '=' + encodeURIComponent(anime.title) + '&' +
       AnimeFormComponent.ANIDB_ID_PARAM + '=' + encodeURIComponent(anime.anidbId);
   }
 
-  match(url: string): boolean {
+  public match(url: string): boolean {
     return url.match(AnidbParserService.URL_REGEX) !== null;
   }
 }

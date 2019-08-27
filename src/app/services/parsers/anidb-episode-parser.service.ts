@@ -27,7 +27,7 @@ export class AnidbEpisodeParserService implements SiteParser {
     return match !== null ? +match[1] : null;
   }
 
-  getData(url: string): Promise<any> {
+  public getData(url: string): Promise<any> {
     return new Promise(( resolve, reject ) => {
       this.http.get(url, {responseType: 'text'}).subscribe(( html ) => {
         resolve(this.parseData(url, html));
@@ -46,7 +46,7 @@ export class AnidbEpisodeParserService implements SiteParser {
     return ova;
   }
 
-  getFormUrl(data: any): string {
+  public getFormUrl(data: any): string {
     const ova = data as Ova;
     return KirinoFormComponent.getUrl(OvaFormComponent.TYPE) + '?' +
       OvaFormComponent.TITLE_PARAM + '=' + encodeURIComponent(ova.title) + '&' +
@@ -54,7 +54,7 @@ export class AnidbEpisodeParserService implements SiteParser {
       OvaFormComponent.DATE_PARAM + '=' + encodeURIComponent(ova.airdate);
   }
 
-  match(url: string): boolean {
+  public match(url: string): boolean {
     return url.match(AnidbEpisodeParserService.URL_REGEX) !== null;
   }
 }
