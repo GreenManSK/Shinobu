@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SiteParser} from './site-parser';
-import {Ova} from '../../kirino/types/ova';
-import {KirinoFormComponent} from '../../kirino/components/kirino-form/kirino-form.component';
-import {OvaFormComponent} from '../../kirino/components/ova-form/ova-form.component';
+import {Ova} from '../../modules/kirino/types/ova';
+import {KirinoFormComponent} from '../../modules/kirino/components/kirino-form/kirino-form.component';
+import {OvaFormComponent} from '../../modules/kirino/components/ova-form/ova-form.component';
 import * as $ from 'jquery';
 import {AnidbParserService} from './anidb-parser.service';
 

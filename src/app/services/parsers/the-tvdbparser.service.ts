@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SiteParser } from './site-parser';
 import { HttpClient } from '@angular/common/http';
-import { Show } from '../../kirino/types/show';
+import { Show } from '../../modules/kirino/types/show';
 import * as $ from 'jquery';
-import { Episode } from '../../kirino/types/episode';
-import { KirinoFormComponent } from '../../kirino/components/kirino-form/kirino-form.component';
-import { ShowFormComponent } from '../../kirino/components/show-form/show-form.component';
+import { Episode } from '../../modules/kirino/types/episode';
+import { KirinoFormComponent } from '../../modules/kirino/components/kirino-form/kirino-form.component';
+import { ShowFormComponent } from '../../modules/kirino/components/show-form/show-form.component';
 
 @Injectable({
   providedIn: 'root'

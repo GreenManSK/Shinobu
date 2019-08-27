@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { SiteParser } from './site-parser';
-import { KirinoFormComponent } from '../../kirino/components/kirino-form/kirino-form.component';
-import { MusicFormComponent } from '../../kirino/components/music-form/music-form.component';
+import { KirinoFormComponent } from '../../modules/kirino/components/kirino-form/kirino-form.component';
+import { MusicFormComponent } from '../../modules/kirino/components/music-form/music-form.component';
 import * as $ from 'jquery';
 import { HttpClient } from '@angular/common/http';
-import { Song } from '../../kirino/types/song';
+import { Song } from '../../modules/kirino/types/song';
 import { AnisonParserService } from './anison-parser.service';
 import { AnidbParserService } from './anidb-parser.service';
 

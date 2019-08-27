@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShinobuComponent } from './shinobu/components/shinobu/shinobu.component';
-import { KirinoComponent } from './kirino/components/kirino/kirino.component';
-import { KirinoFormComponent } from './kirino/components/kirino-form/kirino-form.component';
-import { BackgroundComponent } from './background/components/background/background.component';
-import { BrowserActionComponent } from './borwser-action/browser-action/browser-action.component';
+import { ShinobuComponent } from './modules/shinobu/components/shinobu/shinobu.component';
+import { KirinoComponent } from './modules/kirino/components/kirino/kirino.component';
+import { KirinoFormComponent } from './modules/kirino/components/kirino-form/kirino-form.component';
+import { BackgroundComponent } from './modules/background/components/background/background.component';
+import { BrowserActionComponent } from './modules/borwser-action/browser-action/browser-action.component';
 
 
 const routes: Routes = [

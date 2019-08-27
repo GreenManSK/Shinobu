@@ -1,0 +1,80 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+$bgColor: #9acefc;
+$bgImg: $imgDir + "shinobuBg.jpg";
+$christmasBgImg: $imgDir + "shinobuBgCh.jpg";
+$colorTrans: $shinobuColorTransparency;
+$contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+.ts-shibnou {
+  min-width: 100%;
+  min-height: 100%;
+  @include maximize;
+
+  background: $bgColor url($bgImg) no-repeat fixed center center;
+  background-size: 100% 100%;
+  color: $textColor;
+
+  font-family: $contentFont;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &.christmas {
+    background-image: url($christmasBgImg);
+  }
+
+  notes, tabs, quick-access {
+    height: 100%;
+    width: 100%;
+    max-width: 25%;
+  }
+
+  notes {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  tabs {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  quick-access {
+    order: 2;
+    flex: 2;
+    max-width: 4*(2*$gridMargin + $gridIconSize);
+    display: flex;
+  }
+}
+
+@media (max-width: $shinobuResponsive) {
+  .ts-shibnou {
+    position: relative;
+    flex-direction: column;
+
+    .quick-access {
+      order: 1;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    notes {
+      order: 2;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    tabs {
+      position: absolute;
+      display: block;
+      right: 0;
+      top: 0;
+    }
+  }
+}
