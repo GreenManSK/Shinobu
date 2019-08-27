@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AnidbSongParserService } from '../../service/parsers/anidb-song-parser.service';
-import { SiteParser } from '../../service/parsers/site-parser';
+import { AnidbSongParserService } from '../../services/parsers/anidb-song-parser.service';
+import { SiteParser } from '../../services/parsers/site-parser';
 import { PopUpService } from '../../services/pop-up.service';
-import { AnisonParserService } from '../../service/parsers/anison-parser.service';
-import { TheTVDBParserService } from '../../service/parsers/the-tvdbparser.service';
+import { AnisonParserService } from '../../services/parsers/anison-parser.service';
+import { TheTVDBParserService } from '../../services/parsers/the-tvdbparser.service';
 
 @Component({
   selector: 'app-browser-action',

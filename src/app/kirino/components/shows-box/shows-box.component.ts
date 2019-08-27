@@ -11,7 +11,7 @@ import { MessageService } from '../../../services/message.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { PopUpService } from '../../../services/pop-up.service';
 import { ShowFormComponent } from '../show-form/show-form.component';
-import { TheTVDBParserService } from '../../../service/parsers/the-tvdbparser.service';
+import { TheTVDBParserService } from '../../../services/parsers/the-tvdbparser.service';
 
 type DataBag = {
   show: Show,

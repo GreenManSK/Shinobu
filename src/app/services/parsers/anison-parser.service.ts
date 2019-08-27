@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SiteParser } from './site-parser';
-import { HttpClient } from '../../../../node_modules/@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Song } from '../../kirino/types/song';
 import * as $ from 'jquery';
 import { KirinoFormComponent } from '../../kirino/components/kirino-form/kirino-form.component';

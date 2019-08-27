@@ -10,8 +10,8 @@ import { MessageService } from '../../../services/message.service';
 import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
-import { AnidbSongParserService } from '../../../service/parsers/anidb-song-parser.service';
-import { AnisonParserService } from '../../../service/parsers/anison-parser.service';
+import { AnidbSongParserService } from '../../../services/parsers/anidb-song-parser.service';
+import { AnisonParserService } from '../../../services/parsers/anison-parser.service';
 
 @Component({
   selector: 'music-box',
