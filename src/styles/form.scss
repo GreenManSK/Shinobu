@@ -37,7 +37,7 @@
   }
 }
 
-form.nice {
+form.nice, .form-nice {
   padding: 1rem 1.5rem;
 
   .field {
@@ -196,6 +196,7 @@ form.nice {
     }
   }
 
+  @include formColor($gray, ".gray");
   @include formColor($red, ".red");
   @include formColor($blue, ".blue");
   @include formColor($green, ".green");

@@ -33,6 +33,8 @@ import { BackgroundComponent } from './modules/background/components/background/
 import { BrowserActionComponent } from './modules/borwser-action/browser-action/browser-action.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './components/error/error.component';
+import { SettingsComponent } from './modules/settings/components/settings/settings.component';
+import { ErrorLogComponent } from './modules/settings/components/error-log/error-log.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { ErrorComponent } from './components/error/error.component';
     MusicFormComponent,
     BackgroundComponent,
     BrowserActionComponent,
-    ErrorComponent
+    ErrorComponent,
+    SettingsComponent,
+    ErrorLogComponent
   ],
   imports: [
     BrowserModule,

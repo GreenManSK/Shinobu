@@ -5,6 +5,7 @@ import { KirinoComponent } from './modules/kirino/components/kirino/kirino.compo
 import { KirinoFormComponent } from './modules/kirino/components/kirino-form/kirino-form.component';
 import { BackgroundComponent } from './modules/background/components/background/background.component';
 import { BrowserActionComponent } from './modules/borwser-action/browser-action/browser-action.component';
+import { SettingsComponent } from './modules/settings/components/settings/settings.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'kirino-form/:type/:id', component: KirinoFormComponent},
   {path: 'background', component: BackgroundComponent},
   {path: 'browser-action', component: BrowserActionComponent},
+  {path: 'settings', component: SettingsComponent},
 ];
 
 @NgModule({
