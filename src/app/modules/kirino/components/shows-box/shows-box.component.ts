@@ -112,7 +112,7 @@ export class ShowsBoxComponent implements OnInit {
       episodes.push(new BoxItem(
         show.title + ' [' + episode.episodeNumber + ']',
         null,
-        new Date(episode.airdate),
+        episode.airdate ? new Date(episode.airdate) : null,
         show.id,
         {
           show,

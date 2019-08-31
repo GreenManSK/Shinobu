@@ -119,7 +119,7 @@ export class AnimeBoxComponent implements OnInit {
       episodes.push(new BoxItem(
         anime.title + ' [' + episode.episodeNumber + ']',
         null,
-        new Date(episode.airdate),
+        episode.airdate ? new Date(episode.airdate) : null,
         anime.id,
         {
           anime,

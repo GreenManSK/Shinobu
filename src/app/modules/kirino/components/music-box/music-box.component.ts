@@ -101,7 +101,7 @@ export class MusicBoxComponent implements OnInit {
     return new BoxItem(
       song.show + ' - ' + song.type,
       song.title + (song.author ? ' - ' + song.author : ''),
-      new Date(song.releaseDate),
+      song.releaseDate ? new Date(song.releaseDate) : null,
       null,
       song,
       badges,
