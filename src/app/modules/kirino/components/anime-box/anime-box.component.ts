@@ -14,6 +14,7 @@ import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { AnidbParserService } from '../../../../services/parsers/anidb-parser.service';
 import { NyaaSearchService } from '../../services/nyaa-search.service';
 import { ErrorService } from '../../../../services/error.service';
+import { AnimeSyncService } from '../../../background/service/sync/anime-sync.service';
 
 type DataBag = {
   anime: Anime,
@@ -47,6 +48,7 @@ export class AnimeBoxComponent implements OnInit {
     private zone: NgZone,
     private nyaaSearch: NyaaSearchService,
     private service: AnimeService,
+    private sync: AnimeSyncService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
@@ -62,7 +64,8 @@ export class AnimeBoxComponent implements OnInit {
   }
 
   public synchronizeAnime( item: BoxItem ): void {
-    // TODO
+    const id = (item.data.anime as Anime).id;
+    this.sync.sync(id).then(() => this.reloadItems());
   }
 
   public seenEpisode( item: DataBag ): void {
@@ -128,6 +131,19 @@ export class AnimeBoxComponent implements OnInit {
         [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id))],
         this.buttons,
         nyaaSearch
+      ));
+    }
+    if (episodes.length <= 0) {
+      episodes.push(new BoxItem(
+        anime.title,
+        null,
+        null,
+        anime.id,
+        {
+          anime
+        },
+        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id))],
+        this.buttons
       ));
     }
     return episodes;

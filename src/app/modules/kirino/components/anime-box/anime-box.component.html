@@ -1,6 +1,6 @@
 <item-box [color]="color"
           [localPreferenceKey]="syncKey"
-          [syncFunction]="synchronizeAnime"
+          [syncFunction]="synchronizeAnime.bind(this)"
           [items]="items"
           [enableHiding]="true"
           [title]="'Anime'"

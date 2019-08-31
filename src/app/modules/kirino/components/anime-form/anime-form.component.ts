@@ -31,8 +31,7 @@ export class AnimeFormComponent implements OnInit {
   constructor(
     public messageService: MessageService,
     private route: ActivatedRoute,
-    private service: AnimeService,
-    errorService: ErrorService
+    private service: AnimeService
   ) {
   }
 
