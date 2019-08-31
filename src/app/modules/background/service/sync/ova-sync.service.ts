@@ -21,9 +21,9 @@ export class OvaSyncService {
       return this.ovaParser.getData(url).then(( updatedData: Ova ) => {
         if (updatedData && updatedData.airdate) {
           ova.airdate = updatedData.airdate;
-          console.log(ova);
           return this.ovaService.save(ova).then(() => ova);
         }
+        return ova;
       });
     });
   }
