@@ -17,7 +17,7 @@ export class ChromeDispatcherService {
     );
   }
 
-  public dispatchMessage( message: any, sender: MessageSender, sendResponse: ( response?: any ) => void ): void {
+  private dispatchMessage( message: any, sender: MessageSender, sendResponse: ( response?: any ) => void ): void {
     if (message.hasOwnProperty('address')) {
       const listener = this.listeners[message.address] as ChromeDispatcherListener;
       if (listener) {
@@ -28,6 +28,15 @@ export class ChromeDispatcherService {
         (listener as ChromeDispatcherListener).onMessage(message, sender, sendResponse);
       }
     }
+  }
+
+  public sendMessage(address: string, data: object): Promise<void> {
+    return new Promise<void>((resolve) => {
+      chrome.runtime.sendMessage({
+        ...data,
+        address
+      }, () => resolve());
+    });
   }
 
   public addListener( address: string, listener: ChromeDispatcherListener ): void {
