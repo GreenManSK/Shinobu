@@ -24,7 +24,7 @@ export class ErrorLoggerService extends StoragePromiseService {
   }
 
   public getAll(): Promise<LogError[]> {
-    return this.storageGet(ErrorLoggerService.STORAGE_KEY).then(( result ) => {
+    return this.storageGetOne(ErrorLoggerService.STORAGE_KEY).then(( result ) => {
       if (!result) {
         return [];
       }

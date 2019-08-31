@@ -1,0 +1,16 @@
+@import '../../../../../styles/variables';
+
+$kirinoMaidWidth: 201px;
+$kirinoMaidHeight: 288px;
+
+box::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  background-size: cover;
+  right: (-$kirinoMaidWidth - 10px);
+  width: $kirinoMaidWidth;
+  height: $kirinoMaidHeight;
+  background-image: url($imgDir + 'kirinoMaid.png');
+}

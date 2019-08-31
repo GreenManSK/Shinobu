@@ -35,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './components/error/error.component';
 import { SettingsComponent } from './modules/settings/components/settings/settings.component';
 import { ErrorLogComponent } from './modules/settings/components/error-log/error-log.component';
+import { PreferencesComponent } from './modules/settings/components/preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ErrorLogComponent } from './modules/settings/components/error-log/error
     BrowserActionComponent,
     ErrorComponent,
     SettingsComponent,
-    ErrorLogComponent
+    ErrorLogComponent,
+    PreferencesComponent
   ],
   imports: [
     BrowserModule,
