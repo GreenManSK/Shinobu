@@ -16,12 +16,14 @@ import { LogError } from '../../types/log-error';
 export class AnidbSongParserService implements SiteParser {
 
   private static readonly URL_REGEX = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
+  private static readonly URL_TEMPLATE = AnidbSongParserService.URL_REGEX.toString().replace(/(\/\^|\/i|\\|s\?)/g, '');
+
 
   constructor( private http: HttpClient, private errorService: ErrorService ) {
   }
 
   public static getUrl( id: number ): string {
-    return AnidbSongParserService.URL_REGEX.toString().replace('(d+)', id.toString());
+    return AnidbSongParserService.URL_TEMPLATE.toString().replace('(d+)', id.toString());
   }
 
   public static getId( url: string ): number {
@@ -56,7 +58,7 @@ export class AnidbSongParserService implements SiteParser {
         song.releaseDate = AnidbParserService.anidbDateToTimestamp($releases.first().text());
       }
 
-      const anisonUrl = $site.find('.anison').attr('href');
+      const anisonUrl = $site.find('.i_resource_anison').attr('href');
       if (anisonUrl) {
         song.anisonId = AnisonParserService.getId(anisonUrl);
       }
@@ -68,7 +70,6 @@ export class AnidbSongParserService implements SiteParser {
         e
       ));
     }
-
     return song;
   }
 

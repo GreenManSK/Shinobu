@@ -13,6 +13,7 @@ import { MusicFormComponent } from '../music-form/music-form.component';
 import { AnidbSongParserService } from '../../../../services/parsers/anidb-song-parser.service';
 import { AnisonParserService } from '../../../../services/parsers/anison-parser.service';
 import { ErrorService } from '../../../../services/error.service';
+import { MusicSyncService } from '../../../background/service/sync/music-sync.service';
 
 @Component({
   selector: 'music-box',
@@ -39,6 +40,7 @@ export class MusicBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private service: SongService,
+    private sync: MusicSyncService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
@@ -54,7 +56,8 @@ export class MusicBoxComponent implements OnInit {
   }
 
   public synchronizeMusic( item: BoxItem ): void {
-    // TODO
+    const id = (item.data as Song).id;
+    this.sync.sync(id).then(() => this.reloadItems());
   }
 
   public addMusic(): void {
@@ -100,7 +103,7 @@ export class MusicBoxComponent implements OnInit {
     }
     return new BoxItem(
       song.show + ' - ' + song.type,
-      song.title + (song.author ? ' - ' + song.author : ''),
+      (song.title ? song.title : '') + (song.author ? ' - ' + song.author : ''),
       song.releaseDate ? new Date(song.releaseDate) : null,
       null,
       song,
