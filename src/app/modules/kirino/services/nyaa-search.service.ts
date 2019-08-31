@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Anime } from '../types/anime';
 import { Episode } from '../types/episode';
+import { PreferenceService } from '../../settings/services/preference.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NyaaSearchService {
 
-  private nyaaDomain = 'url'; // TODO: Get form settings
+  private nyaaDomain = 'loading';
 
-  constructor() {
+  constructor(preferenceService: PreferenceService) {
+    preferenceService.get().then((preference) => {
+      this.nyaaDomain = preference.kirino.nyaaUrl;
+    });
   }
 
   public generateSearchText(anime: Anime, episode: Episode): string {
