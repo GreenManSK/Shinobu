@@ -1,6 +1,6 @@
 <item-box [color]="color"
           [localPreferenceKey]="syncKey"
-          [syncFunction]="synchronizeShow"
+          [syncFunction]="synchronizeShow.bind(this)"
           [items]="items"
           [enableHiding]="true"
           [title]="'TV Shows'"

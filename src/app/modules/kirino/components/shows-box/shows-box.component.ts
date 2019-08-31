@@ -13,6 +13,8 @@ import { PopUpService } from '../../../../services/pop-up.service';
 import { ShowFormComponent } from '../show-form/show-form.component';
 import { TheTVDBParserService } from '../../../../services/parsers/the-tvdbparser.service';
 import { ErrorService } from '../../../../services/error.service';
+import { Anime } from '../../types/anime';
+import { ShowSyncService } from '../../../background/service/sync/show-sync.service';
 
 type DataBag = {
   show: Show,
@@ -45,6 +47,7 @@ export class ShowsBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private service: ShowService,
+    private sync: ShowSyncService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
@@ -60,7 +63,8 @@ export class ShowsBoxComponent implements OnInit {
   }
 
   public synchronizeShow( item: BoxItem ): void {
-    // TODO
+    const id = (item.data.show as Show).id;
+    this.sync.sync(id).then(() => this.reloadItems());
   }
 
   public seenShow( item: DataBag ): void {
@@ -121,6 +125,19 @@ export class ShowsBoxComponent implements OnInit {
         [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
         this.buttons,
         show.url ? new BoxLink(show.url, show.url) : null
+      ));
+    }
+    if (episodes.length <= 0) {
+      episodes.push(new BoxItem(
+        show.title,
+        null,
+        null,
+        show.id,
+        {
+          show
+        },
+        [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
+        this.buttons,
       ));
     }
     return episodes;
