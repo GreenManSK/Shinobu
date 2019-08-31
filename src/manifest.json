@@ -8,7 +8,7 @@
     "48": "assets/icons/shinobu/48.png",
     "128": "assets/icons/shinobu/128.png"
   },
-  "options_page": "index.html",
+  "options_page": "index.html#/settings",
   "background": {
     "page": "index.html#/background",
     "persistent": false
