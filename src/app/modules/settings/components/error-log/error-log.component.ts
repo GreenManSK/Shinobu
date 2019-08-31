@@ -23,8 +23,9 @@ export class ErrorLogComponent implements OnInit {
 
   public clear( even: MouseEvent ): void {
     even.preventDefault();
-    this.errorLogger.clear();
-    this.errors = [];
+    this.errorLogger.clear().then(() => {
+      this.errors = [];
+    });
   }
 
   public logToConsole( even: MouseEvent, error: LogError ): void {
