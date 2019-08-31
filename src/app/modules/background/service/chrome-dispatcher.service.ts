@@ -11,6 +11,7 @@ export class ChromeDispatcherService {
 
   constructor() {
     const instance = this;
+    // TODO: Uncomment
     /*chrome.runtime.onMessage.addListener(function () {
         instance.dispatchMessage.apply(instance, arguments);
       }
