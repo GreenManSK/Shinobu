@@ -1,6 +1,6 @@
 <item-box [color]="color"
           [localPreferenceKey]="syncKey"
-          [syncFunction]="synchronizeOva"
+          [syncFunction]="synchronizeOva.bind(this)"
           [items]="items"
           [enableHiding]="false"
           [title]="'OVA'"

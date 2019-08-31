@@ -12,6 +12,7 @@ import { PopUpService } from '../../../../services/pop-up.service';
 import { OvaFormComponent } from '../ova-form/ova-form.component';
 import { AnidbEpisodeParserService } from '../../../../services/parsers/anidb-episode-parser.service';
 import { ErrorService } from '../../../../services/error.service';
+import { OvaSyncService } from '../../../background/service/sync/ova-sync.service';
 
 @Component({
   selector: 'ova-box',
@@ -38,10 +39,10 @@ export class OvaBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private service: OvaService,
-    chromeStorage: ChromeMockStorageService,
+    private sync: OvaSyncService,
     messageService: MessageService,
-    errorService: ErrorService
   ) {
+    service.save(new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 169646, 0));
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();
@@ -54,7 +55,8 @@ export class OvaBoxComponent implements OnInit {
   }
 
   public synchronizeOva( item: BoxItem ): void {
-    // TODO
+    const id = (item.data as Ova).id;
+    this.sync.sync(id).then(() => this.reloadItems());
   }
 
   public addOva(): void {
