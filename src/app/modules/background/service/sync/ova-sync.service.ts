@@ -14,7 +14,7 @@ export class OvaSyncService {
 
   public sync( id: number ): Promise<Ova> {
     return this.ovaService.get(id).then(( ova: Ova ) => {
-      if (!ova || !ova.anidbId) {
+      if (!ova || !ova.anidbId || ova.airdate) {
         return ova;
       }
       const url = AnidbEpisodeParserService.getUrl(ova.anidbId);
