@@ -57,8 +57,9 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
   .ts-shibnou {
     position: relative;
     flex-direction: column;
+    padding-top: $mainMenuSize;
 
-    .quick-access {
+    quick-access {
       order: 1;
       margin: 0 auto;
       padding: 1rem;
@@ -74,7 +75,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
       position: absolute;
       display: block;
       right: 0;
-      top: 0;
+      top: $mainMenuSize;
     }
   }
 }

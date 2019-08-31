@@ -5,6 +5,7 @@
   .container {
     @include clearfix;
     max-width: $responsiveWidth;
+    padding-top: $mainMenuSize;
     margin: 0 auto;
     z-index: 10;
     position: relative;

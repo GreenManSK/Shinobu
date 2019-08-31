@@ -72,6 +72,10 @@ $noteTitleSize: 20px;
     textarea, .text {
       position: initial;
       height: auto;
+      display: block;
+    }
+
+    textarea {
       min-height: 20rem;
     }
   }

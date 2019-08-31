@@ -2,7 +2,6 @@
 
 $mainMenuBg: #000;
 $mainMenuColor: #fff;
-$mainMenuSize: 36px;
 $mainMenuIcon: 24px;
 
 .ts-menu {
@@ -10,7 +9,7 @@ $mainMenuIcon: 24px;
   position: fixed;
   top: 0;
   right: 0;
-  
+
   ul, li {
     padding: 0;
     margin: 0;
