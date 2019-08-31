@@ -17,7 +17,7 @@ export class AnidbParserService implements SiteParser {
 
   private static readonly HTTP_API =
     'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
-  private static readonly CLIENT_VER = '4'; // TODO: Add new version to anidb
+  private static readonly CLIENT_VER = '4';
   private static readonly HTTP_CLIENT = 'shinobu';
   private static readonly API_URL = AnidbParserService.HTTP_API
     .replace(/%httpClient/g, AnidbParserService.HTTP_CLIENT)
