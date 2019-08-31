@@ -31,7 +31,6 @@ export class ShowsBoxComponent implements OnInit {
   public readonly color = BoxColor.Green;
   public readonly syncKey = ShowsBoxComponent.SYNC_KEY;
 
-  private service: ShowService;
   public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
@@ -45,11 +44,11 @@ export class ShowsBoxComponent implements OnInit {
   constructor(
     public popUpService: PopUpService,
     private zone: NgZone,
+    private service: ShowService,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
-    this.service = new ShowService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

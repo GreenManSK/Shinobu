@@ -24,7 +24,6 @@ export class ShowFormComponent implements OnInit {
   public static readonly TVDB_ID_PARAM = 'tvdbId';
 
   public readonly color = BoxColor.Green;
-  private service: ShowService;
 
   public _id: number;
   public show: Show;
@@ -33,9 +32,9 @@ export class ShowFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    private service: ShowService,
     errorService: ErrorService
   ) {
-    this.service = new ShowService(chromeStorage, errorService);
   }
 
   ngOnInit() {

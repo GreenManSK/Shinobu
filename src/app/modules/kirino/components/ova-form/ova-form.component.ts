@@ -25,7 +25,6 @@ export class OvaFormComponent implements OnInit {
   public static readonly DATE_PARAM = 'date';
 
   public readonly color = BoxColor.Pink;
-  private service: OvaService;
 
   public _id: number;
   public ova: Ova;
@@ -34,9 +33,9 @@ export class OvaFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    private service: OvaService,
     errorService: ErrorService
   ) {
-    this.service = new OvaService(chromeStorage, errorService);
   }
 
   ngOnInit() {

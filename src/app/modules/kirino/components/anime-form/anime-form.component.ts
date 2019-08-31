@@ -24,7 +24,6 @@ export class AnimeFormComponent implements OnInit {
   public static readonly ANIDB_ID_PARAM = 'anidbId';
 
   public readonly color = BoxColor.Red;
-  private service: AnimeService;
 
   public _id: number;
   public anime: Anime;
@@ -33,9 +32,9 @@ export class AnimeFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    private service: AnimeService,
     errorService: ErrorService
   ) {
-    this.service = new AnimeService(chromeStorage, errorService);
   }
 
   ngOnInit() {

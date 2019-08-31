@@ -1,5 +1,5 @@
-import {Savable} from '../../../types/savable';
-import {Tile} from './tile';
+import { Savable } from '../../../types/savable';
+import { Tile } from './tile';
 
 export class Tab implements Savable {
   public id: number;

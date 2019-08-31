@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StoragePromiseService } from '../../../services/storage-promise.service';
-import { ChromeMockStorageService } from '../../../mocks/chrome-mock-storage.service';
 import { ErrorService } from '../../../services/error.service';
 import { Preference } from '../types/preference';
+import { ChromeStorageProviderService } from '../../../services/chrome-storage-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,10 @@ export class PreferenceService extends StoragePromiseService {
   private static readonly STORAGE_KEY = 'Preferences';
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
+    chromeStorageProvider: ChromeStorageProviderService,
     protected errorService: ErrorService
   ) {
-    super(chromeStorage, errorService);
-    // super(chrome.storage.sync, errorService); TODO: Fix
+    super(chromeStorageProvider.getLocal(), errorService);
   }
 
   public get(): Promise<Preference> {

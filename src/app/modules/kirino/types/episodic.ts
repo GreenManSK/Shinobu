@@ -1,5 +1,5 @@
-import {Episode} from './episode';
-import {Savable} from '../../../types/savable';
+import { Episode } from './episode';
+import { Savable } from '../../../types/savable';
 
 export interface Episodic extends Savable {
   title: string;

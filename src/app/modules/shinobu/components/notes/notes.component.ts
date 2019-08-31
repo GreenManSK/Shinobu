@@ -3,7 +3,6 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { NoteService } from '../../services/note.service';
 import { Note } from '../../types/note';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
-import { MessageService } from '../../../../services/message.service';
 import { ErrorService } from '../../../../services/error.service';
 
 @Component({

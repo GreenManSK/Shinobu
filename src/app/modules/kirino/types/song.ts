@@ -1,4 +1,4 @@
-import {Savable} from '../../../types/savable';
+import { Savable } from '../../../types/savable';
 
 export class Song implements Savable {
   public id: number;

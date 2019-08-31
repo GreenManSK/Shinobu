@@ -1,5 +1,5 @@
-import {Episode} from './episode';
-import {Episodic} from './episodic';
+import { Episode } from './episode';
+import { Episodic } from './episodic';
 
 export class Anime implements Episodic {
   public id: number;

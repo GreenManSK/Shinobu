@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ErrorService } from './error.service';
 import { StoragePromiseService } from './storage-promise.service';
-import { ChromeMockStorageService } from '../mocks/chrome-mock-storage.service';
 import { LogError } from '../types/log-error';
+import { ChromeStorageProviderService } from './chrome-storage-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,10 @@ export class ErrorLoggerService extends StoragePromiseService {
   private static readonly STORAGE_KEY = 'ErrorsLog';
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
+    chromeStorageProvider: ChromeStorageProviderService,
     protected errorService: ErrorService
   ) {
-    super(chromeStorage, errorService);
-    // super(chrome.storage.local); TODO: Fix
+    super(chromeStorageProvider.getLocal(), errorService);
   }
 
   public start(): void {

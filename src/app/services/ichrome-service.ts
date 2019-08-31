@@ -1,4 +1,4 @@
-import {Savable} from '../types/savable';
+import { Savable } from '../types/savable';
 
 /**
  * Used for saving entities to chrome storage

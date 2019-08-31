@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StoragePromiseService } from './storage-promise.service';
-import { ChromeMockStorageService } from '../mocks/chrome-mock-storage.service';
 import { ErrorService } from './error.service';
+import { ChromeStorageProviderService } from './chrome-storage-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +9,9 @@ import { ErrorService } from './error.service';
 export class LocalPreferenceService extends StoragePromiseService {
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
+    chromeStorageProvider: ChromeStorageProviderService,
     errorService: ErrorService ) {
-    super(chromeStorage, errorService);
-    // super(chrome.storage.local); TODO: Fix
+    super(chromeStorageProvider.getLocal(), errorService);
   }
 
   public get( key: string, defaultValue: any ): Promise<any> {

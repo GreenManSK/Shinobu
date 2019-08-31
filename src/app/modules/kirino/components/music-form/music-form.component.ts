@@ -6,7 +6,7 @@ import { BoxColor } from '../box/box-color.enum';
 import { SongService } from '../../services/song.service';
 import { Song } from '../../types/song';
 import { MusicBoxComponent } from '../music-box/music-box.component';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { ErrorService } from '../../../../services/error.service';
 
 @Component({
@@ -29,7 +29,6 @@ export class MusicFormComponent implements OnInit {
   public static readonly ANISON_ID_PARAM = 'anisonId';
 
   public readonly color = BoxColor.Blue;
-  private service: SongService;
 
   public _id: number;
   public song: Song;
@@ -38,9 +37,9 @@ export class MusicFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    private service: SongService,
     errorService: ErrorService
   ) {
-    this.service = new SongService(chromeStorage, errorService);
   }
 
   ngOnInit() {

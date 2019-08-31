@@ -1,9 +1,5 @@
-import { Injectable } from '@angular/core';
 import StorageArea = chrome.storage.StorageArea;
 
-@Injectable({
-  providedIn: 'root'
-})
 export class ChromeMockStorageService implements StorageArea {
 
   private items: any = {};

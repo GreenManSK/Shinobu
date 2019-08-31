@@ -1,5 +1,5 @@
-import {BoxLink} from './BoxLink';
-import { BoxButton } from "./BoxButton";
+import { BoxLink } from './BoxLink';
+import { BoxButton } from './BoxButton';
 
 export class BoxItem {
   constructor(

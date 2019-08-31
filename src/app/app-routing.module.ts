@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ShinobuComponent } from './modules/shinobu/components/shinobu/shinobu.component';
 import { KirinoComponent } from './modules/kirino/components/kirino/kirino.component';
 import { KirinoFormComponent } from './modules/kirino/components/kirino-form/kirino-form.component';

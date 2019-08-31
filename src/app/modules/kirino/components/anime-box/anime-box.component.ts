@@ -11,8 +11,8 @@ import { MessageService } from '../../../../services/message.service';
 import { PopUpService } from '../../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
-import {AnidbParserService} from '../../../../services/parsers/anidb-parser.service';
-import {NyaaSearchService} from '../../services/nyaa-search.service';
+import { AnidbParserService } from '../../../../services/parsers/anidb-parser.service';
+import { NyaaSearchService } from '../../services/nyaa-search.service';
 import { ErrorService } from '../../../../services/error.service';
 
 type DataBag = {
@@ -32,7 +32,6 @@ export class AnimeBoxComponent implements OnInit {
   public readonly color = BoxColor.Red;
   public readonly syncKey = AnimeBoxComponent.SYNC_KEY;
 
-  private service: AnimeService;
   public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
@@ -47,11 +46,11 @@ export class AnimeBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private nyaaSearch: NyaaSearchService,
+    private service: AnimeService,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
-    this.service = new AnimeService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

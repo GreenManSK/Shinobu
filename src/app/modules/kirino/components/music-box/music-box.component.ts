@@ -26,7 +26,6 @@ export class MusicBoxComponent implements OnInit {
   public readonly color = BoxColor.Blue;
   public readonly syncKey = MusicBoxComponent.SYNC_KEY;
 
-  private service: SongService;
   public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
@@ -39,11 +38,11 @@ export class MusicBoxComponent implements OnInit {
   constructor(
     public popUpService: PopUpService,
     private zone: NgZone,
+    private service: SongService,
     chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
-    this.service = new SongService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

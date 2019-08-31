@@ -17,7 +17,7 @@ import { QuickAccessComponent } from './modules/shinobu/components/quick-access/
 import { TileComponent } from './modules/shinobu/components/tile/tile.component';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { MenuComponent } from './components/menu/menu.component';
-import {ItemBoxComponent} from './modules/kirino/components/item-box/item-box.component';
+import { ItemBoxComponent } from './modules/kirino/components/item-box/item-box.component';
 import { OvaBoxComponent } from './modules/kirino/components/ova-box/ova-box.component';
 import { KirinoImageComponent } from './modules/kirino/components/kirino-image/kirino-image.component';
 import { MusicBoxComponent } from './modules/kirino/components/music-box/music-box.component';

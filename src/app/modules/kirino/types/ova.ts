@@ -1,4 +1,4 @@
-import {Savable} from '../../../types/savable';
+import { Savable } from '../../../types/savable';
 
 export class Ova implements Savable {
   public id: number;
