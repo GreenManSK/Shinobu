@@ -42,7 +42,6 @@ export class OvaBoxComponent implements OnInit {
     private sync: OvaSyncService,
     messageService: MessageService,
   ) {
-    service.save(new Ova('Code Geass: Boukoku no Akito - 5 - To the Beloved', 169646, 0));
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();
@@ -95,7 +94,7 @@ export class OvaBoxComponent implements OnInit {
     return new BoxItem(
       ova.title,
       null,
-      new Date(ova.airdate),
+      ova.airdate ? new Date(ova.airdate) : null,
       null,
       ova,
       [new BoxLink('aniDB.net', AnidbEpisodeParserService.getUrl(ova.anidbId))],
