@@ -1,11 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Tab } from '../../types/tab';
 import { TabService } from '../../services/tab.service';
-import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.service';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
 import validator from 'validator';
 import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
-import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'tabs',
@@ -19,7 +17,6 @@ export class TabsComponent implements OnInit {
   @Output()
   public tabChanged = new EventEmitter<Tab>();
 
-  public tabService: TabService;
   public tabs: Tab[];
   public activeTab: Tab;
 
@@ -28,10 +25,8 @@ export class TabsComponent implements OnInit {
 
   constructor(
     public localPreference: LocalPreferenceService,
-    chromeStorage: ChromeMockStorageService,
-    errorService: ErrorService
+    public tabService: TabService
   ) {
-    this.tabService = new TabService(chromeStorage, errorService);
   }
 
   ngOnInit() {

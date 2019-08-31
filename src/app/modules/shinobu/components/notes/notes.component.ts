@@ -14,16 +14,13 @@ export class NotesComponent implements OnInit {
 
   private static readonly ACTIVE_NOTE_KEY = 'activeNote';
 
-  public noteService: NoteService;
   public notes: Note[];
   public activeNote: Note;
 
   constructor(
     public localPreference: LocalPreferenceService,
-    chromeStorage: ChromeMockStorageService,
-    errorService: ErrorService
+    public noteService: NoteService
   ) {
-    this.noteService = new NoteService(chromeStorage, errorService);
   }
 
   ngOnInit() {
@@ -36,19 +33,19 @@ export class NotesComponent implements OnInit {
     }).then(() => {
       this.notes.sort(( a, b ) => a.title.localeCompare(b.title));
       return this.localPreference.get(NotesComponent.ACTIVE_NOTE_KEY, 0);
-    }).then((activeNoteKey) => {
-        this.activeNote = this.notes.filter((n) => n.id === activeNoteKey)[0];
-        if (!this.activeNote) {
-          this.activeNote = this.notes[0];
-        }
+    }).then(( activeNoteKey ) => {
+      this.activeNote = this.notes.filter(( n ) => n.id === activeNoteKey)[0];
+      if (!this.activeNote) {
+        this.activeNote = this.notes[0];
+      }
     });
   }
 
   public addNote(): void {
-    this.createNote().then((note) => this.activeNote = note);
+    this.createNote().then(( note ) => this.activeNote = note);
   }
 
-  public changeActiveNote(note: Note): void {
+  public changeActiveNote( note: Note ): void {
     this.activeNote = note;
     this.localPreference.get(NotesComponent.ACTIVE_NOTE_KEY, note.id);
   }
