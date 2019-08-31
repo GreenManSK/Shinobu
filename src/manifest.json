@@ -15,7 +15,8 @@
   },
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "alarms"
   ],
   "browser_action": {
     "default_icon": "assets/icons/shinobu/128.png",
