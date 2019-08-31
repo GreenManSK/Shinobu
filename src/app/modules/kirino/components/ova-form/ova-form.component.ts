@@ -30,7 +30,6 @@ export class OvaFormComponent implements OnInit {
   public ova: Ova;
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
     private service: OvaService,

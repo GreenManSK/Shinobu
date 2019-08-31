@@ -29,7 +29,6 @@ export class ShowFormComponent implements OnInit {
   public show: Show;
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
     private service: ShowService,

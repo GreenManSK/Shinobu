@@ -29,7 +29,6 @@ export class AnimeFormComponent implements OnInit {
   public anime: Anime;
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
     private service: AnimeService,

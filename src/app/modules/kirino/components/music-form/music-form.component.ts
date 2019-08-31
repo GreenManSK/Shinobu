@@ -34,7 +34,6 @@ export class MusicFormComponent implements OnInit {
   public song: Song;
 
   constructor(
-    chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
     private service: SongService,
