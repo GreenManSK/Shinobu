@@ -12,6 +12,7 @@ import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { PopUpService } from '../../../../services/pop-up.service';
 import { ShowFormComponent } from '../show-form/show-form.component';
 import { TheTVDBParserService } from '../../../../services/parsers/the-tvdbparser.service';
+import { ErrorService } from '../../../../services/error.service';
 
 type DataBag = {
   show: Show,
@@ -45,9 +46,10 @@ export class ShowsBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
-    messageService: MessageService
+    messageService: MessageService,
+    errorService: ErrorService
   ) {
-    this.service = new ShowService(chromeStorage);
+    this.service = new ShowService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

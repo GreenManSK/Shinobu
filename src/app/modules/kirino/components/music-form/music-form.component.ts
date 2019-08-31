@@ -7,6 +7,7 @@ import { SongService } from '../../services/song.service';
 import { Song } from '../../types/song';
 import { MusicBoxComponent } from '../music-box/music-box.component';
 import { ActivatedRoute } from "@angular/router";
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'music-form',
@@ -37,8 +38,9 @@ export class MusicFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    errorService: ErrorService
   ) {
-    this.service = new SongService(chromeStorage);
+    this.service = new SongService(chromeStorage, errorService);
   }
 
   ngOnInit() {

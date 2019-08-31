@@ -4,6 +4,8 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { TabService } from '../../services/tab.service';
 import { Tile } from "../../types/tile";
 import { ShContextMenuClickEvent } from "ng2-right-click-menu/lib/sh-context-menu.models";
+import { MessageService } from '../../../../services/message.service';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'quick-access',
@@ -20,9 +22,10 @@ export class QuickAccessComponent implements OnInit {
   private oldOrder: Tile[] = [];
 
   constructor(
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    errorService: ErrorService
   ) {
-    this.tabService = new TabService(chromeStorage);
+    this.tabService = new TabService(chromeStorage, errorService);
   }
 
   ngOnInit() {

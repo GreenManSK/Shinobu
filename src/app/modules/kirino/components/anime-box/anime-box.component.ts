@@ -13,6 +13,7 @@ import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import {AnidbParserService} from '../../../../services/parsers/anidb-parser.service';
 import {NyaaSearchService} from '../../services/nyaa-search.service';
+import { ErrorService } from '../../../../services/error.service';
 
 type DataBag = {
   anime: Anime,
@@ -47,9 +48,10 @@ export class AnimeBoxComponent implements OnInit {
     private zone: NgZone,
     private nyaaSearch: NyaaSearchService,
     chromeStorage: ChromeMockStorageService,
-    messageService: MessageService
+    messageService: MessageService,
+    errorService: ErrorService
   ) {
-    this.service = new AnimeService(chromeStorage);
+    this.service = new AnimeService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

@@ -7,6 +7,7 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { MessageService } from '../../../../services/message.service';
 import { ShowsBoxComponent } from '../shows-box/shows-box.component';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'show-form',
@@ -32,8 +33,9 @@ export class ShowFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    errorService: ErrorService
   ) {
-    this.service = new ShowService(chromeStorage);
+    this.service = new ShowService(chromeStorage, errorService);
   }
 
   ngOnInit() {

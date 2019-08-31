@@ -7,6 +7,7 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { MessageService } from '../../../../services/message.service';
 import { OvaBoxComponent } from '../ova-box/ova-box.component';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'ova-form',
@@ -33,8 +34,9 @@ export class OvaFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    errorService: ErrorService
   ) {
-    this.service = new OvaService(chromeStorage);
+    this.service = new OvaService(chromeStorage, errorService);
   }
 
   ngOnInit() {

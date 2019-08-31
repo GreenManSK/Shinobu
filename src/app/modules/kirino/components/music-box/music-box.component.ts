@@ -12,6 +12,7 @@ import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
 import { AnidbSongParserService } from '../../../../services/parsers/anidb-song-parser.service';
 import { AnisonParserService } from '../../../../services/parsers/anison-parser.service';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'music-box',
@@ -39,9 +40,10 @@ export class MusicBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     chromeStorage: ChromeMockStorageService,
-    messageService: MessageService
+    messageService: MessageService,
+    errorService: ErrorService
   ) {
-    this.service = new SongService(chromeStorage);
+    this.service = new SongService(chromeStorage, errorService);
     messageService.onMessage(this.syncKey, () => {
       this.zone.run(() => {
         this.reloadItems();

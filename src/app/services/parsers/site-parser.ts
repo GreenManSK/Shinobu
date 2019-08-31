@@ -3,5 +3,5 @@ export interface SiteParser {
 
   getData( url: string ): Promise<any>;
 
-  getFormUrl(data: any): string;
+  getFormUrl( data: any ): string;
 }

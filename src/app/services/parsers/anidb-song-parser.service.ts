@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Song } from '../../modules/kirino/types/song';
 import { AnisonParserService } from './anison-parser.service';
 import { AnidbParserService } from './anidb-parser.service';
+import { ErrorService } from '../error.service';
+import { LogError } from '../../types/log-error';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class AnidbSongParserService implements SiteParser {
 
   private static readonly URL_REGEX = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
 
-  constructor( private http: HttpClient ) {
+  constructor( private http: HttpClient, private errorService: ErrorService ) {
   }
 
   public static getUrl( id: number ): string {
@@ -37,25 +39,34 @@ export class AnidbSongParserService implements SiteParser {
 
   private parseData( url: string, html: string ): Song {
     const song = new Song();
-    song.anidbId = AnidbSongParserService.getId(url);
+    try {
+      song.anidbId = AnidbSongParserService.getId(url);
 
-    const $site = $(html);
+      const $site = $(html);
 
-    const $anime = $site.find('#animelist tbody tr:first-child');
+      const $anime = $site.find('#animelist tbody tr:first-child');
 
-    song.show = $anime.find('.name').text();
-    song.type = $anime.find('td:first-child').text();
-    song.title = $site.find(':contains(\'Main Title\')').parent('tr').find('.value span').text();
-    song.author = $site.find('.creators .value').text();
+      song.show = $anime.find('.name').text();
+      song.type = $anime.find('td:first-child').text();
+      song.title = $site.find(':contains(\'Main Title\')').parent('tr').find('.value span').text();
+      song.author = $site.find('.creators .value').text();
 
-    const $releases = $site.find('#collectionlist tbody .released');
-    if ($releases.length > 0) {
-      song.releaseDate = AnidbParserService.anidbDateToTimestamp($releases.first().text());
-    }
+      const $releases = $site.find('#collectionlist tbody .released');
+      if ($releases.length > 0) {
+        song.releaseDate = AnidbParserService.anidbDateToTimestamp($releases.first().text());
+      }
 
-    const anisonUrl = $site.find('.anison').attr('href');
-    if (anisonUrl) {
-      song.anisonId = AnisonParserService.getId(anisonUrl);
+      const anisonUrl = $site.find('.anison').attr('href');
+      if (anisonUrl) {
+        song.anisonId = AnisonParserService.getId(anisonUrl);
+      }
+    } catch (e) {
+      this.errorService.sendError(new LogError(
+        this.constructor.name,
+        e.message,
+        Date.now(),
+        e
+      ));
     }
 
     return song;

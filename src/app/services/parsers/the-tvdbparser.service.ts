@@ -6,6 +6,8 @@ import * as $ from 'jquery';
 import { Episode } from '../../modules/kirino/types/episode';
 import { KirinoFormComponent } from '../../modules/kirino/components/kirino-form/kirino-form.component';
 import { ShowFormComponent } from '../../modules/kirino/components/show-form/show-form.component';
+import { ErrorService } from '../error.service';
+import { LogError } from '../../types/log-error';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class TheTVDBParserService implements SiteParser {
   private static readonly URL_TEMPLATE = TheTVDBParserService.URL_REGEX.toString()
     .replace(/\(\?:www\\\.\)\?/g, 'www.').replace(/(\/\^|\/i|\\|s\?)/g, '');
 
-  constructor( private http: HttpClient ) {
+  constructor( private http: HttpClient, private errorService: ErrorService ) {
   }
 
   public static getUrl( id: string ): string {
@@ -38,27 +40,36 @@ export class TheTVDBParserService implements SiteParser {
 
   private parseData( url: string, html: string ): Show {
     const show = new Show();
-    show.tvdbId = TheTVDBParserService.getId(url);
+    try {
+      show.tvdbId = TheTVDBParserService.getId(url);
 
-    const $site = $(html);
-    show.title = $site.find('h2 a').first().text().trim();
+      const $site = $(html);
+      show.title = $site.find('h2 a').first().text().trim();
 
-    const episodes = $site.find('table[id=translations] tbody tr').toArray();
-    for (const episode of episodes) {
-      const $ep = $(episode);
-      const airdate = $ep.find('td:nth-child(3)').text().trim();
-      const seasonTitle = $ep.parents('table').prev().text();
-      const seasonNumber = seasonTitle.match(/(\d+)$/g);
-      if (seasonNumber === null) {
-        continue;
+      const episodes = $site.find('table[id=translations] tbody tr').toArray();
+      for (const episode of episodes) {
+        const $ep = $(episode);
+        const airdate = $ep.find('td:nth-child(3)').text().trim();
+        const seasonTitle = $ep.parents('table').prev().text();
+        const seasonNumber = seasonTitle.match(/(\d+)$/g);
+        if (seasonNumber === null) {
+          continue;
+        }
+        const epNum = $ep.find('td:nth-child(1)').text().trim();
+        show.episodes.push(new Episode(
+          (seasonNumber.length > 0 ? seasonNumber[0] : 0) + 'x' + epNum,
+          airdate ? new Date(airdate).getTime() : null
+        ));
       }
-      const epNum = $ep.find('td:nth-child(1)').text().trim();
-      show.episodes.push(new Episode(
-        (seasonNumber.length > 0 ? seasonNumber[0] : 0) + 'x' + epNum,
-        airdate ? new Date(airdate).getTime() : null
+      show.episodes.sort(( a, b ) => (a.airdate - b.airdate));
+    } catch (e) {
+      this.errorService.sendError(new LogError(
+        this.constructor.name,
+        e.message,
+        Date.now(),
+        e
       ));
     }
-    show.episodes.sort(( a, b ) => (a.airdate - b.airdate));
 
     return show;
   }

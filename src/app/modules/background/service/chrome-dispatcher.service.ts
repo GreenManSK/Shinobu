@@ -11,10 +11,10 @@ export class ChromeDispatcherService {
 
   constructor() {
     const instance = this;
-    chrome.runtime.onMessage.addListener(function () {
+    /*chrome.runtime.onMessage.addListener(function () {
         instance.dispatchMessage.apply(instance, arguments);
       }
-    );
+    );*/
   }
 
   private dispatchMessage( message: any, sender: MessageSender, sendResponse: ( response?: any ) => void ): void {

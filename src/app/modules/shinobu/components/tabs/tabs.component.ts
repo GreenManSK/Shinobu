@@ -5,6 +5,8 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
 import validator from 'validator';
 import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
+import { MessageService } from '../../../../services/message.service';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'tabs',
@@ -27,9 +29,10 @@ export class TabsComponent implements OnInit {
 
   constructor(
     public localPreference: LocalPreferenceService,
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    errorService: ErrorService
   ) {
-    this.tabService = new TabService(chromeStorage);
+    this.tabService = new TabService(chromeStorage, errorService);
   }
 
   ngOnInit() {

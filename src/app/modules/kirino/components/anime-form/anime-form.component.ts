@@ -7,6 +7,7 @@ import { BoxComponent } from '../box/box.component';
 import { MessageService } from '../../../../services/message.service';
 import { AnimeBoxComponent } from '../anime-box/anime-box.component';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'anime-form',
@@ -32,8 +33,9 @@ export class AnimeFormComponent implements OnInit {
     chromeStorage: ChromeMockStorageService,
     public messageService: MessageService,
     private route: ActivatedRoute,
+    errorService: ErrorService
   ) {
-    this.service = new AnimeService(chromeStorage);
+    this.service = new AnimeService(chromeStorage, errorService);
   }
 
   ngOnInit() {

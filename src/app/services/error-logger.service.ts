@@ -12,10 +12,10 @@ export class ErrorLoggerService extends StoragePromiseService {
   private static readonly STORAGE_KEY = 'ErrorsLog';
 
   constructor(
-    private errorService: ErrorService,
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    protected errorService: ErrorService
   ) {
-    super(chromeStorage);
+    super(chromeStorage, errorService);
     // super(chrome.storage.local); TODO: Fix
   }
 

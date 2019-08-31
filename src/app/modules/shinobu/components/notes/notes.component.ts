@@ -3,6 +3,8 @@ import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.
 import { NoteService } from '../../services/note.service';
 import { Note } from '../../types/note';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
+import { MessageService } from '../../../../services/message.service';
+import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'notes',
@@ -19,9 +21,10 @@ export class NotesComponent implements OnInit {
 
   constructor(
     public localPreference: LocalPreferenceService,
-    chromeStorage: ChromeMockStorageService
+    chromeStorage: ChromeMockStorageService,
+    errorService: ErrorService
   ) {
-    this.noteService = new NoteService(chromeStorage);
+    this.noteService = new NoteService(chromeStorage, errorService);
   }
 
   ngOnInit() {
