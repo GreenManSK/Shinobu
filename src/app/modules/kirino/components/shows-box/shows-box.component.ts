@@ -45,7 +45,6 @@ export class ShowsBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private service: ShowService,
-    chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {

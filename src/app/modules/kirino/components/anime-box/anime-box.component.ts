@@ -47,7 +47,6 @@ export class AnimeBoxComponent implements OnInit {
     private zone: NgZone,
     private nyaaSearch: NyaaSearchService,
     private service: AnimeService,
-    chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {

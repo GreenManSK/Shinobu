@@ -39,7 +39,6 @@ export class MusicBoxComponent implements OnInit {
     public popUpService: PopUpService,
     private zone: NgZone,
     private service: SongService,
-    chromeStorage: ChromeMockStorageService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
