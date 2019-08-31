@@ -1,0 +1,7 @@
+<div class="ts-error">
+  <div *ngFor="let error of errors"
+       class="notification error"
+       (click)="removeError(error)">
+    <strong>{{error.source}}:</strong> {{error.text}}
+  </div>
+</div>

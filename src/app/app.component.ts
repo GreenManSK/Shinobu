@@ -14,6 +14,10 @@ export class AppComponent {
     errorLogger.start();
   }
 
+  public isBackground(): boolean {
+    return this.router.url.startsWith('/background');
+  }
+
   public showMenu(): boolean {
     return !this.router.url.startsWith('/kirino-form') && !this.router.url.startsWith('/browser-action');
   }

@@ -32,6 +32,7 @@ import { MusicFormComponent } from './modules/kirino/components/music-form/music
 import { BackgroundComponent } from './modules/background/components/background/background.component';
 import { BrowserActionComponent } from './modules/borwser-action/browser-action/browser-action.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     OvaFormComponent,
     MusicFormComponent,
     BackgroundComponent,
-    BrowserActionComponent
+    BrowserActionComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

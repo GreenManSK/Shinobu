@@ -1,0 +1,77 @@
+@import '~src/styles/variables';
+
+$notificationBgFade: 0.75;
+$notificationBg: #272727;
+$notificationColor: #fff;
+
+$notificationError: rgba(139, 19, 14, 0.92);
+$notificationWarning: #c5a228;
+$notificationSuccess: #366c0b;
+
+@keyframes fadeInAnimation {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.ts-error {
+  position: absolute;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .notification {
+    padding: 1rem;
+    font-size: 1.7rem;
+    text-align: center;
+    color: $notificationColor;
+    background: fade($notificationBg, $notificationBgFade);
+    border-bottom: 1px solid fade($notificationColor, $notificationBgFade/2);
+    animation-name: fadeInAnimation;
+    animation-duration: .5s;
+    cursor: pointer;
+
+    a {
+      color: $notificationColor;
+      &:hover, &:focus, &:active {
+        text-decoration: none;
+      }
+    }
+
+    &[data-repeat]:not([data-repeat=""])::after {
+      content: attr(data-repeat);
+      font-size: 1.3rem;
+      font-family: monospace;
+      vertical-align: top;
+      border-radius: 10px;
+      padding: 2px 5px;
+      margin-left: 5px;
+      color: $notificationBg;
+      background: $notificationColor;
+    }
+
+    &.error {
+      background: rgba($notificationError, $notificationBgFade);
+    }
+    &.warning {
+      background: rgba($notificationWarning, $notificationBgFade);
+    }
+    &.success {
+      background: rgba($notificationSuccess, $notificationBgFade);
+    }
+
+    /* Icons */
+    &.kirino, &.shinobu {
+      $size: 20px;
+      &::before {
+        content: '';
+        width: $size;
+        height: $size;
+        background: no-repeat right bottom;
+        background-size: cover;
+        display: inline-block;
+        margin: 0 5px -5px 0;
+      }
+    }
+  }
+}
