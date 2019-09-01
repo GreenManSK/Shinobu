@@ -5,6 +5,7 @@ import { AlarmService } from '../../service/alarm.service';
 import { PreferenceService } from '../../../settings/services/preference.service';
 import { OvaSyncService } from '../../service/sync/ova-sync.service';
 import { AnimeSyncService } from '../../service/sync/anime-sync.service';
+import { ShowSyncService } from '../../service/sync/show-sync.service';
 
 @Component({
   selector: 'app-background',
@@ -20,6 +21,7 @@ export class BackgroundComponent implements OnInit {
     private preferenceService: PreferenceService,
     private animeSync: AnimeSyncService,
     private ovaSync: OvaSyncService,
+    private showSync: ShowSyncService,
   ) {
     this.alarmService.onInstall();
     this.registerListeners();
@@ -40,6 +42,7 @@ export class BackgroundComponent implements OnInit {
     this.preferenceService.get().then(( preference ) => {
       const syncPromises = [
         this.animeSync.syncAll(preference),
+        this.showSync.syncAll(preference),
         this.ovaSync.syncAll(preference)
       ];
       Promise.all(syncPromises).then(() => {
