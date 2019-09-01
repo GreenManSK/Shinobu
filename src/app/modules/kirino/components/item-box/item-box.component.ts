@@ -79,7 +79,13 @@ export class ItemBoxComponent implements OnInit {
   private prepareRenderedItems(): void {
     this.hiddenGroups = {};
     this.renderedItems = [...this._items]
-      .sort(( a, b ) => (a.date ? a.date.getTime() : 0) - (b.date ? b.date.getTime() : 0))
+      .sort(( a, b ) => {
+        const diff = (b.date ? b.date.getTime() : 0) - (a.date ? a.date.getTime() : 0);
+        if (diff === 0) {
+          return a.title.localeCompare(b.title);
+        }
+        return diff;
+      })
       .filter(i => {
         if (!this.hiddenKeys.has(i.groupKey)) {
           return true;
