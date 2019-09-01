@@ -42,12 +42,12 @@ export class BackgroundComponent implements OnInit {
   private mainLoop(): void {
     console.log('Main loop check');
     this.preferenceService.get().then(( preference ) => {
-      const syncPromises = [
+      const syncPromises = preference.kirino.enableAutoSync ? [
         this.animeSync.syncAll(preference),
         this.showSync.syncAll(preference),
         this.ovaSync.syncAll(preference),
         ...this.musicSync.syncAll(preference)
-      ];
+      ] : [];
       Promise.all(syncPromises).then(() => {
         console.log('Main loop finished');
       });
