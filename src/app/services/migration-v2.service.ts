@@ -11,6 +11,7 @@ import { AnimeService } from '../modules/kirino/services/anime.service';
 import { ShowService } from '../modules/kirino/services/show.service';
 import { SongService } from '../modules/kirino/services/song.service';
 import { Ova } from '../modules/kirino/types/ova';
+import { Song } from '../modules/kirino/types/song';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,8 @@ export class MigrationV2Service {
     return this.clearAll()
       .then(() => this.migrateNotes(data))
       .then(() => this.migrateQuickAccess(data))
-      .then(() => this.migrateOva(data));
+      .then(() => this.migrateOva(data))
+      .then(() => this.migrateSongs(data));
   }
 
   private clearAll(): Promise<void> {
@@ -107,6 +109,23 @@ export class MigrationV2Service {
         data[id + '#date'].val,
       );
       await this.ovaService.save(ova);
+    }
+    return Promise.resolve();
+  }
+
+  private async migrateSongs( data: object ): Promise<void> {
+    const ids = data['Kirino#music'].val;
+    for (const id of ids) {
+      const song = new Song(
+        data[id + '#show'].val,
+        data[id + '#type'].val,
+        data[id + '#title'].val,
+        data[id + '#author'].val,
+        data[id + '#date'].val,
+        data[id + '#anidbId'].val,
+        data[id + '#anisonId'].val,
+      );
+      await this.songService.save(song);
     }
     return Promise.resolve();
   }
