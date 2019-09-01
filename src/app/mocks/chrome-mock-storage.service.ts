@@ -9,6 +9,7 @@ export class ChromeMockStorageService implements StorageArea {
 
   clear( callback?: () => void ): void {
     this.items = {};
+    callback();
   }
 
   get( callback: ( items: { [p: string]: any } ) => void ): void;
