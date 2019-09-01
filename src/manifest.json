@@ -18,6 +18,9 @@
     "tabs",
     "alarms"
   ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
   "browser_action": {
     "default_icon": "assets/icons/shinobu/128.png",
     "default_popup": "index.html#/browser-action"
