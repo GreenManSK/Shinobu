@@ -12,6 +12,8 @@ import { ShowService } from '../modules/kirino/services/show.service';
 import { SongService } from '../modules/kirino/services/song.service';
 import { Ova } from '../modules/kirino/types/ova';
 import { Song } from '../modules/kirino/types/song';
+import { Show } from '../modules/kirino/types/show';
+import { Episode } from '../modules/kirino/types/episode';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +48,8 @@ export class MigrationV2Service {
       .then(() => this.migrateNotes(data))
       .then(() => this.migrateQuickAccess(data))
       .then(() => this.migrateOva(data))
-      .then(() => this.migrateSongs(data));
+      .then(() => this.migrateSongs(data))
+      .then(() => this.migrateShows(data));
   }
 
   private clearAll(): Promise<void> {
@@ -126,6 +129,27 @@ export class MigrationV2Service {
         data[id + '#anisonId'].val,
       );
       await this.songService.save(song);
+    }
+    return Promise.resolve();
+  }
+
+  private async migrateShows( data: object ): Promise<void> {
+    const ids = data['Kirino#show'].val;
+    for (const id of ids) {
+      const episodes = [];
+      for (const epidoseId of data[id + '#episodes'].val) {
+        episodes.push(new Episode(
+          data[epidoseId + '#number'].val,
+          data[epidoseId + '#date'].val
+        ));
+      }
+      const show = new Show(
+        data[id + '#name'].val,
+        data[id + '#thetvdbId'].val,
+        '',
+        episodes,
+      );
+      await this.showServic.save(show);
     }
     return Promise.resolve();
   }
