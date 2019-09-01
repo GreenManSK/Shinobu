@@ -14,6 +14,7 @@ import { Ova } from '../modules/kirino/types/ova';
 import { Song } from '../modules/kirino/types/song';
 import { Show } from '../modules/kirino/types/show';
 import { Episode } from '../modules/kirino/types/episode';
+import { Anime } from '../modules/kirino/types/anime';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,8 @@ export class MigrationV2Service {
       .then(() => this.migrateQuickAccess(data))
       .then(() => this.migrateOva(data))
       .then(() => this.migrateSongs(data))
-      .then(() => this.migrateShows(data));
+      .then(() => this.migrateShows(data))
+      .then(() => this.migrateAnime(data));
   }
 
   private clearAll(): Promise<void> {
@@ -150,6 +152,28 @@ export class MigrationV2Service {
         episodes,
       );
       await this.showServic.save(show);
+    }
+    return Promise.resolve();
+  }
+
+  private async migrateAnime( data: object ): Promise<void> {
+    const ids = data['Kirino#anime'].val;
+    for (const id of ids) {
+      const episodes = [];
+      for (const epidoseId of data[id + '#episodes'].val) {
+        episodes.push(new Episode(
+          data[epidoseId + '#number'].val,
+          data[epidoseId + '#date'].val
+        ));
+      }
+      const searchText = data[id + '#searchText'].val;
+      const anime = new Anime(
+        data[id + '#name'].val,
+        data[id + '#anidbId'].val,
+        searchText ? searchText.replace('%e', '%n') : null,
+        episodes
+      );
+      await this.animeService.save(anime);
     }
     return Promise.resolve();
   }
