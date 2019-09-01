@@ -80,7 +80,7 @@ export class ItemBoxComponent implements OnInit {
     this.hiddenGroups = {};
     this.renderedItems = [...this._items]
       .sort(( a, b ) => {
-        const diff = (b.date ? b.date.getTime() : 0) - (a.date ? a.date.getTime() : 0);
+        const diff = (a.date ? a.date.getTime() : Number.MAX_VALUE) - (b.date ? b.date.getTime() : Number.MAX_VALUE);
         if (diff === 0) {
           return a.title.localeCompare(b.title);
         }
