@@ -6,6 +6,11 @@ import { NoteColor } from '../modules/shinobu/types/note-color.enum';
 import { Tile } from '../modules/shinobu/types/tile';
 import { TabService } from '../modules/shinobu/services/tab.service';
 import { Tab } from '../modules/shinobu/types/tab';
+import { OvaService } from '../modules/kirino/services/ova.service';
+import { AnimeService } from '../modules/kirino/services/anime.service';
+import { ShowService } from '../modules/kirino/services/show.service';
+import { SongService } from '../modules/kirino/services/song.service';
+import { Ova } from '../modules/kirino/types/ova';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +20,11 @@ export class MigrationV2Service {
   constructor(
     private chromeStorageProvider: ChromeStorageProviderService,
     private noteService: NoteService,
-    private tabService: TabService
+    private tabService: TabService,
+    private ovaService: OvaService,
+    private animeService: AnimeService,
+    private showServic: ShowService,
+    private songService: SongService
   ) {
   }
 
@@ -34,7 +43,8 @@ export class MigrationV2Service {
   public migrate( data: object ): Promise<void> {
     return this.clearAll()
       .then(() => this.migrateNotes(data))
-      .then(() => this.migrateQuickAccess(data));
+      .then(() => this.migrateQuickAccess(data))
+      .then(() => this.migrateOva(data));
   }
 
   private clearAll(): Promise<void> {
@@ -85,6 +95,19 @@ export class MigrationV2Service {
       await this.tabService.save(tab);
     }
 
+    return Promise.resolve();
+  }
+
+  private async migrateOva( data: object ): Promise<void> {
+    const ids = data['Kirino#ova'].val;
+    for (const id of ids) {
+      const ova = new Ova(
+        data[id + '#name'].val,
+        data[id + '#anidbEpisodeId'].val,
+        data[id + '#date'].val,
+      );
+      await this.ovaService.save(ova);
+    }
     return Promise.resolve();
   }
 }
