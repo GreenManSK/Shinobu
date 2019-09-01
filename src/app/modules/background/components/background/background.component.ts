@@ -4,6 +4,7 @@ import { BadgeManipulatorService } from '../../service/badge-manipulator.service
 import { AlarmService } from '../../service/alarm.service';
 import { PreferenceService } from '../../../settings/services/preference.service';
 import { OvaSyncService } from '../../service/sync/ova-sync.service';
+import { AnimeSyncService } from '../../service/sync/anime-sync.service';
 
 @Component({
   selector: 'app-background',
@@ -17,7 +18,8 @@ export class BackgroundComponent implements OnInit {
     private dispatcher: ChromeDispatcherService,
     private badgeManipulator: BadgeManipulatorService,
     private preferenceService: PreferenceService,
-    private ovaSync: OvaSyncService
+    private animeSync: AnimeSyncService,
+    private ovaSync: OvaSyncService,
   ) {
     this.alarmService.onInstall();
     this.registerListeners();
@@ -34,13 +36,13 @@ export class BackgroundComponent implements OnInit {
   }
 
   private mainLoop(): void {
-    // TODO: Chcek sync times
-    // TODO: Save new sync time
-    // TODO: Sync & notify
     console.log('Main loop check');
     this.preferenceService.get().then(( preference ) => {
-      const syncPromises = [];
-      this.ovaSync.syncAll(preference).then(() => {
+      const syncPromises = [
+        this.animeSync.syncAll(preference),
+        this.ovaSync.syncAll(preference)
+      ];
+      Promise.all(syncPromises).then(() => {
         console.log('Main loop finished');
       });
     });
