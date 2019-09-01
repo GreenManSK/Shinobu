@@ -4,7 +4,6 @@ import { AnisonParserService } from '../../../../services/parsers/anison-parser.
 import { AnidbSongParserService } from '../../../../services/parsers/anidb-song-parser.service';
 import { Song } from '../../../kirino/types/song';
 import { Preference } from '../../../settings/types/preference';
-import { Show } from '../../../kirino/types/show';
 import { SyncHelper } from './sync-helper';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
 import { MessageService } from '../../../../services/message.service';
@@ -53,7 +52,7 @@ export class MusicSyncService {
 
   private updateSongData( song: Song, updatedData: Song ): void {
     for (const field of MusicSyncService.UPDATE_FIELDS) {
-      if (updatedData[field]) {
+      if (!song[field] && updatedData[field]) {
         song[field] = updatedData[field];
       }
     }
