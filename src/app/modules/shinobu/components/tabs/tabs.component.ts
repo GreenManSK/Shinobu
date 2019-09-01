@@ -58,7 +58,7 @@ export class TabsComponent implements OnInit {
 
   public changeActiveTab( tab: Tab ): void {
     this.activeTab = tab;
-    this.localPreference.get(TabsComponent.ACTIVE_TAB_KEY, tab.id);
+    this.localPreference.set(TabsComponent.ACTIVE_TAB_KEY, tab.id);
     this.tabChanged.emit(tab);
   }
 

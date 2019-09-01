@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ChromeMockStorageService } from '../../../../mocks/chrome-mock-storage.service';
 import { NoteService } from '../../services/note.service';
 import { Note } from '../../types/note';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
-import { ErrorService } from '../../../../services/error.service';
 
 @Component({
   selector: 'notes',
@@ -47,7 +45,7 @@ export class NotesComponent implements OnInit {
 
   public changeActiveNote( note: Note ): void {
     this.activeNote = note;
-    this.localPreference.get(NotesComponent.ACTIVE_NOTE_KEY, note.id);
+    this.localPreference.set(NotesComponent.ACTIVE_NOTE_KEY, note.id);
   }
 
   public deleteActiveNote(): void {

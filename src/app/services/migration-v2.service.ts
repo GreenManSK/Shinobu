@@ -45,7 +45,7 @@ export class MigrationV2Service {
       this.chromeStorageProvider.getLocal().get(( data ) => {
         resolve(data);
       });
-    }).then(this.migrate);
+    }).then((data) => this.migrate(data));
   }
 
   public migrateFromString( json: string ): Promise<void> {
@@ -53,6 +53,9 @@ export class MigrationV2Service {
   }
 
   public migrate( data: object ): Promise<void> {
+    if (Object.keys(data).length <= 0) {
+      return Promise.resolve();
+    }
     return this.clearAll()
       .then(() => this.migrateNotes(data))
       .then(() => this.migrateQuickAccess(data))
@@ -88,7 +91,7 @@ export class MigrationV2Service {
   }
 
   private async migrateQuickAccess( data: object ): Promise<void> {
-    const ids = data['Shinobu#tabs'].val;
+    const ids = data['Shinobu#tabs'].val.reverse();
 
     for (const id of ids) {
       const tiles = [];
