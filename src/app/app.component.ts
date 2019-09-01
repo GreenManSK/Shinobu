@@ -18,7 +18,7 @@ export class AppComponent {
   ) {
     errorLogger.start();
     if (!this.isBackground()) {
-      console.log(migrationV2);
+      migrationV2.doNeededMigration();
     }
  }
 

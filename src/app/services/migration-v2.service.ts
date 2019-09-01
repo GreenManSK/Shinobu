@@ -32,6 +32,14 @@ export class MigrationV2Service {
   ) {
   }
 
+  public doNeededMigration(): void {
+    this.chromeStorageProvider.getSync().get((data) => {
+      if (Object.keys(data).length <= 0) {
+        this.migrateFromLocal();
+      }
+    });
+  }
+
   public migrateFromLocal(): Promise<void> {
     return new Promise<object>(resolve => {
       this.chromeStorageProvider.getLocal().get(( data ) => {
