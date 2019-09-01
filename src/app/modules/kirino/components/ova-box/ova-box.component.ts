@@ -97,7 +97,7 @@ export class OvaBoxComponent implements OnInit {
       ova.airdate ? new Date(ova.airdate) : null,
       null,
       ova,
-      [new BoxLink('aniDB.net', AnidbEpisodeParserService.getUrl(ova.anidbId))],
+      ova.anidbId ? [new BoxLink('aniDB.net', AnidbEpisodeParserService.getUrl(ova.anidbId))] : [],
       this.buttons
     );
   }
