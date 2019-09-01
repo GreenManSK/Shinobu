@@ -15,7 +15,7 @@ import { LogError } from '../../types/log-error';
 export class AnidbParserService implements SiteParser {
 
   private static readonly URL_REGEX = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i');
-  private static readonly URL_TEMPLATE = AnidbParserService.toString().replace(/(\/\^|\/i|\\|s\?)/g, '');
+  private static readonly URL_TEMPLATE = AnidbParserService.URL_REGEX.toString().replace(/(\/\^|\/i|\\|s\?)/g, '');
 
   private static readonly HTTP_API =
     'http://api.anidb.net:9001/httpapi?request=anime&client=%httpClient&clientver=%clientver&protover=1&aid=%aid';
