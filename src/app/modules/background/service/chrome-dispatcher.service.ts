@@ -12,7 +12,7 @@ export class ChromeDispatcherService {
   constructor() {
     const instance = this;
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
-      chrome.runtime.onMessage.addListener(() => {
+      chrome.runtime.onMessage.addListener(function () {
           instance.dispatchMessage.apply(instance, arguments);
         }
       );

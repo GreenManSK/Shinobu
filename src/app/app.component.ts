@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ErrorLoggerService } from './services/error-logger.service';
+import { MigrationV2Service } from './services/migration-v2.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,16 @@ import { ErrorLoggerService } from './services/error-logger.service';
 export class AppComponent {
   title = 'shinobu';
 
-  constructor( private router: Router, errorLogger: ErrorLoggerService ) {
+  constructor(
+    migrationV2: MigrationV2Service,
+    private router: Router,
+    errorLogger: ErrorLoggerService
+  ) {
     errorLogger.start();
-  }
+    if (!this.isBackground()) {
+      console.log(migrationV2);
+    }
+ }
 
   public isBackground(): boolean {
     return this.router.url.startsWith('/background');
