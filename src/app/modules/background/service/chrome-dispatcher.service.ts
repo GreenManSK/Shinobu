@@ -11,11 +11,12 @@ export class ChromeDispatcherService {
 
   constructor() {
     const instance = this;
-    // TODO: Uncomment
-    /*chrome.runtime.onMessage.addListener(function () {
-        instance.dispatchMessage.apply(instance, arguments);
-      }
-    );*/
+    if (chrome && chrome.runtime && chrome.runtime.onMessage) {
+      chrome.runtime.onMessage.addListener(() => {
+          instance.dispatchMessage.apply(instance, arguments);
+        }
+      );
+    }
   }
 
   private dispatchMessage( message: any, sender: MessageSender, sendResponse: ( response?: any ) => void ): void {
@@ -31,8 +32,8 @@ export class ChromeDispatcherService {
     }
   }
 
-  public sendMessage(address: string, data: object): Promise<void> {
-    return new Promise<void>((resolve) => {
+  public sendMessage( address: string, data: object ): Promise<void> {
+    return new Promise<void>(( resolve ) => {
       chrome.runtime.sendMessage({
         ...data,
         address
