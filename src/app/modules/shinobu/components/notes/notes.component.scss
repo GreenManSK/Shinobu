@@ -4,6 +4,7 @@
 .ts-notes {
   //height: 100%
   @include maximize;
+  position: relative;
 }
 
 fa {
