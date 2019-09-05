@@ -10,7 +10,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
 .ts-shibnou {
   min-width: 100%;
   min-height: 100%;
-  @include maximize;
+  //@include maximize;
 
   background: $bgColor url($bgImg) no-repeat fixed center center;
   background-size: 100% 100%;
@@ -26,7 +26,6 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
   }
 
   notes, tabs, quick-access {
-    height: 100%;
     width: 100%;
     max-width: 25%;
   }

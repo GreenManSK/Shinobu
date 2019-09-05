@@ -17,3 +17,7 @@ html, body {
 a {
   transition: color $time, background $time, opacity $time, padding $time;
 }
+
+menu {
+  margin: 0;
+}
