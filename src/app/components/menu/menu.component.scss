@@ -38,6 +38,10 @@ $mainMenuIcon: 24px;
     padding-top: 6px;
     opacity: .5;
 
+    &.hide {
+      display: none;
+    }
+
     &:hover, &:active, &:focus {
       opacity: 1;
     }
