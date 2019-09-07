@@ -142,7 +142,7 @@ export class AnimeBoxComponent implements OnInit {
         {
           anime
         },
-        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id))],
+        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId))],
         this.buttons
       ));
     }
