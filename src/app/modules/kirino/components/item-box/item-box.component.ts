@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
 import { BoxItem } from './data/BoxItem';
 import { LocalPreferenceService } from '../../../../services/local-preference.service';
 import { BoxColor } from '../box/box-color.enum';
@@ -39,9 +39,11 @@ export class ItemBoxComponent implements OnInit {
   public hiddenGroups: object;
   public renderedItems: BoxItem[] = [];
   public now: Date;
+  public minimized = true;
 
   constructor(
-    public localPreference: LocalPreferenceService
+    public localPreference: LocalPreferenceService,
+    private ref: ApplicationRef
   ) {
     this.now = new Date();
   }
@@ -69,6 +71,11 @@ export class ItemBoxComponent implements OnInit {
     this.localPreference.set(this.localPreferenceKey + ItemBoxComponent.HIDDEN_KEYS, Array.from(this.hiddenKeys.values())).then(() => {
       this.prepareRenderedItems();
     });
+  }
+
+  public onHeaderClick(): void {
+    this.minimized = !this.minimized;
+    this.prepareRenderedItems();
   }
 
   public onButtonClicked( event: MouseEvent, item: BoxItem, button: BoxButton ): void {

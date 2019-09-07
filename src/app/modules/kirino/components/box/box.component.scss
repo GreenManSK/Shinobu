@@ -40,6 +40,10 @@
       border-radius: $boxRadius $boxRadius 0 0;
       padding: (2*$boxRadius) (3*$boxRadius);
 
+      &.clickable {
+        cursor: pointer;
+      }
+      
       .icon {
         float: left;
         font-size: 1.75rem;

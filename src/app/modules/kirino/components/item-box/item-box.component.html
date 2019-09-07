@@ -1,9 +1,10 @@
 <box [color]="color"
      [title]="title"
      [icon]="icon"
-     [headerButton]="headerButton">
+     [headerButton]="headerButton"
+     [onHeaderClick]="onHeaderClick.bind(this)">
   <ng-template>
-    <ul class="data">
+    <ul class="data" [ngClass]="{minimized: minimized}">
       <li *ngFor="let item of renderedItems"
           [ngClass]="{actual: item.date && now.getTime() >= item.date.getTime()}"
           [shAttachMenu]="menu"
@@ -11,7 +12,8 @@
         <div class="content">
           <div class="top">
             <h3 class="title">{{item.title}}</h3>
-            <a *ngFor="let badge of item.badges" [title]="badge.text" [href]="badge.url" class="badge" target="_blank">{{badge.text}}</a>
+            <a *ngFor="let badge of item.badges" [title]="badge.text" [href]="badge.url" class="badge"
+               target="_blank">{{badge.text}}</a>
           </div>
           <div class="text">
             <a *ngIf="item.link" [href]="item.link.url" [title]="item.link.text">[{{item.link.text}}]</a><br

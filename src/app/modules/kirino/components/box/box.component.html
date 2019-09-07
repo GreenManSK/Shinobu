@@ -1,5 +1,5 @@
 <div class="ts-box" [ngClass]="[colorClass]">
-  <div class="head">
+  <div class="head" [ngClass]="{clickable: onHeaderClick}" (click)="onHeaderClick()">
     <fa class="icon" *ngIf="!isImage(icon)" [name]="icon"></fa>
     <img class="icon" *ngIf="isImage(icon)" [src]="icon">
     <h2>{{title}}</h2>

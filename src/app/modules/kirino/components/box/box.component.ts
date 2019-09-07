@@ -24,6 +24,9 @@ export class BoxComponent implements OnInit {
   @Input()
   public headerButton: BoxButton;
 
+  @Input()
+  public onHeaderClick: () => void;
+
   constructor() {
   }
 
