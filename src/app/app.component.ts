@@ -12,14 +12,10 @@ export class AppComponent {
   title = 'shinobu';
 
   constructor(
-    migrationV2: MigrationV2Service,
     private router: Router,
     errorLogger: ErrorLoggerService
   ) {
     errorLogger.start();
-    if (!this.isBackground()) {
-      migrationV2.doNeededMigration();
-    }
  }
 
   public isBackground(): boolean {
