@@ -9,6 +9,9 @@ import { ErrorService } from '../../../../services/error.service';
 import { MangaService } from '../../services/manga.service';
 import { Episode } from '../../types/episode';
 import { Manga } from '../../types/manga';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { AnimeFormComponent } from '../anime-form/anime-form.component';
+import { MangaFormComponent } from '../manga-form/manga-form.component';
 
 type DataBag = {
   manga: Manga,
@@ -73,11 +76,21 @@ export class MangaBoxComponent implements OnInit {
   }
 
   public addManga(): void {
-    // TODO
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(MangaFormComponent.TYPE),
+      'Add',
+      MangaFormComponent.WIDTH,
+      MangaFormComponent.HEIGHT
+    );
   }
 
   public editManga( item: DataBag ): void {
-    // TODO
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(MangaFormComponent.TYPE, item.manga.id),
+      'Edit',
+      MangaFormComponent.WIDTH,
+      MangaFormComponent.HEIGHT
+    );
   }
 
   public deleteManga( item: DataBag ): void {

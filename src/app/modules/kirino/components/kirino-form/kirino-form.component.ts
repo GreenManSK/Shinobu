@@ -4,6 +4,7 @@ import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ShowFormComponent } from '../show-form/show-form.component';
 import { OvaFormComponent } from '../ova-form/ova-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
+import { MangaFormComponent } from '../manga-form/manga-form.component';
 
 @Component({
   selector: 'kirino-form',
@@ -41,5 +42,9 @@ export class KirinoFormComponent implements OnInit {
 
   public isMusic(): boolean {
     return this.type === MusicFormComponent.TYPE;
+  }
+
+  public isManga(): boolean {
+    return this.type === MangaFormComponent.TYPE;
   }
 }

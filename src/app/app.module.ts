@@ -37,6 +37,7 @@ import { SettingsComponent } from './modules/settings/components/settings/settin
 import { ErrorLogComponent } from './modules/settings/components/error-log/error-log.component';
 import { PreferencesComponent } from './modules/settings/components/preferences/preferences.component';
 import { MangaBoxComponent } from './modules/kirino/components/manga-box/manga-box.component';
+import { MangaFormComponent } from './modules/kirino/components/manga-form/manga-form.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { MangaBoxComponent } from './modules/kirino/components/manga-box/manga-b
     SettingsComponent,
     ErrorLogComponent,
     PreferencesComponent,
-    MangaBoxComponent
+    MangaBoxComponent,
+    MangaFormComponent
   ],
   imports: [
     BrowserModule,

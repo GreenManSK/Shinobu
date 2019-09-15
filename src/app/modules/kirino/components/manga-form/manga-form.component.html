@@ -1,0 +1,23 @@
+<box [color]="color"
+     [title]="'Manga'"
+     [icon]="'assets/icons/manga.ico'">
+  <ng-template>
+    <form *ngIf="manga" class="nice show-labels" [ngClass]="[colorClass]">
+      <div class="field">
+        <label for="form-title">Title</label>
+        <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="manga.title">
+      </div>
+      <div class="field">
+        <label for="form-amazon">amazon ID</label>
+        <input type="text" id="form-amazon" placeholder="amazon ID" name="amazonId" [(ngModel)]="manga.amazonId">
+      </div>
+      <div class="field">
+        <label for="form-last-read">Last read volume</label>
+        <input type="number" id="form-last-read" placeholder="Last read volume" name="last-read" [(ngModel)]="manga.lastRead">
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save()">
+      </div>
+    </form>
+  </ng-template>
+</box>
