@@ -6,6 +6,7 @@ import { AnisonParserService } from '../../../services/parsers/anison-parser.ser
 import { TheTVDBParserService } from '../../../services/parsers/the-tvdbparser.service';
 import { AnidbEpisodeParserService } from '../../../services/parsers/anidb-episode-parser.service';
 import { AnidbParserService } from '../../../services/parsers/anidb-parser.service';
+import { MangaParserService } from '../../../services/parsers/manga-parser.service';
 
 @Component({
   selector: 'app-browser-action',
@@ -25,14 +26,16 @@ export class BrowserActionComponent implements OnInit {
     anisonParser: AnisonParserService,
     theTVDBParser: TheTVDBParserService,
     anidbEpisodeParser: AnidbEpisodeParserService,
-    anidbParser: AnidbParserService
+    anidbParser: AnidbParserService,
+    mangaParser: MangaParserService
   ) {
     this.parsers = [
       anidbSongParser,
       anisonParser,
       theTVDBParser,
       anidbEpisodeParser,
-      anidbParser
+      anidbParser,
+      mangaParser
     ];
   }
 

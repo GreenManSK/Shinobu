@@ -3,13 +3,15 @@ let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i')
 let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
 let ANIDB_EPISODE_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/episode\/(\d+)/, 'i');
 let THETVDB_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/seasons\/all/, 'i');
+let AMAZON_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)\?.*/, 'i');
 
 let regexs = [
   ANISON_REGEXP,
   ANIDB_ANIME_REGEXP,
   ANIDB_SONG_REGEXP,
   ANIDB_EPISODE_REGEXP,
-  THETVDB_REGEXP
+  THETVDB_REGEXP,
+  AMAZON_REGEXP
 ];
 
 function updateBadge() {

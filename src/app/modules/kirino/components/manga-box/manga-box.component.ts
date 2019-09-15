@@ -10,10 +10,10 @@ import { MangaService } from '../../services/manga.service';
 import { Episode } from '../../types/episode';
 import { Manga } from '../../types/manga';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
-import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
 import { MangaParserService } from '../../../../services/parsers/manga-parser.service';
 import { BoxLink } from '../item-box/data/BoxLink';
+import { MangaSyncService } from '../../../background/service/sync/manga-sync.service';
 
 type DataBag = {
   manga: Manga,
@@ -47,7 +47,7 @@ export class MangaBoxComponent implements OnInit {
     private zone: NgZone,
     private nyaaSearch: NyaaSearchService,
     private service: MangaService,
-    // private sync: AnimeSyncService,
+    private sync: MangaSyncService,
     messageService: MessageService,
     errorService: ErrorService
   ) {
@@ -63,7 +63,8 @@ export class MangaBoxComponent implements OnInit {
   }
 
   public synchronizeManga( item: BoxItem ): void {
-    // TODO
+    const id = (item.data.manga as Manga).id;
+    this.sync.sync(id).then(() => this.reloadItems());
   }
 
   public seenEpisode( item: DataBag ): void {

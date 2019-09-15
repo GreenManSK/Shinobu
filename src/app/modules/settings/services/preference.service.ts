@@ -28,7 +28,8 @@ export class PreferenceService extends StoragePromiseService {
           enableAutoSync: false,
           anidbRefreshRateInMin: 2 * 60,
           anisonRefreshRateInMin: 12 * 60,
-          theTvdbRefreshRateInMin: 6 * 60
+          theTvdbRefreshRateInMin: 6 * 60,
+          amazonRefreshRateInMin: 24 * 60
         }
       };
     });

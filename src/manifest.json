@@ -1,6 +1,6 @@
 {
   "name": "Shinobu",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Shinobu UwU",
   "manifest_version": 2,
   "icons": {
@@ -33,7 +33,9 @@
         "*://anidb.net/song/*",
         "*://anidb.net/episode/*",
         "*://www.thetvdb.com/series/*/seasons/all",
-        "*://thetvdb.com/series/*/seasons/all"
+        "*://thetvdb.com/series/*/seasons/all",
+        "*://www.amazon.co.jp/gp/product/*",
+        "*://www.amazon.co.jp/kindle-dbs/productPage/ajax/*"
       ],
       "js": [
         "js/content.js"

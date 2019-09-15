@@ -4,6 +4,7 @@ export type Preference = {
     nyaaUrl: string,
     anidbRefreshRateInMin: number,
     anisonRefreshRateInMin: number,
-    theTvdbRefreshRateInMin: number
+    theTvdbRefreshRateInMin: number,
+    amazonRefreshRateInMin: number
   }
 };

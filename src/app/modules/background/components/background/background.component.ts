@@ -7,6 +7,7 @@ import { OvaSyncService } from '../../service/sync/ova-sync.service';
 import { AnimeSyncService } from '../../service/sync/anime-sync.service';
 import { ShowSyncService } from '../../service/sync/show-sync.service';
 import { MusicSyncService } from '../../service/sync/music-sync.service';
+import { MangaSyncService } from '../../service/sync/manga-sync.service';
 
 @Component({
   selector: 'app-background',
@@ -24,6 +25,7 @@ export class BackgroundComponent implements OnInit {
     private ovaSync: OvaSyncService,
     private showSync: ShowSyncService,
     private musicSync: MusicSyncService,
+    private mangaSync: MangaSyncService,
   ) {
     this.alarmService.onInstall();
     this.registerListeners();
@@ -46,7 +48,8 @@ export class BackgroundComponent implements OnInit {
         this.animeSync.syncAll(preference),
         this.showSync.syncAll(preference),
         this.ovaSync.syncAll(preference),
-        ...this.musicSync.syncAll(preference)
+        ...this.musicSync.syncAll(preference),
+        this.mangaSync.syncAll(preference)
       ] : [];
       Promise.all(syncPromises).then(() => {
         console.log('Main loop finished');
