@@ -12,6 +12,8 @@ import { Manga } from '../../types/manga';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
+import { MangaParserService } from '../../../../services/parsers/manga-parser.service';
+import { BoxLink } from '../item-box/data/BoxLink';
 
 type DataBag = {
   manga: Manga,
@@ -119,7 +121,7 @@ export class MangaBoxComponent implements OnInit {
           manga,
           episode
         },
-        [/*new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId))*/], // TODO
+        [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
         this.buttons
       ));
     }
@@ -132,7 +134,7 @@ export class MangaBoxComponent implements OnInit {
         {
           manga
         },
-        [/*new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId))*/], // TODO
+        [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
         this.buttons.slice(1, 3)
       ));
     }
