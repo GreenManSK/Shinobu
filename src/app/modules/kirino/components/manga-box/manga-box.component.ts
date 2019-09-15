@@ -33,7 +33,7 @@ export class MangaBoxComponent implements OnInit {
   public items: BoxItem[] = [];
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'eye', this.seenEpisode.bind(this)),
+    new BoxButton('Mark as read', 'eye', this.seenEpisode.bind(this)),
     new BoxButton('Edit', 'pencil', this.editManga.bind(this)),
     new BoxButton('Delete', 'trash-o', this.deleteManga.bind(this))
   ];
@@ -133,7 +133,7 @@ export class MangaBoxComponent implements OnInit {
           manga
         },
         [/*new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId))*/], // TODO
-        this.buttons
+        this.buttons.slice(1, 3)
       ));
     }
     return episodes;

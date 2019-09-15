@@ -137,7 +137,7 @@ export class ShowsBoxComponent implements OnInit {
           show
         },
         [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
-        this.buttons,
+        this.buttons.slice(1, 3),
       ));
     }
     return episodes;
