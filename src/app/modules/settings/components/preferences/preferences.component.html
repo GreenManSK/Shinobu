@@ -34,6 +34,12 @@
                [(ngModel)]="preference.kirino.theTvdbRefreshRateInMin">
       </div>
 
+      <div class="field">
+        <label for="form-amazon-refresh">Amazon data refresh rate in mins</label>
+        <input type="number" id="form-amazon-refresh" name="amazon-refresh"
+               [(ngModel)]="preference.kirino.amazonRefreshRateInMin">
+      </div>
+
       <div class="buttons">
         <input type="submit" value="Save" (click)="save()">
       </div>
