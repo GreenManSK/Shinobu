@@ -43,7 +43,7 @@
       &.clickable {
         cursor: pointer;
       }
-      
+
       .icon {
         float: left;
         font-size: 1.75rem;
@@ -51,6 +51,10 @@
         margin-right: .55rem;
         display: inline-block;
         padding-top: .2rem;
+      }
+
+      img.icon {
+        max-height: 16px;
       }
 
       h2 {
