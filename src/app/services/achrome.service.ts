@@ -25,6 +25,7 @@ export abstract class AChromeService extends StoragePromiseService implements IC
     const storageId = this.getStorageId(item.id);
     return this.getAllIds().then(keys => {
       keys.push(storageId);
+      keys = this.clearUnique(keys);
       const data = {};
       data[this.getTypeName()] = keys;
       data[storageId] = item;
@@ -62,5 +63,13 @@ export abstract class AChromeService extends StoragePromiseService implements IC
 
   private generateId() {
     return ~~(Math.random() * 10000000);
+  }
+
+  private clearUnique(ids: string[]): string[] {
+    const buffer = {};
+    for (const s of ids) {
+      buffer[s] = true;
+    }
+    return Object.keys(buffer);
   }
 }
