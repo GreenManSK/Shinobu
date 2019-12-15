@@ -2,7 +2,7 @@ let ANISON_REGEXP = new RegExp(/^https?:\/\/anison\.info\/data\/song\/(\d+)\.htm
 let ANIDB_ANIME_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/anime\/(\d+)/, 'i');
 let ANIDB_SONG_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/song\/(\d+)/, 'i');
 let ANIDB_EPISODE_REGEXP = new RegExp(/^https?:\/\/anidb\.net\/episode\/(\d+)/, 'i');
-let THETVDB_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/seasons\/all/, 'i');
+let THETVDB_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/allseasons\/official/, 'i');
 let AMAZON_REGEXP = new RegExp(/^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)\?.*/, 'i');
 
 let regexs = [

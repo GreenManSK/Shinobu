@@ -14,7 +14,7 @@ import { LogError } from '../../types/log-error';
 })
 export class TheTVDBParserService implements SiteParser {
 
-  private static readonly URL_REGEX = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/seasons\/all/, 'i');
+  private static readonly URL_REGEX = new RegExp(/^https?:\/\/(?:www\.)?thetvdb\.com\/series\/([^/]+)\/allseasons\/official/, 'i');
   private static readonly URL_TEMPLATE = TheTVDBParserService.URL_REGEX.toString()
     .replace(/\(\?:www\\\.\)\?/g, 'www.').replace(/(\/\^|\/i|\\|s\?)/g, '');
 
@@ -44,18 +44,19 @@ export class TheTVDBParserService implements SiteParser {
       show.tvdbId = TheTVDBParserService.getId(url);
 
       const $site = $(html);
-      show.title = $site.find('h2 a').first().text().trim();
+      show.title = $site.find('title').text().trim();
 
-      const episodes = $site.find('table[id=translations] tbody tr').toArray();
+      const episodes = $site.find('.list-group li.list-group-item').toArray();
       for (const episode of episodes) {
         const $ep = $(episode);
-        const airdate = $ep.find('td:nth-child(3)').text().trim();
-        const seasonTitle = $ep.parents('table').prev().text();
-        const seasonNumber = seasonTitle.match(/(\d+)$/g);
+        const airdate = $ep.find('ul li').text().trim();
+        const seasonTitle = $ep.find('h4 span').text().trim();
+        const matches = seasonTitle.match(/S(\d+)E(\+)/i);
+        const seasonNumber = matches[1];
         if (seasonNumber === null) {
           continue;
         }
-        const epNum = $ep.find('td:nth-child(1)').text().trim();
+        const epNum = matches[2];
         show.episodes.push(new Episode(
           (seasonNumber.length > 0 ? seasonNumber[0] : 0) + 'x' + epNum,
           airdate ? new Date(airdate).getTime() : null
