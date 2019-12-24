@@ -52,7 +52,7 @@ export class TheTVDBParserService implements SiteParser {
         const airdate = $ep.find('ul li').text().trim();
         const epNumber = $ep.find('h4 span').text().trim();
         show.episodes.push(new Episode(
-          (epNumber,
+          epNumber,
           airdate ? new Date(airdate).getTime() : null
         ));
       }
