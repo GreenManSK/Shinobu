@@ -50,15 +50,9 @@ export class TheTVDBParserService implements SiteParser {
       for (const episode of episodes) {
         const $ep = $(episode);
         const airdate = $ep.find('ul li').text().trim();
-        const seasonTitle = $ep.find('h4 span').text().trim();
-        const matches = seasonTitle.match(/S(\d+)E(\+)/i);
-        const seasonNumber = matches[1];
-        if (seasonNumber === null) {
-          continue;
-        }
-        const epNum = matches[2];
+        const epNumber = $ep.find('h4 span').text().trim();
         show.episodes.push(new Episode(
-          (seasonNumber.length > 0 ? seasonNumber[0] : 0) + 'x' + epNum,
+          (epNumber,
           airdate ? new Date(airdate).getTime() : null
         ));
       }
