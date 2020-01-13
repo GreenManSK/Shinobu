@@ -21,7 +21,7 @@ export class ShinobuComponent implements OnInit {
 
   public checkChristmasTime(): void {
     const today = new Date();
-    this.isChristmasTime = today.getMonth() === 11 || (today.getMonth() === 0 && today.getDay() < 10);
+    this.isChristmasTime = today.getMonth() === 11 || (today.getMonth() === 0 && today.getDate() < 10);
   }
 
   public onTabChanged( tab: Tab ): void {
