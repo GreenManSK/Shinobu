@@ -49,7 +49,7 @@ export class TheTVDBParserService implements SiteParser {
       const episodes = $site.find('.list-group li.list-group-item').toArray();
       for (const episode of episodes) {
         const $ep = $(episode);
-        const airdate = $ep.find('ul li').text().trim();
+        const airdate = $ep.find('ul li').first().text().trim();
         const epNumber = $ep.find('h4 span').text().trim();
         show.episodes.push(new Episode(
           epNumber,
