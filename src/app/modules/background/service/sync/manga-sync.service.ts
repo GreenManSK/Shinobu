@@ -72,6 +72,7 @@ export class MangaSyncService {
         this.updateEpisodes(manga, updatedData.episodes);
         return this.syncManga(manga);
       }
+      this.updateEpisodes(manga, updatedData.episodes);
       return this.mangaService.save(manga).then(() => manga);
     });
   }
