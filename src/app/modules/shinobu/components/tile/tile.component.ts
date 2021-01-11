@@ -18,6 +18,9 @@ export class TileComponent implements OnInit {
   }
 
   public isImage( icon: string ): boolean {
-    return validator.isURL(icon);
+    return validator.isURL(icon, {
+      require_tld: false,
+      require_protocol: true
+    });
   }
 }
