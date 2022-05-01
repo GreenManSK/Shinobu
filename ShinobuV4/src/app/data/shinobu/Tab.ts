@@ -3,10 +3,10 @@ import { ASavable } from '../ASavable';
 
 export class Tab extends ASavable {
   constructor(
-    public title: string,
-    public icon: string,
-    public tiles: Tile[],
-    public order: number
+    public title: string | null = null,
+    public icon: string | null = null,
+    public tiles: Tile[] | null = null,
+    public order: number | null = null
   ) {
     super();
   }
