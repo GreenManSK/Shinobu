@@ -1,3 +1,4 @@
 export interface ISavable {
-  id?: number;
+  id?: string;
+  userId?: string;
 }
