@@ -1,0 +1,21 @@
+@import "variables";
+@import "mixins";
+
+@include scrollbar($bg: #000);
+
+html, body {
+  font-size: 62.5%;
+  font-family: $font;
+  padding: 0;
+  margin: 0;
+  background: $backgroundColor;
+  height: 100%;
+}
+
+a {
+  transition: color $time, background $time, opacity $time, padding $time;
+}
+
+menu {
+  margin: 0;
+}

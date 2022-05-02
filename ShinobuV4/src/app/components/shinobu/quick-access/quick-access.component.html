@@ -1,0 +1,5 @@
+<div class="ts-quick-access" *ngIf="tab">
+  <tile *ngIf="tab.tiles.length === 0" class="add" [tile]="addTile"></tile>
+  <tile *ngFor="let tile of tab.tiles"
+        [tile]="tile"></tile>
+</div>

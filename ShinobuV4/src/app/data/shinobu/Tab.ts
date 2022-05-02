@@ -5,8 +5,8 @@ export class Tab extends ASavable {
   constructor(
     public title: string | null = null,
     public icon: string | null = null,
-    public tiles: Tile[] | null = null,
-    public order: number | null = null
+    public tiles: Tile[] = [],
+    public order: number = 0
   ) {
     super();
   }

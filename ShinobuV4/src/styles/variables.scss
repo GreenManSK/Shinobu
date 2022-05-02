@@ -1,0 +1,28 @@
+$font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$time: 0.5s;
+$textColor: #333;
+$shadow: 2px 2px 8px rgba(0, 0, 0, .3);
+$responsiveWidth: 900px;
+$space: 20px;
+$miniSpace: 10px;
+$backgroundColor: #000;
+
+$imgDir: '/assets/img/';
+$iconDir: '/assets/icons/';
+
+// Shinobu
+$shinobuResponsive: 1111px;
+$shinobuColorTransparency: .5;
+$shinobuBgColor: #9acefc;
+
+// Menu
+$mainMenuSize: 36px;
+
+// Icon grid
+$gridIconCount: 4;
+$gridIconSize: 137px;
+$gridMargin: 1px;
+$gridPadding: 10px;
+$gridPlaceholderBorder: 4px;
+$gridBackground: rgba(0, 0, 0, .1);
+$gridColor: #fff;

@@ -15,7 +15,6 @@ export abstract class DynamicStorageService<T extends ISavable> implements IStor
   constructor( collectionName: string, afs: AngularFirestore, authService: AuthService, errorService: ErrorService ) {
     this.readyPromise = authService.isAuthenticatedPromise().then(isAuthenticated => {
       this.implementation = isAuthenticated ? new FirestoreStorageService(collectionName, afs, authService, errorService) : new LocalStorageService(collectionName, errorService);
-      console.log(this.implementation);
     });
   }
 

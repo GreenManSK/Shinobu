@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,10 +8,16 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { ShinobuMainComponent } from './components/shinobu/shinobu-main/shinobu-main.component';
+import { QuickAccessComponent } from './components/shinobu/quick-access/quick-access.component';
+import { TileComponent } from './components/shinobu/tile/tile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ShinobuMainComponent,
+    QuickAccessComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,
@@ -29,4 +35,5 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

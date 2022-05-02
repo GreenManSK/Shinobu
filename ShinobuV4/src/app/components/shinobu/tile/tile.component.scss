@@ -1,0 +1,37 @@
+@import '../../../../styles/variables';
+
+.ts-tile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+
+  box-sizing: border-box;
+  width: $gridIconSize;
+  height: $gridIconSize;
+  margin: $gridMargin;
+  padding: $gridPadding;
+
+  overflow: hidden;
+  font-size: 2.4rem;
+  text-align: center;
+  text-decoration: none;
+  color: $gridColor;
+  background: $gridBackground;
+
+  &:hover, &:active, &:focus {
+    background: rgba($gridBackground, 20%);
+  }
+
+  img {
+    vertical-align: top;
+    max-width: 100%;
+  }
+
+  i {
+    font-size: 3.3em;
+  }
+  span.icon {
+    font-size: 2.5em;
+  }
+}

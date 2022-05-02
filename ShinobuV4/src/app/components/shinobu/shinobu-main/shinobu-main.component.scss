@@ -1,0 +1,55 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+$bgImg: $imgDir + "shinobuBg.jpg";
+$christmasBgImg: $imgDir + "shinobuBgCh.jpg";
+$colorTrans: $shinobuColorTransparency;
+$contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+.ts-shibnou {
+  min-width: 100%;
+  min-height: 100%;
+  //@include maximize;
+
+  background: $shinobuBgColor url($bgImg) no-repeat fixed center center;
+  background-size: 100% 100%;
+  color: $textColor;
+
+  font-family: $contentFont;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &.christmas {
+    background-image: url($christmasBgImg);
+  }
+
+  .spacer, quick-access {
+    width: 100%;
+    max-width: 25%;
+  }
+
+  quick-access {
+    order: 2;
+    flex: 2;
+    max-width: 4*(2*$gridMargin + $gridIconSize);
+    display: flex;
+  }
+}
+
+@media (max-width: $shinobuResponsive) {
+  .ts-shibnou {
+    position: relative;
+    flex-direction: column;
+    padding-top: $mainMenuSize;
+    background-size: cover;
+    background-position: right;
+  }
+
+  quick-access {
+    order: 1;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 1rem;
+  }
+}
