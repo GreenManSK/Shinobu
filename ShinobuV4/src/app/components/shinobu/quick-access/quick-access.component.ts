@@ -36,5 +36,4 @@ export class QuickAccessComponent implements OnInit {
     this.activeTile = new Tile('', '', '', 1 + (this.tab?.tiles?.length || 0));
     this.showModal = true;
   }
-
 }

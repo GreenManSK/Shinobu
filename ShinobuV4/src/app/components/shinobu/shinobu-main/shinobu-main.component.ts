@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Tab } from '../../../data/shinobu/Tab';
+import { Tile } from '../../../data/shinobu/Tile';
 
 @Component({
   selector: 'app-shinobu-main',
@@ -9,7 +10,9 @@ import { Tab } from '../../../data/shinobu/Tab';
 export class ShinobuMainComponent implements OnInit {
 
   public isChristmasTime: boolean = false;
-  public tab: Tab = new Tab("default", "default", []);
+  public tab: Tab = new Tab("default", "default", [
+    new Tile("Hoshimachi!", "", "", 0)
+  ]);
 
   constructor() {
     this.checkChristmasTime();

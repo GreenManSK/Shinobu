@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,8 @@ import { TileComponent } from './components/shinobu/tile/tile.component';
 import { QuickAccessModalComponent } from './components/shinobu/quick-access-modal/quick-access-modal.component';
 import { FormsModule } from '@angular/forms';
 import { NgxEmojModule } from 'ngx-emoj';
+import { ShContextMenuModule } from 'ng2-right-click-menu';
+import { LongPressContextMenuDirective } from './directives/long-press-context-menu.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { NgxEmojModule } from 'ngx-emoj';
     ShinobuMainComponent,
     QuickAccessComponent,
     TileComponent,
-    QuickAccessModalComponent
+    QuickAccessModalComponent,
+    LongPressContextMenuDirective
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,9 @@ import { NgxEmojModule } from 'ngx-emoj';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     FormsModule,
-    NgxEmojModule
+    NgxEmojModule,
+    ShContextMenuModule,
+    HammerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
