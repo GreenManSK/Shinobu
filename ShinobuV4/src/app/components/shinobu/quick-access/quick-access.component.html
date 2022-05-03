@@ -1,5 +1,7 @@
 <div class="ts-quick-access" *ngIf="tab">
-  <tile *ngIf="tab.tiles.length === 0" class="add" [tile]="addTile"></tile>
+  <tile *ngIf="tab.tiles.length === 0" class="add" [tile]="addTileButton" (click)="addTile($event)"></tile>
   <tile *ngFor="let tile of tab.tiles"
         [tile]="tile"></tile>
 </div>
+
+<quick-access-modal *ngIf="tab && activeTile" [tab]="tab" [tile]="activeTile" [(visible)]="showModal"></quick-access-modal>

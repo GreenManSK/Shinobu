@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TabService } from '../../../services/data/shinobu/tab.service';
 import { Tab } from '../../../data/shinobu/Tab';
-import { Tile } from '../../../data/shinobu/Tile';
 
 @Component({
   selector: 'app-shinobu-main',
@@ -11,36 +9,7 @@ import { Tile } from '../../../data/shinobu/Tile';
 export class ShinobuMainComponent implements OnInit {
 
   public isChristmasTime: boolean = false;
-  public tab: Tab = new Tab("default", "default", [
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "ri-twitter-fill", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "http://www.greenmanov.net/favicon.ico", 0),
-    new Tile("Just text", "https://www.greenmanov.net/", "😅", 0),
-  ]);
+  public tab: Tab = new Tab("default", "default", []);
 
   constructor() {
     this.checkChristmasTime();

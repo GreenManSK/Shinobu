@@ -1,0 +1,34 @@
+<div class="ts-quick-access-modal" *ngIf="visible && editItem">
+  <div class="box">
+    <div class="preview" *ngIf="tile">
+      <tile [tile]="previewTile"></tile>
+    </div>
+    <form class="nice cyan">
+      <div *ngIf="tile" class="field">
+        <label for="form-link">URL</label>
+        <input type="text" id="form-link" placeholder="URL" name="url" [(ngModel)]="url">
+      </div>
+      <div class="field">
+        <label for="form-title">Title</label>
+        <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="title">
+      </div>
+      <div class="field group">
+        <label for="form-icon">Icon</label>
+        <input type="text" id="form-icon" placeholder="Icon" name="icon" [(ngModel)]="icon">
+        <a class="help" title="Pick icon" href="https://remixicon.com/" target="_blank"><i class="ri-remixicon-line"></i></a>
+        <span class="help" title="Pick emoji" (click)="showEmojiPicker = !showEmojiPicker">🌺</span>
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save()">
+        <button class="second" (click)="hide()">Cancel</button>
+      </div>
+    </form>
+    <ngx-emoj
+      *ngIf="showEmojiPicker"
+      (onemojipick)="handleEmoji($event)"
+      [width]="'35vw'"
+      [height]="'50vh'"
+      [theme]="emojiPickerTheme">
+    </ngx-emoj>
+  </div>
+</div>

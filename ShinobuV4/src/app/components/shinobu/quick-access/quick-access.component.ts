@@ -10,7 +10,9 @@ import { Tile } from '../../../data/shinobu/Tile';
 export class QuickAccessComponent implements OnInit {
 
   private _tab?: Tab;
-  public addTile = new Tile('Add', '#', 'ri-add-line', 0);
+  public addTileButton = new Tile('Add', '#', 'ri-add-line', 0);
+  public showModal = false;
+  public activeTile?: Tile;
 
   constructor() {
   }
@@ -25,6 +27,14 @@ export class QuickAccessComponent implements OnInit {
 
   public get tab(): Tab | undefined {
     return this._tab;
+  }
+
+  public addTile(event?: MouseEvent): void {
+    if (event) {
+      event.preventDefault();
+    }
+    this.activeTile = new Tile('', '', '', 1 + (this.tab?.tiles?.length || 0));
+    this.showModal = true;
   }
 
 }

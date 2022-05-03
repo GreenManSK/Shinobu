@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,13 +11,17 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ShinobuMainComponent } from './components/shinobu/shinobu-main/shinobu-main.component';
 import { QuickAccessComponent } from './components/shinobu/quick-access/quick-access.component';
 import { TileComponent } from './components/shinobu/tile/tile.component';
+import { QuickAccessModalComponent } from './components/shinobu/quick-access-modal/quick-access-modal.component';
+import { FormsModule } from '@angular/forms';
+import { NgxEmojModule } from 'ngx-emoj';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShinobuMainComponent,
     QuickAccessComponent,
-    TileComponent
+    TileComponent,
+    QuickAccessModalComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { TileComponent } from './components/shinobu/tile/tile.component';
     }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FormsModule,
+    NgxEmojModule
   ],
   providers: [],
   bootstrap: [AppComponent]

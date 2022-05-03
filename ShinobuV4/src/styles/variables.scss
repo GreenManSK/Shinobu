@@ -10,6 +10,16 @@ $backgroundColor: #000;
 $imgDir: '/assets/img/';
 $iconDir: '/assets/icons/';
 
+// Colors
+$gray: #9a9a9a;
+$red: #B63533;
+$blue: #3573a8;
+$green: #5c8230;
+$yellow: #d87f37;
+$pink: #b03c6e;
+$purple: #473cb0;
+$cyan: #3385ad;
+
 // Shinobu
 $shinobuResponsive: 1111px;
 $shinobuColorTransparency: .5;
@@ -26,3 +36,9 @@ $gridPadding: 10px;
 $gridPlaceholderBorder: 4px;
 $gridBackground: rgba(0, 0, 0, .1);
 $gridColor: #fff;
+
+// Modal box
+$boxBg: #fff;
+$boxColor: #777;
+$boxRadius: 5px;
+$boxHeaderColor: #fff;
