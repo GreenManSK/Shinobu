@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Tab } from '../../../data/shinobu/Tab';
 import { Tile } from '../../../data/shinobu/Tile';
+import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
 
 @Component({
   selector: 'quick-access',
@@ -34,6 +35,11 @@ export class QuickAccessComponent implements OnInit {
       event.preventDefault();
     }
     this.activeTile = new Tile('', '', '', 1 + (this.tab?.tiles?.length || 0));
+    this.showModal = true;
+  }
+
+  public editTile( event: ShContextMenuClickEvent ): void {
+    this.activeTile = event.data as Tile;
     this.showModal = true;
   }
 }
