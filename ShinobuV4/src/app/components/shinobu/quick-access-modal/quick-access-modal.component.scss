@@ -55,3 +55,10 @@ ngx-emoj, icon-picker {
   margin: 1rem auto 0;
   width: 35vw;
 }
+
+@media (max-width: $shinobuResponsive) {
+  ngx-emoj, icon-picker {
+    margin: 0;
+    width: 100%;
+  }
+}

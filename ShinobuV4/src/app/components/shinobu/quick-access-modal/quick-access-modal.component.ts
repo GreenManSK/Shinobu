@@ -52,6 +52,8 @@ export class QuickAccessModalComponent implements OnInit {
   @Input('tab')
   set tab( value: Tab | undefined ) {
     this._tab = value;
+    this.showEmojiPicker = false;
+    this.showIconPicker = false;
     this.updateValues();
   }
 
@@ -119,5 +121,15 @@ export class QuickAccessModalComponent implements OnInit {
 
   public handleIcon( icon: string ) {
     this.icon = icon;
+  }
+
+  public toggleEmoji() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+    this.showIconPicker = false;
+  }
+
+  public toggleIcon() {
+    this.showIconPicker = !this.showIconPicker;
+    this.showEmojiPicker = false;
   }
 }

@@ -15,8 +15,8 @@
       <div class="field group">
         <label for="form-icon">Icon</label>
         <input type="text" id="form-icon" placeholder="Icon" name="icon" [(ngModel)]="icon">
-        <span class="help" title="Pick icon" (click)="showIconPicker = !showIconPicker"><i class="ri-remixicon-line"></i></span>
-        <span class="help" title="Pick emoji" (click)="showEmojiPicker = !showEmojiPicker">🌺</span>
+        <span class="help" title="Pick icon" (click)="toggleIcon()"><i class="ri-remixicon-line"></i></span>
+        <span class="help" title="Pick emoji" (click)="toggleEmoji()">🌺</span>
       </div>
       <div class="buttons">
         <input type="submit" value="Save" (click)="save()">
