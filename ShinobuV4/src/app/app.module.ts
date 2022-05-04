@@ -17,6 +17,7 @@ import { NgxEmojModule } from 'ngx-emoj';
 import { ShContextMenuModule } from 'ng2-right-click-menu';
 import { LongPressContextMenuDirective } from './directives/long-press-context-menu.directive';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { IconPickerComponent } from './components/shinobu/icon-picker/icon-picker.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SortablejsModule } from 'ngx-sortablejs';
     QuickAccessComponent,
     TileComponent,
     QuickAccessModalComponent,
-    LongPressContextMenuDirective
+    LongPressContextMenuDirective,
+    IconPickerComponent
   ],
   imports: [
     BrowserModule,

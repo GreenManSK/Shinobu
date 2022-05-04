@@ -209,9 +209,3 @@ form.nice, .form-nice {
   @include formColor($purple, ".purple");
   @include formColor($cyan, ".cyan");
 }
-
-ngx-emoj {
-  display: block;
-  margin: 0 auto;
-  width: 35vw;
-}

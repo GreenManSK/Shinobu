@@ -41,6 +41,7 @@ export class QuickAccessModalComponent implements OnInit {
   };
 
   public showEmojiPicker = false;
+  public showIconPicker = false;
 
   constructor( private tabService: TabService ) {
   }
@@ -114,5 +115,9 @@ export class QuickAccessModalComponent implements OnInit {
 
   public handleEmoji( event: any ): void {
     this.icon = event.char;
+  }
+
+  public handleIcon( icon: string ) {
+    this.icon = icon;
   }
 }

@@ -4,7 +4,7 @@
 @import "context-menu";
 @import "form";
 
-@include scrollbar($bg: #000);
+@include scrollbar($bg: rgba(0,0,0,.5), $bar: 50%);
 
 html, body {
   font-size: 62.5%;
