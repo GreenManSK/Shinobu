@@ -1,15 +1,30 @@
-<div class="ts-quick-access" *ngIf="tab">
-  <tile *ngIf="tab.tiles.length === 0" class="add" [tile]="addTileButton" (click)="addTile($event)"></tile>
-  <tile *ngFor="let tile of tab.tiles"
-        [tile]="tile"
-        [shAttachMenu]="menu"
-        [shMenuData]="tile"
-        longPressContextMenu></tile>
-</div>
+<div *ngIf="sorting" class="ts-sorting-title"><button (click)="toggleSort()">Stop sorting <i class="ri-close-circle-fill"></i></button></div>
+<div class="ts-quick-access" *ngIf="tab" [sortablejs]="tab.tiles" [sortablejsOptions]="sortableOptions">
+    <tile *ngIf="tab.tiles.length === 0" class="add" [tile]="addTileButton" (click)="addTile($event)"></tile>
+    <ng-container *ngIf="!sorting">
+      <tile *ngFor="let tile of tab.tiles"
+            [tile]="tile"
+            [shAttachMenu]="menu"
+            [shMenuData]="tile"
+            longPressContextMenu></tile>
+    </ng-container>
+    <ng-container *ngIf="sorting">
+      <tile *ngFor="let tile of tab.tiles"
+            [tile]="tile"
+            [shake]="true"></tile>
+    </ng-container>
+  </div>
 
-<quick-access-modal *ngIf="tab && activeTile" [tab]="tab" [tile]="activeTile" [(visible)]="showModal"></quick-access-modal>
+<quick-access-modal *ngIf="tab && activeTile" [tab]="tab" [tile]="activeTile"
+                    [(visible)]="showModal"></quick-access-modal>
 
 <sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="toggleSort()">
+    <div>
+      <i class="ri-layout-grid-fill"></i> Sort
+    </div>
+  </ng-template>
+
   <ng-template shContextMenuItem (click)="addTile()">
     <div>
       <i class="ri-add-line"></i> Add

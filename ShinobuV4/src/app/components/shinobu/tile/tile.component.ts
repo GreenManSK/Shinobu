@@ -12,10 +12,19 @@ export class TileComponent implements OnInit {
   @Input()
   public tile?: Tile;
 
+  @Input()
+  public shake: boolean = false;
+
+  public styles: any = {};
+
   constructor() {
   }
 
   ngOnInit() {
+    if (this.shake) {
+      const delay = Math.round(Math.random() * 100) / 1000;
+      this.styles["animation-delay"] = `${delay}s`;
+    }
   }
 
   public isImage(): boolean {

@@ -11,7 +11,12 @@ export class ShinobuMainComponent implements OnInit {
 
   public isChristmasTime: boolean = false;
   public tab: Tab = new Tab("default", "default", [
-    new Tile("Hoshimachi!", "", "", 0)
+    new Tile("Hoshimachi!", "", "", 0),
+    new Tile("Marin!", "", "", 1),
+    new Tile("Aqua!", "", "", 2),
+    new Tile("Kanata!", "", "", 3),
+    new Tile("Coco!", "", "", 4),
+    new Tile("Cali!", "", "", 5),
   ]);
 
   constructor() {

@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxEmojModule } from 'ngx-emoj';
 import { ShContextMenuModule } from 'ng2-right-click-menu';
 import { LongPressContextMenuDirective } from './directives/long-press-context-menu.directive';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { LongPressContextMenuDirective } from './directives/long-press-context-m
     FormsModule,
     NgxEmojModule,
     ShContextMenuModule,
-    HammerModule
+    HammerModule,
+    SortablejsModule.forRoot({ animation: 150 }),
   ],
   providers: [],
   bootstrap: [AppComponent]

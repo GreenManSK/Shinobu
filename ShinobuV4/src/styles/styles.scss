@@ -15,7 +15,7 @@ html, body {
   height: 100%;
 }
 
-a {
+a, button {
   transition: color $time, background $time, opacity $time, padding $time;
 }
 

@@ -1,17 +1,15 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[longPressContextMenu]'
 })
 export class LongPressContextMenuDirective {
 
-  constructor() {
-  }
-
   @HostListener('press', ['$event'])
   public triggerContextMenu($event: any) {
-    if ($event)
+    if ($event) {
       $event.preventDefault();
+    }
 
     const element = $event.target;
     const ev3 = new MouseEvent("contextmenu", {

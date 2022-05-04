@@ -11,10 +11,16 @@ import { TabService } from '../../../services/data/shinobu/tab.service';
 })
 export class QuickAccessComponent implements OnInit {
 
-  private _tab?: Tab;
   public addTileButton = new Tile('Add', '#', 'ri-add-line', 0);
   public showModal = false;
   public activeTile?: Tile;
+  public sorting = false;
+  public sortableOptions = {
+    onUpdate: () => this.saveOrder()
+  };
+
+  private oldOrder: Tile[] = [];
+  private _tab?: Tab;
 
   constructor(private tabService: TabService) {
   }
@@ -24,6 +30,9 @@ export class QuickAccessComponent implements OnInit {
 
   @Input('tab')
   public set tab( tab: Tab | undefined ) {
+    if (tab) {
+      this.oldOrder = Object.assign([], tab.tiles);
+    }
     this._tab = tab;
   }
 
@@ -53,6 +62,19 @@ export class QuickAccessComponent implements OnInit {
     if (index > -1) {
       this.tab.tiles.splice(index, 1);
     }
+    this.tabService.save(this.tab);
+  }
+
+  public toggleSort() {
+    this.sorting = !this.sorting;
+  }
+
+  public saveOrder() {
+    if (!this.tab || JSON.stringify(this.oldOrder) === JSON.stringify(this.tab.tiles)) {
+      return;
+    }
+    this.tab.tiles.forEach((tile, index) => tile.order = index+1);
+    this.oldOrder = Object.assign([], this.tab.tiles);
     this.tabService.save(this.tab);
   }
 }

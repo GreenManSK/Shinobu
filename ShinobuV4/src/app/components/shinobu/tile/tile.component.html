@@ -1,4 +1,10 @@
-<a *ngIf="tile" class="ts-tile" [href]="tile.link" [title]="tile.title">
+<a *ngIf="tile"
+   [class.ts-tile]="true"
+   [class.shake]="shake"
+   [href]="!shake ? tile.link : '#'"
+   [title]="tile.title"
+   [ngStyle]="styles"
+>
   <ng-container *ngIf="tile.icon" [ngSwitch]="getIconType()">
     <img *ngSwitchCase="'image'" [alt]="tile.title" [src]="tile.icon">
     <i *ngSwitchCase="'icon'" [class]="tile.icon"></i>
