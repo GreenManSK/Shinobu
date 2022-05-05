@@ -19,4 +19,18 @@
       <i class="ri-add-line"></i> Add
     </div>
   </ng-template>
-</sh-context-menu>>
+
+  <ng-template shContextMenuItem (click)="editTab($event)">
+    <div>
+      <i class="ri-edit-line"></i>
+      Edit
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem let-data (click)="deleteTab($event)">
+    <div>
+      <i class="ri-delete-bin-line"></i>
+      Delete
+    </div>
+  </ng-template>
+</sh-context-menu>

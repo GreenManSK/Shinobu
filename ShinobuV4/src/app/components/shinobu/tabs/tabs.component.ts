@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Tab } from '../../../data/shinobu/Tab';
-import { TabService } from '../../../services/data/shinobu/tab.service';
-import { LocalPreferenceService } from '../../../services/data/local-preference.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Tab} from '../../../data/shinobu/Tab';
+import {TabService} from '../../../services/data/shinobu/tab.service';
+import {LocalPreferenceService} from '../../../services/data/local-preference.service';
+import {ShContextMenuClickEvent} from "ng2-right-click-menu/lib/sh-context-menu.models";
 
 @Component({
   selector: 'tabs',
@@ -21,7 +22,7 @@ export class TabsComponent implements OnInit {
   public showModal = false;
   public editedTab?: Tab;
 
-  constructor( private tabService: TabService, private localPreferenceService: LocalPreferenceService ) {
+  constructor(private tabService: TabService, private localPreferenceService: LocalPreferenceService) {
   }
 
   ngOnInit(): void {
@@ -45,5 +46,17 @@ export class TabsComponent implements OnInit {
   public addTab() {
     this.editedTab = new Tab('', '', [], this.tabs.length + 1)
     this.showModal = true;
+  }
+
+  public editTab(event: ShContextMenuClickEvent) {
+    this.editedTab = event.data as Tab;
+    this.showModal = true;
+  }
+
+  public deleteTab(event: ShContextMenuClickEvent) {
+    const tab = event.data as Tab;
+    // TODO FIX
+    console.log(tab);
+    // this.tabService.delete(tab);
   }
 }
