@@ -1,0 +1,26 @@
+@import '../../../../styles/variables';
+
+.ts-tabs {
+  ul, li {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    text-align: right;
+    list-style: none;
+  }
+}
+
+@media (max-width: $shinobuResponsive) {
+  .ts-tabs {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      li {
+        display: inline-block;
+      }
+    }
+  }
+}

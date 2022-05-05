@@ -1,0 +1,22 @@
+<div class="ts-tabs">
+  <ul>
+    <li *ngFor="let tab of tabs">
+      <tab [tab]="tab"
+           [isActive]="tab == activeTab"
+           [shAttachMenu]="menu"
+           [shMenuData]="tab"
+           longPressContextMenu></tab>
+    </li>
+  </ul>
+</div>
+
+<quick-access-modal *ngIf="editedTab" [tab]="editedTab"
+                    [(visible)]="showModal"></quick-access-modal>
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="addTab()">
+    <div>
+      <i class="ri-add-line"></i> Add
+    </div>
+  </ng-template>
+</sh-context-menu>>

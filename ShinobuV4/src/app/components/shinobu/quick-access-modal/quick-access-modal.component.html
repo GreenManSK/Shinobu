@@ -3,6 +3,9 @@
     <div class="preview" *ngIf="tile">
       <tile [tile]="previewTile"></tile>
     </div>
+    <div class="preview" *ngIf="tab && !tile">
+      <tab [tab]="previewTab" [isStandalone]="true"></tab>
+    </div>
     <form class="nice cyan">
       <div *ngIf="tile" class="field">
         <label for="form-link">URL</label>

@@ -16,7 +16,7 @@ html, body {
 }
 
 a, button {
-  transition: color $time, background $time, opacity $time, padding $time;
+  transition: color $time, background $time, opacity $time, padding $time, margin $time;
 }
 
 menu {

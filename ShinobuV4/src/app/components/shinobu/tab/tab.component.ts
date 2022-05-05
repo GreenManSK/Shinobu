@@ -1,34 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Tile } from '../../../data/shinobu/Tile';
+import { Tab } from '../../../data/shinobu/Tab';
 import validator from 'validator';
 
 @Component({
-  selector: 'tile',
-  templateUrl: './tile.component.html',
-  styleUrls: ['./tile.component.scss']
+  selector: 'tab',
+  templateUrl: './tab.component.html',
+  styleUrls: ['./tab.component.scss']
 })
-export class TileComponent implements OnInit {
+export class TabComponent implements OnInit {
 
   @Input()
-  public tile?: Tile;
+  public tab?: Tab;
 
   @Input()
-  public shake: boolean = false;
+  public isActive: boolean = false;
 
-  public styles: any = {};
+  @Input()
+  public isStandalone: boolean = false;
 
   constructor() {
   }
 
-  ngOnInit() {
-    if (this.shake) {
-      const delay = Math.round(Math.random() * 100) / 1000;
-      this.styles['animation-delay'] = `${delay}s`;
-    }
+  ngOnInit(): void {
   }
 
   public isImage(): boolean {
-    const {icon} = this.tile || {};
+    const {icon} = this.tab || {};
     return !!icon && validator.isURL(icon, {
       require_tld: false,
       require_protocol: true
@@ -36,7 +33,7 @@ export class TileComponent implements OnInit {
   }
 
   public isIcon(): boolean {
-    const {icon} = this.tile || {};
+    const {icon} = this.tab || {};
     return !!icon && icon.startsWith('ri-');
   }
 
@@ -49,4 +46,5 @@ export class TileComponent implements OnInit {
     }
     return 'text';
   }
+
 }

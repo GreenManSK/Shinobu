@@ -79,6 +79,10 @@ export class QuickAccessModalComponent implements OnInit {
     return new Tile(this.title, this.url, this.icon, 0);
   }
 
+  public get previewTab(): Tab {
+    return new Tab(this.title, this.icon, [], 0);
+  }
+
   private updateValues(): void {
     const editItem = this.editItem;
     if (!editItem) {

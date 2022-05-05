@@ -24,7 +24,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     background-image: url($christmasBgImg);
   }
 
-  .spacer, quick-access {
+  .spacer, quick-access, tabs {
     width: 100%;
     max-width: 25%;
   }
@@ -45,7 +45,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     position: relative;
   }
 
-  .spacer2 {
+  tabs {
     order: 3;
     display: flex;
     flex-direction: column;
@@ -61,12 +61,21 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     padding-top: $mainMenuSize;
     background-size: cover;
     background-position: right;
+
+    quick-access {
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 1rem;
+      justify-content: start;
+      max-width: 100%;
+    }
+
+    tabs {
+      order: 1;
+      max-width: 100%;
+      width: 100%;
+      align-items: center;
+    }
   }
 
-  quick-access {
-    order: 1;
-    margin: 0 auto;
-    box-sizing: border-box;
-    padding: 1rem;
-  }
 }

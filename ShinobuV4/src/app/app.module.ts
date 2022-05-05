@@ -18,6 +18,8 @@ import { ShContextMenuModule } from 'ng2-right-click-menu';
 import { LongPressContextMenuDirective } from './directives/long-press-context-menu.directive';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { IconPickerComponent } from './components/shinobu/icon-picker/icon-picker.component';
+import { TabsComponent } from './components/shinobu/tabs/tabs.component';
+import { TabComponent } from './components/shinobu/tab/tab.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { IconPickerComponent } from './components/shinobu/icon-picker/icon-picke
     TileComponent,
     QuickAccessModalComponent,
     LongPressContextMenuDirective,
-    IconPickerComponent
+    IconPickerComponent,
+    TabsComponent,
+    TabComponent
   ],
   imports: [
     BrowserModule,
