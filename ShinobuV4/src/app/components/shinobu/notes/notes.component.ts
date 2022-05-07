@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Note } from '../../../data/shinobu/Note';
 import { NoteService } from '../../../services/data/shinobu/note.service';
 import { LocalPreferenceService } from '../../../services/data/local-preference.service';
+import { Color } from '../../../types/Color';
 
 @Component({
   selector: 'notes',
@@ -47,5 +48,13 @@ export class NotesComponent implements OnInit {
 
   public addNote() {
     this.createNote().then(note => this.setActiveNote(note));
+  }
+
+  onColorChange( color: Color ) {
+    if (!this.activeNote) {
+      return;
+    }
+    this.activeNote.color = color;
+    this.noteService.save(this.activeNote);
   }
 }

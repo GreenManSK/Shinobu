@@ -7,6 +7,10 @@
 </div>
 
 <sh-context-menu #menu>
+  <ng-template shContextMenuItem let-data>
+    <color-picker (colorPicked)="onColorChange($event)"></color-picker>
+  </ng-template>
+  <ng-template shContextMenuItem [divider]="true"></ng-template>
   <ng-template shContextMenuItem (click)="addNote()">
     <div>
       <i class="ri-add-line"></i> Add
