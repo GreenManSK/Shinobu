@@ -23,3 +23,15 @@ a, button {
 menu {
   margin: 0;
 }
+
+.sh-context-menu {
+  .sh-context-menu--item > div {
+    display: flex;
+    align-items: center;
+    i {
+      display: inline-block;
+      text-align: center;
+      width: 1.5em;
+    }
+  }
+}
