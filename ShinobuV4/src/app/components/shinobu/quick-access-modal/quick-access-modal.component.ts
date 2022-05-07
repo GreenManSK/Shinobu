@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Tab } from '../../../data/shinobu/Tab';
 import { Tile } from '../../../data/shinobu/Tile';
 import { TabService } from '../../../services/data/shinobu/tab.service';
+import { SiteDataParserService } from '../../../services/site-data-parser.service';
 
 @Component({
   selector: 'quick-access-modal',
@@ -43,7 +44,7 @@ export class QuickAccessModalComponent implements OnInit {
   public showEmojiPicker = false;
   public showIconPicker = false;
 
-  constructor( private tabService: TabService ) {
+  constructor( private tabService: TabService, private siteDataParser: SiteDataParserService ) {
   }
 
   ngOnInit(): void {
@@ -135,5 +136,18 @@ export class QuickAccessModalComponent implements OnInit {
   public toggleIcon() {
     this.showIconPicker = !this.showIconPicker;
     this.showEmojiPicker = false;
+  }
+
+  public getIconFromUrl() {
+    if (!this.tile || !this.url) {
+      return;
+    }
+
+    this.siteDataParser.getFaviconUrl(this.url).then(faviconUrl => {
+      if (!faviconUrl) {
+        return;
+      }
+      this.icon = faviconUrl;
+    })
   }
 }

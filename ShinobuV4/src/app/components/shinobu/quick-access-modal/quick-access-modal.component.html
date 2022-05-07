@@ -7,9 +7,10 @@
       <tab [tab]="previewTab" [isStandalone]="true"></tab>
     </div>
     <form class="nice cyan">
-      <div *ngIf="tile" class="field">
+      <div *ngIf="tile" class="field group">
         <label for="form-link">URL</label>
         <input type="text" id="form-link" placeholder="URL" name="url" [(ngModel)]="url">
+        <span class="help" title="Get icon from URL" (click)="getIconFromUrl()"><i class="ri-image-add-line"></i></span>
       </div>
       <div class="field">
         <label for="form-title">Title</label>
