@@ -16,7 +16,7 @@ export class QuickAccessComponent implements OnInit {
   public activeTile?: Tile;
   public sorting = false;
   public sortableOptions = {
-    onUpdate: () => this.saveOrder()
+    onUpdate: () => this.saveOrder(),
   };
 
   private oldOrder: Tile[] = [];
@@ -58,11 +58,13 @@ export class QuickAccessComponent implements OnInit {
       return;
     }
     const tile = event.data as Tile;
-    const index = this.tab.tiles.indexOf(tile, 0);
-    if (index > -1) {
-      this.tab.tiles.splice(index, 1);
+    if (confirm(`Do you really want to delete ${tile.title}?`)) {
+      const index = this.tab.tiles.indexOf(tile, 0);
+      if (index > -1) {
+        this.tab.tiles.splice(index, 1);
+      }
+      this.tabService.save(this.tab);
     }
-    this.tabService.save(this.tab);
   }
 
   public toggleSort() {

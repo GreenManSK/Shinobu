@@ -20,10 +20,12 @@ $modalRadius: 15px;
 
 
   .box {
+    max-height: calc(100% - $space - $space);
+    overflow-y: scroll;
     min-width: 350px;
     background: $boxBg;
     border-radius: $boxRadius;
-    margin-bottom: $space;
+    margin: $space 0;
     box-shadow: $shadow;
     font-size: 1.4rem;
 

@@ -4,19 +4,19 @@
       <tab [tab]="sortingTab" [isStandalone]="true" (click)="toggleSort()"></tab>
     </li>
   </ul>
-  <ul [class.sorting]="sorting" [sortablejs]="tabs" [sortablejsOptions]="sortableOptions">
+  <ul *ngIf="!sorting">
     <li *ngFor="let tab of tabs">
-      <ng-container *ngIf="!sorting">
         <tab [tab]="tab"
              [isActive]="tab == activeTab"
              [shAttachMenu]="menu"
              [shMenuData]="tab"
              (click)="switchTab(tab)"
              longPressContextMenu></tab>
-      </ng-container>
-      <ng-container *ngIf="sorting">
+    </li>
+  </ul>
+  <ul *ngIf="sorting" [class.sorting]="sorting" [sortablejs]="tabs" [sortablejsOptions]="sortableOptions">
+    <li *ngFor="let tab of tabs">
         <tab [tab]="tab" [shake]="true" [isStandalone]="true"></tab>
-      </ng-container>
     </li>
   </ul>
 </div>

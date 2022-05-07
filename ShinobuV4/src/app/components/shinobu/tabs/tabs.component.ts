@@ -73,7 +73,9 @@ export class TabsComponent implements OnInit {
 
   public deleteTab(event: ShContextMenuClickEvent) {
     const tab = event.data as Tab;
-    this.tabService.delete(tab);
+    if (confirm(`Do you really want to delete ${tab.title}?`)) {
+      this.tabService.delete(tab);
+    }
   }
 
   public toggleSort() {
