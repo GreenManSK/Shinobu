@@ -3,6 +3,12 @@
 
 .ts-notes {
   @include maximize;
+
+  i {
+    display: inline-block;
+    text-align: center;
+    width: 1em;
+  }
 }
 
 @media (max-width: $shinobuResponsive) {

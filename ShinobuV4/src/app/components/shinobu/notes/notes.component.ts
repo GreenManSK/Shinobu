@@ -35,7 +35,7 @@ export class NotesComponent implements OnInit {
     });
   }
 
-  private setActiveNote( note: Note ) {
+  public setActiveNote( note: Note ) {
     this.localPreferenceService.save(NotesComponent.ACTIVE_NOTE_KEY, note.id);
     this.activeNote = note;
   }

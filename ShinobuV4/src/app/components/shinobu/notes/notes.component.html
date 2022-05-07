@@ -12,4 +12,23 @@
       <i class="ri-add-line"></i> Add
     </div>
   </ng-template>
+  <ng-template
+    shContextMenuItem
+    [subMenu]="changeMenu"
+  >
+    <div>
+      <i class="ri-booklet-fill"></i>
+      Change
+    </div>
+  </ng-template>
+
+  <sh-context-menu #changeMenu>
+    <ng-template shContextMenuItem
+                 *ngFor="let note of notes"
+                 (click)="setActiveNote(note)">
+      <div>
+        {{note.title}}
+      </div>
+    </ng-template>
+  </sh-context-menu>
 </sh-context-menu>
