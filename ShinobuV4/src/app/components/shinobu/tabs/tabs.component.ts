@@ -64,8 +64,6 @@ export class TabsComponent implements OnInit {
 
   public deleteTab(event: ShContextMenuClickEvent) {
     const tab = event.data as Tab;
-    // TODO FIX
-    console.log(tab);
-    // this.tabService.delete(tab);
+    this.tabService.delete(tab);
   }
 }

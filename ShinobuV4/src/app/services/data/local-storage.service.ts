@@ -56,7 +56,7 @@ export class LocalStorageService<T extends ISavable> implements IStorageService<
         this.handleError('delete', 'Not found');
         reject();
       } else {
-        items = items.splice(toDelete, 1);
+        items.splice(toDelete, 1);
         this.saveItems(items);
         resolve();
       }
