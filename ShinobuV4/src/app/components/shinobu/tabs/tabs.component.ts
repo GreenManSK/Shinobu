@@ -29,6 +29,15 @@ export class TabsComponent implements OnInit {
     this.tabService.onReady().then(() => this.prepareTabs())
   }
 
+  public switchTab(tab: Tab) {
+    this.setActiveTab(tab);
+  }
+
+  public addTab() {
+    this.editedTab = new Tab('', '', [], this.tabs.length + 1)
+    this.showModal = true;
+  }
+
   private prepareTabs() {
     this.tabService.getAll().subscribe(tabs => {
       this.tabs = tabs;
@@ -37,15 +46,15 @@ export class TabsComponent implements OnInit {
         return
       }
       const activeTabId = this.localPreferenceService.get(TabsComponent.ACTIVE_TAB_KEY, 0);
-      const activeTab = this.tabs.filter(tab => tab.id === activeTabId);
-      this.activeTab = activeTab.length > 0 ? activeTab[0] : this.tabs[0];
-      this.tabChanged.emit(this.activeTab);
+      const activeTabCandidates = this.tabs.filter(tab => tab.id === activeTabId);
+      this.setActiveTab(activeTabCandidates.length > 0 ? activeTabCandidates[0] : this.tabs[0]);
     })
   }
 
-  public addTab() {
-    this.editedTab = new Tab('', '', [], this.tabs.length + 1)
-    this.showModal = true;
+  private setActiveTab(tab: Tab) {
+    this.localPreferenceService.save(TabsComponent.ACTIVE_TAB_KEY, tab.id);
+    this.activeTab = tab;
+    this.tabChanged.emit(this.activeTab);
   }
 
   public editTab(event: ShContextMenuClickEvent) {

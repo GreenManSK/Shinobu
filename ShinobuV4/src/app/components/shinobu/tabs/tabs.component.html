@@ -5,6 +5,7 @@
            [isActive]="tab == activeTab"
            [shAttachMenu]="menu"
            [shMenuData]="tab"
+           (click)="switchTab(tab)"
            longPressContextMenu></tab>
     </li>
   </ul>
