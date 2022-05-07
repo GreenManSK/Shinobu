@@ -26,6 +26,13 @@
     </div>
   </ng-template>
 
+  <ng-template shContextMenuItem let-data (click)="deleteNote($event)">
+    <div>
+      <i class="ri-delete-bin-line"></i>
+      Delete
+    </div>
+  </ng-template>
+
   <sh-context-menu #changeMenu>
     <ng-template shContextMenuItem
                  *ngFor="let note of notes"

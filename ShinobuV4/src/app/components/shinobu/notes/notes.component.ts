@@ -3,6 +3,7 @@ import { Note } from '../../../data/shinobu/Note';
 import { NoteService } from '../../../services/data/shinobu/note.service';
 import { LocalPreferenceService } from '../../../services/data/local-preference.service';
 import { Color } from '../../../types/Color';
+import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
 
 @Component({
   selector: 'notes',
@@ -50,11 +51,18 @@ export class NotesComponent implements OnInit {
     this.createNote().then(note => this.setActiveNote(note));
   }
 
-  onColorChange( color: Color ) {
+  public onColorChange( color: Color ) {
     if (!this.activeNote) {
       return;
     }
     this.activeNote.color = color;
     this.noteService.save(this.activeNote);
+  }
+
+  public deleteNote(event: ShContextMenuClickEvent) {
+    const note = event.data as Note;
+    if (confirm(`Do you really want to delete ${note.title}?`)) {
+      this.noteService.delete(note);
+    }
   }
 }
