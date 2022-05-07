@@ -20,6 +20,8 @@ import { SortablejsModule } from 'ngx-sortablejs';
 import { IconPickerComponent } from './components/shinobu/icon-picker/icon-picker.component';
 import { TabsComponent } from './components/shinobu/tabs/tabs.component';
 import { TabComponent } from './components/shinobu/tab/tab.component';
+import { NotesComponent } from './components/shinobu/notes/notes.component';
+import { NoteComponent } from './components/shinobu/note/note.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { TabComponent } from './components/shinobu/tab/tab.component';
     LongPressContextMenuDirective,
     IconPickerComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    NotesComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
