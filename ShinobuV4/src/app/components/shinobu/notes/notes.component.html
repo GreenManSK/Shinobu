@@ -1,3 +1,15 @@
 <div class="ts-notes">
-  <note [note]="activeNote"></note>
+  <note [note]="activeNote"
+        [shAttachMenu]="menu"
+        [shMenuData]="activeNote"
+        longPressContextMenu
+  ></note>
 </div>
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="addNote()">
+    <div>
+      <i class="ri-add-line"></i> Add
+    </div>
+  </ng-template>
+</sh-context-menu>
