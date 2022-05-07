@@ -2,7 +2,9 @@
    href="#"
    [title]="tab.title"
    [class.active]="isActive"
-   [class.standalone]="isStandalone">
+   [class.standalone]="isStandalone"
+   [class.shake]="shake"
+   [ngStyle]="styles">
   <ng-container *ngIf="tab.icon" [ngSwitch]="getIconType()">
     <img *ngSwitchCase="'image'" [alt]="tab.title" [src]="tab.icon">
     <i *ngSwitchCase="'icon'" [class]="tab.icon"></i>

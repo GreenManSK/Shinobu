@@ -1,12 +1,22 @@
 <div class="ts-tabs">
-  <ul>
+  <ul *ngIf="sorting">
+    <li>
+      <tab [tab]="sortingTab" [isStandalone]="true" (click)="toggleSort()"></tab>
+    </li>
+  </ul>
+  <ul [class.sorting]="sorting" [sortablejs]="tabs" [sortablejsOptions]="sortableOptions">
     <li *ngFor="let tab of tabs">
-      <tab [tab]="tab"
-           [isActive]="tab == activeTab"
-           [shAttachMenu]="menu"
-           [shMenuData]="tab"
-           (click)="switchTab(tab)"
-           longPressContextMenu></tab>
+      <ng-container *ngIf="!sorting">
+        <tab [tab]="tab"
+             [isActive]="tab == activeTab"
+             [shAttachMenu]="menu"
+             [shMenuData]="tab"
+             (click)="switchTab(tab)"
+             longPressContextMenu></tab>
+      </ng-container>
+      <ng-container *ngIf="sorting">
+        <tab [tab]="tab" [shake]="true" [isStandalone]="true"></tab>
+      </ng-container>
     </li>
   </ul>
 </div>
@@ -15,6 +25,12 @@
                     [(visible)]="showModal"></quick-access-modal>
 
 <sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="toggleSort()">
+    <div>
+      <i class="ri-layout-grid-fill"></i> Sort
+    </div>
+  </ng-template>
+
   <ng-template shContextMenuItem (click)="addTab()">
     <div>
       <i class="ri-add-line"></i> Add

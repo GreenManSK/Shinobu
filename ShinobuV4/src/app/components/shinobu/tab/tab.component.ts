@@ -18,10 +18,19 @@ export class TabComponent implements OnInit {
   @Input()
   public isStandalone: boolean = false;
 
+  @Input()
+  public shake: boolean = false;
+
+  public styles: any = {};
+
   constructor() {
   }
 
   ngOnInit(): void {
+    if (this.shake) {
+      const delay = Math.round(Math.random() * 100) / 1000;
+      this.styles['animation-delay'] = `${delay}s`;
+    }
   }
 
   public isImage(): boolean {

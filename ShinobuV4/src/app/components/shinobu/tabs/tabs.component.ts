@@ -22,6 +22,14 @@ export class TabsComponent implements OnInit {
   public showModal = false;
   public editedTab?: Tab;
 
+  public sorting = false;
+  public sortableOptions = {
+    onUpdate: () => this.saveOrder()
+  };
+  public sortingTab = new Tab("Stop sorting", "ri-close-circle-line");
+
+  private oldOrder: Tab[] = [];
+
   constructor(private tabService: TabService, private localPreferenceService: LocalPreferenceService) {
   }
 
@@ -41,6 +49,7 @@ export class TabsComponent implements OnInit {
   private prepareTabs() {
     this.tabService.getAll().subscribe(tabs => {
       this.tabs = tabs;
+      this.oldOrder = Object.assign([], tabs);
       if (this.tabs.length <= 0) {
         this.tabService.save(new Tab('default', 'ri-home-heart-fill', []))
         return
@@ -65,5 +74,19 @@ export class TabsComponent implements OnInit {
   public deleteTab(event: ShContextMenuClickEvent) {
     const tab = event.data as Tab;
     this.tabService.delete(tab);
+  }
+
+  public toggleSort() {
+    this.sorting = !this.sorting;
+  }
+
+  private saveOrder() {
+    if (JSON.stringify(this.oldOrder) === JSON.stringify(this.tabs)) {
+      return;
+    }
+    this.tabs.forEach((tab, index) => tab.order = index+1);
+    this.oldOrder = Object.assign([], this.tabs);
+    const tabs = this.oldOrder
+    tabs.forEach(tab => this.tabService.save(tab));
   }
 }

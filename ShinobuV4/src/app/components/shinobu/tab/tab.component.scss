@@ -46,6 +46,11 @@ a {
   &.standalone {
     @include standalone()
   }
+
+  &.shake {
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+  }
 }
 
 @media (max-width: $shinobuResponsive) {
