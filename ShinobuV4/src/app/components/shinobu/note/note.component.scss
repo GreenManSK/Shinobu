@@ -13,6 +13,7 @@ $notePaddingLeft: .5rem;
   textarea, .title, button {
     color: $noteTextColor;
     background: transparentize(darken($color, 20%), $shinobuColorTransparency);
+    border-radius: 0;
   }
   textarea, .title {
     &:not(:first-child) {
@@ -100,7 +101,7 @@ $notePaddingLeft: .5rem;
   &.hasButton {
     .title {
       right: $noteButtonSize;
-      width: auto;
+      width: calc(100% - $noteButtonSize);
     }
   }
 
@@ -109,12 +110,12 @@ $notePaddingLeft: .5rem;
 
     textarea, .title {
       position: initial;
-      height: auto;
       display: block;
     }
 
     textarea {
       min-height: 20rem;
+      height: auto;
     }
   }
 }
