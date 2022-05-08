@@ -1,0 +1,10 @@
+<p>box works!</p>
+<div class="ts-box" [ngClass]="[colorClass]">
+  <div class="head">
+    <i *ngIf="!isImage(icon)" [class]="icon"></i>
+    <img class="icon" *ngIf="isImage(icon)" [src]="icon" [alt]="title">
+    <h2>{{title}}</h2>
+  </div>
+  <ng-container *ngTemplateOutlet="contentTemplate">
+  </ng-container>
+</div>

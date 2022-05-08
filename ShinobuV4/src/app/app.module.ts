@@ -25,6 +25,10 @@ import { NoteComponent } from './components/shinobu/note/note.component';
 import { ColorPickerComponent } from './components/shinobu/color-picker/color-picker.component';
 import { AlertCenterComponent } from './components/alert-center/alert-center.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { SettingsComponent } from './components/settings/settings/settings.component';
+import { ShinobuPreferenceComponent } from './components/settings/shinobu-preference/shinobu-preference.component';
+import { BoxComponent } from './components/box/box.component';
+import { AuthenticationComponent } from './components/settings/authentiaction/authentication.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,11 @@ import { MenuComponent } from './components/menu/menu.component';
     NoteComponent,
     ColorPickerComponent,
     AlertCenterComponent,
-    MenuComponent
+    MenuComponent,
+    SettingsComponent,
+    ShinobuPreferenceComponent,
+    BoxComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
