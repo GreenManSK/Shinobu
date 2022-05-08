@@ -23,6 +23,7 @@ import { TabComponent } from './components/shinobu/tab/tab.component';
 import { NotesComponent } from './components/shinobu/notes/notes.component';
 import { NoteComponent } from './components/shinobu/note/note.component';
 import { ColorPickerComponent } from './components/shinobu/color-picker/color-picker.component';
+import { AlertCenterComponent } from './components/alert-center/alert-center.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ColorPickerComponent } from './components/shinobu/color-picker/color-pi
     TabComponent,
     NotesComponent,
     NoteComponent,
-    ColorPickerComponent
+    ColorPickerComponent,
+    AlertCenterComponent
   ],
   imports: [
     BrowserModule,

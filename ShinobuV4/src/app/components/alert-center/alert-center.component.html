@@ -1,0 +1,7 @@
+<div class="ts-alert-center">
+  <div *ngFor="let alert of alerts"
+    [class]="[toAlertTypeString(alert.type), 'notification']">
+    <strong>{{alert.source}}</strong>
+    {{alert.text}}
+  </div>
+</div>
