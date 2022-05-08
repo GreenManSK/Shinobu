@@ -72,6 +72,7 @@ form.nice, .form-nice {
     border: 1px solid darken($boxBg, 40%);
     outline: none;
     color: $textColor;
+    height: 3.6rem;
 
     &:disabled {
       background: darken(#fff, 10%);
@@ -81,6 +82,7 @@ form.nice, .form-nice {
   textarea {
     resize: none;
     font-family: inherit;
+    height: auto;
   }
 
   hr {
@@ -107,6 +109,8 @@ form.nice, .form-nice {
       border-radius: 0;
       cursor: pointer;
       background: darken(#fff, 10%);
+      display: flex;
+      align-items: center;
     }
 
     :last-child {

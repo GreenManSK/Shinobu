@@ -1,8 +1,12 @@
 .ts-authenticaion {
   .sign-in-buttons {
-    i {
-      display: block;
-      font-size: 10rem;
+    button {
+      height: auto;
+
+      i {
+        display: block;
+        font-size: 10rem;
+      }
     }
   }
 }
