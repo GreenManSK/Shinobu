@@ -19,7 +19,8 @@ export class AuthService {
   }
 
   public subscribe( callback: () => void ) {
-    this.subject.subscribe(callback);
+    const subscription = this.subject.subscribe(callback);
+    return () => subscription.unsubscribe();
   }
 
   public isAuthenticatedPromise(): Promise<boolean> {

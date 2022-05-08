@@ -1,15 +1,15 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Tab} from '../../../data/shinobu/Tab';
-import {TabService} from '../../../services/data/shinobu/tab.service';
-import {LocalPreferenceService} from '../../../services/data/local-preference.service';
-import {ShContextMenuClickEvent} from "ng2-right-click-menu/lib/sh-context-menu.models";
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Tab } from '../../../data/shinobu/Tab';
+import { TabService } from '../../../services/data/shinobu/tab.service';
+import { LocalPreferenceService } from '../../../services/data/local-preference.service';
+import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
 
 @Component({
   selector: 'tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent implements OnInit, OnDestroy {
 
   private static readonly ACTIVE_TAB_KEY = 'activeTab';
 
@@ -26,18 +26,24 @@ export class TabsComponent implements OnInit {
   public sortableOptions = {
     onUpdate: () => this.saveOrder()
   };
-  public sortingTab = new Tab("Stop sorting", "ri-close-circle-line");
+  public sortingTab = new Tab('Stop sorting', 'ri-close-circle-line');
 
   private oldOrder: Tab[] = [];
 
-  constructor(private tabService: TabService, private localPreferenceService: LocalPreferenceService) {
+  private tabsUnsubscribe?: () => void;
+
+  constructor( private tabService: TabService, private localPreferenceService: LocalPreferenceService ) {
   }
 
   ngOnInit(): void {
     this.tabService.onReady().then(() => this.prepareTabs())
   }
 
-  public switchTab(tab: Tab) {
+  ngOnDestroy() {
+    this.tabsUnsubscribe && this.tabsUnsubscribe();
+  }
+
+  public switchTab( tab: Tab ) {
     this.setActiveTab(tab);
   }
 
@@ -47,7 +53,7 @@ export class TabsComponent implements OnInit {
   }
 
   private prepareTabs() {
-    this.tabService.getAll().subscribe(tabs => {
+    this.tabsUnsubscribe = this.tabService.getAll().subscribe(tabs => {
       this.tabs = tabs;
       this.oldOrder = Object.assign([], tabs);
       if (this.tabs.length <= 0) {
@@ -57,21 +63,21 @@ export class TabsComponent implements OnInit {
       const activeTabId = this.localPreferenceService.get(TabsComponent.ACTIVE_TAB_KEY, 0);
       const activeTabCandidates = this.tabs.filter(tab => tab.id === activeTabId);
       this.setActiveTab(activeTabCandidates.length > 0 ? activeTabCandidates[0] : this.tabs[0]);
-    })
+    }).unsubscribe;
   }
 
-  private setActiveTab(tab: Tab) {
+  private setActiveTab( tab: Tab ) {
     this.localPreferenceService.save(TabsComponent.ACTIVE_TAB_KEY, tab.id);
     this.activeTab = tab;
     this.tabChanged.emit(this.activeTab);
   }
 
-  public editTab(event: ShContextMenuClickEvent) {
+  public editTab( event: ShContextMenuClickEvent ) {
     this.editedTab = event.data as Tab;
     this.showModal = true;
   }
 
-  public deleteTab(event: ShContextMenuClickEvent) {
+  public deleteTab( event: ShContextMenuClickEvent ) {
     const tab = event.data as Tab;
     if (confirm(`Do you really want to delete ${tab.title}?`)) {
       this.tabService.delete(tab);
@@ -86,7 +92,7 @@ export class TabsComponent implements OnInit {
     if (JSON.stringify(this.oldOrder) === JSON.stringify(this.tabs)) {
       return;
     }
-    this.tabs.forEach((tab, index) => tab.order = index+1);
+    this.tabs.forEach(( tab, index ) => tab.order = index + 1);
     this.oldOrder = Object.assign([], this.tabs);
     const tabs = this.oldOrder
     tabs.forEach(tab => this.tabService.save(tab));
