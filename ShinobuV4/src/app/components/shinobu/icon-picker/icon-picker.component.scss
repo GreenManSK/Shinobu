@@ -1,0 +1,40 @@
+@import '../../../../styles/variables';
+
+.icon-picker {
+  .header {
+    text-align: center;
+    button {
+      display: inline-block;
+      width: auto;
+      font-size: 2rem;
+      padding: .5rem;
+      i {
+        vertical-align: text-bottom;
+      }
+    }
+  }
+  .search-bar {
+    input {
+      margin: .5rem 0;
+    }
+  }
+  .icons {
+    max-width: 100%;
+    max-height: 40vh;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    text-align: center;
+
+    i {
+      display: inline-block;
+      font-size: 3rem;
+      padding: 1rem;
+      cursor: pointer;
+      &:hover, &:active, &:focus {
+        color: $blue;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@import '../../../../styles/variables';
+
+$modalWebBackground: rgba(0, 0, 0, .7);
+$modalBackground: #fff;
+$modalRadius: 15px;
+
+.ts-quick-access-modal {
+  position: fixed;
+  z-index: 100;
+  background: $modalWebBackground;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  .box {
+    max-height: calc(100% - $space - $space);
+    overflow-y: scroll;
+    min-width: 350px;
+    background: $boxBg;
+    border-radius: $boxRadius;
+    margin: $space 0;
+    box-shadow: $shadow;
+    font-size: 1.4rem;
+
+    .preview {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      background: fade-out(#000, .3);
+      border-radius: ($boxRadius - 1px) ($boxRadius - 1px) 0 0;
+      padding: $modalRadius * 2/3 $modalRadius;
+
+      a {
+        margin: 0 auto;
+      }
+    }
+
+    .question {
+      text-align: center;
+      font-size: 120%;
+      margin-bottom: .5rem;
+    }
+  }
+}
+
+ngx-emoj, icon-picker {
+  display: block;
+  margin: 1rem auto 0;
+  width: 35vw;
+}
+
+@media (max-width: $shinobuResponsive) {
+  ngx-emoj, icon-picker {
+    margin: 0;
+    width: 100%;
+  }
+}

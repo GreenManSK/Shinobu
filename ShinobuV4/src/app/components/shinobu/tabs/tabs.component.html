@@ -1,0 +1,53 @@
+<div class="ts-tabs">
+  <ul *ngIf="sorting">
+    <li>
+      <tab [tab]="sortingTab" [isStandalone]="true" (click)="toggleSort()"></tab>
+    </li>
+  </ul>
+  <ul *ngIf="!sorting">
+    <li *ngFor="let tab of tabs">
+        <tab [tab]="tab"
+             [isActive]="tab == activeTab"
+             [shAttachMenu]="menu"
+             [shMenuData]="tab"
+             (click)="switchTab(tab)"
+             longPressContextMenu></tab>
+    </li>
+  </ul>
+  <ul *ngIf="sorting" [class.sorting]="sorting" [sortablejs]="tabs" [sortablejsOptions]="sortableOptions">
+    <li *ngFor="let tab of tabs">
+        <tab [tab]="tab" [shake]="true" [isStandalone]="true"></tab>
+    </li>
+  </ul>
+</div>
+
+<quick-access-modal *ngIf="editedTab" [tab]="editedTab"
+                    [(visible)]="showModal"></quick-access-modal>
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem (click)="toggleSort()">
+    <div>
+      <i class="ri-layout-grid-fill"></i> Sort
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem (click)="addTab()">
+    <div>
+      <i class="ri-add-line"></i> Add
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem (click)="editTab($event)">
+    <div>
+      <i class="ri-edit-line"></i>
+      Edit
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem let-data (click)="deleteTab($event)">
+    <div>
+      <i class="ri-delete-bin-line"></i>
+      Delete
+    </div>
+  </ng-template>
+</sh-context-menu>

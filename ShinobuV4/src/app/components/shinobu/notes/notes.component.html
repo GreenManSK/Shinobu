@@ -1,0 +1,54 @@
+<div class="ts-notes">
+  <ng-container *ngIf="isTouch">
+    <div #contextMenuOwner
+         [shAttachMenu]="menu"
+         [shMenuData]="activeNote"></div>
+    <note [note]="activeNote"
+          (openContextMenu)="openContextMenu()"
+    ></note>
+  </ng-container>
+  <ng-container *ngIf="!isTouch">
+    <note [note]="activeNote"
+          [shAttachMenu]="menu"
+          [shMenuData]="activeNote"
+    ></note>
+  </ng-container>
+</div>
+
+<sh-context-menu #menu>
+  <ng-template shContextMenuItem let-data>
+    <color-picker (colorPicked)="onColorChange($event)"></color-picker>
+  </ng-template>
+  <ng-template shContextMenuItem [divider]="true"></ng-template>
+  <ng-template shContextMenuItem (click)="addNote()">
+    <div>
+      <i class="ri-add-line"></i> Add
+    </div>
+  </ng-template>
+  <ng-template
+    shContextMenuItem
+    [subMenu]="changeMenu"
+  >
+    <div>
+      <i class="ri-booklet-fill"></i>
+      Change
+    </div>
+  </ng-template>
+
+  <ng-template shContextMenuItem let-data (click)="deleteNote($event)">
+    <div>
+      <i class="ri-delete-bin-line"></i>
+      Delete
+    </div>
+  </ng-template>
+
+  <sh-context-menu #changeMenu>
+    <ng-template shContextMenuItem
+                 *ngFor="let note of notes"
+                 (click)="setActiveNote(note)">
+      <div>
+        {{note.title}}
+      </div>
+    </ng-template>
+  </sh-context-menu>
+</sh-context-menu>

@@ -1,0 +1,40 @@
+<div class="ts-quick-access-modal" *ngIf="visible && editItem">
+  <div class="box">
+    <div class="preview" *ngIf="tile">
+      <tile [tile]="previewTile"></tile>
+    </div>
+    <div class="preview" *ngIf="tab && !tile">
+      <tab [tab]="previewTab" [isStandalone]="true"></tab>
+    </div>
+    <form class="nice cyan">
+      <div *ngIf="tile" class="field group">
+        <label for="form-link">URL</label>
+        <input type="text" id="form-link" placeholder="URL" name="url" [(ngModel)]="url">
+        <span class="help" title="Get icon from URL" (click)="getIconFromUrl()"><i class="ri-image-add-line"></i></span>
+      </div>
+      <div class="field">
+        <label for="form-title">Title</label>
+        <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="title">
+      </div>
+      <div class="field group">
+        <label for="form-icon">Icon</label>
+        <input type="text" id="form-icon" placeholder="Icon" name="icon" [(ngModel)]="icon">
+        <span class="help" title="Pick icon" (click)="toggleIcon()"><i class="ri-remixicon-line"></i></span>
+        <span class="help" title="Pick emoji" (click)="toggleEmoji()">🌺</span>
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save()">
+        <button class="second" (click)="hide()">Cancel</button>
+      </div>
+
+      <icon-picker *ngIf="showIconPicker" (onIconPick)="handleIcon($event)"></icon-picker>
+    </form>
+    <ngx-emoj
+      *ngIf="showEmojiPicker"
+      (onemojipick)="handleEmoji($event)"
+      [width]="'35vw'"
+      [height]="'50vh'"
+      [theme]="emojiPickerTheme">
+    </ngx-emoj>
+  </div>
+</div>
