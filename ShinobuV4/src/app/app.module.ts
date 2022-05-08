@@ -24,6 +24,7 @@ import { NotesComponent } from './components/shinobu/notes/notes.component';
 import { NoteComponent } from './components/shinobu/note/note.component';
 import { ColorPickerComponent } from './components/shinobu/color-picker/color-picker.component';
 import { AlertCenterComponent } from './components/alert-center/alert-center.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AlertCenterComponent } from './components/alert-center/alert-center.com
     NotesComponent,
     NoteComponent,
     ColorPickerComponent,
-    AlertCenterComponent
+    AlertCenterComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
