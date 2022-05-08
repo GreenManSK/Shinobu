@@ -1,0 +1,19 @@
+{
+  "name": "Shinobu",
+  "version": "4.0.0",
+  "description": "Shinobu UwU",
+  "manifest_version": 2,
+  "icons": {
+    "16": "assets/icons/shinobu/16.png",
+    "48": "assets/icons/shinobu/48.png",
+    "128": "assets/icons/shinobu/128.png"
+  },
+  "options_page": "index.html#/settings",
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "content_scripts": []
+}
