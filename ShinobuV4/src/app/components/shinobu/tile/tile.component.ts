@@ -15,6 +15,9 @@ export class TileComponent implements OnInit {
   @Input()
   public shake: boolean = false;
 
+  @Input()
+  public small: boolean = false;
+
   public styles: any = {};
 
   constructor() {

@@ -36,7 +36,15 @@
   i {
     font-size: 3.3em;
   }
+
   span.icon {
     font-size: 2.5em;
+  }
+
+  &.small {
+    width: $gridIconSize * $gridSmallerRatio;
+    height: $gridIconSize * $gridSmallerRatio;
+    margin: $gridMargin * $gridSmallerRatio;
+    padding: $gridPadding * $gridSmallerRatio;
   }
 }

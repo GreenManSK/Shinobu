@@ -1,6 +1,7 @@
 <a *ngIf="tile"
    [class.ts-tile]="true"
    [class.shake]="shake"
+   [class.small]="small"
    [href]="!shake ? tile.link : '#'"
    [title]="tile.title"
    [ngStyle]="styles"

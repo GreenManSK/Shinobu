@@ -3,6 +3,7 @@ import { Tab } from '../../../data/shinobu/Tab';
 import { Tile } from '../../../data/shinobu/Tile';
 import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
 import { TabService } from '../../../services/data/shinobu/tab.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'quick-access',
@@ -11,6 +12,8 @@ import { TabService } from '../../../services/data/shinobu/tab.service';
 })
 export class QuickAccessComponent implements OnInit {
 
+  private static readonly SMALL_BREAKPOINT = 4 * 6;
+
   public addTileButton = new Tile('Add', '#', 'ri-add-line', 0);
   public showModal = false;
   public activeTile?: Tile;
@@ -18,11 +21,12 @@ export class QuickAccessComponent implements OnInit {
   public sortableOptions = {
     onUpdate: () => this.saveOrder(),
   };
+  public isSmall = false;
 
   private oldOrder: Tile[] = [];
   private _tab?: Tab;
 
-  constructor(private tabService: TabService) {
+  constructor( private tabService: TabService, private deviceService: DeviceDetectorService ) {
   }
 
   ngOnInit(): void {
@@ -34,13 +38,14 @@ export class QuickAccessComponent implements OnInit {
       this.oldOrder = Object.assign([], tab.tiles);
     }
     this._tab = tab;
+    this.updateIsSmall();
   }
 
   public get tab(): Tab | undefined {
     return this._tab;
   }
 
-  public addTile(event?: MouseEvent): void {
+  public addTile( event?: MouseEvent ): void {
     if (event) {
       event.preventDefault();
     }
@@ -64,6 +69,7 @@ export class QuickAccessComponent implements OnInit {
         this.tab.tiles.splice(index, 1);
       }
       this.tabService.save(this.tab);
+      this.updateIsSmall();
     }
   }
 
@@ -75,8 +81,12 @@ export class QuickAccessComponent implements OnInit {
     if (!this.tab || JSON.stringify(this.oldOrder) === JSON.stringify(this.tab.tiles)) {
       return;
     }
-    this.tab.tiles.forEach((tile, index) => tile.order = index+1);
+    this.tab.tiles.forEach(( tile, index ) => tile.order = index + 1);
     this.oldOrder = Object.assign([], this.tab.tiles);
     this.tabService.save(this.tab);
+  }
+
+  public updateIsSmall() {
+    this.isSmall = this.deviceService.isTablet() || this.deviceService.isMobile() || (this._tab?.tiles?.length || 0) > QuickAccessComponent.SMALL_BREAKPOINT;
   }
 }
