@@ -29,6 +29,7 @@ import { SettingsComponent } from './components/settings/settings/settings.compo
 import { ShinobuPreferenceComponent } from './components/settings/shinobu-preference/shinobu-preference.component';
 import { BoxComponent } from './components/box/box.component';
 import { AuthenticationComponent } from './components/settings/authentiaction/authentication.component';
+import { FirebaseMigrationComponent } from './components/settings/firebase-migration/firebase-migration.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AuthenticationComponent } from './components/settings/authentiaction/au
     SettingsComponent,
     ShinobuPreferenceComponent,
     BoxComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    FirebaseMigrationComponent
   ],
   imports: [
     BrowserModule,
