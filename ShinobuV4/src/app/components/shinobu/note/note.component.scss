@@ -2,18 +2,32 @@
 @import '../../../../styles/mixins';
 
 $noteTextColor: #fff;
-$noteFontSize: 17px;
-$noteTitleSize: 20px;
+$noteFontSize: 1.7rem;
+$noteTitleSize: 2rem;
+$noteButtonSize: 3rem;
+
+$notePaddingTop: .3rem;
+$notePaddingLeft: .5rem;
 
 @mixin note($color) {
-  textarea, .text {
+  textarea, .title, button {
     color: $noteTextColor;
     background: transparentize(darken($color, 20%), $shinobuColorTransparency);
   }
-  textarea, .text {
+  textarea, .title {
     &:not(:first-child) {
       border-top: 1px solid transparentize($color, $shinobuColorTransparency*1.3);
       background: opacify($color, $shinobuColorTransparency*1.3);
+    }
+  }
+
+  button {
+    background: darken($color, 5);
+    &:hover, &:focus {
+      background: darken($color, 10);
+    }
+    &:active {
+      background: darken($color, 15);
     }
   }
 }
@@ -41,13 +55,12 @@ $noteTitleSize: 20px;
   @include noteClass($purple, ".purple");
   @include noteClass($cyan, ".cyan");
 
-  textarea, .text {
+  textarea, .title, button {
     @include maximize;
     margin: 0;
-    box-sizing: border-box;
     resize: none;
-    width: 100%;
-    padding: .3rem .5rem;
+    width: calc(100% - 2 * $notePaddingLeft);
+    padding: $notePaddingTop $notePaddingLeft;
     font-size: $noteFontSize;
     outline: 0;
     border: none;
@@ -56,21 +69,45 @@ $noteTitleSize: 20px;
     cursor: pointer;
   }
 
-  .text {
+  textarea {
+    bottom: $noteTitleSize + 2 * $notePaddingTop;
+  }
+
+  .title {
     height: $noteTitleSize;
     top: initial;
     text-align: center;
     font-size: $noteTitleSize;
+    text-overflow: ellipsis;
   }
 
-  textarea {
-    bottom: $noteTitleSize;
+  button {
+    height: $noteTitleSize + .7rem;
+    width: $noteButtonSize;
+    top: initial;
+    left: auto;
+    right: 0;
+    text-align: center;
+    font-size: $noteTitleSize;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    i {
+      font-size: $noteTitleSize - .2rem;
+    }
+  }
+
+  &.hasButton {
+    .title {
+      right: $noteButtonSize;
+      width: auto;
+    }
   }
 
   @media (max-width: $shinobuResponsive) {
     height: auto;
 
-    textarea, .text {
+    textarea, .title {
       position: initial;
       height: auto;
       display: block;

@@ -1,4 +1,5 @@
-<div *ngIf="note" class="ts-note" [ngClass]="[color()]">
+<div *ngIf="note" class="ts-note" [ngClass]="[color()]" [class.hasButton]="isTouch">
   <textarea [(ngModel)]="note.text" (keyup)="prepareSave()"></textarea>
-  <input class="text" [(ngModel)]="note.title" (keyup)="prepareSave()" type="text" />
+  <input class="title" [(ngModel)]="note.title" (keyup)="prepareSave()" type="text" />
+  <button *ngIf="isTouch" (click)="openContextMenu.emit()"><i class="ri-layout-top-2-fill"></i></button>
 </div>

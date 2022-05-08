@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Note } from '../../../data/shinobu/Note';
 import { Color } from '../../../types/Color';
 import { NoteService } from '../../../services/data/shinobu/note.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'note',
@@ -15,12 +16,18 @@ export class NoteComponent implements OnInit {
   @Input()
   public note?: Note;
 
+  @Output()
+  public openContextMenu: EventEmitter<void> = new EventEmitter<void>();
+
+  public isTouch = false;
+
   private saveTimeout?: number;
 
-  constructor( private noteService: NoteService ) {
+  constructor( private noteService: NoteService, private deviceService: DeviceDetectorService  ) {
   }
 
   ngOnInit(): void {
+    this.isTouch = this.deviceService.isTablet() || this.deviceService.isMobile();
   }
 
   public prepareSave() {

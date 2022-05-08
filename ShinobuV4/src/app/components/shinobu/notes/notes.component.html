@@ -1,9 +1,18 @@
 <div class="ts-notes">
-  <note [note]="activeNote"
-        [shAttachMenu]="menu"
-        [shMenuData]="activeNote"
-        longPressContextMenu
-  ></note>
+  <ng-container *ngIf="isTouch">
+    <div #contextMenuOwner
+         [shAttachMenu]="menu"
+         [shMenuData]="activeNote"></div>
+    <note [note]="activeNote"
+          (openContextMenu)="openContextMenu()"
+    ></note>
+  </ng-container>
+  <ng-container *ngIf="!isTouch">
+    <note [note]="activeNote"
+          [shAttachMenu]="menu"
+          [shMenuData]="activeNote"
+    ></note>
+  </ng-container>
 </div>
 
 <sh-context-menu #menu>

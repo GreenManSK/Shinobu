@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Note } from '../../../data/shinobu/Note';
 import { NoteService } from '../../../services/data/shinobu/note.service';
 import { LocalPreferenceService } from '../../../services/data/local-preference.service';
 import { Color } from '../../../types/Color';
 import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { NoteComponent } from '../note/note.component';
 
 @Component({
   selector: 'notes',
@@ -14,13 +16,18 @@ export class NotesComponent implements OnInit {
 
   private static readonly ACTIVE_NOTE_KEY = 'activeNote';
 
+  @ViewChild("contextMenuOwner") noteElement?: ElementRef;
+
   public notes: Note[] = [];
   public activeNote?: Note;
 
-  constructor( private noteService: NoteService, private localPreferenceService: LocalPreferenceService ) {
+  public isTouch = false;
+
+  constructor( private noteService: NoteService, private localPreferenceService: LocalPreferenceService, private deviceService: DeviceDetectorService  ) {
   }
 
   ngOnInit(): void {
+    this.isTouch = this.deviceService.isTablet() || this.deviceService.isMobile();
     this.noteService.onReady().then(() => this.prepareNotes());
   }
 
@@ -59,10 +66,27 @@ export class NotesComponent implements OnInit {
     this.noteService.save(this.activeNote);
   }
 
-  public deleteNote(event: ShContextMenuClickEvent) {
+  public deleteNote( event: ShContextMenuClickEvent ) {
     const note = event.data as Note;
     if (confirm(`Do you really want to delete ${note.title}?`)) {
       this.noteService.delete(note);
     }
+  }
+
+  public openContextMenu() {
+    if (!this.noteElement) {
+      return;
+    }
+    const element = this.noteElement.nativeElement;
+    const ev3 = new MouseEvent("contextmenu", {
+      bubbles: true,
+      cancelable: false,
+      view: window,
+      button: 2,
+      buttons: 0,
+      clientX: element.getBoundingClientRect().x,
+      clientY: element.getBoundingClientRect().y
+    });
+    element.dispatchEvent(ev3);
   }
 }
