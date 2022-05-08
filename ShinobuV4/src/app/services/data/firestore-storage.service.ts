@@ -45,12 +45,12 @@ export class FirestoreStorageService<T extends ISavable> implements IStorageServ
   public save( item: T ): Promise<T> {
     item.userId = this.authService.getUserId();
     if (item.id) {
-      return this.collection.doc(item.id).update({...item}).then(() => item, error => {
+      return this.collection.doc(item.id).update(this.toPlainObject(item) as T).then(() => item, error => {
         this.handleError(`save(${item.id})`, error);
         return item;
       });
     }
-    return this.collection.add({...item}).then(ref => {
+    return this.collection.add(this.toPlainObject(item)  as T).then(ref => {
       item.id = ref.id;
       return item;
     }, error => {
@@ -75,5 +75,12 @@ export class FirestoreStorageService<T extends ISavable> implements IStorageServ
 
   private handleError( method: string, message: string, ex?: Error ) {
     this.errorService.sendError(new LogError(`${this.constructor.name}(${this.collectionName})`, `${method}: ${message}`, ex));
+  }
+
+  private toPlainObject( item: T ) {
+    if (item.toPlainObject) {
+      return item.toPlainObject();
+    }
+    return {...item};
   }
 }

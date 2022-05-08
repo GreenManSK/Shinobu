@@ -16,17 +16,23 @@ export class TabService extends DynamicStorageService<Tab> {
 
   override getAll(): Observable<Tab[]> {
     return super.getAll().pipe(
-      map(tabs => tabs.map(this.sortTiles)),
-      tap(tabs => tabs.sort((a,b) => a.order - b.order))
+      map(tabs => tabs.map(this.sortTiles).map(this.plainToTab)),
+      tap(tabs => tabs.sort(( a, b ) => a.order - b.order))
     );
   }
 
   override getById( id: string ): Observable<Tab> {
-    return super.getById(id).pipe(map(tab => this.sortTiles(tab)));
+    return super.getById(id).pipe(map(tab => this.plainToTab(this.sortTiles(tab))));
   }
 
   private sortTiles( tab: Tab ): Tab {
     tab.tiles?.sort(( a, b ) => a.order - b.order);
+    return tab;
+  }
+
+  private plainToTab( plain: Tab ): Tab {
+    const tab = new Tab();
+    Object.assign(tab, plain);
     return tab;
   }
 }

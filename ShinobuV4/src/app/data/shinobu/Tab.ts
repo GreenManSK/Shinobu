@@ -10,4 +10,11 @@ export class Tab extends ASavable {
   ) {
     super();
   }
+
+  override toPlainObject(): any {
+    return {
+      ...this,
+      tiles: this.tiles.map(tile => ({...tile}))
+    }
+  }
 }
