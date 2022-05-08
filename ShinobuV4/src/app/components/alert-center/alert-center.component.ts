@@ -22,7 +22,7 @@ export class AlertCenterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.alertUnsubscribe = this.alertService.subscribe(this.onAlertEvent);
+    this.alertUnsubscribe = this.alertService.subscribe(alert =>this.onAlertEvent(alert));
   }
 
   ngOnDestroy(): void {
