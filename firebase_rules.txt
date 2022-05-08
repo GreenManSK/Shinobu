@@ -2,12 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /tabs/{item} {
+    	allow read: if request.auth != null && request.auth.uid == resource.data.userId;
     	allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
-    	allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
+    	allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
     }
     match /notes/{item} {
+    	allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
     	allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
-    	allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
+    	allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
     }
   }
 }
