@@ -1,5 +1,0 @@
-<a class="ts-tile" [href]="tile.link" [title]="tile.title">
-  <fa *ngIf="tile.icon && !isImage(tile.icon)" [name]="tile.icon"></fa>
-  <img *ngIf="tile.icon && isImage(tile.icon)" [alt]="tile.title" [src]="tile.icon">
-  <span *ngIf="!tile.icon">{{tile.title}}</span>
-</a>
