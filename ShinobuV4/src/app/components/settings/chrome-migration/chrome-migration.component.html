@@ -1,0 +1,8 @@
+<ng-container *ngIf="hasDataToMigrate">
+  <hr>
+  <p>You have data from old version of chrome extension. Do you want to migrate the data?</p>
+  <div class="buttons">
+    <button (click)="migrateData($event)">Yes</button>
+    <button class="second" (click)="skipMigration($event)">No</button>
+  </div>
+</ng-container>

@@ -30,6 +30,7 @@ import { ShinobuPreferenceComponent } from './components/settings/shinobu-prefer
 import { BoxComponent } from './components/box/box.component';
 import { AuthenticationComponent } from './components/settings/authentiaction/authentication.component';
 import { FirebaseMigrationComponent } from './components/settings/firebase-migration/firebase-migration.component';
+import { ChromeMigrationComponent } from './components/settings/chrome-migration/chrome-migration.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { FirebaseMigrationComponent } from './components/settings/firebase-migra
     ShinobuPreferenceComponent,
     BoxComponent,
     AuthenticationComponent,
-    FirebaseMigrationComponent
+    FirebaseMigrationComponent,
+    ChromeMigrationComponent
   ],
   imports: [
     BrowserModule,
