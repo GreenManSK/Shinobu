@@ -31,6 +31,7 @@ import { BoxComponent } from './components/box/box.component';
 import { AuthenticationComponent } from './components/settings/authentiaction/authentication.component';
 import { FirebaseMigrationComponent } from './components/settings/firebase-migration/firebase-migration.component';
 import { ChromeMigrationComponent } from './components/settings/chrome-migration/chrome-migration.component';
+import { KirinoComponent } from './components/kirino/kirino/kirino.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ChromeMigrationComponent } from './components/settings/chrome-migration
     BoxComponent,
     AuthenticationComponent,
     FirebaseMigrationComponent,
-    ChromeMigrationComponent
+    ChromeMigrationComponent,
+    KirinoComponent
   ],
   imports: [
     BrowserModule,
