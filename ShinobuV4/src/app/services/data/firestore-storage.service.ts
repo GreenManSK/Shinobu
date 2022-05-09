@@ -3,14 +3,14 @@ import { IStorageService } from './istorage-service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AuthService } from '../auth.service';
 import { ErrorService } from '../error.service';
-import { catchError, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { LogError } from '../../types/LogError';
 import firebase from 'firebase/compat';
 
 export class FirestoreStorageService<T extends ISavable> implements IStorageService<T> {
 
   private collection: AngularFirestoreCollection<T>;
-  private subject?: Subject<T[]>;
+  private subject?: BehaviorSubject<T[]>;
 
   constructor( private collectionName: string, afs: AngularFirestore, private authService: AuthService, private errorService: ErrorService ) {
     this.collection = afs.collection<T>(collectionName);
@@ -22,7 +22,7 @@ export class FirestoreStorageService<T extends ISavable> implements IStorageServ
 
   public getAll(): Observable<T[]> {
     if (!this.subject) {
-      this.subject = new Subject<T[]>();
+      this.subject = new BehaviorSubject<T[]>([]);
       this.collection.ref.where('userId', '==', this.authService.getUserId()).onSnapshot(( {docs} ) => {
         this.subject?.next(docs.map(this.snaphshotToData));
       }, error => {
