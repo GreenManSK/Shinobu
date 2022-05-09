@@ -1,5 +1,5 @@
-import { ASavable } from '../../../data/ASavable';
 import { Episode } from './Episode';
+import { ASavable } from '../ASavable';
 
 export abstract class AEpisodic extends ASavable {
   public title: string = '';
