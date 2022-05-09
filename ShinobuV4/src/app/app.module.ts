@@ -32,6 +32,7 @@ import { AuthenticationComponent } from './components/settings/authentiaction/au
 import { FirebaseMigrationComponent } from './components/settings/firebase-migration/firebase-migration.component';
 import { ChromeMigrationComponent } from './components/settings/chrome-migration/chrome-migration.component';
 import { KirinoComponent } from './components/kirino/kirino/kirino.component';
+import { KirinoImageComponent } from './components/kirino/kirino-image/kirino-image.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { KirinoComponent } from './components/kirino/kirino/kirino.component';
     AuthenticationComponent,
     FirebaseMigrationComponent,
     ChromeMigrationComponent,
-    KirinoComponent
+    KirinoComponent,
+    KirinoImageComponent
   ],
   imports: [
     BrowserModule,
