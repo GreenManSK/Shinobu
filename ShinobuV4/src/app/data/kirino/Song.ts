@@ -1,4 +1,5 @@
-import { ASavable } from '../../../data/ASavable';
+import { ASavable } from '../ASavable';
+
 
 export class Song extends ASavable {
 
