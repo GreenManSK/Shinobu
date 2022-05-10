@@ -57,7 +57,7 @@ export class TabsComponent implements OnInit, OnDestroy {
       this.tabs = tabs;
       this.oldOrder = Object.assign([], tabs);
       if (this.tabs.length <= 0) {
-        this.tabService.save(new Tab('default', 'ri-home-heart-fill', []))
+        this.tabs = [new Tab('default', 'ri-home-heart-fill', [])];
         return
       }
       const activeTabId = this.localPreferenceService.get(TabsComponent.ACTIVE_TAB_KEY, 0);
@@ -67,7 +67,9 @@ export class TabsComponent implements OnInit, OnDestroy {
   }
 
   private setActiveTab( tab: Tab ) {
-    this.localPreferenceService.save(TabsComponent.ACTIVE_TAB_KEY, tab.id);
+    if (tab.id) {
+      this.localPreferenceService.save(TabsComponent.ACTIVE_TAB_KEY, tab.id);
+    }
     this.activeTab = tab;
     this.tabChanged.emit(this.activeTab);
   }

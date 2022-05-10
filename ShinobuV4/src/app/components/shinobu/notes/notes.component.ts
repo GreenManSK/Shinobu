@@ -40,8 +40,7 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notesUnsubscribe = this.noteService.getAll().subscribe(notes => {
       this.notes = notes;
       if (this.notes.length <= 0) {
-        this.createNote();
-        return;
+        this.notes = [new Note('New note ' + Date.now())];
       }
       const activeNoteId = this.localPreferenceService.get(NotesComponent.ACTIVE_NOTE_KEY, 0);
       const activeNoteCandidate = this.notes.filter(note => note.id === activeNoteId);
@@ -50,7 +49,9 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   public setActiveNote( note: Note ) {
-    this.localPreferenceService.save(NotesComponent.ACTIVE_NOTE_KEY, note.id);
+    if (note.id) {
+      this.localPreferenceService.save(NotesComponent.ACTIVE_NOTE_KEY, note.id);
+    }
     this.activeNote = note;
   }
 
