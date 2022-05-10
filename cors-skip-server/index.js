@@ -1,5 +1,5 @@
 const host = process.argv.length > 3 ? process.argv[2] : "127.0.0.1";
-const port = process.argv.length > 2 ? process.argv[1] : "8080";
+const port = process.argv.length > 2 ? process.argv[1] : "6446";
 
 const allowedUrls = [
     "anison.info/data/song/",
@@ -15,7 +15,7 @@ const allowedUrls = [
 const cors_proxy = require('cors-anywhere');
 cors_proxy.createServer({
     originWhitelist: [],
-    // requireHeader: ['origin', 'x-requested-with'],
+    requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2'],
     handleInitialRequest: (req, res, location) => {
         const url = `${location.host}${location.path}`;
