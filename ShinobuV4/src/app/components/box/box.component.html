@@ -1,9 +1,11 @@
-<p>box works!</p>
 <div class="ts-box" [ngClass]="[colorClass]">
-  <div class="head">
-    <i *ngIf="!isImage(icon)" [class]="icon"></i>
+  <div class="head" [ngClass]="{clickable: onHeaderClick}" (click)="onHeaderClick && onHeaderClick()">
+    <i *ngIf="!isImage(icon)" [class]="icon" class="icon"></i>
     <img class="icon" *ngIf="isImage(icon)" [src]="icon" [alt]="title">
     <h2>{{title}}</h2>
+    <div *ngIf="headerButton" class="tools">
+      <a [title]="headerButton.title" href="#" (click)="headerButtonClick($event)"><i [class]="headerButton.icon"></i></a>
+    </div>
   </div>
   <ng-container *ngTemplateOutlet="contentTemplate">
   </ng-container>

@@ -33,6 +33,7 @@ import { FirebaseMigrationComponent } from './components/settings/firebase-migra
 import { ChromeMigrationComponent } from './components/settings/chrome-migration/chrome-migration.component';
 import { KirinoComponent } from './components/kirino/kirino/kirino.component';
 import { KirinoImageComponent } from './components/kirino/kirino-image/kirino-image.component';
+import { ItemBoxComponent } from './components/kirino/item-box/item-box.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { KirinoImageComponent } from './components/kirino/kirino-image/kirino-im
     FirebaseMigrationComponent,
     ChromeMigrationComponent,
     KirinoComponent,
-    KirinoImageComponent
+    KirinoImageComponent,
+    ItemBoxComponent
   ],
   imports: [
     BrowserModule,
