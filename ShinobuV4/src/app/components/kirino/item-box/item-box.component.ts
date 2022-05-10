@@ -29,7 +29,7 @@ export class ItemBoxComponent implements OnInit {
   public enableHiding = false;
 
   @Input()
-  public headerButton?: BoxButton;
+  public headerButtons: BoxButton[] = [];
 
   public now: Date;
   public minimized = true;

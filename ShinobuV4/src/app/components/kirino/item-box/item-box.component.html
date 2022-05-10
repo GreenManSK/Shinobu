@@ -2,7 +2,7 @@
      [title]="title"
      [icon]="icon"
      [onHeaderClick]="onHeaderClick.bind(this)"
-     [headerButton]="headerButton">
+     [headerButtons]="headerButtons">
   <ng-template>
     <ul class="data" [ngClass]="{minimized: minimized}">
       <li *ngFor="let item of renderItems"

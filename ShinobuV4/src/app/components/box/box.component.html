@@ -3,8 +3,9 @@
     <i *ngIf="!isImage(icon)" [class]="icon" class="icon"></i>
     <img class="icon" *ngIf="isImage(icon)" [src]="icon" [alt]="title">
     <h2>{{title}}</h2>
-    <div *ngIf="headerButton" class="tools">
-      <a [title]="headerButton.title" href="#" (click)="headerButtonClick($event)"><i [class]="headerButton.icon"></i></a>
+    <div *ngIf="headerButtons" class="tools">
+      <a *ngFor="let headerButton of headerButtons" [title]="headerButton.title" href="#"
+         (click)="headerButtonClick($event, headerButton)"><i [class]="headerButton.icon"></i></a>
     </div>
   </div>
   <ng-container *ngTemplateOutlet="contentTemplate">

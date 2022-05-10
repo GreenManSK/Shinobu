@@ -19,7 +19,7 @@ export class BoxComponent implements OnInit {
   public icon = '';
 
   @Input()
-  public headerButton?: BoxButton;
+  public headerButtons: BoxButton[] = [];
 
   @Input()
   public onHeaderClick?: () => void;
@@ -41,12 +41,12 @@ export class BoxComponent implements OnInit {
     return BoxComponent.getColorClass(this.color);
   }
 
-  public headerButtonClick( event: MouseEvent ): void {
+  public headerButtonClick( event: MouseEvent, button: BoxButton ): void {
     event.preventDefault();
-    if (!this.headerButton?.callback) {
+    if (!button?.callback) {
       return;
     }
-    this.headerButton.callback(null);
+    button.callback(null);
   }
 
   public static getColorClass( color: Color ): string {
