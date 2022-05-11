@@ -4,7 +4,7 @@ import { Episode } from './Episode';
 export class Show extends AEpisodic {
   constructor(
     title: string = '',
-    public tvdbId: number = 0,
+    public tvdbId: string = '',
     public url: string = '',
     episodes: Episode[] = [],
     lastSeen: number = 0
