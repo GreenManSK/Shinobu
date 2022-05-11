@@ -9,7 +9,7 @@ import { LocalStorageService } from './local-storage.service';
 
 export abstract class DynamicStorageService<T extends ISavable> implements IStorageService<T> {
 
-  private readonly readyPromise: Promise<void>;
+  protected readyPromise: Promise<void>;
   private implementation?: IStorageService<T>;
 
   constructor( private collectionName: string, afs: AngularFirestore, authService: AuthService, private errorService: ErrorService ) {

@@ -11,6 +11,7 @@ import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { Episode } from '../../../data/kirino/Episode';
+import { NyaaSearchService } from '../../../services/nyaa-search.service';
 
 type DataBag = {
   anime: Anime,
@@ -38,9 +39,9 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: AnimeService,
-    private popUpService: PopUpService
+    private popUpService: PopUpService,
+    private nyaaSearch: NyaaSearchService
   ) {
-    console.log(AnidbParserService.getApiUrl(17089));
   }
 
   ngOnInit(): void {
@@ -62,7 +63,8 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     for (const episode of anime.episodes) {
       let nyaaSearch: BoxLink | undefined = undefined;
       if (anime.nyaaSearch) {
-        nyaaSearch = new BoxLink(anime.nyaaSearch); // TODO: Use nyaa serach service for link
+        const searchText = this.nyaaSearch.generateSearchText(anime, episode);
+        nyaaSearch = new BoxLink(searchText, this.nyaaSearch.getSearchUrl(searchText));
       }
       episodes.push(new BoxItem(
         anime.title + ' [' + episode.number + ']',
