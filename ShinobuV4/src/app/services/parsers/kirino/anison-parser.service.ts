@@ -43,7 +43,7 @@ export class AnisonParserService implements ISiteParser<Song> {
       song.type = showInfo?.querySelector('td:nth-child(3)')?.textContent || '';
 
       song.title = el.querySelector('.subject')?.textContent || '';
-      const authorHeader = Array.from(document.querySelectorAll('td')).filter(td => td?.textContent?.includes('歌手'));
+      const authorHeader = Array.from(el.querySelectorAll('td')).filter(td => td?.textContent?.includes('歌手'));
       song.author = authorHeader.length > 0 && authorHeader[0]?.parentElement?.querySelector('td:nth-child(2)')?.textContent || '';
       const date = el.querySelector('[axis=date]')?.getAttribute('title');
       if (date) {
