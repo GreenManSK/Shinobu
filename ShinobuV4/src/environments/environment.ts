@@ -12,7 +12,8 @@ export const environment = {
     authDomain: 'shinobu-7c893.firebaseapp.com',
     messagingSenderId: '826493978428',
   },
-  production: false
+  production: false,
+  corsServer: "http://127.0.0.1:8080/"
 };
 
 /*
