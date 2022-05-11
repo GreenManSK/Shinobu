@@ -9,5 +9,10 @@ export const environment = {
     messagingSenderId: '826493978428',
   },
   production: true,
-  corsServer: "http://127.0.0.1:8080/"
+  corsServer: "http://127.0.0.1:8080/",
+  anidbApi: {
+    url: "http://api.anidb.net:9001",
+    clientVersion: "0",
+    clientName: 'name'
+  }
 };
