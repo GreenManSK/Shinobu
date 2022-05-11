@@ -11,9 +11,13 @@
         <label for="form-anidb">aniDB.net ID</label>
         <input type="number" id="form-anidb" placeholder="aniDB.net ID" name="anidbId" [(ngModel)]="anime.anidbId">
       </div>
-      <div class="field group">
-        <label>Search text</label>
-        <!--        TODO: -->
+      <div class="field">
+        <label for="form-nyaa-text">Search text</label>
+        <input type="text" id="form-nyaa-text" placeholder="Search text" name="nyaaText" [(ngModel)]="nyaaSearchText">
+      </div>
+      <div class="field">
+        <label for="form-nyaa-digits">Number of digits per episode number</label>
+        <input type="number" id="form-nyaa-digits" placeholder="Number of digits" name="nyaaDigits" [(ngModel)]="nyaaSearchDigist">
       </div>
       <div class="buttons">
         <input type="submit" value="Save" (click)="save()">

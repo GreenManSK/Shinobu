@@ -15,4 +15,11 @@ export class Anime extends AEpisodic {
     this.episodes = episodes;
     this.lastSeen = lastSeen;
   }
+
+  override toPlainObject(): any {
+    return {
+      ...this,
+      nyaaSearch: {...this.nyaaSearch}
+    }
+  }
 }

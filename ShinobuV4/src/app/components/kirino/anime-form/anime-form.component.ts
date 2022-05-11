@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Anime } from '../../../data/kirino/Anime';
 import { Subscription } from 'rxjs';
 import { BoxComponent } from '../../box/box.component';
+import { NyaaSearch } from '../../../data/kirino/NyaaSearch';
 
 @Component({
   selector: 'anime-form',
@@ -26,6 +27,9 @@ export class AnimeFormComponent implements OnInit {
   private _id: string = '';
   public anime?: Anime;
 
+  public nyaaSearchText = '';
+  public nyaaSearchDigist = 2;
+
   constructor(
     private route: ActivatedRoute,
     private service: AnimeService ) {
@@ -43,6 +47,8 @@ export class AnimeFormComponent implements OnInit {
         let subscription: Subscription;
         subscription = this.service.getById(id).subscribe(anime => {
           this.anime = anime;
+          this.nyaaSearchText = anime.nyaaSearch?.searchText || '';
+          this.nyaaSearchDigist = anime.nyaaSearch?.digits || 0;
           subscription.unsubscribe();
         });
       });
@@ -57,6 +63,11 @@ export class AnimeFormComponent implements OnInit {
   public save(): void {
     if (!this.anime) {
       return;
+    }
+    if (!this.nyaaSearchText) {
+      this.anime.nyaaSearch = undefined;
+    } else {
+      this.anime.nyaaSearch = new NyaaSearch(this.nyaaSearchText, this.nyaaSearchDigist);
     }
     this.service.save(this.anime).then(() => {
       // TODO: Sync data
