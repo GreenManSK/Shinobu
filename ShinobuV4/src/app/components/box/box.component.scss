@@ -4,6 +4,13 @@
 @mixin color-box($color) {
   .head {
     background: $color;
+    .tools {
+      a {
+        &:hover, &:focus, &:active {
+          color: $color;
+        }
+      }
+    }
   }
   li a {
     color: $color;
@@ -72,6 +79,7 @@
           display: inline-block;
           padding: 0.05rem $boxRadius;
           border-radius: $boxRadius;
+          text-decoration: none;
           &:hover, &:focus, &:active {
             background: $boxHeaderColor;
           }

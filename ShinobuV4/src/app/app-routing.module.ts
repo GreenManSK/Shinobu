@@ -3,10 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShinobuMainComponent } from './components/shinobu/shinobu-main/shinobu-main.component';
 import { SettingsComponent } from './components/settings/settings/settings.component';
 import { KirinoComponent } from './components/kirino/kirino/kirino.component';
+import { KirinoFormComponent } from './components/kirino/kirino-form/kirino-form.component';
 
 const routes: Routes = [
   {path: '', component: ShinobuMainComponent},
   {path: 'kirino', component: KirinoComponent},
+  {path: 'kirino-form/:type', component: KirinoFormComponent},
+  {path: 'kirino-form/:type/:id', component: KirinoFormComponent},
   {path: 'settings', component: SettingsComponent},
 ];
 

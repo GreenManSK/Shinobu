@@ -1,0 +1,23 @@
+<box [color]="color"
+     [title]="'Anime'"
+     [icon]="'assets/icons/anidb.ico'">
+  <ng-template>
+    <form *ngIf="anime" class="nice show-labels" [ngClass]="[getColorClass()]">
+      <div class="field">
+        <label for="form-title">Title</label>
+        <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="anime.title">
+      </div>
+      <div class="field">
+        <label for="form-anidb">aniDB.net ID</label>
+        <input type="number" id="form-anidb" placeholder="aniDB.net ID" name="anidbId" [(ngModel)]="anime.anidbId">
+      </div>
+      <div class="field group">
+        <label>Search text</label>
+        <!--        TODO: -->
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save()">
+      </div>
+    </form>
+  </ng-template>
+</box>
