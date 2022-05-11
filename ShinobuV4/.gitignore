@@ -46,3 +46,6 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 firebase.json
+
+ShinobuV4/src/environments/environment.ts
+ShinobuV4/src/environments/environment.prod.ts
