@@ -17,17 +17,17 @@ export class HttpClientService {
     this.useCorsServer = !!chrome;
   }
 
-  public getData( url: string ): Promise<string> {
+  public getData( url: string, skipCors = false ): Promise<string> {
     return new Promise(( resolve ) => {
       let subscription: Subscription | undefined = undefined;
-      subscription = this.http.get(this.getUrl(url), {responseType: 'text'}).subscribe(html => {
+      subscription = this.http.get(this.getUrl(url, skipCors), {responseType: 'text'}).subscribe(html => {
         resolve(html);
         subscription && subscription.unsubscribe();
       });
     });
   }
 
-  private getUrl( plainUrl: string ) {
-    return this.useCorsServer ? `${this.corsServerUrl}${plainUrl}` : plainUrl;
+  private getUrl( plainUrl: string, skipCors: boolean ) {
+    return this.useCorsServer && !skipCors ? `${this.corsServerUrl}${plainUrl}` : plainUrl;
   }
 }
