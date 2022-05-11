@@ -6,6 +6,8 @@ import { environment } from '../../../../environments/environment';
 import { HttpClientService } from '../../http-client.service';
 import { LogError } from '../../../types/LogError';
 import { Episode } from '../../../data/kirino/Episode';
+import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
+import { AnimeFormComponent } from '../../../components/kirino/anime-form/anime-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +33,9 @@ export class AnidbParserService implements ISiteParser<Anime> {
   }
 
   public getFormUrl( data: Anime ): string {
-    // TODO: when kirino form is added
-    return '';
+    return KirinoFormComponent.getUrl(AnimeFormComponent.TYPE) + '?' +
+      AnimeFormComponent.TITLE_PARAM + '=' + encodeURIComponent(data.title) + '&' +
+      AnimeFormComponent.ANIDB_ID_PARAM + '=' + encodeURIComponent(data.anidbId);
   }
 
   public match( url: string ): boolean {
