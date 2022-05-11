@@ -32,7 +32,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
     new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editAnime(bag)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line')
+    new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteAnime(bag))
   ];
   private dataSubscription?: Subscription;
 
@@ -117,5 +117,9 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     }
     anime.episodes.splice(index, 1);
     this.service.save(anime);
+  }
+
+  public deleteAnime( {anime}: DataBag ): void {
+    this.service.delete(anime);
   }
 }
