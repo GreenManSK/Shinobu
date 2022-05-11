@@ -30,7 +30,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
   public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addAnime());
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'ri-eye-line'),
+    new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
     new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editAnime(bag)),
     new BoxButton('Delete', 'ri-delete-bin-6-line')
   ];
@@ -101,12 +101,21 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editAnime( bag: DataBag ) {
+  private editAnime( {anime}: DataBag ) {
     this.popUpService.openPopUp(
-      KirinoFormComponent.getUrl(AnimeFormComponent.TYPE, bag.anime.id),
+      KirinoFormComponent.getUrl(AnimeFormComponent.TYPE, anime.id),
       'Edit',
       AnimeFormComponent.WIDTH,
       AnimeFormComponent.HEIGHT
     );
+  }
+
+  private markAsSeen( {anime, episode}: DataBag ) {
+    const index = anime.episodes.indexOf(episode);
+    if (index < 0) {
+      return;
+    }
+    anime.episodes.splice(index, 1);
+    this.service.save(anime);
   }
 }
