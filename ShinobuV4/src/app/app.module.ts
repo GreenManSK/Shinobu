@@ -77,7 +77,9 @@ import { AnimeFormComponent } from './components/kirino/anime-form/anime-form.co
       registrationStrategy: 'registerWhenStable:30000'
     }),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule.enablePersistence({
+      synchronizeTabs: true
+    }),
     AngularFireAuthModule,
     FormsModule,
     NgxEmojModule,

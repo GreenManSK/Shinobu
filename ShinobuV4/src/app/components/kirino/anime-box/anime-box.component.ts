@@ -10,6 +10,12 @@ import { AnidbParserService } from '../../../services/parsers/kirino/anidb-parse
 import { PopUpService } from '../../../services/pop-up.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
+import { Episode } from '../../../data/kirino/Episode';
+
+type DataBag = {
+  anime: Anime,
+  episode: Episode
+};
 
 @Component({
   selector: 'anime-box',
@@ -25,7 +31,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line'),
-    new BoxButton('Edit', 'ri-edit-2-line'),
+    new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editAnime(bag)),
     new BoxButton('Delete', 'ri-delete-bin-6-line')
   ];
   private dataSubscription?: Subscription;
@@ -90,6 +96,15 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(AnimeFormComponent.TYPE),
       'Add',
+      AnimeFormComponent.WIDTH,
+      AnimeFormComponent.HEIGHT
+    );
+  }
+
+  private editAnime( bag: DataBag ) {
+    this.popUpService.openPopUp(
+      KirinoFormComponent.getUrl(AnimeFormComponent.TYPE, bag.anime.id),
+      'Edit',
       AnimeFormComponent.WIDTH,
       AnimeFormComponent.HEIGHT
     );

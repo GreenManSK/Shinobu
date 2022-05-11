@@ -39,11 +39,13 @@ export class AnimeFormComponent implements OnInit {
   public set id( id: string ) {
     this._id = id;
     if (id) {
-      let subscription: Subscription;
-      subscription = this.service.getById(id).subscribe(anime => {
-        this.anime = anime;
-        subscription.unsubscribe();
-      })
+      this.service.onReady().then(() => {
+        let subscription: Subscription;
+        subscription = this.service.getById(id).subscribe(anime => {
+          this.anime = anime;
+          subscription.unsubscribe();
+        });
+      });
     } else {
       this.anime = new Anime(
         this.route.snapshot.queryParams[AnimeFormComponent.TITLE_PARAM],

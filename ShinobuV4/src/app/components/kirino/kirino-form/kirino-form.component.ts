@@ -23,7 +23,7 @@ export class KirinoFormComponent implements OnInit {
     return this.type === AnimeFormComponent.TYPE;
   }
 
-  public static getUrl( type: string, id?: number ): string {
+  public static getUrl( type: string, id?: string ): string {
     return 'index.html#/kirino-form/' + type + (id ? '/' + id : '');
   }
 
