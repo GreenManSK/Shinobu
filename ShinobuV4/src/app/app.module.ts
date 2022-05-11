@@ -34,6 +34,7 @@ import { ChromeMigrationComponent } from './components/settings/chrome-migration
 import { KirinoComponent } from './components/kirino/kirino/kirino.component';
 import { KirinoImageComponent } from './components/kirino/kirino-image/kirino-image.component';
 import { ItemBoxComponent } from './components/kirino/item-box/item-box.component';
+import { AnimeBoxComponent } from './components/kirino/anime-box/anime-box.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ItemBoxComponent } from './components/kirino/item-box/item-box.componen
     ChromeMigrationComponent,
     KirinoComponent,
     KirinoImageComponent,
-    ItemBoxComponent
+    ItemBoxComponent,
+    AnimeBoxComponent
   ],
   imports: [
     BrowserModule,
