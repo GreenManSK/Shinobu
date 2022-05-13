@@ -39,6 +39,8 @@ import { KirinoFormComponent } from './components/kirino/kirino-form/kirino-form
 import { AnimeFormComponent } from './components/kirino/anime-form/anime-form.component';
 import { MusicFormComponent } from './components/kirino/music-form/music-form.component';
 import { MusicBoxComponent } from './components/kirino/music-box/music-box.component';
+import { ShowsBoxComponent } from './components/kirino/shows-box/shows-box.component';
+import { ShowFormComponent } from './components/kirino/show-form/show-form.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { MusicBoxComponent } from './components/kirino/music-box/music-box.compo
     KirinoFormComponent,
     AnimeFormComponent,
     MusicFormComponent,
-    MusicBoxComponent
+    MusicBoxComponent,
+    ShowsBoxComponent,
+    ShowFormComponent
   ],
   imports: [
     BrowserModule,

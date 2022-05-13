@@ -23,7 +23,6 @@ export class AnimeFormComponent implements OnInit {
 
   public readonly color = Color.Red;
 
-
   private _id: string = '';
   public anime?: Anime;
 
@@ -32,7 +31,8 @@ export class AnimeFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: AnimeService ) {
+    private service: AnimeService
+  ) {
   }
 
   ngOnInit(): void {

@@ -1,0 +1,23 @@
+<box [color]="color"
+     [title]="'TV Shows'"
+     [icon]="'ri-tv-line'">
+  <ng-template>
+    <form *ngIf="show" class="nice show-labels" [ngClass]="[getColorClass()]">
+      <div class="field">
+        <label for="form-title">Title</label>
+        <input type="text" id="form-title" placeholder="Title" name="title" [(ngModel)]="show.title">
+      </div>
+      <div class="field">
+        <label for="form-anidb">theTVDB.com ID</label>
+        <input type="text" id="form-anidb" placeholder="theTVDB.com ID" name="anidbId" [(ngModel)]="show.tvdbId">
+      </div>
+      <div class="field">
+        <label for="form-url">URL</label>
+        <input type="text" id="form-url" placeholder="URL" name="url" [(ngModel)]="show.url">
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save()">
+      </div>
+    </form>
+  </ng-template>
+</box>

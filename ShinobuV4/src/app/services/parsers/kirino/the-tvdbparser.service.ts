@@ -5,6 +5,8 @@ import { HttpClientService } from '../../http-client.service';
 import { ErrorService } from '../../error.service';
 import { LogError } from '../../../types/LogError';
 import { Episode } from '../../../data/kirino/Episode';
+import { ShowFormComponent } from '../../../components/kirino/show-form/show-form.component';
+import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +24,10 @@ export class TheTVDBParserService implements ISiteParser<Show> {
     return this.http.getData(url).then(( html ) => this.parseData(url, html));
   }
 
-  public getFormUrl( data: Show ): string {
-    // TODO: add when show form implemented
-    return '';
+  public getFormUrl( show: Show ): string {
+    return KirinoFormComponent.getUrl(ShowFormComponent.TYPE) + '?' +
+      ShowFormComponent.TITLE_PARAM + '=' + encodeURIComponent(show.title) + '&' +
+      ShowFormComponent.TVDB_ID_PARAM + '=' + encodeURIComponent(show.tvdbId);
   }
 
   public match( url: string ): boolean {
