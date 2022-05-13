@@ -5,6 +5,8 @@ import { HttpClientService } from '../../http-client.service';
 import { ErrorService } from '../../error.service';
 import { LogError } from '../../../types/LogError';
 import { AnidbParserService } from './anidb-parser.service';
+import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
+import { OvaFormComponent } from '../../../components/kirino/ova-form/ova-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +23,11 @@ export class AnidbEpisodeParserService implements ISiteParser<Ova> {
     return this.http.getData(url).then(( html ) => this.parseData(url, html));
   }
 
-  public getFormUrl( data: Ova ): string {
-    // TODO: add when ova form implemented
-    return '';
+  public getFormUrl( ova: Ova ): string {
+    return KirinoFormComponent.getUrl(OvaFormComponent.TYPE) + '?' +
+      OvaFormComponent.TITLE_PARAM + '=' + encodeURIComponent(ova.title) + '&' +
+      OvaFormComponent.ANIDB_ID_PARAM + '=' + encodeURIComponent(ova.anidbId) + '&' +
+      OvaFormComponent.DATE_PARAM + '=' + encodeURIComponent(ova.airdate);
   }
 
   public match( url: string ): boolean {
