@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Color } from '../../../types/Color';
 import { BoxButton } from '../../../types/kirino/BoxButton';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { MusicFormComponent } from '../music-form/music-form.component';
   templateUrl: './music-box.component.html',
   styleUrls: ['./music-box.component.scss']
 })
-export class MusicBoxComponent implements OnInit {
+export class MusicBoxComponent implements OnInit, OnDestroy {
 
   public readonly color = Color.Blue;
 
@@ -42,6 +42,10 @@ export class MusicBoxComponent implements OnInit {
         this.items = songs.map(song => this.toBoxItem(song));
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.dataSubscription?.unsubscribe();
   }
 
   private toBoxItem( song: Song ): BoxItem {
