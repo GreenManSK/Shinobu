@@ -43,6 +43,8 @@ import { ShowsBoxComponent } from './components/kirino/shows-box/shows-box.compo
 import { ShowFormComponent } from './components/kirino/show-form/show-form.component';
 import { OvaBoxComponent } from './components/kirino/ova-box/ova-box.component';
 import { OvaFormComponent } from './components/kirino/ova-form/ova-form.component';
+import { MangaBoxComponent } from './components/kirino/manga-box/manga-box.component';
+import { MangaFormComponent } from './components/kirino/manga-form/manga-form.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { OvaFormComponent } from './components/kirino/ova-form/ova-form.componen
     ShowsBoxComponent,
     ShowFormComponent,
     OvaBoxComponent,
-    OvaFormComponent
+    OvaFormComponent,
+    MangaBoxComponent,
+    MangaFormComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,8 @@ import { HttpClientService } from '../../http-client.service';
 import { ErrorService } from '../../error.service';
 import { LogError } from '../../../types/LogError';
 import { Episode } from '../../../data/kirino/Episode';
+import { MangaFormComponent } from '../../../components/kirino/manga-form/manga-form.component';
+import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +27,10 @@ export class MangaParserService implements ISiteParser<Manga> {
     return this.http.getData(url).then(( html ) => this.parseData(url, html));
   }
 
-  public getFormUrl( data: Manga ): string {
-    // TODO: add when manga form implemented
-    return '';
+  public getFormUrl( manga: Manga ): string {
+    return KirinoFormComponent.getUrl(MangaFormComponent.TYPE) + '?' +
+      MangaFormComponent.TITLE_PARAM + '=' + encodeURIComponent(manga.title) + '&' +
+      MangaFormComponent.AMAZON_ID_PARAM + '=' + encodeURIComponent(manga.amazonId);
   }
 
   public match( url: string ): boolean {
