@@ -12,7 +12,7 @@ export class NyaaSearchService {
   private nyaaUrl: string = '';
 
   constructor( kirinoSettings: KirinoSettingsService ) {
-    kirinoSettings.subscribe().subscribe(settings => this.nyaaUrl = settings.nyaaUrl);
+    kirinoSettings.asObservable().subscribe(settings => this.nyaaUrl = settings.nyaaUrl);
   }
 
   public generateSearchText( anime: Anime, episode: Episode ): string {

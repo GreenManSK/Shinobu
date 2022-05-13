@@ -47,14 +47,16 @@ export class KirinoSettingsService extends DynamicStorageService<KirinoSettings>
   }
 
   public update( settings: KirinoSettings ) {
-    settings.id = this.settings.id;
-    super.save(settings).then(( newSettings ) => {
+    if (this.settings.id) {
+      settings.id = this.settings.id;
+    }
+    return super.save(settings).then(( newSettings ) => {
       this.settings = newSettings;
       this.subject?.next(this.settings);
     });
   }
 
-  public subscribe(): Observable<KirinoSettings> {
+  public asObservable(): Observable<KirinoSettings> {
     if (!this.subject) {
       this.subject = new BehaviorSubject<KirinoSettings>(this.settings);
     }

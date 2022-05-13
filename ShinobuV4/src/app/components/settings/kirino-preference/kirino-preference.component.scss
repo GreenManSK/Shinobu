@@ -1,0 +1,23 @@
+@import '~src/styles/variables';
+
+$kirinoMaidWidth: 201px;
+$kirinoMaidHeight: 288px;
+
+box::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: $kirinoMaidHeight;
+  background-size: cover;
+  right: (-$kirinoMaidWidth - 10px);
+  width: $kirinoMaidWidth;
+  height: $kirinoMaidHeight;
+  background-image: url($imgDir + 'kirinoMaid.png');
+}
+
+@media (max-width: ($responsiveWidth + 2 * $kirinoMaidWidth)) {
+  box::after {
+    position: initial;
+    margin: 0 auto;
+  }
+}

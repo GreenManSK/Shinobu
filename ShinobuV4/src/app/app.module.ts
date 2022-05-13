@@ -45,6 +45,7 @@ import { OvaBoxComponent } from './components/kirino/ova-box/ova-box.component';
 import { OvaFormComponent } from './components/kirino/ova-form/ova-form.component';
 import { MangaBoxComponent } from './components/kirino/manga-box/manga-box.component';
 import { MangaFormComponent } from './components/kirino/manga-form/manga-form.component';
+import { KirinoPreferenceComponent } from './components/settings/kirino-preference/kirino-preference.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { MangaFormComponent } from './components/kirino/manga-form/manga-form.co
     OvaBoxComponent,
     OvaFormComponent,
     MangaBoxComponent,
-    MangaFormComponent
+    MangaFormComponent,
+    KirinoPreferenceComponent
   ],
   imports: [
     BrowserModule,
