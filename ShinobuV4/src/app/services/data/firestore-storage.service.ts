@@ -78,7 +78,6 @@ export class FirestoreStorageService<T extends ISavable> implements IStorageServ
   }
 
   private toPlainObject( item: T ) {
-    console.log(item, item.toPlainObject());
     if (item.toPlainObject) {
       return item.toPlainObject();
     }
