@@ -38,7 +38,6 @@ export class AnimeFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   @Input('id')
   public set id( id: string ) {
     this._id = id;
@@ -74,7 +73,6 @@ export class AnimeFormComponent implements OnInit {
       window.close();
     });
   }
-
 
   public getColorClass() {
     return BoxComponent.getColorClass(this.color);

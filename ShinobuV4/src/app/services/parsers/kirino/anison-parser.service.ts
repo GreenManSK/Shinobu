@@ -4,6 +4,8 @@ import { Song } from '../../../data/kirino/Song';
 import { HttpClientService } from '../../http-client.service';
 import { ErrorService } from '../../error.service';
 import { LogError } from '../../../types/LogError';
+import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
+import { MusicFormComponent } from '../../../components/kirino/music-form/music-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +22,15 @@ export class AnisonParserService implements ISiteParser<Song> {
     return this.http.getData(url).then(( html ) => this.parseData(url, html));
   }
 
-  public getFormUrl( data: Song ): string {
-    // TODO: add when song form implemented
-    return '';
+  public getFormUrl( song: Song ): string {
+    return KirinoFormComponent.getUrl(MusicFormComponent.TYPE) + '?' +
+      MusicFormComponent.SHOW_PARAM + '=' + encodeURIComponent(song.show) + '&' +
+      MusicFormComponent.TYPE_PARAM + '=' + encodeURIComponent(song.type) + '&' +
+      MusicFormComponent.TITLE_PARAM + '=' + encodeURIComponent(song.title) + '&' +
+      MusicFormComponent.AUTHOR_PARAM + '=' + encodeURIComponent(song.author) + '&' +
+      MusicFormComponent.DATE_PARAM + '=' + encodeURIComponent(song.releaseDate) + '&' +
+      MusicFormComponent.ANIDB_ID_PARAM + '=' + encodeURIComponent(song.anidbId) + '&' +
+      MusicFormComponent.ANISON_ID_PARAM + '=' + encodeURIComponent(song.anisonId) + '&';
   }
 
   public match( url: string ): boolean {

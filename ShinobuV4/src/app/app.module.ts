@@ -37,6 +37,8 @@ import { ItemBoxComponent } from './components/kirino/item-box/item-box.componen
 import { AnimeBoxComponent } from './components/kirino/anime-box/anime-box.component';
 import { KirinoFormComponent } from './components/kirino/kirino-form/kirino-form.component';
 import { AnimeFormComponent } from './components/kirino/anime-form/anime-form.component';
+import { MusicFormComponent } from './components/kirino/music-form/music-form.component';
+import { MusicBoxComponent } from './components/kirino/music-box/music-box.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { AnimeFormComponent } from './components/kirino/anime-form/anime-form.co
     ItemBoxComponent,
     AnimeBoxComponent,
     KirinoFormComponent,
-    AnimeFormComponent
+    AnimeFormComponent,
+    MusicFormComponent,
+    MusicBoxComponent
   ],
   imports: [
     BrowserModule,

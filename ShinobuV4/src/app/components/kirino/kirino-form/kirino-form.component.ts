@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
+import { MusicFormComponent } from '../music-form/music-form.component';
 
 @Component({
   selector: 'app-kirino-form',
@@ -21,6 +22,10 @@ export class KirinoFormComponent implements OnInit {
 
   public isAnime(): boolean {
     return this.type === AnimeFormComponent.TYPE;
+  }
+
+  public isMusic(): boolean {
+    return this.type === MusicFormComponent.TYPE;
   }
 
   public static getUrl( type: string, id?: string ): string {
