@@ -6,6 +6,9 @@ import { DynamicStorageService } from '../../../services/data/dynamic-storage.se
 import { TabService } from '../../../services/data/shinobu/tab.service';
 import { NoteService } from '../../../services/data/shinobu/note.service';
 import { Subscription } from 'rxjs';
+import { AlertService } from '../../../services/alert.service';
+import { Alert } from '../../../types/Alert';
+import { AlertType } from '../../../types/AlertType';
 
 @Component({
   selector: 'firebase-migration',
@@ -25,7 +28,7 @@ export class FirebaseMigrationComponent implements OnInit, OnDestroy {
     firebase: DynamicStorageService<any>
   }[] = [];
 
-  constructor( public authService: AuthService, afs: AngularFirestore, errorService: ErrorService ) {
+  constructor( public authService: AuthService, afs: AngularFirestore, errorService: ErrorService, private alertService: AlertService ) {
     authService.isAuthenticatedPromise().then(isAuthenticated => this.isAuthenticated = isAuthenticated);
     FirebaseMigrationComponent.DATA_SERVICES.forEach(service => {
       const firebase = new service(afs, authService, errorService);
@@ -50,7 +53,7 @@ export class FirebaseMigrationComponent implements OnInit, OnDestroy {
     }
     if (confirm('Do you really want to migrate your old data?')) {
       this.migrateOldData().then(() => this.deleteOldData()).then(() => {
-        alert('Migrated old data!')
+        this.alertService.publish(new Alert('Migration', 'Migrated old data!', AlertType.success));
         this.hasDataToMigrate = false;
       });
     }
@@ -62,7 +65,7 @@ export class FirebaseMigrationComponent implements OnInit, OnDestroy {
     }
     if (confirm('Do you really want to delete your old data?')) {
       this.deleteOldData().then(() => {
-        alert('Data deleted!')
+        this.alertService.publish(new Alert('Migration', 'Data deleted!', AlertType.warning));
         this.hasDataToMigrate = false;
       });
     }
