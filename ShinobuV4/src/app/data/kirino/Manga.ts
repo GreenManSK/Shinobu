@@ -6,7 +6,6 @@ export class Manga extends AEpisodic {
     title: string = '',
     public amazonId: string = '',
     episodes: Episode[] = [],
-    public nyaaSearch = '',
     lastSeen: number = 0,
     public lastParsedPage: number = 0
   ) {
