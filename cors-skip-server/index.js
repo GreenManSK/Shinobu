@@ -7,7 +7,7 @@ const allowedUrls = [
     "anidb.net/song/",
     "anidb.net/episode/",
     "www.thetvdb.com/series/",
-    "thetvdb.com/series/*/allseasons/official",
+    "thetvdb.com/series/",
     "www.amazon.co.jp/gp/product/",
     "www.amazon.co.jp/kindle-dbs/productPage/ajax/",
     "api.anidb.net:9001"

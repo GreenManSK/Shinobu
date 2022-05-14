@@ -53,7 +53,8 @@ export class AnidbParserService implements ISiteParser<Anime> {
     try {
       const el = document.createElement('html');
       el.innerHTML = html;
-
+      const anidbId = el.querySelector('anime')?.getAttribute('id');
+      anime.anidbId = anidbId ? +anidbId : 0;
       anime.title = el.querySelector('title[type=main]')?.textContent || '';
       el.querySelectorAll('episode').forEach(episode => {
         const airdate = episode.querySelector('airdate')?.textContent;

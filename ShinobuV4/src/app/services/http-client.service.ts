@@ -18,6 +18,7 @@ export class HttpClientService {
   }
 
   public getData( url: string, skipCors = false ): Promise<string> {
+    console.log(this.getUrl(url, skipCors));
     return new Promise(( resolve ) => {
       let subscription: Subscription | undefined = undefined;
       subscription = this.http.get(this.getUrl(url, skipCors), {responseType: 'text'}).subscribe(html => {

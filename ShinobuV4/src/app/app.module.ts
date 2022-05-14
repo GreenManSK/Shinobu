@@ -47,6 +47,8 @@ import { MangaBoxComponent } from './components/kirino/manga-box/manga-box.compo
 import { MangaFormComponent } from './components/kirino/manga-form/manga-form.component';
 import { KirinoPreferenceComponent } from './components/settings/kirino-preference/kirino-preference.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BackgroundComponent } from './components/background/background.component';
+import { BrowserActionComponent } from './components/browser-action/browser-action.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { HttpClientModule } from '@angular/common/http';
     OvaFormComponent,
     MangaBoxComponent,
     MangaFormComponent,
-    KirinoPreferenceComponent
+    KirinoPreferenceComponent,
+    BackgroundComponent,
+    BrowserActionComponent
   ],
   imports: [
     BrowserModule,

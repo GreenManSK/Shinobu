@@ -15,7 +15,7 @@ export class MangaParserService implements ISiteParser<Manga> {
 
   public static readonly PAGE_SIZE = 10;
 
-  private static readonly URL_REGEX = new RegExp(/^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)\?.*/, 'i');
+  private static readonly URL_REGEX = new RegExp(/^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)(\?.*)?/, 'i');
   private static readonly URL_TEMPLATE = 'https://www.amazon.co.jp/gp/product/(d+)';
 
   private static readonly API_URL = `https://www.amazon.co.jp/kindle-dbs/productPage/ajax/seriesAsinList?asin=%aid&pageNumber=%apage&pageSize=${MangaParserService.PAGE_SIZE}&ref_=series_dp_batch_load_more`

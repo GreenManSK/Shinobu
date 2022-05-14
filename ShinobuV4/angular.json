@@ -30,7 +30,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/js/content.js"
             ],
             "styles": [
               "node_modules/remixicon/fonts/remixicon.css",
