@@ -85,7 +85,7 @@ export class ItemBoxComponent implements OnInit {
       .sort(( a, b ) => {
         const diff = (a.date ? a.date.getTime() : Number.MAX_VALUE) - (b.date ? b.date.getTime() : Number.MAX_VALUE);
         if (diff === 0) {
-          return a.title.localeCompare(b.title);
+          return this._items.indexOf(a) - this._items.indexOf(b);
         }
         return diff;
       })

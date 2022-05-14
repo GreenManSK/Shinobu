@@ -9,6 +9,7 @@ import { AlertType } from '../../../types/AlertType';
 import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
 import { MusicSyncService } from '../../../services/sync/kirino/music-sync.service';
 import { ShowSyncService } from '../../../services/sync/kirino/show-sync.service';
+import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
 
 type KirinoRefreshSettings = {
   key: string,
@@ -41,8 +42,8 @@ export class KirinoPreferenceComponent implements OnInit, OnDestroy {
       label: 'TheTVDB.com data refresh rate in mins'
     },
     {
-      key: 'amazon',
-      defaultValueInMins: 24 * 60,
+      key: MangaSyncService.SYNC_KEY,
+      defaultValueInMins: MangaSyncService.DEFAULT_SYNC_TIME_IN_MINS,
       label: 'Amazon data refresh rate in mins'
     }
   ];

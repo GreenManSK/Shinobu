@@ -3,4 +3,5 @@
           [enableHiding]="true"
           [title]="'Manga'"
           [icon]="'assets/icons/manga.ico'"
-          [headerButtons]="[addButton]"></item-box>
+          [headerButtons]="headerButtons"
+          [syncFunction]="syncItem.bind(this)"></item-box>

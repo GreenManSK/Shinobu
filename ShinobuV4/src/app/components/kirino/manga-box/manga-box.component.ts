@@ -11,6 +11,7 @@ import { BoxLink } from '../../../types/kirino/BoxLink';
 import { MangaParserService } from '../../../services/parsers/kirino/manga-parser.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
+import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
 
 type DataBag = {
   manga: Manga,
@@ -28,7 +29,10 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
   public readonly color = Color.Purple;
 
   public items: BoxItem[] = [];
-  public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addManga());
+  public headerButtons = [
+    new BoxButton('Add', 'ri-add-box-line', () => this.addManga()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+  ];
 
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
@@ -40,6 +44,7 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
   constructor(
     private service: MangaService,
     private popUpService: PopUpService,
+    private syncService: MangaSyncService
   ) {
   }
 
@@ -59,7 +64,8 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
 
   private toEpisodeItems( manga: Manga ) {
     const episodes = [] as BoxItem[];
-    for (const episode of manga.episodes) {
+    const sortedEpisodes = manga.episodes.sort((a,b) => +a.number - +b.number);
+    for (const episode of sortedEpisodes) {
       episodes.push(new BoxItem(
         `${manga.title} [${episode.number}]`,
         '',
@@ -119,5 +125,14 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     manga.episodes.splice(index, 1);
     manga.lastSeen = Math.max(manga.lastSeen, +episode.number);
     this.service.save(manga)
+  }
+
+  public syncItem(item: BoxItem) {
+    const manga = item.data.manga as Manga;
+    this.syncService.sync(manga, true, true);
+  }
+
+  private syncAll() {
+    this.syncService.syncAll(false, true);
   }
 }

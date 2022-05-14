@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MangaService } from '../../../services/data/kirino/manga.service';
 import { BoxComponent } from '../../box/box.component';
 import { Subscription } from 'rxjs';
+import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
 
 @Component({
   selector: 'manga-form',
@@ -28,7 +29,8 @@ export class MangaFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: MangaService
+    private service: MangaService,
+    private sync: MangaSyncService
   ) {
   }
 
@@ -60,9 +62,8 @@ export class MangaFormComponent implements OnInit {
     if (!this.manga) {
       return;
     }
-    this.service.save(this.manga).then(() => {
-      // TODO: Sync data
-      window.close();
+    this.service.save(this.manga).then((manga) => {
+      this.sync.sync(manga).then(() => window.close());
     });
   }
 

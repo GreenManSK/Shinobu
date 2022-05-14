@@ -15,4 +15,11 @@ export class Manga extends AEpisodic {
     this.episodes = episodes;
     this.lastSeen = lastSeen;
   }
+
+  override toPlainObject(): any {
+    return {
+      ...this,
+      episodes: this.episodes.map(e => ({...e}))
+    }
+  }
 }
