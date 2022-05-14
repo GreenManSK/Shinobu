@@ -24,7 +24,7 @@ export class ChromeMigrationComponent implements OnInit {
     $event.preventDefault();
     if (confirm('Start data migration?')) {
       this.migrationService.migrate().then(() => {
-        // this.migrationService.markAsMigrated();
+        this.migrationService.markAsMigrated();
         this.alertService.publish(new Alert('Migration', 'Migration completed!', AlertType.success));
       });
     }
