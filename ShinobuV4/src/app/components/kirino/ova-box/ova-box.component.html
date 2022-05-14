@@ -1,6 +1,7 @@
 <item-box [color]="color"
           [items]="items"
           [enableHiding]="false"
+          [syncFunction]="syncItem.bind(this)"
           [title]="'OVA'"
           [icon]="'assets/icons/anidb.ico'"
-          [headerButtons]="[addButton]"></item-box>
+          [headerButtons]="headerButtons"></item-box>

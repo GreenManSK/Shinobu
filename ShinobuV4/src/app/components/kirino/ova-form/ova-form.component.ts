@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OvaService } from '../../../services/data/kirino/ova.service';
 import { BoxComponent } from '../../box/box.component';
 import { Subscription } from 'rxjs';
+import { OvaSyncService } from '../../../services/sync/kirino/ova-sync.service';
 
 @Component({
   selector: 'ova-form',
@@ -28,7 +29,8 @@ export class OvaFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: OvaService
+    private service: OvaService,
+    private sync: OvaSyncService
   ) {
   }
 
@@ -59,9 +61,8 @@ export class OvaFormComponent implements OnInit {
     if (!this.ova) {
       return;
     }
-    this.service.save(this.ova).then(() => {
-      // TODO: Sync data
-      window.close();
+    this.service.save(this.ova).then(( ova ) => {
+      this.sync.sync(ova).then(() => window.close());
     });
   }
 

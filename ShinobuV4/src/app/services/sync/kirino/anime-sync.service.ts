@@ -6,8 +6,6 @@ import { AnimeService } from '../../data/kirino/anime.service';
 import { ASyncService } from './ASyncService';
 import { AnidbParserService } from '../../parsers/kirino/anidb-parser.service';
 import { EpisodeSyncHelper } from './episode-sync-helper';
-import { first } from 'rxjs';
-import { SyncHelper } from './sync-helper';
 
 @Injectable({
   providedIn: 'root'
@@ -42,20 +40,8 @@ export class AnimeSyncService extends ASyncService<Anime> {
     });
   }
 
-  protected syncAllItems( force = false, log = false ): Promise<void> {
-    return new Promise<void>(resolve => {
-      this.service.getAll().pipe(first()).subscribe(async ( animes ) => {
-        const last = animes[animes.length - 1];
-        for (const anime of animes) {
-          const lastSync = anime.lastSync;
-          await this.sync(anime, force, log);
-          if (anime !== last && anime.lastSync !== lastSync) {
-            await SyncHelper.delay(AnimeSyncService.DELAY);
-          }
-        }
-        resolve();
-      });
-    });
+  public syncAll( force: boolean, log: boolean ): Promise<void> {
+    return this.syncAllItems(force, log, this.service, AnimeSyncService.DELAY);
   }
 
   protected getName(): string {

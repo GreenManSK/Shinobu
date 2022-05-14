@@ -10,6 +10,7 @@ import { BoxLink } from '../../../types/kirino/BoxLink';
 import { AnidbEpisodeParserService } from '../../../services/parsers/kirino/anidb-episode-parser.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { OvaFormComponent } from '../ova-form/ova-form.component';
+import { OvaSyncService } from '../../../services/sync/kirino/ova-sync.service';
 
 @Component({
   selector: 'ova-box',
@@ -21,7 +22,10 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
   public readonly color = Color.Pink;
 
   public items: BoxItem[] = [];
-  public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addOva());
+  public headerButtons = [
+    new BoxButton('Add', 'ri-add-box-line', () => this.addOva()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+  ];
 
   private buttons: BoxButton[] = [
     new BoxButton('Edit', 'ri-edit-2-line', ( ova: Ova ) => this.editOva(ova)),
@@ -32,6 +36,7 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
   constructor(
     private service: OvaService,
     private popUpService: PopUpService,
+    private syncService: OvaSyncService
   ) {
   }
 
@@ -78,6 +83,15 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
   }
 
   private deleteOva( ova: Ova ) {
-   this.service.delete(ova);
+    this.service.delete(ova);
+  }
+
+  public syncItem( item: BoxItem ) {
+    const ova = item.data as Ova;
+    this.syncService.sync(ova, true, true);
+  }
+
+  private syncAll() {
+    this.syncService.syncAll(false, true);
   }
 }

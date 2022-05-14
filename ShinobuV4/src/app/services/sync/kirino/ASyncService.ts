@@ -4,6 +4,9 @@ import { KirinoSettingsService } from '../../data/kirino/kirino-settings.service
 import { AlertService } from '../../alert.service';
 import { AlertType } from '../../../types/AlertType';
 import { Alert } from '../../../types/Alert';
+import { IStorageService } from '../../data/istorage-service';
+import { first } from 'rxjs';
+import { SyncHelper } from './sync-helper';
 
 export abstract class ASyncService<T extends ISyncable> implements ISyncService<T> {
 
@@ -13,15 +16,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
 
   public abstract sync( item: T, force: boolean, log: boolean ): Promise<T>;
 
-  public syncAll( force: boolean, log: boolean ): Promise<void> {
-    const dismissSyncingAlert = this.alertService.publish(new Alert(this.getName(), 'Syncing', AlertType.warning, true));
-    return this.syncAllItems(force, log).then(() => {
-      dismissSyncingAlert();
-      this.log(true, 'Finished', AlertType.success);
-    });
-  }
-
-  protected abstract syncAllItems( force: boolean, log: boolean ): Promise<void>;
+  public abstract syncAll( force: boolean, log: boolean ): Promise<void>;
 
   protected abstract getName(): string;
 
@@ -39,6 +34,29 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
       const consoleFn = type === AlertType.error ? console.error : type === AlertType.warning ? console.warn : console.log;
       consoleFn(`${this.getName()}: ${message}`);
     }
+  }
+
+  protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number ): Promise<void> {
+    const dismissSyncingAlert = this.alertService.publish(new Alert(this.getName(), 'Syncing', AlertType.warning, true));
+
+    return new Promise<void>(resolve => {
+      service.onReady().then(() => {
+        service.getAll().pipe(first()).subscribe(async items => {
+          const last = items[items.length - 1];
+          for (const item of items) {
+            const lastSync = item.lastSync;
+            await this.sync(item, force, log);
+            if (item !== last && item.lastSync !== lastSync) {
+              await SyncHelper.delay(delay);
+            }
+          }
+          resolve();
+        });
+      });
+    }).then(() => {
+      dismissSyncingAlert();
+      this.log(true, 'Finished', AlertType.success);
+    });
   }
 
 }

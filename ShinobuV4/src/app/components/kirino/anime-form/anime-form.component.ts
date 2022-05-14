@@ -71,7 +71,7 @@ export class AnimeFormComponent implements OnInit {
       this.anime.nyaaSearch = new NyaaSearch(this.nyaaSearchText, this.nyaaSearchDigist);
     }
     this.service.save(this.anime).then(( anime ) => {
-      this.sync.sync(anime, true).then(() => window.close());
+      this.sync.sync(anime).then(() => window.close());
     });
   }
 
