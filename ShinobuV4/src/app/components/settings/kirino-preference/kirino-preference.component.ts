@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AlertService } from '../../../services/alert.service';
 import { Alert } from '../../../types/Alert';
 import { AlertType } from '../../../types/AlertType';
+import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
 
 type KirinoRefreshSettings = {
   key: string,
@@ -23,8 +24,8 @@ export class KirinoPreferenceComponent implements OnInit, OnDestroy {
   public readonly color = Color.Orange;
   public readonly refreshSettings: KirinoRefreshSettings[] = [
     {
-      key: 'anidb',
-      defaultValueInMins: 2 * 60,
+      key: AnimeSyncService.SYNC_KEY,
+      defaultValueInMins: AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS,
       label: 'aniDB data refresh rate in mins'
     },
     {

@@ -51,4 +51,10 @@
       Toggle first/all
     </div>
   </ng-template>
+  <ng-template *ngIf="syncFunction" shContextMenuItem (click)="syncFunction($event.data)">
+    <div>
+      <i class="ri-refresh-line"></i>
+      Sync data
+    </div>
+  </ng-template>
 </sh-context-menu>

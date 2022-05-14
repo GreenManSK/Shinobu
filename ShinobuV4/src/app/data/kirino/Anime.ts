@@ -19,7 +19,8 @@ export class Anime extends AEpisodic {
   override toPlainObject(): any {
     return {
       ...this,
-      nyaaSearch: {...this.nyaaSearch}
+      nyaaSearch: {...this.nyaaSearch},
+      episodes: this.episodes.map(e => ({...e}))
     }
   }
 }

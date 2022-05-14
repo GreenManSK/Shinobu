@@ -46,6 +46,7 @@ import { OvaFormComponent } from './components/kirino/ova-form/ova-form.componen
 import { MangaBoxComponent } from './components/kirino/manga-box/manga-box.component';
 import { MangaFormComponent } from './components/kirino/manga-form/manga-form.component';
 import { KirinoPreferenceComponent } from './components/settings/kirino-preference/kirino-preference.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { KirinoPreferenceComponent } from './components/settings/kirino-preferen
     ShContextMenuModule,
     HammerModule,
     SortablejsModule.forRoot({ animation: 150 }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

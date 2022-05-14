@@ -57,7 +57,7 @@ export class AnidbParserService implements ISiteParser<Anime> {
       anime.title = el.querySelector('title[type=main]')?.textContent || '';
       el.querySelectorAll('episode').forEach(episode => {
         const airdate = episode.querySelector('airdate')?.textContent;
-        const number = +(episode.querySelector('epno[type=1]')?.textContent || '');
+        const number = +(episode.querySelector('epno[type="1"]')?.textContent || '');
         if (number > 0 && !isNaN(number)) {
           anime.episodes.push(new Episode(number.toString(), airdate ? new Date(airdate).getTime() : 0))
         }

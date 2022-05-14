@@ -6,6 +6,7 @@ import { Anime } from '../../../data/kirino/Anime';
 import { Subscription } from 'rxjs';
 import { BoxComponent } from '../../box/box.component';
 import { NyaaSearch } from '../../../data/kirino/NyaaSearch';
+import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
 
 @Component({
   selector: 'anime-form',
@@ -31,7 +32,8 @@ export class AnimeFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: AnimeService
+    private service: AnimeService,
+    private sync: AnimeSyncService
   ) {
   }
 
@@ -68,9 +70,8 @@ export class AnimeFormComponent implements OnInit {
     } else {
       this.anime.nyaaSearch = new NyaaSearch(this.nyaaSearchText, this.nyaaSearchDigist);
     }
-    this.service.save(this.anime).then(() => {
-      // TODO: Sync data
-      window.close();
+    this.service.save(this.anime).then(( anime ) => {
+      this.sync.sync(anime, true).then(() => window.close());
     });
   }
 

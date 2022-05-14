@@ -31,6 +31,9 @@ export class ItemBoxComponent implements OnInit {
   @Input()
   public headerButtons: BoxButton[] = [];
 
+  @Input()
+  public syncFunction?: ( item: BoxItem ) => void;
+
   public now: Date;
   public minimized = true;
   public hiddenGroups: { [key: string]: number } = {};

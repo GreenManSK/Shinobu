@@ -56,4 +56,11 @@ export class AlertCenterComponent implements OnInit, OnDestroy {
         return 'warning';
     }
   }
+
+  public dismiss( alert: Alert ) {
+    if (alert.permanent) {
+      return;
+    }
+    this.removeAlert(alert);
+  }
 }

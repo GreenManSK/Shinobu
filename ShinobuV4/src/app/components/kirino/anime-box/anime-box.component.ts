@@ -12,6 +12,7 @@ import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { Episode } from '../../../data/kirino/Episode';
 import { NyaaSearchService } from '../../../services/nyaa-search.service';
+import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
 
 type DataBag = {
   anime: Anime,
@@ -28,8 +29,11 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
   public readonly color = Color.Red;
 
   public items: BoxItem[] = [];
-  public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addAnime());
 
+  public headerButtons = [
+    new BoxButton('Add', 'ri-add-box-line', () => this.addAnime()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+  ];
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
     new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editAnime(bag)),
@@ -40,7 +44,8 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
   constructor(
     private service: AnimeService,
     private popUpService: PopUpService,
-    private nyaaSearch: NyaaSearchService
+    private nyaaSearch: NyaaSearchService,
+    private syncService: AnimeSyncService
   ) {
   }
 
@@ -75,7 +80,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
           anime,
           episode
         },
-        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id ? +anime.id : 0))],
+        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
         this.buttons,
         nyaaSearch
       ));
@@ -87,7 +92,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
         undefined,
         anime.id,
         {anime},
-        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.id ? +anime.id : 0))],
+        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
         this.buttons.slice(1, 3)
       ));
     }
@@ -123,5 +128,14 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   public deleteAnime( {anime}: DataBag ): void {
     this.service.delete(anime);
+  }
+
+  public syncItem( item: BoxItem ) {
+    const anime = item.data.anime as Anime;
+    this.syncService.sync(anime, true, true);
+  }
+
+  private syncAll() {
+    this.syncService.syncAll(false, true);
   }
 }
