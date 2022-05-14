@@ -11,6 +11,7 @@ import { AnidbSongParserService } from '../../../services/parsers/kirino/anidb-s
 import { AnisonParserService } from '../../../services/parsers/kirino/anison-parser.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
+import { MusicSyncService } from '../../../services/sync/kirino/music-sync.service';
 
 @Component({
   selector: 'music-box',
@@ -22,7 +23,10 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
   public readonly color = Color.Blue;
 
   public items: BoxItem[] = [];
-  public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addSong());
+  public headerButtons = [
+    new BoxButton('Add', 'ri-add-box-line', () => this.addSong()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+  ];
 
   private buttons: BoxButton[] = [
     new BoxButton('Edit', 'ri-edit-2-line', ( song: Song ) => this.editSong(song)),
@@ -33,6 +37,7 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
   constructor(
     private service: SongService,
     private popUpService: PopUpService,
+    private sync: MusicSyncService
   ) {
   }
 
@@ -87,5 +92,14 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
 
   private deleteSong( song: Song ) {
     this.service.delete(song);
+  }
+
+  public syncItem( item: BoxItem ) {
+    const song = item.data as Song;
+    this.sync.sync(song, true, true);
+  }
+
+  private syncAll() {
+    this.sync.syncAll(false, true);
   }
 }

@@ -5,6 +5,7 @@ import { SongService } from '../../../services/data/kirino/song.service';
 import { Song } from '../../../data/kirino/Song';
 import { Subscription } from 'rxjs';
 import { BoxComponent } from '../../box/box.component';
+import { MusicSyncService } from '../../../services/sync/kirino/music-sync.service';
 
 @Component({
   selector: 'music-form',
@@ -32,7 +33,8 @@ export class MusicFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: SongService
+    private service: SongService,
+    private sync: MusicSyncService
   ) {
   }
 
@@ -67,9 +69,8 @@ export class MusicFormComponent implements OnInit {
     if (!this.song) {
       return;
     }
-    this.service.save(this.song).then(() => {
-      // TODO: Sync data
-      window.close();
+    this.service.save(this.song).then((song) => {
+      this.sync.sync(song).then(() => window.close());
     });
   }
 

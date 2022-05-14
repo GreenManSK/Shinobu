@@ -46,7 +46,7 @@ export class AnisonParserService implements ISiteParser<Song> {
       const el = document.createElement('html');
       el.innerHTML = html;
 
-      const showInfo = el.querySelectorAll('table.liest')[1].querySelector('tbody tr:nth-child(1)');
+      const showInfo = el.querySelectorAll('table.list')[1].querySelector('tbody tr:nth-child(1)');
       song.show = showInfo?.querySelector('td:nth-child(2)')?.textContent || '';
       song.type = showInfo?.querySelector('td:nth-child(3)')?.textContent || '';
 

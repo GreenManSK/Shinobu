@@ -36,12 +36,13 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
     }
   }
 
-  protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number ): Promise<void> {
+  protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number, filter: ( item: T ) => boolean = () => true ): Promise<void> {
     const dismissSyncingAlert = this.alertService.publish(new Alert(this.getName(), 'Syncing', AlertType.warning, true));
 
     return new Promise<void>(resolve => {
       service.onReady().then(() => {
         service.getAll().pipe(first()).subscribe(async items => {
+          items = items.filter(filter);
           const last = items[items.length - 1];
           for (const item of items) {
             const lastSync = item.lastSync;

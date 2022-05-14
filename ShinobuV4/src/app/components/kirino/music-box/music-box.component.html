@@ -3,4 +3,5 @@
           [enableHiding]="false"
           [title]="'Music'"
           [icon]="'ri-music-2-fill'"
-          [headerButtons]="[addButton]"></item-box>
+          [headerButtons]="headerButtons"
+          [syncFunction]="syncItem.bind(this)"></item-box>

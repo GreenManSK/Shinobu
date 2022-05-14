@@ -7,6 +7,7 @@ import { AlertService } from '../../../services/alert.service';
 import { Alert } from '../../../types/Alert';
 import { AlertType } from '../../../types/AlertType';
 import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
+import { MusicSyncService } from '../../../services/sync/kirino/music-sync.service';
 
 type KirinoRefreshSettings = {
   key: string,
@@ -29,8 +30,8 @@ export class KirinoPreferenceComponent implements OnInit, OnDestroy {
       label: 'aniDB data refresh rate in mins'
     },
     {
-      key: 'anison',
-      defaultValueInMins: 24 * 60,
+      key: MusicSyncService.ANISON_SYNC_KEY,
+      defaultValueInMins: MusicSyncService.ANISON_DEFAULT_SYNC_TIME_IN_MINS,
       label: 'Anisom data refresh rate in mins'
     },
     {

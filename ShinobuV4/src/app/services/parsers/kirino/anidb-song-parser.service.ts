@@ -61,7 +61,7 @@ export class AnidbSongParserService implements ISiteParser<Song> {
       song.show = el.querySelector('.name')?.textContent || '';
       song.type = el.querySelector('td:first-child')?.textContent || '';
       const titleHeader = Array.from(el.querySelectorAll('th')).filter(th => th?.textContent?.includes('Main Title'));
-      song.title = titleHeader.length > 0 && titleHeader[0].querySelector('.value span')?.textContent || '';
+      song.title = titleHeader.length > 0 && titleHeader[0].parentElement?.querySelector('.value span')?.textContent || '';
       song.author = el.querySelector('.creators .value')?.textContent || '';
 
       const relase = el.querySelector('#collectionlist tbody .released')?.textContent;
