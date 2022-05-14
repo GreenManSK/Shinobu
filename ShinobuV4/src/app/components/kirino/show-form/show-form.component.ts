@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ShowService } from '../../../services/data/kirino/show.service';
 import { Subscription } from 'rxjs';
 import { BoxComponent } from '../../box/box.component';
+import { ShowSyncService } from '../../../services/sync/kirino/show-sync.service';
 
 @Component({
   selector: 'show-form',
@@ -27,7 +28,8 @@ export class ShowFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: ShowService
+    private service: ShowService,
+    private sync: ShowSyncService
   ) {
   }
 
@@ -57,9 +59,8 @@ export class ShowFormComponent implements OnInit {
     if (!this.show) {
       return;
     }
-    this.service.save(this.show).then(() => {
-      // TODO: Sync data
-      window.close();
+    this.service.save(this.show).then(( show ) => {
+      this.sync.sync(show).then(() => window.close());
     });
   }
 

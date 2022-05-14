@@ -11,6 +11,7 @@ import { BoxLink } from '../../../types/kirino/BoxLink';
 import { TheTVDBParserService } from '../../../services/parsers/kirino/the-tvdbparser.service';
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { ShowFormComponent } from '../show-form/show-form.component';
+import { ShowSyncService } from '../../../services/sync/kirino/show-sync.service';
 
 type DataBag = {
   show: Show,
@@ -27,7 +28,10 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
   public readonly color = Color.Green;
 
   public items: BoxItem[] = [];
-  public addButton = new BoxButton('Add', 'ri-add-box-line', () => this.addShow());
+  public headerButtons = [
+    new BoxButton('Add', 'ri-add-box-line', () => this.addShow()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+  ];
 
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsShow(bag)),
@@ -39,6 +43,7 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
   constructor(
     private service: ShowService,
     private popUpService: PopUpService,
+    private syncService: ShowSyncService
   ) {
   }
 
@@ -118,5 +123,14 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     }
     bag.show.episodes.splice(index, 1);
     this.service.save(bag.show);
+  }
+
+  public syncItem(item: BoxItem) {
+    const show = item.data.show as Show;
+    this.syncService.sync(show, true, true);
+  }
+
+  private syncAll() {
+    this.syncService.syncAll(false, true);
   }
 }

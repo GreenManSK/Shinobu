@@ -3,4 +3,5 @@
           [enableHiding]="true"
           [title]="'TV Shows'"
           [icon]="'ri-tv-line'"
-          [headerButtons]="[addButton]"></item-box>
+          [headerButtons]="headerButtons"
+          [syncFunction]="syncItem.bind(this)"></item-box>
