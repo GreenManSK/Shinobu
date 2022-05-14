@@ -45,6 +45,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     if ($event) {
       $event.preventDefault();
     }
-    this.authService.signOut();
+    if (confirm('Do you really want to sing out?')) {
+      this.authService.signOut();
+    }
   }
 }
