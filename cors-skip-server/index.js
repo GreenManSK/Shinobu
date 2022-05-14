@@ -9,7 +9,8 @@ const allowedUrls = [
     "www.thetvdb.com/series/*/allseasons/official",
     "thetvdb.com/series/*/allseasons/official",
     "www.amazon.co.jp/gp/product/",
-    "www.amazon.co.jp/kindle-dbs/productPage/ajax/"
+    "www.amazon.co.jp/kindle-dbs/productPage/ajax/",
+    "api.anidb.net:9001"
 ]
 
 const cors_proxy = require('cors-anywhere');
