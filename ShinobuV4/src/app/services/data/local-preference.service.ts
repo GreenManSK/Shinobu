@@ -15,7 +15,7 @@ export class LocalPreferenceService {
     return JSON.parse(storedValue);
   }
 
-  public save( key: string, value: any ): void {
+  public set( key: string, value: any ): void {
     localStorage.setItem(key, JSON.stringify(value));
   }
 }

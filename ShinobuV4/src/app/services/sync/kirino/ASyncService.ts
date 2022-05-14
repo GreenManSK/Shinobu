@@ -38,12 +38,12 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
   }
 
   protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number, filter: ( item: T ) => boolean = () => true ): Promise<void> {
-    this.log(log, 'Syncing');
+    const syncAlertDismiss = this.log(log, 'Syncing');
 
     return new Promise<void>(resolve => {
       service.onReady().then(() => {
         service.getAll().pipe(first()).subscribe(async items => {
-          items = items.filter(filter);
+          items = items.filter(filter).sort((a,b) => (a.lastSync || 0) - (b.lastSync || 0));
           const last = items[items.length - 1];
           for (const item of items) {
             const lastSync = item.lastSync;
@@ -56,6 +56,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
         });
       });
     }).then(() => {
+      syncAlertDismiss();
       this.log(true, 'Finished', AlertType.success);
     });
   }

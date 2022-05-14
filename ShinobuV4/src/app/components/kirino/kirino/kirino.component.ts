@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KirinoSyncService } from '../../../services/sync/kirino/kirino-sync.service';
 
 @Component({
   selector: 'app-kirino',
@@ -7,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KirinoComponent implements OnInit {
 
-  constructor() {
+  constructor( private kirinoSyncService: KirinoSyncService ) {
   }
 
   ngOnInit(): void {
+    this.kirinoSyncService.run();
   }
 
 }

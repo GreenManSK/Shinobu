@@ -68,7 +68,7 @@ export class TabsComponent implements OnInit, OnDestroy {
 
   private setActiveTab( tab: Tab ) {
     if (tab.id) {
-      this.localPreferenceService.save(TabsComponent.ACTIVE_TAB_KEY, tab.id);
+      this.localPreferenceService.set(TabsComponent.ACTIVE_TAB_KEY, tab.id);
     }
     this.activeTab = tab;
     this.tabChanged.emit(this.activeTab);

@@ -50,7 +50,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   public setActiveNote( note: Note ) {
     if (note.id) {
-      this.localPreferenceService.save(NotesComponent.ACTIVE_NOTE_KEY, note.id);
+      this.localPreferenceService.set(NotesComponent.ACTIVE_NOTE_KEY, note.id);
     }
     this.activeNote = note;
   }
