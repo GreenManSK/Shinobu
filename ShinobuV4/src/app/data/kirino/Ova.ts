@@ -1,6 +1,6 @@
-import { ASavable } from '../ASavable';
+import { ASyncable } from './ASyncable';
 
-export class Ova extends ASavable {
+export class Ova extends ASyncable {
   constructor(
     public title = '',
     public anidbId: number = 0,

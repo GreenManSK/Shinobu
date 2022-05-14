@@ -1,7 +1,7 @@
-import { ASavable } from '../ASavable';
+import { ASyncable } from './ASyncable';
 
 
-export class Song extends ASavable {
+export class Song extends ASyncable {
 
   constructor(
     public show: string = '',
