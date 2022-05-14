@@ -19,10 +19,10 @@ cors_proxy.createServer({
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2'],
     handleInitialRequest: (req, res, location) => {
-        if (!location) {
+        if (!req?.url) {
             return true;
         }
-        const url = `${location.host}${location.path}`;
+        const url = req.url.replace(/\/?https?:\/\//, '');
         for (const allowed of allowedUrls) {
             if (url.startsWith(allowed)) {
                 return false;
