@@ -7,6 +7,7 @@ import { OvaService } from '../../data/kirino/ova.service';
 import { AnidbEpisodeParserService } from '../../parsers/kirino/anidb-episode-parser.service';
 import { AnimeSyncService } from './anime-sync.service';
 import { InternetConnectionService } from '../../internet-connection.service';
+import { AlertType } from '../../../types/AlertType';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class OvaSyncService extends ASyncService<Ova> {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
-    this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`);
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -44,6 +45,12 @@ export class OvaSyncService extends ASyncService<Ova> {
       }
       item.lastSync = Date.now();
       return this.service.save(item);
+    }).then(item => {
+      dismissAlert();
+      return item;
+    }).catch(item => {
+      this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
+      return item;
     });
   }
 

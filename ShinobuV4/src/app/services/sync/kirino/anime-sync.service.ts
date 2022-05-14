@@ -7,6 +7,7 @@ import { ASyncService } from './ASyncService';
 import { AnidbParserService } from '../../parsers/kirino/anidb-parser.service';
 import { EpisodeSyncHelper } from './episode-sync-helper';
 import { InternetConnectionService } from '../../internet-connection.service';
+import { AlertType } from '../../../types/AlertType';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class AnimeSyncService extends ASyncService<Anime> {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
-    this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`);
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -43,6 +44,12 @@ export class AnimeSyncService extends ASyncService<Anime> {
       }
       item.lastSync = Date.now();
       return this.service.save(item);
+    }).then(item => {
+      dismissAlert();
+      return item;
+    }).catch(item => {
+      this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
+      return item;
     });
   }
 

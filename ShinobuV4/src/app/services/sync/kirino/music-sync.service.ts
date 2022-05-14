@@ -8,6 +8,7 @@ import { AnidbSongParserService } from '../../parsers/kirino/anidb-song-parser.s
 import { AnisonParserService } from '../../parsers/kirino/anison-parser.service';
 import { AnimeSyncService } from './anime-sync.service';
 import { InternetConnectionService } from '../../internet-connection.service';
+import { AlertType } from '../../../types/AlertType';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class MusicSyncService extends ASyncService<Song> {
       }
     }
 
-    this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`);
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -59,15 +60,22 @@ export class MusicSyncService extends ASyncService<Song> {
       this.updateSongData(item, updatedData);
       item.lastSync = Date.now();
       return this.service.save(item);
+    }).then(item => {
+      dismissAlert();
+      return item;
+    }).catch(item => {
+      this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
+      return item;
     });
   }
 
   public syncAll( force: boolean, log: boolean ): Promise<void> {
     const promises = [
-      this.syncAllItems(force, log, this.service, MusicSyncService.ANIDB_DELAY, (item) => !this.shouldUseAnison(item)),
-      this.syncAllItems(force, log, this.service, MusicSyncService.ANISON_DELAY, (item) => this.shouldUseAnison(item)),
+      this.syncAllItems(force, log, this.service, MusicSyncService.ANIDB_DELAY, ( item ) => !this.shouldUseAnison(item)),
+      this.syncAllItems(force, log, this.service, MusicSyncService.ANISON_DELAY, ( item ) => this.shouldUseAnison(item)),
     ];
-    return Promise.all(promises).then(() => {});
+    return Promise.all(promises).then(() => {
+    });
   }
 
   protected getName(): string {
@@ -79,7 +87,7 @@ export class MusicSyncService extends ASyncService<Song> {
   }
 
   private getDataPromise( song: Song ): Promise<any> {
-return this.shouldUseAnison(song) ?
+    return this.shouldUseAnison(song) ?
       this.anisonParser.getData(AnisonParserService.getUrl(song.anisonId)) :
       this.anidbParser.getData(AnidbSongParserService.getUrl(song.anidbId));
   }

@@ -7,6 +7,7 @@ import { MangaService } from '../../data/kirino/manga.service';
 import { MangaParserService } from '../../parsers/kirino/manga-parser.service';
 import { Episode } from '../../../data/kirino/Episode';
 import { InternetConnectionService } from '../../internet-connection.service';
+import { AlertType } from '../../../types/AlertType';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,17 @@ export class MangaSyncService extends ASyncService<Manga> {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, MangaSyncService.SYNC_KEY, MangaSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
-    return this.syncManga(item);
+    return this.syncManga(item).then(item => {
+      dismissAlert();
+      return item;
+    }).catch(item => {
+      this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
+      return item;
+    });
   }
 
   public syncAll( force: boolean, log: boolean ): Promise<void> {

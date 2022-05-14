@@ -27,17 +27,18 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
     return nextSync < now;
   }
 
-  protected log( createAlert: boolean, message: string, type: AlertType = AlertType.warning ) {
+  protected log( createAlert: boolean, message: string, type: AlertType = AlertType.warning, permanent = false ) {
     if (createAlert) {
-      this.alertService.publish(new Alert(this.getName(), message, type));
+      return this.alertService.publish(new Alert(this.getName(), message, type, permanent));
     } else {
       const consoleFn = type === AlertType.error ? console.error : type === AlertType.warning ? console.warn : console.log;
       consoleFn(`${this.getName()}: ${message}`);
     }
+    return () => {};
   }
 
   protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number, filter: ( item: T ) => boolean = () => true ): Promise<void> {
-    const dismissSyncingAlert = this.alertService.publish(new Alert(this.getName(), 'Syncing', AlertType.warning, true));
+    this.log(log, 'Syncing');
 
     return new Promise<void>(resolve => {
       service.onReady().then(() => {
@@ -55,7 +56,6 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
         });
       });
     }).then(() => {
-      dismissSyncingAlert();
       this.log(true, 'Finished', AlertType.success);
     });
   }
