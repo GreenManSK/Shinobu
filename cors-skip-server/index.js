@@ -20,7 +20,7 @@ cors_proxy.createServer({
     removeHeaders: ['cookie', 'cookie2'],
     handleInitialRequest: (req, res, location) => {
         if (!location) {
-            return false;
+            return true;
         }
         const url = `${location.host}${location.path}`;
         for (const allowed of allowedUrls) {
