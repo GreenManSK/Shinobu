@@ -37,7 +37,7 @@ export class MusicSyncService extends ASyncService<Song> {
     if (!this.internetConnectionService.isConnected()) {
       return Promise.resolve(item);
     }
-    if (!item.anisonId && !item.anidbId) {
+    if ((!item.anisonId && !item.anidbId) || item.releaseDate) {
       return Promise.resolve(item);
     }
 

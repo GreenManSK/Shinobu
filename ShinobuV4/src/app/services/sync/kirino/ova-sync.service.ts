@@ -30,7 +30,7 @@ export class OvaSyncService extends ASyncService<Ova> {
     if (!this.internetConnectionService.isConnected()) {
       return Promise.resolve(item);
     }
-    if (!item.anidbId) {
+    if (!item.anidbId || item.airdate) {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
