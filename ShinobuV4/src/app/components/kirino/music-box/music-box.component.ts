@@ -12,6 +12,7 @@ import { AnisonParserService } from '../../../services/parsers/kirino/anison-par
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MusicFormComponent } from '../music-form/music-form.component';
 import { MusicSyncService } from '../../../services/sync/kirino/music-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 @Component({
   selector: 'music-box',
@@ -33,15 +34,20 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Delete', 'ri-delete-bin-6-line', ( song: Song ) => this.deleteSong(song))
   ];
   private dataSubscription?: Subscription;
+  private internetSubscription?: Subscription;
 
   constructor(
     private service: SongService,
     private popUpService: PopUpService,
-    private sync: MusicSyncService
+    private sync: MusicSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
   }
 
   ngOnInit(): void {
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.headerButtons[1].disabled = !connected;
+    });
     this.service.onReady().then(() => {
       this.dataSubscription = this.service.getAll().subscribe(songs => {
         this.items = songs.map(song => this.toBoxItem(song));
@@ -51,6 +57,7 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription?.unsubscribe();
+    this.internetSubscription?.unsubscribe();
   }
 
   private toBoxItem( song: Song ): BoxItem {

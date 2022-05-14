@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Color } from '../../../types/Color';
 import { BoxItem } from '../../../types/kirino/BoxItem';
 import { BoxButton } from '../../../types/kirino/BoxButton';
 import { LocalPreferenceService } from '../../../services/data/local-preference.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'item-box',
   templateUrl: './item-box.component.html',
   styleUrls: ['./item-box.component.scss']
 })
-export class ItemBoxComponent implements OnInit {
+export class ItemBoxComponent implements OnInit, OnDestroy {
 
   private static readonly HIDDEN_KEYS = '_HIDDEN';
 
@@ -38,11 +40,13 @@ export class ItemBoxComponent implements OnInit {
   public minimized = true;
   public hiddenGroups: { [key: string]: number } = {};
   public renderItems: BoxItem[] = [];
+  public isOnline = false;
 
   private _items: BoxItem[] = [];
   private _hiddenKyes: Set<string> = new Set<string>();
+  private internetSubscription?: Subscription;
 
-  constructor( private localPreferenceService: LocalPreferenceService ) {
+  constructor( private localPreferenceService: LocalPreferenceService, private internetConnectionService: InternetConnectionService ) {
     this.now = new Date();
   }
 
@@ -50,6 +54,13 @@ export class ItemBoxComponent implements OnInit {
     if (this.enableHiding) {
       this._hiddenKyes = new Set<string>(this.localPreferenceService.get(`${this.localPreferenceKey}${ItemBoxComponent.HIDDEN_KEYS}`, []));
     }
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.isOnline = connected;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.internetSubscription?.unsubscribe();
   }
 
   @Input('items')

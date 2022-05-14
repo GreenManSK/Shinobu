@@ -12,6 +12,7 @@ import { MangaParserService } from '../../../services/parsers/kirino/manga-parse
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
 import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 type DataBag = {
   manga: Manga,
@@ -40,15 +41,20 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteManga(bag))
   ];
   private dataSubscription?: Subscription;
+  private internetSubscription?: Subscription;
 
   constructor(
     private service: MangaService,
     private popUpService: PopUpService,
-    private syncService: MangaSyncService
+    private syncService: MangaSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
   }
 
   ngOnInit(): void {
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.headerButtons[1].disabled = !connected;
+    });
     this.service.onReady().then(() => {
       this.dataSubscription = this.service.getAll().subscribe(manga => {
         const items = [] as BoxItem[];
@@ -60,6 +66,7 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription?.unsubscribe();
+    this.internetSubscription?.unsubscribe();
   }
 
   private toEpisodeItems( manga: Manga ) {

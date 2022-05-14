@@ -6,6 +6,7 @@ import { AnimeService } from '../../data/kirino/anime.service';
 import { ASyncService } from './ASyncService';
 import { AnidbParserService } from '../../parsers/kirino/anidb-parser.service';
 import { EpisodeSyncHelper } from './episode-sync-helper';
+import { InternetConnectionService } from '../../internet-connection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,16 @@ export class AnimeSyncService extends ASyncService<Anime> {
     kirinoSettingsService: KirinoSettingsService,
     alertService: AlertService,
     private service: AnimeService,
-    private parser: AnidbParserService ) {
+    private parser: AnidbParserService,
+    private internetConnectionService: InternetConnectionService
+  ) {
     super(kirinoSettingsService, alertService);
   }
 
   public sync( item: Anime, force = false, log = false ): Promise<Anime> {
+    if (!this.internetConnectionService.isConnected()) {
+      return Promise.resolve(item);
+    }
     const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
     this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`);
     if (!shouldSync) {

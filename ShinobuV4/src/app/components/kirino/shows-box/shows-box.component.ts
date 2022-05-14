@@ -12,6 +12,7 @@ import { TheTVDBParserService } from '../../../services/parsers/kirino/the-tvdbp
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { ShowFormComponent } from '../show-form/show-form.component';
 import { ShowSyncService } from '../../../services/sync/kirino/show-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 type DataBag = {
   show: Show,
@@ -39,15 +40,20 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteShow(bag))
   ];
   private dataSubscription?: Subscription;
+  private internetSubscription?: Subscription;
 
   constructor(
     private service: ShowService,
     private popUpService: PopUpService,
-    private syncService: ShowSyncService
+    private syncService: ShowSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
   }
 
   ngOnInit(): void {
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.headerButtons[1].disabled = !connected;
+    });
     this.service.onReady().then(() => {
       this.dataSubscription = this.service.getAll().subscribe(show => {
         const items = [] as BoxItem[];
@@ -59,6 +65,7 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription?.unsubscribe();
+    this.internetSubscription?.unsubscribe();
   }
 
   private toEpisodeItems( show: Show ): BoxItem[] {

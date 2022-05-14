@@ -13,6 +13,7 @@ import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { Episode } from '../../../data/kirino/Episode';
 import { NyaaSearchService } from '../../../services/nyaa-search.service';
 import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 type DataBag = {
   anime: Anime,
@@ -32,7 +33,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   public headerButtons = [
     new BoxButton('Add', 'ri-add-box-line', () => this.addAnime()),
-    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
+    new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll(), true),
   ];
   private buttons: BoxButton[] = [
     new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
@@ -40,16 +41,21 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteAnime(bag))
   ];
   private dataSubscription?: Subscription;
+  private internetSubscription?: Subscription;
 
   constructor(
     private service: AnimeService,
     private popUpService: PopUpService,
     private nyaaSearch: NyaaSearchService,
-    private syncService: AnimeSyncService
+    private syncService: AnimeSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
   }
 
   ngOnInit(): void {
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.headerButtons[1].disabled = !connected;
+    });
     this.service.onReady().then(() => {
       this.dataSubscription = this.service.getAll().subscribe(anime => {
         const items = [] as BoxItem[];
@@ -61,6 +67,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription?.unsubscribe();
+    this.internetSubscription?.unsubscribe();
   }
 
   private toEpisodeItems( anime: Anime ): BoxItem[] {

@@ -51,10 +51,11 @@
       Toggle first/all
     </div>
   </ng-template>
-  <ng-template *ngIf="syncFunction" shContextMenuItem (click)="syncFunction($event.data)">
+  <ng-template *ngIf="syncFunction" shContextMenuItem (click)="isOnline && syncFunction($event.data)">
     <div>
       <i class="ri-refresh-line"></i>
-      Sync data
+      <s title="Unavailable until online" *ngIf="!isOnline">Sync data</s>
+      <span *ngIf="isOnline">Sync data</span>
     </div>
   </ng-template>
 </sh-context-menu>

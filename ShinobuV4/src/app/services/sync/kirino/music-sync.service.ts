@@ -7,6 +7,7 @@ import { SongService } from '../../data/kirino/song.service';
 import { AnidbSongParserService } from '../../parsers/kirino/anidb-song-parser.service';
 import { AnisonParserService } from '../../parsers/kirino/anison-parser.service';
 import { AnimeSyncService } from './anime-sync.service';
+import { InternetConnectionService } from '../../internet-connection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,16 @@ export class MusicSyncService extends ASyncService<Song> {
     alertService: AlertService,
     private service: SongService,
     private anidbParser: AnidbSongParserService,
-    private anisonParser: AnisonParserService
+    private anisonParser: AnisonParserService,
+    private internetConnectionService: InternetConnectionService
   ) {
     super(kirinoSettingsService, alertService);
   }
 
   public sync( item: Song, force = false, log = false ): Promise<Song> {
+    if (!this.internetConnectionService.isConnected()) {
+      return Promise.resolve(item);
+    }
     if (!item.anisonId && !item.anidbId) {
       return Promise.resolve(item);
     }

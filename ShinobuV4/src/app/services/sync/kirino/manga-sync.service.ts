@@ -6,6 +6,7 @@ import { AlertService } from '../../alert.service';
 import { MangaService } from '../../data/kirino/manga.service';
 import { MangaParserService } from '../../parsers/kirino/manga-parser.service';
 import { Episode } from '../../../data/kirino/Episode';
+import { InternetConnectionService } from '../../internet-connection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,16 @@ export class MangaSyncService extends ASyncService<Manga> {
     kirinoSettingsService: KirinoSettingsService,
     alertService: AlertService,
     private service: MangaService,
-    private parser: MangaParserService
+    private parser: MangaParserService,
+    private internetConnectionService: InternetConnectionService
   ) {
     super(kirinoSettingsService, alertService);
   }
 
   public sync( item: Manga, force = false, log = false ): Promise<Manga> {
+    if (!this.internetConnectionService.isConnected()) {
+      return Promise.resolve(item);
+    }
     if (!item.amazonId) {
       return Promise.resolve(item);
     }

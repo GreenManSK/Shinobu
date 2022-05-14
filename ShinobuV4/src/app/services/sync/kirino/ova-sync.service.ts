@@ -6,6 +6,7 @@ import { AlertService } from '../../alert.service';
 import { OvaService } from '../../data/kirino/ova.service';
 import { AnidbEpisodeParserService } from '../../parsers/kirino/anidb-episode-parser.service';
 import { AnimeSyncService } from './anime-sync.service';
+import { InternetConnectionService } from '../../internet-connection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,16 @@ export class OvaSyncService extends ASyncService<Ova> {
     kirinoSettingsService: KirinoSettingsService,
     alertService: AlertService,
     private service: OvaService,
-    private parser: AnidbEpisodeParserService
+    private parser: AnidbEpisodeParserService,
+    private internetConnectionService: InternetConnectionService
   ) {
     super(kirinoSettingsService, alertService);
   }
 
   public sync( item: Ova, force = false, log = false): Promise<Ova> {
+    if (!this.internetConnectionService.isConnected()) {
+      return Promise.resolve(item);
+    }
     if (!item.anidbId) {
       return Promise.resolve(item);
     }

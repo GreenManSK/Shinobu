@@ -11,6 +11,7 @@ import { AnidbEpisodeParserService } from '../../../services/parsers/kirino/anid
 import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
 import { OvaFormComponent } from '../ova-form/ova-form.component';
 import { OvaSyncService } from '../../../services/sync/kirino/ova-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 @Component({
   selector: 'ova-box',
@@ -32,15 +33,20 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Delete', 'ri-delete-bin-6-line', ( ova: Ova ) => this.deleteOva(ova))
   ];
   private dataSubscription?: Subscription;
+  private internetSubscription?: Subscription;
 
   constructor(
     private service: OvaService,
     private popUpService: PopUpService,
-    private syncService: OvaSyncService
+    private syncService: OvaSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
   }
 
   ngOnInit(): void {
+    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
+      this.headerButtons[1].disabled = !connected;
+    });
     this.service.onReady().then(() => {
       this.dataSubscription = this.service.getAll().subscribe(ovas => {
         this.items = ovas.map(ova => this.toBoxItem(ova));
@@ -50,6 +56,7 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription?.unsubscribe();
+    this.internetSubscription?.unsubscribe();
   }
 
   private toBoxItem( ova: Ova ) {
