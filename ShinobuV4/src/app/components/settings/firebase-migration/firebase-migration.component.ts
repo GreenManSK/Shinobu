@@ -9,6 +9,12 @@ import { Subscription } from 'rxjs';
 import { AlertService } from '../../../services/alert.service';
 import { Alert } from '../../../types/Alert';
 import { AlertType } from '../../../types/AlertType';
+import { AnimeService } from '../../../services/data/kirino/anime.service';
+import { KirinoSettingsService } from '../../../services/data/kirino/kirino-settings.service';
+import { MangaService } from '../../../services/data/kirino/manga.service';
+import { OvaService } from '../../../services/data/kirino/ova.service';
+import { ShowService } from '../../../services/data/kirino/show.service';
+import { SongService } from '../../../services/data/kirino/song.service';
 
 @Component({
   selector: 'firebase-migration',
@@ -17,7 +23,7 @@ import { AlertType } from '../../../types/AlertType';
 })
 export class FirebaseMigrationComponent implements OnInit, OnDestroy {
 
-  private static readonly DATA_SERVICES = [TabService, NoteService];
+  private static readonly DATA_SERVICES = [TabService, NoteService, AnimeService, KirinoSettingsService, MangaService, OvaService, ShowService, SongService];
 
   public isAuthenticated = false;
   public hasDataToMigrate = false;
