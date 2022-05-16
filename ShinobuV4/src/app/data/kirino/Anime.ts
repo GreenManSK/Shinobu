@@ -23,4 +23,8 @@ export class Anime extends AEpisodic {
       episodes: this.episodes.map(e => ({...e}))
     }
   }
+
+  public parseEpisodeNumber( episodeNumber: string ): number {
+    return +episodeNumber;
+  }
 }

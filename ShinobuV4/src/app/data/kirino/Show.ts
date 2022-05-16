@@ -21,4 +21,13 @@ export class Show extends AEpisodic {
       episodes: this.episodes.map(e => ({...e}))
     };
   }
+
+  public parseEpisodeNumber( episodeNumber: string ): number {
+    const match = episodeNumber.match(/^S(\d+)E(\d+)$/);
+    if (match === null) {
+      return -1;
+    }
+    return +match[1] * 1000 + +match[2];
+  }
+
 }

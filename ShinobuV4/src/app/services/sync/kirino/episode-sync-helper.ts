@@ -17,7 +17,14 @@ export class EpisodeSyncHelper {
       if (exists) {
         episodeMap[ep.number].airdate = ep.airdate;
       }
-      return ep.airdate >= now && !exists;
+      if (exists) {
+        return false;
+      }
+
+      if (show.lastSeen !== 0) {
+        return show.parseEpisodeNumber(ep.number) > show.lastSeen;
+      }
+      return ep.airdate >= now;
     });
     show.episodes = show.episodes.concat(newEpisodes);
     return show;
