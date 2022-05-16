@@ -14,7 +14,7 @@ export class HttpClientService {
 
   constructor( private http: HttpClient ) {
     this.corsServerUrl = environment.corsServer;
-    this.useCorsServer = !!chrome;
+    this.useCorsServer = true;
   }
 
   public getData( url: string, skipCors = false ): Promise<string> {
