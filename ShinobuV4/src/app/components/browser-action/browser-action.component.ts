@@ -44,22 +44,20 @@ export class BrowserActionComponent implements OnInit {
 
   ngOnInit(): void {
     const url = this.route.snapshot.queryParams['url'];
-    if (!url) {
-      window.close();
-      return;
-    }
-    for (const parser of this.parsers) {
-      if (parser.match(url)) {
-        parser.getData(url).then(( data ) => {
-          this.popUpService.openPopUp(
-            parser.getFormUrl(data),
-            '',
-            BrowserActionComponent.WIDTH,
-            BrowserActionComponent.HEIGHT
-          );
-          window.close();
-        });
-        break;
+    if (url) {
+      for (const parser of this.parsers) {
+        if (parser.match(url)) {
+          parser.getData(url).then(( data ) => {
+            window.open(parser.getFormUrl(data),"_self");
+            // this.popUpService.openPopUp(
+            //   parser.getFormUrl(data),
+            //   '',
+            //   BrowserActionComponent.WIDTH,
+            //   BrowserActionComponent.HEIGHT
+            // );
+          });
+          break;
+        }
       }
     }
   }
