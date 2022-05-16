@@ -8,6 +8,7 @@ import { TheTVDBParserService } from '../../services/parsers/kirino/the-tvdbpars
 import { AnidbEpisodeParserService } from '../../services/parsers/kirino/anidb-episode-parser.service';
 import { AnidbParserService } from '../../services/parsers/kirino/anidb-parser.service';
 import { MangaParserService } from '../../services/parsers/kirino/manga-parser.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-browser-action',
@@ -23,6 +24,7 @@ export class BrowserActionComponent implements OnInit {
 
   constructor(
     public popUpService: PopUpService,
+    private route: ActivatedRoute,
     anidbSongParser: AnidbSongParserService,
     anisonParser: AnisonParserService,
     theTVDBParser: TheTVDBParserService,
@@ -41,25 +43,25 @@ export class BrowserActionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    chrome.tabs.query({currentWindow: true, active: true}, ( tabs ) => {
-      const url = tabs[0].url;
-      if (!url) {
-        return;
+    const url = this.route.snapshot.queryParams['url'];
+    if (!url) {
+      window.close();
+      return;
+    }
+    for (const parser of this.parsers) {
+      if (parser.match(url)) {
+        parser.getData(url).then(( data ) => {
+          this.popUpService.openPopUp(
+            parser.getFormUrl(data),
+            '',
+            BrowserActionComponent.WIDTH,
+            BrowserActionComponent.HEIGHT
+          );
+          window.close();
+        });
+        break;
       }
-      for (const parser of this.parsers) {
-        if (parser.match(url)) {
-          parser.getData(url).then(( data ) => {
-            this.popUpService.openPopUp(
-              parser.getFormUrl(data),
-              '',
-              BrowserActionComponent.WIDTH,
-              BrowserActionComponent.HEIGHT
-            );
-          });
-          break;
-        }
-      }
-    });
+    }
   }
 
 }
