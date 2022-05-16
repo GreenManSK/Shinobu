@@ -38,7 +38,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
   }
 
   protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number, filter: ( item: T ) => boolean = () => true ): Promise<void> {
-    const syncAlertDismiss = this.log(log, 'Syncing');
+    const syncAlertDismiss = this.log(log, 'Syncing', AlertType.warning, true);
 
     return new Promise<void>(resolve => {
       service.onReady().then(() => {
@@ -57,7 +57,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
       });
     }).then(() => {
       syncAlertDismiss();
-      this.log(true, 'Finished', AlertType.success);
+      this.log(log, 'Finished', AlertType.success);
     });
   }
 
