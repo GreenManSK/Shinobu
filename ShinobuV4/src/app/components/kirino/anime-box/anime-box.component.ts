@@ -74,7 +74,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     const episodes = [] as BoxItem[];
     for (const episode of anime.episodes) {
       let nyaaSearch: BoxLink | undefined = undefined;
-      if (anime.nyaaSearch) {
+      if (anime.nyaaSearch && anime.nyaaSearch.searchText) {
         const searchText = this.nyaaSearch.generateSearchText(anime, episode);
         nyaaSearch = new BoxLink(searchText, this.nyaaSearch.getSearchUrl(searchText));
       }
