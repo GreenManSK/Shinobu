@@ -41,12 +41,14 @@ export class BoxComponent implements OnInit {
     return BoxComponent.getColorClass(this.color);
   }
 
-  public headerButtonClick( event: MouseEvent, button: BoxButton ): void {
+  public headerButtonClick( event: MouseEvent, button: BoxButton ): boolean {
     event.preventDefault();
+    event.stopPropagation();
     if (!button?.callback) {
-      return;
+      return false;
     }
     button.callback(null);
+    return false;
   }
 
   public static getColorClass( color: Color ): string {
