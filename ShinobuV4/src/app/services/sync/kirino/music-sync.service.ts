@@ -51,17 +51,17 @@ export class MusicSyncService extends ASyncService<Song> {
       }
     }
 
-    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
 
     return this.getDataPromise(item).then(updatedData => {
       this.updateSongData(item, updatedData);
       item.lastSync = Date.now();
       return this.service.save(item);
     }).then(item => {
-      dismissAlert();
+      dismissAlert?.();
       return item;
     }).catch(item => {
       this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)

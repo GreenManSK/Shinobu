@@ -34,10 +34,10 @@ export class OvaSyncService extends ASyncService<Ova> {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
-    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     const url = AnidbEpisodeParserService.getUrl(item.anidbId);
     return this.parser.getData(url).then(updatedData => {
       if (updatedData && updatedData.airdate) {
@@ -46,7 +46,7 @@ export class OvaSyncService extends ASyncService<Ova> {
       item.lastSync = Date.now();
       return this.service.save(item);
     }).then(item => {
-      dismissAlert();
+      dismissAlert?.();
       return item;
     }).catch(item => {
       this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
@@ -54,7 +54,7 @@ export class OvaSyncService extends ASyncService<Ova> {
     });
   }
 
-  public override syncAll( force: boolean, log: boolean ): Promise<void> {
+  public syncAll( force: boolean, log: boolean ): Promise<void> {
     return this.syncAllItems(force, log, this.service, OvaSyncService.DELAY);
   }
 

@@ -5,7 +5,7 @@ import { AlertService } from '../../alert.service';
 import { AlertType } from '../../../types/AlertType';
 import { Alert } from '../../../types/Alert';
 import { IStorageService } from '../../data/istorage-service';
-import { first } from 'rxjs';
+import {first, Subscription} from 'rxjs';
 import { SyncHelper } from './sync-helper';
 
 export abstract class ASyncService<T extends ISyncable> implements ISyncService<T> {
@@ -38,11 +38,21 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
   }
 
   protected syncAllItems( force: boolean, log: boolean, service: IStorageService<T>, delay: number, filter: ( item: T ) => boolean = () => true ): Promise<void> {
-    const syncAlertDismiss = this.log(log, 'Syncing', AlertType.warning, true);
+    let syncAlertDismiss = () => {};
 
     return new Promise<void>(resolve => {
       service.onReady().then(() => {
-        service.getAll().pipe(first()).subscribe(async items => {
+        let subscription: Subscription;
+        let triggers = 0;
+        subscription = service.getAll().subscribe(async items => {
+          triggers++;
+          if (items.length > 0 || triggers > 1) {
+            subscription?.unsubscribe();
+          }
+          if (items.length === 0) {
+            return;
+          }
+          syncAlertDismiss = this.log(log, 'Syncing', AlertType.warning, true);
           items = items.filter(filter).sort((a,b) => (a.lastSync || 0) - (b.lastSync || 0));
           const last = items[items.length - 1];
           for (const item of items) {

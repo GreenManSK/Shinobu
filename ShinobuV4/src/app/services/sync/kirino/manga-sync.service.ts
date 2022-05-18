@@ -36,12 +36,12 @@ export class MangaSyncService extends ASyncService<Manga> {
       return Promise.resolve(item);
     }
     const shouldSync = force || this.shouldSync(item, MangaSyncService.SYNC_KEY, MangaSyncService.DEFAULT_SYNC_TIME_IN_MINS);
-    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
+    const dismissAlert = this.log(log, `${item.id}/${item.title} (force: ${force ? 'yes' : 'no'}) - ${shouldSync ? 'syncing' : 'skipping'}`, AlertType.warning, shouldSync);
     return this.syncManga(item).then(item => {
-      dismissAlert();
+      dismissAlert?.();
       return item;
     }).catch(item => {
       this.log(log, `Problem syncing ${item.id}/${item.title}`, AlertType.error)
