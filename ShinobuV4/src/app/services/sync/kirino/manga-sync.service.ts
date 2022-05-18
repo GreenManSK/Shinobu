@@ -78,7 +78,7 @@ export class MangaSyncService extends ASyncService<Manga> {
       if (existingEpisodes.has(episode.number)) {
         continue;
       }
-      if (+episode.number <= manga.lastSeen) {
+      if (manga.parseEpisodeNumber(episode.number) <= manga.lastSeen) {
         continue;
       }
       manga.episodes.push(episode);

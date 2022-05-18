@@ -23,7 +23,11 @@ export class Manga extends AEpisodic {
   }
 
   public parseEpisodeNumber( episodeNumber: string ): number {
-    return +episodeNumber;
+    const match = episodeNumber.match(/(\d+)/);
+    if (match === null) {
+      return -1;
+    }
+    return +match[1];
   }
 
 }

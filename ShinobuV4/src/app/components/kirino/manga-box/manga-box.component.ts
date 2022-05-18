@@ -1,18 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Color } from '../../../types/Color';
-import { Episode } from '../../../data/kirino/Episode';
-import { Manga } from '../../../data/kirino/Manga';
-import { BoxItem } from '../../../types/kirino/BoxItem';
-import { BoxButton } from '../../../types/kirino/BoxButton';
-import { Subscription } from 'rxjs';
-import { PopUpService } from '../../../services/pop-up.service';
-import { MangaService } from '../../../services/data/kirino/manga.service';
-import { BoxLink } from '../../../types/kirino/BoxLink';
-import { MangaParserService } from '../../../services/parsers/kirino/manga-parser.service';
-import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
-import { MangaFormComponent } from '../manga-form/manga-form.component';
-import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
-import { InternetConnectionService } from '../../../services/internet-connection.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Color} from '../../../types/Color';
+import {Episode} from '../../../data/kirino/Episode';
+import {Manga} from '../../../data/kirino/Manga';
+import {BoxItem} from '../../../types/kirino/BoxItem';
+import {BoxButton} from '../../../types/kirino/BoxButton';
+import {Subscription} from 'rxjs';
+import {PopUpService} from '../../../services/pop-up.service';
+import {MangaService} from '../../../services/data/kirino/manga.service';
+import {BoxLink} from '../../../types/kirino/BoxLink';
+import {MangaParserService} from '../../../services/parsers/kirino/manga-parser.service';
+import {KirinoFormComponent} from '../kirino-form/kirino-form.component';
+import {MangaFormComponent} from '../manga-form/manga-form.component';
+import {MangaSyncService} from '../../../services/sync/kirino/manga-sync.service';
+import {InternetConnectionService} from '../../../services/internet-connection.service';
 
 type DataBag = {
   manga: Manga,
@@ -36,9 +36,9 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
   ];
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
-    new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editManga(bag)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteManga(bag))
+    new BoxButton('Mark as seen', 'ri-eye-line', (bag: DataBag) => this.markAsSeen(bag)),
+    new BoxButton('Edit', 'ri-edit-2-line', (bag: DataBag) => this.editManga(bag)),
+    new BoxButton('Delete', 'ri-delete-bin-6-line', (bag: DataBag) => this.deleteManga(bag))
   ];
   private dataSubscription?: Subscription;
   private internetSubscription?: Subscription;
@@ -69,9 +69,9 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     this.internetSubscription?.unsubscribe();
   }
 
-  private toEpisodeItems( manga: Manga ) {
+  private toEpisodeItems(manga: Manga) {
     const episodes = [] as BoxItem[];
-    const sortedEpisodes = manga.episodes.sort((a,b) => +a.number - +b.number);
+    const sortedEpisodes = manga.episodes.sort((a, b) => manga.parseEpisodeNumber(a.number) - manga.parseEpisodeNumber(b.number));
     for (const episode of sortedEpisodes) {
       episodes.push(new BoxItem(
         `${manga.title} [${episode.number}]`,
@@ -111,7 +111,7 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editManga( {manga}: DataBag ) {
+  private editManga({manga}: DataBag) {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(MangaFormComponent.TYPE, manga.id),
       'Edit',
@@ -120,17 +120,17 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private deleteManga( {manga}: DataBag ) {
+  private deleteManga({manga}: DataBag) {
     this.service.delete(manga);
   }
 
-  private markAsSeen( {manga, episode}: DataBag ) {
+  private markAsSeen({manga, episode}: DataBag) {
     const index = manga.episodes.indexOf(episode);
     if (index < 0) {
       return;
     }
     manga.episodes.splice(index, 1);
-    manga.lastSeen = Math.max(manga.lastSeen, +episode.number);
+    manga.lastSeen = Math.max(manga.lastSeen, manga.parseEpisodeNumber(episode.number));
     this.service.save(manga)
   }
 
