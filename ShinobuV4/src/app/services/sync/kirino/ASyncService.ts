@@ -5,7 +5,7 @@ import { AlertService } from '../../alert.service';
 import { AlertType } from '../../../types/AlertType';
 import { Alert } from '../../../types/Alert';
 import { IStorageService } from '../../data/istorage-service';
-import {first, Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 import { SyncHelper } from './sync-helper';
 
 export abstract class ASyncService<T extends ISyncable> implements ISyncService<T> {
@@ -46,6 +46,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
         let triggers = 0;
         subscription = service.getAll().subscribe(async items => {
           triggers++;
+          console.log(`${this.getName()}: syncing triggered with`, items);
           if (items.length > 0 || triggers > 1) {
             subscription?.unsubscribe();
           }
