@@ -1,3 +1,3 @@
-<alert-center *ngIf="!isBackground()"></alert-center>
+<alert-center *ngIf="!isBackground()" [isKirino]="isKirino()"></alert-center>
 <menu *ngIf="!isBackground() && showMenu()"></menu>
 <router-outlet></router-outlet>
