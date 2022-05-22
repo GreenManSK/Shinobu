@@ -49,6 +49,8 @@ export class KirinoSyncService {
           return;
         }
         console.log(`Kirino sync started for ${key}`);
+        settings.lastRefresh = Date.now();
+        this.kirinoSettings.update(settings);
         const promise = service.syncAll(false, true).then(() => {
           settings.lastRefresh = Date.now();
           this.kirinoSettings.update(settings);
