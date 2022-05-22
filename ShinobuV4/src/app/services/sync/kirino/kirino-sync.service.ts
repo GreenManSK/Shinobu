@@ -7,6 +7,7 @@ import { ShowSyncService } from './show-sync.service';
 import { MusicSyncService } from './music-sync.service';
 import { LocalPreferenceService } from '../../data/local-preference.service';
 import { ASyncService } from './ASyncService';
+import { first, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,22 +44,29 @@ export class KirinoSyncService {
   public run(): Promise<any> {
     return this.kirinoSettings.onReady().then(() => {
       const promises: Promise<any>[] = [];
-      this.syncs.forEach(( {key, service} ) => {
-        const settings = this.kirinoSettings.get();
-        if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
+      let subscription: Subscription;
+      subscription = this.kirinoSettings.asObservable().subscribe(settings => {
+        if (!settings.id) {
           return;
         }
-        console.log(`Kirino sync started for ${key}`);
+        subscription.unsubscribe();
+        this.syncs.forEach(( {key, service} ) => {
+          if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
+            return;
+          }
+          console.log(`Kirino sync started for ${key}`);
+          const promise = service.syncAll(false, true)
+          promise.then(() => console.log(`Kirino sync finished for ${key}`));
+          promises.push(promise);
+        });
         settings.lastRefresh = Date.now();
         this.kirinoSettings.update(settings);
-        const promise = service.syncAll(false, true).then(() => {
-          settings.lastRefresh = Date.now();
-          this.kirinoSettings.update(settings);
-        });
-        promise.then(() => console.log(`Kirino sync finished for ${key}`));
-        promises.push(promise);
       });
-      return Promise.all(promises);
+      return Promise.all(promises).then(() => {
+        const settings = this.kirinoSettings.get();
+        settings.lastRefresh = Date.now();
+        this.kirinoSettings.update(settings);
+      });
     });
   }
 }

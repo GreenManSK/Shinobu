@@ -17,11 +17,14 @@ export class KirinoSettingsService extends DynamicStorageService<KirinoSettings>
   constructor( afs: AngularFirestore, authService: AuthService, errorService: ErrorService ) {
     super('kirinoSettings', afs, authService, errorService);
     this.readyPromise = this.readyPromise.then(() => {
-      super.getAll().subscribe(allSettings => {
-        if (allSettings.length > 0) {
-          this.settings = allSettings[0];
-          this.subject?.next(this.settings);
-        }
+      return new Promise<void>(resolve => {
+        super.getAll().subscribe(allSettings => {
+          if (allSettings.length > 0) {
+            this.settings = allSettings[0];
+            this.subject?.next(this.settings);
+          }
+          resolve();
+        });
       });
     });
   }
