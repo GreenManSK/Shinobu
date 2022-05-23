@@ -82,6 +82,7 @@ export class ItemBoxComponent implements OnInit, OnDestroy {
     } else {
       this._hiddenKyes.add(item.groupKey);
     }
+    this.localPreferenceService.set(`${this.localPreferenceKey}${ItemBoxComponent.HIDDEN_KEYS}`, Array.from(this._hiddenKyes));
     this.prepareRenderedItems();
   }
 
