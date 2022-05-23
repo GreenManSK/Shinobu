@@ -41,6 +41,9 @@ export class KirinoSyncService {
   }
 
   public run(): Promise<any> {
+    if (!this.automaticSyncEnabled) {
+      return Promise.resolve();
+    }
     const promises: Promise<any>[] = [];
     this.syncs.forEach(( {key, service} ) => {
       const lastSync = this.localPreference.get(key, 0);
