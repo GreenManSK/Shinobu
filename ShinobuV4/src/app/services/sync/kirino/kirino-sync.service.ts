@@ -42,6 +42,9 @@ export class KirinoSyncService {
   }
 
   public run(): Promise<any> {
+    if (!this.automaticSyncEnabled){
+      return Promise.resolve();
+    }
     return this.kirinoSettings.onReady().then(() => {
       const promises: Promise<any>[] = [];
       let subscription: Subscription;
