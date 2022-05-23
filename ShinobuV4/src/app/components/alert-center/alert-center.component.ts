@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { Alert } from '../../types/Alert';
 import { AlertEvent } from '../../types/AlertEvent';
@@ -13,6 +13,9 @@ import { AlertType } from '../../types/AlertType';
 export class AlertCenterComponent implements OnInit, OnDestroy {
 
   private static readonly TIMEOUT_IN_MS = 10000;
+
+  @Input()
+  public isKirino = false;
 
   public alerts: Alert[] = [];
 

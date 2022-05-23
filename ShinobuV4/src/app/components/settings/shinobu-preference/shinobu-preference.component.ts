@@ -15,4 +15,9 @@ export class ShinobuPreferenceComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  reloadApp( $event: MouseEvent ) {
+    $event.preventDefault();
+    location.reload();
+  }
 }

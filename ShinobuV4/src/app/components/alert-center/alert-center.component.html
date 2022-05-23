@@ -1,4 +1,4 @@
-<div class="ts-alert-center">
+<div class="ts-alert-center" [class.kirino]="isKirino">
   <div *ngFor="let alert of alerts"
     [class]="[toAlertTypeString(alert.type), 'notification']"
     (click)="dismiss(alert)">

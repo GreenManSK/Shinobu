@@ -7,6 +7,7 @@ import { ShowSyncService } from './show-sync.service';
 import { MusicSyncService } from './music-sync.service';
 import { LocalPreferenceService } from '../../data/local-preference.service';
 import { ASyncService } from './ASyncService';
+import { first, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class KirinoSyncService {
   }[] = [];
 
   constructor(
-    kirinoSettings: KirinoSettingsService,
+    private kirinoSettings: KirinoSettingsService,
     private localPreference: LocalPreferenceService,
     private animeSync: AnimeSyncService,
     private ovaSync: OvaSyncService,
@@ -41,22 +42,31 @@ export class KirinoSyncService {
   }
 
   public run(): Promise<any> {
-    if (!this.automaticSyncEnabled) {
-      return Promise.resolve();
-    }
-    const promises: Promise<any>[] = [];
-    this.syncs.forEach(( {key, service} ) => {
-      const lastSync = this.localPreference.get(key, 0);
-      if (Date.now() - lastSync < KirinoSyncService.MIN_SYNC_DELAY) {
-        return;
-      }
-      console.log(`Kirino sync started for ${key}`);
-      const promise = service.syncAll(false, true).then(() => {
-        this.localPreference.set(key, Date.now());
+    return this.kirinoSettings.onReady().then(() => {
+      const promises: Promise<any>[] = [];
+      let subscription: Subscription;
+      subscription = this.kirinoSettings.asObservable().subscribe(settings => {
+        if (!settings.id) {
+          return;
+        }
+        subscription.unsubscribe();
+        this.syncs.forEach(( {key, service} ) => {
+          if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
+            return;
+          }
+          console.log(`Kirino sync started for ${key}`);
+          const promise = service.syncAll(false, true)
+          promise.then(() => console.log(`Kirino sync finished for ${key}`));
+          promises.push(promise);
+        });
+        settings.lastRefresh = Date.now();
+        this.kirinoSettings.update(settings);
       });
-      promise.then(() => console.log(`Kirino sync finished for ${key}`));
-      promises.push(promise);
+      return Promise.all(promises).then(() => {
+        const settings = this.kirinoSettings.get();
+        settings.lastRefresh = Date.now();
+        this.kirinoSettings.update(settings);
+      });
     });
-    return Promise.all(promises);
   }
 }
