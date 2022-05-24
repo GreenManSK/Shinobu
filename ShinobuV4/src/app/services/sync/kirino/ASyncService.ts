@@ -46,13 +46,13 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
         let triggers = 0;
         subscription = service.getAll().subscribe(async items => {
           triggers++;
-          console.log(`${this.getName()}: syncing triggered with`, items);
           if (items.length > 0 || triggers > 1) {
             subscription?.unsubscribe();
           }
           if (items.length === 0) {
             return;
           }
+          console.log(`${this.getName()}: syncing triggered with`, items);
           syncAlertDismiss = this.log(log, 'Syncing', AlertType.warning, true);
           items = items.filter(filter).sort((a,b) => (a.lastSync || 0) - (b.lastSync || 0));
           const last = items[items.length - 1];

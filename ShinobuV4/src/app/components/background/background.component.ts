@@ -32,9 +32,9 @@ export class BackgroundComponent implements OnInit {
   }
 
   private mainLoop() {
-    console.log('Main loop check');
-    this.kirinoSyncService.run().then(() => {
-      console.log('Main loop finished');
-    });
+    // console.log('Main loop check');
+    // this.kirinoSyncService.run().then(() => {
+    //   console.log('Main loop finished');
+    // });
   }
 }
