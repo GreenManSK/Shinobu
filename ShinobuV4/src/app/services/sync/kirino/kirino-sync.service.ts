@@ -53,11 +53,13 @@ export class KirinoSyncService {
           let resolved = false;
           const syncStartedPromise = new Promise<void>(resolve => {
             let subscription: Subscription;
+            let started = false;
             subscription = this.kirinoSettings.asObservable().subscribe(settings => {
-              if (!settings.id) {
+              if (!settings.id || started) {
                 return;
               }
-              subscription.unsubscribe();
+              started = true;
+              subscription?.unsubscribe();
               this.syncs.forEach(({key, service}) => {
                 if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
                   return;
