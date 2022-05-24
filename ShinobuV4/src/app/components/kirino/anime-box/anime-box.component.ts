@@ -130,7 +130,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
       return;
     }
     anime.episodes.splice(index, 1);
-    anime.lastSeen = anime.parseEpisodeNumber(episode.number);
+    anime.lastSeen = Math.max(anime.parseEpisodeNumber(episode.number), anime.lastSeen);
     this.service.save(anime);
   }
 

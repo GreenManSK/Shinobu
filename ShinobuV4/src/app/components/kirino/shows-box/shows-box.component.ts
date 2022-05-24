@@ -129,7 +129,7 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
       return;
     }
     bag.show.episodes.splice(index, 1);
-    bag.show.lastSeen = bag.show.parseEpisodeNumber(bag.episode.number);
+    bag.show.lastSeen = Math.max(bag.show.parseEpisodeNumber(bag.episode.number), bag.show.lastSeen);
     this.service.save(bag.show);
   }
 
