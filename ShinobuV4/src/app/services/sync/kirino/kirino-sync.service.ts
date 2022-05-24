@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { KirinoSettingsService } from '../../data/kirino/kirino-settings.service';
-import { AnimeSyncService } from './anime-sync.service';
-import { OvaSyncService } from './ova-sync.service';
-import { MangaSyncService } from './manga-sync.service';
-import { ShowSyncService } from './show-sync.service';
-import { MusicSyncService } from './music-sync.service';
-import { LocalPreferenceService } from '../../data/local-preference.service';
-import { ASyncService } from './ASyncService';
-import { first, Subscription } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {KirinoSettingsService} from '../../data/kirino/kirino-settings.service';
+import {AnimeSyncService} from './anime-sync.service';
+import {OvaSyncService} from './ova-sync.service';
+import {MangaSyncService} from './manga-sync.service';
+import {ShowSyncService} from './show-sync.service';
+import {MusicSyncService} from './music-sync.service';
+import {LocalPreferenceService} from '../../data/local-preference.service';
+import {ASyncService} from './ASyncService';
+import {first, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,29 +42,37 @@ export class KirinoSyncService {
   }
 
   public run(): Promise<any> {
-    if (!this.automaticSyncEnabled){
+    if (!this.automaticSyncEnabled) {
       return Promise.resolve();
     }
     return this.kirinoSettings.onReady().then(() => {
       const promises: Promise<any>[] = [];
-      let subscription: Subscription;
-      subscription = this.kirinoSettings.asObservable().subscribe(settings => {
-        if (!settings.id) {
-          return;
-        }
-        subscription.unsubscribe();
-        this.syncs.forEach(( {key, service} ) => {
-          if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
+      let resolved = false;
+      const syncStartedPromise = new Promise(resolve => {
+        let subscription: Subscription;
+        subscription = this.kirinoSettings.asObservable().subscribe(settings => {
+          if (!settings.id) {
             return;
           }
-          console.log(`Kirino sync started for ${key}`);
-          const promise = service.syncAll(false, true)
-          promise.then(() => console.log(`Kirino sync finished for ${key}`));
-          promises.push(promise);
+          subscription.unsubscribe();
+          this.syncs.forEach(({key, service}) => {
+            if (Date.now() - settings.lastRefresh < KirinoSyncService.MIN_SYNC_DELAY) {
+              return;
+            }
+            console.log(`Kirino sync started for ${key}`);
+            const promise = service.syncAll(false, true)
+            promise.then(() => console.log(`Kirino sync finished for ${key}`));
+            promises.push(promise);
+            if (!resolved) {
+              resolved = true;
+              resolve();
+            }
+          });
+          settings.lastRefresh = Date.now();
+          this.kirinoSettings.update(settings);
         });
-        settings.lastRefresh = Date.now();
-        this.kirinoSettings.update(settings);
       });
+      promises.push(syncStartedPromise);
       return Promise.all(promises).then(() => {
         const settings = this.kirinoSettings.get();
         settings.lastRefresh = Date.now();
