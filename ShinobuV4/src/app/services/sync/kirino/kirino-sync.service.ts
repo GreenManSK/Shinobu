@@ -8,6 +8,7 @@ import {MusicSyncService} from './music-sync.service';
 import {LocalPreferenceService} from '../../data/local-preference.service';
 import {ASyncService} from './ASyncService';
 import {first, Subscription} from 'rxjs';
+import { InternetConnectionService } from '../../internet-connection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ import {first, Subscription} from 'rxjs';
 export class KirinoSyncService {
 
   private static readonly MIN_SYNC_DELAY = 60 * 60 * 1000;
-  private static readonly DELAY_ON_START = 0; //10 * 1000;
+  private static readonly DELAY_ON_START = 10 * 1000;
 
   private syncs: {
     key: string,
@@ -29,7 +30,8 @@ export class KirinoSyncService {
     private ovaSync: OvaSyncService,
     private mangaSync: MangaSyncService,
     private showSync: ShowSyncService,
-    private musicSync: MusicSyncService
+    private musicSync: MusicSyncService,
+    private internetConnectionService: InternetConnectionService
   ) {
     this.syncs = [
       {key: 'kirinoLastAnimeSync', service: this.animeSync},
@@ -41,6 +43,9 @@ export class KirinoSyncService {
   }
 
   public run() {
+    if (!this.internetConnectionService.isConnected()) {
+      return;
+    }
     setTimeout(() => {
       return this.kirinoSettings.onReady().then(() => {
         let subscription: Subscription;
@@ -63,6 +68,7 @@ export class KirinoSyncService {
             promises.push(promise);
           });
           return Promise.all(promises).then(() => {
+            console.log("Kirino done all");
             const settings = this.kirinoSettings.get();
             settings.lastRefresh = Date.now();
             this.kirinoSettings.update(settings);

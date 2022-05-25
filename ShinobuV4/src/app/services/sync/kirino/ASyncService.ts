@@ -10,6 +10,8 @@ import { SyncHelper } from './sync-helper';
 
 export abstract class ASyncService<T extends ISyncable> implements ISyncService<T> {
 
+  private static readonly SYNC_ALL_TIMEOUT = 30 * 1000;
+
   constructor( private kirinoSettingsService: KirinoSettingsService, protected alertService: AlertService ) {
 
   }
@@ -48,6 +50,10 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
           triggers++;
           if (items.length > 0 || triggers > 1) {
             subscription?.unsubscribe();
+            if (triggers > 1) {
+              resolve();
+              return;
+            }
           }
           if (items.length === 0) {
             return;
