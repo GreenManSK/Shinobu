@@ -29,11 +29,11 @@ export class AppComponent implements OnInit  {
 
   ngOnInit(): void {
     // To preventively sync data
-    this.animeService.getAll().subscribe(() => {});
-    this.songService.getAll().subscribe(() => {});
-    this.ovaService.getAll().subscribe(() => {});
-    this.showService.getAll().subscribe(() => {});
-    this.mangaService.getAll().subscribe(() => {});
+    this.animeService.onReady().then(() => this.animeService.getAll().subscribe(() => {}));
+    this.songService.onReady().then(() => this.songService.getAll().subscribe(() => {}));
+    this.ovaService.onReady().then(() => this.ovaService.getAll().subscribe(() => {}));
+    this.showService.onReady().then(() => this.showService.getAll().subscribe(() => {}));
+    this.mangaService.onReady().then(() => this.mangaService.getAll().subscribe(() => {}));
   }
 
   public isBackground(): boolean {
