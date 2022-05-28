@@ -8,6 +8,7 @@ import { SongService } from './services/data/kirino/song.service';
 import { OvaService } from './services/data/kirino/ova.service';
 import { ShowService } from './services/data/kirino/show.service';
 import { MangaService } from './services/data/kirino/manga.service';
+import { KirinoSettingsService } from './services/data/kirino/kirino-settings.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit  {
     private songService: SongService,
     private ovaService: OvaService,
     private showService: ShowService,
-    private mangaService: MangaService
+    private mangaService: MangaService,
+    private kirinoSettingsService: KirinoSettingsService
   ) {
   }
 
