@@ -10,7 +10,8 @@ export class BoxItem {
     public data: any = null,
     public badges: BoxLink[] = [],
     public buttons: BoxButton[] = [],
-    public link?: BoxLink
+    public link?: BoxLink,
+    public isSynced = false
   ) {
 
   }

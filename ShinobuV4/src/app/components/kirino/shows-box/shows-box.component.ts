@@ -82,7 +82,8 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
         },
         [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
         this.buttons,
-        show.url ? new BoxLink(show.url, show.url) : undefined
+        show.url ? new BoxLink(show.url, show.url) : undefined,
+        this.syncService.isSynced(show)
       ));
     }
     if (episodes.length <= 0) {
@@ -96,6 +97,8 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
         },
         [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
         this.buttons.slice(1, 3),
+        undefined,
+        this.syncService.isSynced(show)
       ));
     }
     return episodes;

@@ -67,7 +67,9 @@ export class OvaBoxComponent implements OnInit, OnDestroy {
       null,
       ova,
       ova.anidbId ? [new BoxLink('aniDB.net', AnidbEpisodeParserService.getUrl(ova.anidbId))] : [],
-      this.buttons
+      this.buttons,
+      undefined,
+      this.syncService.isSynced(ova)
     );
   }
 

@@ -33,7 +33,7 @@ export class OvaSyncService extends ASyncService<Ova> {
     if (!item.anidbId || item.airdate) {
       return Promise.resolve(item);
     }
-    const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+    const shouldSync = force || !this.isSynced(item);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -56,6 +56,10 @@ export class OvaSyncService extends ASyncService<Ova> {
 
   public syncAll( force: boolean, log: boolean ): Promise<void> {
     return this.syncAllItems(force, log, this.service, OvaSyncService.DELAY);
+  }
+
+  public isSynced(item: Ova): boolean {
+    return !this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
   }
 
   protected getName(): string {

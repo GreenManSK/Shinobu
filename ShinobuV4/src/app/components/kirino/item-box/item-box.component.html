@@ -24,8 +24,8 @@
           </div>
         </div>
         <div class="info">
-          <span *ngIf="item.date" class="date">{{item.date | date:'yyyy/M/d'}}</span>
-          <span *ngIf="!item.date" class="date unknown">Unknown</span>
+          <span *ngIf="item.date" class="date">{{item.date | date:'yyyy/M/d'}} <i *ngIf="item.isSynced" class="ri-check-line"></i></span>
+          <span *ngIf="!item.date" class="date unknown">Unknown <i *ngIf="item.isSynced" class="ri-check-line"></i></span>
           <ng-container *ngFor="let button of item.buttons; let isLast=last">
             <a href="#" [title]="button.title" (click)="onButtonClicked($event, item, button)">
               <i [class]="button.icon"></i>

@@ -35,7 +35,7 @@ export class MangaSyncService extends ASyncService<Manga> {
     if (!item.amazonId) {
       return Promise.resolve(item);
     }
-    const shouldSync = force || this.shouldSync(item, MangaSyncService.SYNC_KEY, MangaSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+    const shouldSync = force || !this.isSynced(item);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -53,10 +53,13 @@ export class MangaSyncService extends ASyncService<Manga> {
     return this.syncAllItems(force, log, this.service, MangaSyncService.DELAY);
   }
 
+  public isSynced(item: Manga): boolean {
+    return !this.shouldSync(item, MangaSyncService.SYNC_KEY, MangaSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+  }
+
   protected getName(): string {
     return 'MangaSync';
   }
-
 
   private syncManga( manga: Manga ): Promise<Manga> {
     const url = MangaParserService.getApiUrl(manga.amazonId, manga.lastParsedPage);

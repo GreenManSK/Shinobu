@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { ASyncService } from './ASyncService';
-import { Show } from '../../../data/kirino/Show';
-import { KirinoSettingsService } from '../../data/kirino/kirino-settings.service';
-import { AlertService } from '../../alert.service';
-import { ShowService } from '../../data/kirino/show.service';
-import { TheTVDBParserService } from '../../parsers/kirino/the-tvdbparser.service';
-import { EpisodeSyncHelper } from './episode-sync-helper';
-import { InternetConnectionService } from '../../internet-connection.service';
-import { AlertType } from '../../../types/AlertType';
+import {Injectable} from '@angular/core';
+import {ASyncService} from './ASyncService';
+import {Show} from '../../../data/kirino/Show';
+import {KirinoSettingsService} from '../../data/kirino/kirino-settings.service';
+import {AlertService} from '../../alert.service';
+import {ShowService} from '../../data/kirino/show.service';
+import {TheTVDBParserService} from '../../parsers/kirino/the-tvdbparser.service';
+import {EpisodeSyncHelper} from './episode-sync-helper';
+import {InternetConnectionService} from '../../internet-connection.service';
+import {AlertType} from '../../../types/AlertType';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +28,11 @@ export class ShowSyncService extends ASyncService<Show> {
     super(kirinoSettingsService, alertService);
   }
 
-  public sync( item: Show, force = false, log = false ): Promise<Show> {
+  public sync(item: Show, force = false, log = false): Promise<Show> {
     if (!this.internetConnectionService.isConnected()) {
       return Promise.resolve(item);
     }
-    const shouldSync = force || this.shouldSync(item, ShowSyncService.SYNC_KEY, ShowSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+    const shouldSync = force || !this.isSynced(item);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -54,8 +54,12 @@ export class ShowSyncService extends ASyncService<Show> {
     });
   }
 
-  public syncAll( force: boolean, log: boolean ): Promise<void> {
+  public syncAll(force: boolean, log: boolean): Promise<void> {
     return this.syncAllItems(force, log, this.service, ShowSyncService.DELAY);
+  }
+
+  public isSynced(item: Show): boolean {
+    return !this.shouldSync(item, ShowSyncService.SYNC_KEY, ShowSyncService.DEFAULT_SYNC_TIME_IN_MINS);
   }
 
   protected getName(): string {

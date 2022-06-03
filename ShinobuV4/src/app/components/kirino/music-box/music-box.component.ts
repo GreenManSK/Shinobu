@@ -75,7 +75,9 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
       null,
       song,
       badges,
-      this.buttons
+      this.buttons,
+      undefined,
+      this.sync.isSynced(song)
     );
   }
 

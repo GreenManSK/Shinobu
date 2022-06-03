@@ -89,7 +89,8 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
         },
         [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
         this.buttons,
-        nyaaSearch
+        nyaaSearch,
+        this.syncService.isSynced(anime)
       ));
     }
     if (episodes.length <= 0) {
@@ -100,7 +101,9 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
         anime.id,
         {anime},
         [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
-        this.buttons.slice(1, 3)
+        this.buttons.slice(1, 3),
+        undefined,
+        this.syncService.isSynced(anime)
       ));
     }
     return episodes;

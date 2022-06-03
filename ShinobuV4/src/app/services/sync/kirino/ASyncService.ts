@@ -20,6 +20,8 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
 
   public abstract syncAll( force: boolean, log: boolean ): Promise<void>;
 
+  public abstract isSynced(item: T): boolean;
+
   protected abstract getName(): string;
 
   protected shouldSync( item: T, syncKey: string, defaultValue: number ) {

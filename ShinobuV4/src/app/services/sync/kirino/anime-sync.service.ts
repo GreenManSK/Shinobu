@@ -32,7 +32,7 @@ export class AnimeSyncService extends ASyncService<Anime> {
     if (!this.internetConnectionService.isConnected()) {
       return Promise.resolve(item);
     }
-    const shouldSync = force || this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+    const shouldSync = force || !this.isSynced(item);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -55,6 +55,10 @@ export class AnimeSyncService extends ASyncService<Anime> {
 
   public syncAll( force: boolean, log: boolean ): Promise<void> {
     return this.syncAllItems(force, log, this.service, AnimeSyncService.DELAY);
+  }
+
+  public isSynced(item: Anime): boolean {
+    return !this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
   }
 
   protected getName(): string {

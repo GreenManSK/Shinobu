@@ -83,7 +83,9 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
           episode
         },
         [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
-        this.buttons
+        this.buttons,
+        undefined,
+        this.syncService.isSynced(manga)
       ));
     }
     if (episodes.length <= 0) {
@@ -96,7 +98,9 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
           manga
         },
         [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
-        this.buttons.slice(1, 3)
+        this.buttons.slice(1, 3),
+        undefined,
+        this.syncService.isSynced(manga)
       ));
     }
     return episodes;

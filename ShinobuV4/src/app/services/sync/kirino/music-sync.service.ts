@@ -41,16 +41,7 @@ export class MusicSyncService extends ASyncService<Song> {
       return Promise.resolve(item);
     }
 
-    let shouldSync = force;
-    const useAnison = this.shouldUseAnison(item);
-    if (!shouldSync) {
-      if (useAnison) {
-        shouldSync = this.shouldSync(item, MusicSyncService.ANISON_SYNC_KEY, MusicSyncService.ANISON_DEFAULT_SYNC_TIME_IN_MINS);
-      } else {
-        shouldSync = this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
-      }
-    }
-
+    let shouldSync = force || !this.isSynced(item);
     if (!shouldSync) {
       return Promise.resolve(item);
     }
@@ -76,6 +67,18 @@ export class MusicSyncService extends ASyncService<Song> {
     ];
     return Promise.all(promises).then(() => {
     });
+  }
+
+  public isSynced(item: Song): boolean {
+    if (item.releaseDate) {
+      return true;
+    }
+    const useAnison = this.shouldUseAnison(item);
+      if (useAnison) {
+        return !this.shouldSync(item, MusicSyncService.ANISON_SYNC_KEY, MusicSyncService.ANISON_DEFAULT_SYNC_TIME_IN_MINS);
+      } else {
+        return !this.shouldSync(item, AnimeSyncService.SYNC_KEY, AnimeSyncService.DEFAULT_SYNC_TIME_IN_MINS);
+      }
   }
 
   protected getName(): string {
