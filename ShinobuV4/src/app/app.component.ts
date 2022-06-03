@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppUpdateService } from './services/app-update.service';
-import { TabService } from './services/data/shinobu/tab.service';
-import { NoteService } from './services/data/shinobu/note.service';
 import { AnimeService } from './services/data/kirino/anime.service';
 import { SongService } from './services/data/kirino/song.service';
 import { OvaService } from './services/data/kirino/ova.service';
