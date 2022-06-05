@@ -76,7 +76,7 @@ export abstract class ASyncService<T extends ISyncable> implements ISyncService<
       });
     }).then(() => {
       syncAlertDismiss();
-      this.log(log, 'Finished', AlertType.success);
+      // this.log(log, 'Finished', AlertType.success);
     });
   }
 
