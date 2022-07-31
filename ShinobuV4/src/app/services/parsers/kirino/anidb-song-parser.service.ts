@@ -58,7 +58,7 @@ export class AnidbSongParserService implements ISiteParser<Song> {
       const el = document.createElement('html');
       el.innerHTML = html;
 
-      song.show = el.querySelector('td.value [itemprop="name"]')?.textContent || '';
+      song.show = el.querySelector('#animelist td.name')?.textContent || '';
       song.type = el.querySelector('#animelist td:first-child')?.textContent || '';
       const titleHeader = Array.from(el.querySelectorAll('th')).filter(th => th?.textContent?.includes('Main Title'));
       song.title = titleHeader.length > 0 && titleHeader[0].parentElement?.querySelector('.value span')?.textContent || '';
