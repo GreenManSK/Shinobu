@@ -14,6 +14,7 @@ import { Episode } from '../../../data/kirino/Episode';
 import { NyaaSearchService } from '../../../services/nyaa-search.service';
 import { AnimeSyncService } from '../../../services/sync/kirino/anime-sync.service';
 import { InternetConnectionService } from '../../../services/internet-connection.service';
+import { KirinoSettingsService } from '../../../services/data/kirino/kirino-settings.service';
 
 type DataBag = {
   anime: Anime,
@@ -48,7 +49,8 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     private popUpService: PopUpService,
     private nyaaSearch: NyaaSearchService,
     private syncService: AnimeSyncService,
-    private internetConnectionService: InternetConnectionService
+    private internetConnectionService: InternetConnectionService,
+    private kirinoSettings: KirinoSettingsService
   ) {
   }
 
@@ -62,6 +64,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
         anime.forEach(a => items.push(...this.toEpisodeItems(a)));
         this.items = items;
       });
+      this.kirinoSettings.asObservable().subscribe(settings => this.updateNyaaUrl(settings.nyaaUrl));
     });
   }
 
@@ -148,5 +151,14 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
 
   private syncAll() {
     this.syncService.syncAll(false, true);
+  }
+
+  private updateNyaaUrl( nyaaUrl: string ) {
+    for (const item of this.items) {
+      if (!item.link) {
+        continue;
+      }
+      item.link.url = this.nyaaSearch.getSearchUrl(item.link.text);
+    }
   }
 }
