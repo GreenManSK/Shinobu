@@ -76,7 +76,7 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
       episodes.push(new BoxItem(
         `${manga.title} [${episode.number}]`,
         '',
-        undefined,
+        episode.airdate ? new Date(episode.airdate) : undefined,
         manga.id,
         {
           manga,

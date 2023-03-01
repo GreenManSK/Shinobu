@@ -75,10 +75,14 @@ export class MangaSyncService extends ASyncService<Manga> {
   }
 
   private updateEpisodes( manga: Manga, episodes: Episode[] ): void {
-    const existingEpisodes = new Set<string>();
-    manga.episodes.forEach(e => existingEpisodes.add(e.number));
+    const existingEpisodes = new Map<string, Episode>();
+    manga.episodes.forEach(e => existingEpisodes.set(e.number, e));
     for (const episode of episodes) {
       if (existingEpisodes.has(episode.number)) {
+        const storedEpisode = existingEpisodes.get(episode.number);
+        if (episode.airdate !== 0 && storedEpisode) {
+          storedEpisode.airdate = episode.airdate;
+        }
         continue;
       }
       if (manga.parseEpisodeNumber(episode.number) <= manga.lastSeen) {

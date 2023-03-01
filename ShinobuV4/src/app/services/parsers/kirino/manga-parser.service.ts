@@ -61,7 +61,12 @@ export class MangaParserService implements ISiteParser<Manga> {
         const volumes = el.querySelectorAll('.series-childAsin-count');
         volumes.forEach(volume => {
           const volumeNumber = volume?.textContent?.trim() || '-1';
-          manga.episodes.push(new Episode(volumeNumber, Date.now()));
+          let airDate = 0;
+          const publishingDate = volume.parentElement?.querySelector('.a-color-success.a-text-bold')?.textContent;
+          if (publishingDate) {
+            airDate = new Date(publishingDate).getTime();
+          }
+          manga.episodes.push(new Episode(volumeNumber, airDate));
         });
       }
     } catch (e: any) {
