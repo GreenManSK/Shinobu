@@ -1,32 +1,30 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Color} from '../../../types/Color';
-import {Episode} from '../../../data/kirino/Episode';
-import {Manga} from '../../../data/kirino/Manga';
-import {BoxItem} from '../../../types/kirino/BoxItem';
-import {BoxButton} from '../../../types/kirino/BoxButton';
-import {Subscription} from 'rxjs';
-import {PopUpService} from '../../../services/pop-up.service';
-import {MangaService} from '../../../services/data/kirino/manga.service';
-import {BoxLink} from '../../../types/kirino/BoxLink';
-import {MangaParserService} from '../../../services/parsers/kirino/manga-parser.service';
-import {KirinoFormComponent} from '../kirino-form/kirino-form.component';
-import {MangaFormComponent} from '../manga-form/manga-form.component';
-import {MangaSyncService} from '../../../services/sync/kirino/manga-sync.service';
-import {InternetConnectionService} from '../../../services/internet-connection.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Color } from '../../../types/Color';
+import { Episode } from '../../../data/kirino/Episode';
+import { Manga } from '../../../data/kirino/Manga';
+import { BoxItem } from '../../../types/kirino/BoxItem';
+import { BoxButton } from '../../../types/kirino/BoxButton';
+import { Subscription } from 'rxjs';
+import { PopUpService } from '../../../services/pop-up.service';
+import { MangaService } from '../../../services/data/kirino/manga.service';
+import { BoxLink } from '../../../types/kirino/BoxLink';
+import { MangaParserService } from '../../../services/parsers/kirino/manga-parser.service';
+import { KirinoFormComponent } from '../kirino-form/kirino-form.component';
+import { MangaFormComponent } from '../manga-form/manga-form.component';
+import { MangaSyncService } from '../../../services/sync/kirino/manga-sync.service';
+import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 type DataBag = {
-  manga: Manga,
-  episode: Episode
+  manga: Manga;
+  episode: Episode;
 };
-
 
 @Component({
   selector: 'manga-box',
   templateUrl: './manga-box.component.html',
-  styleUrls: ['./manga-box.component.scss']
+  styleUrls: ['./manga-box.component.scss'],
 })
 export class MangaBoxComponent implements OnInit, OnDestroy {
-
   public readonly color = Color.Purple;
 
   public items: BoxItem[] = [];
@@ -34,11 +32,18 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Add', 'ri-add-box-line', () => this.addManga()),
     new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
   ];
+  public title = 'Manga';
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'ri-eye-line', (bag: DataBag) => this.markAsSeen(bag)),
-    new BoxButton('Edit', 'ri-edit-2-line', (bag: DataBag) => this.editManga(bag)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line', (bag: DataBag) => this.deleteManga(bag))
+    new BoxButton('Mark as seen', 'ri-eye-line', (bag: DataBag) =>
+      this.markAsSeen(bag)
+    ),
+    new BoxButton('Edit', 'ri-edit-2-line', (bag: DataBag) =>
+      this.editManga(bag)
+    ),
+    new BoxButton('Delete', 'ri-delete-bin-6-line', (bag: DataBag) =>
+      this.deleteManga(bag)
+    ),
   ];
   private dataSubscription?: Subscription;
   private internetSubscription?: Subscription;
@@ -48,18 +53,20 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     private popUpService: PopUpService,
     private syncService: MangaSyncService,
     private internetConnectionService: InternetConnectionService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
-      this.headerButtons[1].disabled = !connected;
-    });
+    this.internetSubscription = this.internetConnectionService
+      .asObservable()
+      .subscribe((connected) => {
+        this.headerButtons[1].disabled = !connected;
+      });
     this.service.onReady().then(() => {
-      this.dataSubscription = this.service.getAll().subscribe(manga => {
+      this.dataSubscription = this.service.getAll().subscribe((manga) => {
         const items = [] as BoxItem[];
-        manga.forEach(m => items.push(...this.toEpisodeItems(m)));
+        manga.forEach((m) => items.push(...this.toEpisodeItems(m)));
         this.items = items;
+        this.updateTitle();
       });
     });
   }
@@ -71,37 +78,44 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
 
   private toEpisodeItems(manga: Manga) {
     const episodes = [] as BoxItem[];
-    const sortedEpisodes = manga.episodes.sort((a, b) => manga.parseEpisodeNumber(a.number) - manga.parseEpisodeNumber(b.number));
+    const sortedEpisodes = manga.episodes.sort(
+      (a, b) =>
+        manga.parseEpisodeNumber(a.number) - manga.parseEpisodeNumber(b.number)
+    );
     for (const episode of sortedEpisodes) {
-      episodes.push(new BoxItem(
-        `${manga.title} [${episode.number}]`,
-        '',
-        episode.airdate ? new Date(episode.airdate) : undefined,
-        manga.id,
-        {
-          manga,
-          episode
-        },
-        [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
-        this.buttons,
-        undefined,
-        this.syncService.isSynced(manga)
-      ));
+      episodes.push(
+        new BoxItem(
+          `${manga.title} [${episode.number}]`,
+          '',
+          episode.airdate ? new Date(episode.airdate) : undefined,
+          manga.id,
+          {
+            manga,
+            episode,
+          },
+          [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
+          this.buttons,
+          undefined,
+          this.syncService.isSynced(manga)
+        )
+      );
     }
     if (episodes.length <= 0) {
-      episodes.push(new BoxItem(
-        manga.title,
-        '',
-        undefined,
-        manga.id,
-        {
-          manga
-        },
-        [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
-        this.buttons.slice(1, 3),
-        undefined,
-        this.syncService.isSynced(manga)
-      ));
+      episodes.push(
+        new BoxItem(
+          manga.title,
+          '',
+          undefined,
+          manga.id,
+          {
+            manga,
+          },
+          [new BoxLink('Amazon', MangaParserService.getUrl(manga.amazonId))],
+          this.buttons.slice(1, 3),
+          undefined,
+          this.syncService.isSynced(manga)
+        )
+      );
     }
     return episodes;
   }
@@ -115,7 +129,7 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editManga({manga}: DataBag) {
+  private editManga({ manga }: DataBag) {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(MangaFormComponent.TYPE, manga.id),
       'Edit',
@@ -124,18 +138,21 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private deleteManga({manga}: DataBag) {
+  private deleteManga({ manga }: DataBag) {
     this.service.delete(manga);
   }
 
-  private markAsSeen({manga, episode}: DataBag) {
+  private markAsSeen({ manga, episode }: DataBag) {
     const index = manga.episodes.indexOf(episode);
     if (index < 0) {
       return;
     }
     manga.episodes.splice(index, 1);
-    manga.lastSeen = Math.max(manga.lastSeen, manga.parseEpisodeNumber(episode.number));
-    this.service.save(manga)
+    manga.lastSeen = Math.max(
+      manga.lastSeen,
+      manga.parseEpisodeNumber(episode.number)
+    );
+    this.service.save(manga);
   }
 
   public syncItem(item: BoxItem) {
@@ -145,5 +162,17 @@ export class MangaBoxComponent implements OnInit, OnDestroy {
 
   private syncAll() {
     this.syncService.syncAll(false, true);
+  }
+
+  private updateTitle() {
+    const now = new Date();
+    const unwatched = this.items.filter(
+      (i) => i.date && now.getTime() >= i.date?.getTime()
+    ).length;
+    if (unwatched > 0) {
+      this.title = `Manga [${unwatched}]`;
+    } else {
+      this.title = 'Manga';
+    }
   }
 }

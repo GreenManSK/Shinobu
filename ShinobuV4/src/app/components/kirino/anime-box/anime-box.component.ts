@@ -17,29 +17,36 @@ import { InternetConnectionService } from '../../../services/internet-connection
 import { KirinoSettingsService } from '../../../services/data/kirino/kirino-settings.service';
 
 type DataBag = {
-  anime: Anime,
-  episode: Episode
+  anime: Anime;
+  episode: Episode;
 };
 
 @Component({
   selector: 'anime-box',
   templateUrl: './anime-box.component.html',
-  styleUrls: ['./anime-box.component.scss']
+  styleUrls: ['./anime-box.component.scss'],
 })
 export class AnimeBoxComponent implements OnInit, OnDestroy {
-
   public readonly color = Color.Red;
 
   public items: BoxItem[] = [];
+
+  public title = 'Anime';
 
   public headerButtons = [
     new BoxButton('Add', 'ri-add-box-line', () => this.addAnime()),
     new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll(), true),
   ];
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsSeen(bag)),
-    new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editAnime(bag)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteAnime(bag))
+    new BoxButton('Mark as seen', 'ri-eye-line', (bag: DataBag) =>
+      this.markAsSeen(bag)
+    ),
+    new BoxButton('Edit', 'ri-edit-2-line', (bag: DataBag) =>
+      this.editAnime(bag)
+    ),
+    new BoxButton('Delete', 'ri-delete-bin-6-line', (bag: DataBag) =>
+      this.deleteAnime(bag)
+    ),
   ];
   private dataSubscription?: Subscription;
   private internetSubscription?: Subscription;
@@ -51,20 +58,24 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     private syncService: AnimeSyncService,
     private internetConnectionService: InternetConnectionService,
     private kirinoSettings: KirinoSettingsService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
-      this.headerButtons[1].disabled = !connected;
-    });
-    this.service.onReady().then(() => {
-      this.dataSubscription = this.service.getAll().subscribe(anime => {
-        const items = [] as BoxItem[];
-        anime.forEach(a => items.push(...this.toEpisodeItems(a)));
-        this.items = items;
+    this.internetSubscription = this.internetConnectionService
+      .asObservable()
+      .subscribe((connected) => {
+        this.headerButtons[1].disabled = !connected;
       });
-      this.kirinoSettings.asObservable().subscribe(settings => this.updateNyaaUrl(settings.nyaaUrl));
+    this.service.onReady().then(() => {
+      this.dataSubscription = this.service.getAll().subscribe((anime) => {
+        const items = [] as BoxItem[];
+        anime.forEach((a) => items.push(...this.toEpisodeItems(a)));
+        this.items = items;
+        this.updateTitle();
+      });
+      this.kirinoSettings
+        .asObservable()
+        .subscribe((settings) => this.updateNyaaUrl(settings.nyaaUrl));
     });
   }
 
@@ -73,41 +84,58 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     this.internetSubscription?.unsubscribe();
   }
 
-  private toEpisodeItems( anime: Anime ): BoxItem[] {
+  private toEpisodeItems(anime: Anime): BoxItem[] {
     const episodes = [] as BoxItem[];
     for (const episode of anime.episodes) {
       let nyaaSearch: BoxLink | undefined = undefined;
       if (anime.nyaaSearch && anime.nyaaSearch.searchText) {
         const searchText = this.nyaaSearch.generateSearchText(anime, episode);
-        nyaaSearch = new BoxLink(searchText, this.nyaaSearch.getSearchUrl(searchText));
+        nyaaSearch = new BoxLink(
+          searchText,
+          this.nyaaSearch.getSearchUrl(searchText)
+        );
       }
-      episodes.push(new BoxItem(
-        anime.title + ' [' + episode.number + ']',
-        '',
-        episode.airdate ? new Date(episode.airdate) : undefined,
-        anime.id,
-        {
-          anime,
-          episode
-        },
-        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
-        this.buttons,
-        nyaaSearch,
-        this.syncService.isSynced(anime)
-      ));
+      episodes.push(
+        new BoxItem(
+          anime.title + ' [' + episode.number + ']',
+          '',
+          episode.airdate ? new Date(episode.airdate) : undefined,
+          anime.id,
+          {
+            anime,
+            episode,
+          },
+          [
+            new BoxLink(
+              'aniDB.net',
+              AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0)
+            ),
+          ],
+          this.buttons,
+          nyaaSearch,
+          this.syncService.isSynced(anime)
+        )
+      );
     }
     if (episodes.length <= 0) {
-      episodes.push(new BoxItem(
-        anime.title,
-        '',
-        undefined,
-        anime.id,
-        {anime},
-        [new BoxLink('aniDB.net', AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0))],
-        this.buttons.slice(1, 3),
-        undefined,
-        this.syncService.isSynced(anime)
-      ));
+      episodes.push(
+        new BoxItem(
+          anime.title,
+          '',
+          undefined,
+          anime.id,
+          { anime },
+          [
+            new BoxLink(
+              'aniDB.net',
+              AnidbParserService.getUrl(anime.anidbId ? +anime.anidbId : 0)
+            ),
+          ],
+          this.buttons.slice(1, 3),
+          undefined,
+          this.syncService.isSynced(anime)
+        )
+      );
     }
     return episodes;
   }
@@ -121,7 +149,7 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editAnime( {anime}: DataBag ) {
+  private editAnime({ anime }: DataBag) {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(AnimeFormComponent.TYPE, anime.id),
       'Edit',
@@ -130,21 +158,24 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private markAsSeen( {anime, episode}: DataBag ) {
+  private markAsSeen({ anime, episode }: DataBag) {
     const index = anime.episodes.indexOf(episode);
     if (index < 0) {
       return;
     }
     anime.episodes.splice(index, 1);
-    anime.lastSeen = Math.max(anime.parseEpisodeNumber(episode.number), anime.lastSeen);
+    anime.lastSeen = Math.max(
+      anime.parseEpisodeNumber(episode.number),
+      anime.lastSeen
+    );
     this.service.save(anime);
   }
 
-  public deleteAnime( {anime}: DataBag ): void {
+  public deleteAnime({ anime }: DataBag): void {
     this.service.delete(anime);
   }
 
-  public syncItem( item: BoxItem ) {
+  public syncItem(item: BoxItem) {
     const anime = item.data.anime as Anime;
     this.syncService.sync(anime, true, true);
   }
@@ -153,12 +184,24 @@ export class AnimeBoxComponent implements OnInit, OnDestroy {
     this.syncService.syncAll(false, true);
   }
 
-  private updateNyaaUrl( nyaaUrl: string ) {
+  private updateNyaaUrl(nyaaUrl: string) {
     for (const item of this.items) {
       if (!item.link) {
         continue;
       }
       item.link.url = this.nyaaSearch.getSearchUrl(item.link.text);
+    }
+  }
+
+  private updateTitle() {
+    const now = new Date();
+    const unwatched = this.items.filter(
+      (i) => i.date && now.getTime() >= i.date?.getTime()
+    ).length;
+    if (unwatched > 0) {
+      this.title = `Anime [${unwatched}]`;
+    } else {
+      this.title = 'Anime';
     }
   }
 }

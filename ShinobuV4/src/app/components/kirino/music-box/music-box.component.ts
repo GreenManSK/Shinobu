@@ -17,10 +17,9 @@ import { InternetConnectionService } from '../../../services/internet-connection
 @Component({
   selector: 'music-box',
   templateUrl: './music-box.component.html',
-  styleUrls: ['./music-box.component.scss']
+  styleUrls: ['./music-box.component.scss'],
 })
 export class MusicBoxComponent implements OnInit, OnDestroy {
-
   public readonly color = Color.Blue;
 
   public items: BoxItem[] = [];
@@ -28,10 +27,15 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Add', 'ri-add-box-line', () => this.addSong()),
     new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
   ];
+  public title = 'Music';
 
   private buttons: BoxButton[] = [
-    new BoxButton('Edit', 'ri-edit-2-line', ( song: Song ) => this.editSong(song)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line', ( song: Song ) => this.deleteSong(song))
+    new BoxButton('Edit', 'ri-edit-2-line', (song: Song) =>
+      this.editSong(song)
+    ),
+    new BoxButton('Delete', 'ri-delete-bin-6-line', (song: Song) =>
+      this.deleteSong(song)
+    ),
   ];
   private dataSubscription?: Subscription;
   private internetSubscription?: Subscription;
@@ -41,16 +45,18 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     private popUpService: PopUpService,
     private sync: MusicSyncService,
     private internetConnectionService: InternetConnectionService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
-      this.headerButtons[1].disabled = !connected;
-    });
+    this.internetSubscription = this.internetConnectionService
+      .asObservable()
+      .subscribe((connected) => {
+        this.headerButtons[1].disabled = !connected;
+      });
     this.service.onReady().then(() => {
-      this.dataSubscription = this.service.getAll().subscribe(songs => {
-        this.items = songs.map(song => this.toBoxItem(song));
+      this.dataSubscription = this.service.getAll().subscribe((songs) => {
+        this.items = songs.map((song) => this.toBoxItem(song));
+        this.updateTitle();
       });
     });
   }
@@ -60,17 +66,23 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     this.internetSubscription?.unsubscribe();
   }
 
-  private toBoxItem( song: Song ): BoxItem {
+  private toBoxItem(song: Song): BoxItem {
     const badges = [];
     if (song.anidbId) {
-      badges.push(new BoxLink('aniDB.net', AnidbSongParserService.getUrl(song.anidbId)));
+      badges.push(
+        new BoxLink('aniDB.net', AnidbSongParserService.getUrl(song.anidbId))
+      );
     }
     if (song.anisonId) {
-      badges.push(new BoxLink('Anison', AnisonParserService.getUrl(song.anisonId)));
+      badges.push(
+        new BoxLink('Anison', AnisonParserService.getUrl(song.anisonId))
+      );
     }
     return new BoxItem(
       `${song.show} - ${song.type}`,
-      `${song.title ? song.title : ''}${song.author ? ` - ${song.author}` : ''}`,
+      `${song.title ? song.title : ''}${
+        song.author ? ` - ${song.author}` : ''
+      }`,
       song.releaseDate ? new Date(song.releaseDate) : undefined,
       null,
       song,
@@ -90,7 +102,7 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editSong( song: Song ) {
+  private editSong(song: Song) {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(MusicFormComponent.TYPE, song.id),
       'Edit',
@@ -99,16 +111,28 @@ export class MusicBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private deleteSong( song: Song ) {
+  private deleteSong(song: Song) {
     this.service.delete(song);
   }
 
-  public syncItem( item: BoxItem ) {
+  public syncItem(item: BoxItem) {
     const song = item.data as Song;
     this.sync.sync(song, true, true);
   }
 
   private syncAll() {
     this.sync.syncAll(false, true);
+  }
+
+  private updateTitle() {
+    const now = new Date();
+    const unwatched = this.items.filter(
+      (i) => i.date && now.getTime() >= i.date?.getTime()
+    ).length;
+    if (unwatched > 0) {
+      this.title = `Music [${unwatched}]`;
+    } else {
+      this.title = 'Music';
+    }
   }
 }

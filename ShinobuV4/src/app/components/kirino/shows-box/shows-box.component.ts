@@ -15,17 +15,16 @@ import { ShowSyncService } from '../../../services/sync/kirino/show-sync.service
 import { InternetConnectionService } from '../../../services/internet-connection.service';
 
 type DataBag = {
-  show: Show,
-  episode: Episode
+  show: Show;
+  episode: Episode;
 };
 
 @Component({
   selector: 'shows-box',
   templateUrl: './shows-box.component.html',
-  styleUrls: ['./shows-box.component.scss']
+  styleUrls: ['./shows-box.component.scss'],
 })
 export class ShowsBoxComponent implements OnInit, OnDestroy {
-
   public readonly color = Color.Green;
 
   public items: BoxItem[] = [];
@@ -33,11 +32,18 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     new BoxButton('Add', 'ri-add-box-line', () => this.addShow()),
     new BoxButton('Sync all', 'ri-refresh-line', () => this.syncAll()),
   ];
+  public title = 'TV Shows';
 
   private buttons: BoxButton[] = [
-    new BoxButton('Mark as seen', 'ri-eye-line', ( bag: DataBag ) => this.markAsShow(bag)),
-    new BoxButton('Edit', 'ri-edit-2-line', ( bag: DataBag ) => this.editShow(bag)),
-    new BoxButton('Delete', 'ri-delete-bin-6-line', ( bag: DataBag ) => this.deleteShow(bag))
+    new BoxButton('Mark as seen', 'ri-eye-line', (bag: DataBag) =>
+      this.markAsShow(bag)
+    ),
+    new BoxButton('Edit', 'ri-edit-2-line', (bag: DataBag) =>
+      this.editShow(bag)
+    ),
+    new BoxButton('Delete', 'ri-delete-bin-6-line', (bag: DataBag) =>
+      this.deleteShow(bag)
+    ),
   ];
   private dataSubscription?: Subscription;
   private internetSubscription?: Subscription;
@@ -47,18 +53,20 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     private popUpService: PopUpService,
     private syncService: ShowSyncService,
     private internetConnectionService: InternetConnectionService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.internetSubscription = this.internetConnectionService.asObservable().subscribe(connected => {
-      this.headerButtons[1].disabled = !connected;
-    });
+    this.internetSubscription = this.internetConnectionService
+      .asObservable()
+      .subscribe((connected) => {
+        this.headerButtons[1].disabled = !connected;
+      });
     this.service.onReady().then(() => {
-      this.dataSubscription = this.service.getAll().subscribe(show => {
+      this.dataSubscription = this.service.getAll().subscribe((show) => {
         const items = [] as BoxItem[];
-        show.forEach(s => items.push(...this.toEpisodeItems(s)));
+        show.forEach((s) => items.push(...this.toEpisodeItems(s)));
         this.items = items;
+        this.updateTitle();
       });
     });
   }
@@ -68,38 +76,52 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     this.internetSubscription?.unsubscribe();
   }
 
-  private toEpisodeItems( show: Show ): BoxItem[] {
+  private toEpisodeItems(show: Show): BoxItem[] {
     const episodes = [] as BoxItem[];
     for (const episode of show.episodes) {
-      episodes.push(new BoxItem(
-        `${show.title} [${episode.number}]`,
-        '',
-        episode.airdate ? new Date(episode.airdate) : undefined,
-        show.id,
-        {
-          show,
-          episode
-        },
-        [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
-        this.buttons,
-        show.url ? new BoxLink(show.url, show.url) : undefined,
-        this.syncService.isSynced(show)
-      ));
+      episodes.push(
+        new BoxItem(
+          `${show.title} [${episode.number}]`,
+          '',
+          episode.airdate ? new Date(episode.airdate) : undefined,
+          show.id,
+          {
+            show,
+            episode,
+          },
+          [
+            new BoxLink(
+              'TheTVDB.com',
+              TheTVDBParserService.getUrl(show.tvdbId)
+            ),
+          ],
+          this.buttons,
+          show.url ? new BoxLink(show.url, show.url) : undefined,
+          this.syncService.isSynced(show)
+        )
+      );
     }
     if (episodes.length <= 0) {
-      episodes.push(new BoxItem(
-        show.title,
-        '',
-        undefined,
-        show.id,
-        {
-          show
-        },
-        [new BoxLink('TheTVDB.com', TheTVDBParserService.getUrl(show.tvdbId))],
-        this.buttons.slice(1, 3),
-        undefined,
-        this.syncService.isSynced(show)
-      ));
+      episodes.push(
+        new BoxItem(
+          show.title,
+          '',
+          undefined,
+          show.id,
+          {
+            show,
+          },
+          [
+            new BoxLink(
+              'TheTVDB.com',
+              TheTVDBParserService.getUrl(show.tvdbId)
+            ),
+          ],
+          this.buttons.slice(1, 3),
+          undefined,
+          this.syncService.isSynced(show)
+        )
+      );
     }
     return episodes;
   }
@@ -113,7 +135,7 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private editShow( {show}: DataBag ) {
+  private editShow({ show }: DataBag) {
     this.popUpService.openPopUp(
       KirinoFormComponent.getUrl(ShowFormComponent.TYPE, show.id),
       'Edit',
@@ -122,17 +144,20 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  private deleteShow( {show}: DataBag ) {
+  private deleteShow({ show }: DataBag) {
     this.service.delete(show);
   }
 
-  private markAsShow( bag: DataBag ) {
+  private markAsShow(bag: DataBag) {
     const index = bag.show.episodes.indexOf(bag.episode);
     if (index < 0) {
       return;
     }
     bag.show.episodes.splice(index, 1);
-    bag.show.lastSeen = Math.max(bag.show.parseEpisodeNumber(bag.episode.number), bag.show.lastSeen);
+    bag.show.lastSeen = Math.max(
+      bag.show.parseEpisodeNumber(bag.episode.number),
+      bag.show.lastSeen
+    );
     this.service.save(bag.show);
   }
 
@@ -143,5 +168,17 @@ export class ShowsBoxComponent implements OnInit, OnDestroy {
 
   private syncAll() {
     this.syncService.syncAll(false, true);
+  }
+
+  private updateTitle() {
+    const now = new Date();
+    const unwatched = this.items.filter(
+      (i) => i.date && now.getTime() >= i.date?.getTime()
+    ).length;
+    if (unwatched > 0) {
+      this.title = `TV Shows [${unwatched}]`;
+    } else {
+      this.title = 'TV Shows';
+    }
   }
 }
