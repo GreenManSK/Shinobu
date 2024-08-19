@@ -42,9 +42,12 @@ export class BakcupSettingsComponent implements OnInit {
             dataService.useLocalStorage();
           }
           return new Promise((resolve) => {
-            dataService.getAll().subscribe((items) => {
-              data[dataService.collectionName] = items;
-              resolve(true);
+            dataService.onReady().then(() => {
+              dataService.getAll().subscribe((items) => {
+                data[dataService.collectionName] = items;
+                this.backupData = JSON.stringify(data, null, 2);
+                resolve(true);
+              });
             });
           });
         }
