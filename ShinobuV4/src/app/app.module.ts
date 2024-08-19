@@ -49,6 +49,7 @@ import { KirinoPreferenceComponent } from './components/settings/kirino-preferen
 import { HttpClientModule } from '@angular/common/http';
 import { BackgroundComponent } from './components/background/background.component';
 import { BrowserActionComponent } from './components/browser-action/browser-action.component';
+import { BakcupSettingsComponent } from './components/settings/bakcup-settings/bakcup-settings.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { BrowserActionComponent } from './components/browser-action/browser-acti
     MangaFormComponent,
     KirinoPreferenceComponent,
     BackgroundComponent,
-    BrowserActionComponent
+    BrowserActionComponent,
+    BakcupSettingsComponent
   ],
   imports: [
     BrowserModule,

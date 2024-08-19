@@ -12,7 +12,7 @@ export abstract class DynamicStorageService<T extends ISavable> implements IStor
   protected readyPromise: Promise<void>;
   private implementation?: IStorageService<T>;
 
-  constructor( private collectionName: string, afs: AngularFirestore, authService: AuthService, private errorService: ErrorService ) {
+  constructor( public readonly collectionName: string, afs: AngularFirestore, authService: AuthService, private errorService: ErrorService ) {
     this.readyPromise = authService.isAuthenticatedPromise().then(isAuthenticated => {
       if (this.implementation) {
         return;

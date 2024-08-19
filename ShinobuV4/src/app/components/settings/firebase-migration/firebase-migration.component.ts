@@ -23,7 +23,7 @@ import { SongService } from '../../../services/data/kirino/song.service';
 })
 export class FirebaseMigrationComponent implements OnInit, OnDestroy {
 
-  private static readonly DATA_SERVICES = [TabService, NoteService, AnimeService, MangaService, OvaService, ShowService, SongService];
+  public static readonly DATA_SERVICES = [TabService, NoteService, AnimeService, MangaService, OvaService, ShowService, SongService];
 
   public isAuthenticated = false;
   public hasDataToMigrate = false;
