@@ -15,13 +15,35 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
   background-size: 100% 100%;
   color: $textColor;
 
+
   font-family: $contentFont;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
+  #bg-video {
+    display: none;
+  }
+
   &.christmas {
     background-image: url($christmasBgImg);
+  }
+
+  &.Gura {
+    background: #fff url($imgDir + "gura.webp") no-repeat fixed right center;
+
+    &.hasVideo {
+      background-image: none;
+    }
+
+    #bg-video {
+      display: block;
+      position: fixed;
+      right: 0%;
+      bottom: 0;
+      top: 0;
+      height: 100vh;
+    }
   }
 
   notes, quick-access, tabs {

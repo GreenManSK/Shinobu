@@ -1,13 +1,42 @@
-<box [color]="color"
-     title="Shinobu"
-     icon="assets/icons/shinobu/16.png">
+<box [color]="color" title="Shinobu" icon="assets/icons/shinobu/16.png">
   <ng-template>
-    <form class="nice show-labels blue">
+    <form class="nice show-labels blue" *ngIf="settings">
       <authentication></authentication>
       <firebase-migration></firebase-migration>
       <chrome-migration></chrome-migration>
-      <br>
-      <button (click)="reloadApp($event)"><i class="ri-refresh-line"></i>Reload app</button>
+      <br />
+      <button (click)="reloadApp($event)">
+        <i class="ri-refresh-line"></i>Reload app
+      </button>
+
+      <div class="field">
+        <label for="form-nyaa-url">Theme</label>
+        <select (change)="setTheme($event.target)">
+          <option
+            *ngFor="let t of themes"
+            [ngValue]="t"
+            [selected]="settings.theme == t"
+          >
+            {{ t }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="form-nyaa-url">Chistmas heme</label>
+        <select (change)="setTheme($event.target)">
+          <option
+            *ngFor="let t of christmasThemes"
+            [ngValue]="t"
+            [selected]="settings.christmasTheme == t"
+          >
+            {{ t }}
+          </option>
+        </select>
+      </div>
+      <div class="buttons">
+        <input type="submit" value="Save" (click)="save($event)" />
+      </div>
     </form>
   </ng-template>
 </box>
