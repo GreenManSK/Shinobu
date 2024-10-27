@@ -30,7 +30,8 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
   }
 
   &.Gura {
-    background: #fff url($imgDir + "gura.webp") no-repeat fixed right center;
+    background: #fff url($imgDir + "gura.webp") no-repeat fixed right top;
+    background-attachment: fixed;
 
     &.hasVideo {
       background-image: none;
