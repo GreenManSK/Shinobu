@@ -41,5 +41,10 @@ service cloud.firestore {
     	allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
     	allow update: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
     }
+    match /shinobuSettings/{item} {
+    	allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+    	allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    	allow update: if request.auth != null && request.auth.uid == resource.data.userId && request.auth.uid == request.resource.data.userId;
+    }
   }
 }
