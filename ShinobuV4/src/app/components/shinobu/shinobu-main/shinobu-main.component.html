@@ -1,6 +1,6 @@
 <div class="ts-shibnou" [ngClass]="getClass()">
-  <video *ngIf="!isMobile" autoplay muted loop id="bg-video">
-    <source src="/assets/img/gura.mp4" type="video/mp4" />
+  <video *ngIf="!isMobile && video" autoplay muted loop id="bg-video">
+    <source [src]="video" type="video/mp4" />
   </video>
   <quick-access [tab]="tab"></quick-access>
   <notes></notes>

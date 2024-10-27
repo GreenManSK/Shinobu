@@ -3,6 +3,7 @@ import { Tab } from '../../../data/shinobu/Tab';
 import { ShinobuSettings } from 'src/app/data/shinobu/ShinobuSettings';
 import { ShinobuSettingsService } from 'src/app/services/data/shinobu/shinobu-settings.service';
 import { Subscription } from 'rxjs';
+import { ChristmasThemeType, ThemeType } from 'src/app/types/shinobu/ThemeType';
 
 @Component({
   selector: 'app-shinobu-main',
@@ -16,10 +17,9 @@ export class ShinobuMainComponent implements OnInit {
 
   private subscription?: Subscription;
 
-  public readonly isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
+  public readonly isMobile = /iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 
   constructor(private shinobuSettingsService: ShinobuSettingsService) {
     this.checkChristmasTime();
@@ -59,5 +59,22 @@ export class ShinobuMainComponent implements OnInit {
       hasVideo: !this.isMobile,
       [theme ?? '']: true,
     };
+  }
+
+  public get video() {
+    if (this.isChristmasTime) {
+      if (this.settings?.christmasTheme === ChristmasThemeType.Fauna) {
+        return '/assets/img/fauna-christmas.mp4';
+      }
+    } else {
+      if (this.settings?.theme === ThemeType.Gura) {
+        return '/assets/img/gura.mp4';
+      }
+      if (this.settings?.theme === ThemeType.Fauna) {
+        return '/assets/img/fauna.mp4';
+      }
+    }
+
+    return undefined;
   }
 }

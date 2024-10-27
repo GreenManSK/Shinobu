@@ -40,10 +40,31 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     #bg-video {
       display: block;
       position: fixed;
-      right: 0%;
+      right: 0;
       bottom: 0;
       top: 0;
       height: 100vh;
+    }
+  }
+
+  &.Fauna {
+    background-image: url($imgDir + "fauna.webp");
+
+    &.christmas {
+      background-image: url($imgDir + "fauna-christmas.webp");
+    }
+
+    &.hasVideo {
+      background-image: none;
+    }
+
+    #bg-video {
+      display: block;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
     }
   }
 

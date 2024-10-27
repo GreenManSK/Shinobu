@@ -15,8 +15,11 @@ import { ChristmasThemeType, ThemeType } from 'src/app/types/shinobu/ThemeType';
 })
 export class ShinobuPreferenceComponent implements OnInit {
   public readonly color = Color.Blue;
-  public readonly themes = [ThemeType.Shinobu, ThemeType.Gura];
-  public readonly christmasThemes = [ChristmasThemeType.Shinobu];
+  public readonly themes = [ThemeType.Shinobu, ThemeType.Gura, ThemeType.Fauna];
+  public readonly christmasThemes = [
+    ChristmasThemeType.Shinobu,
+    ChristmasThemeType.Fauna,
+  ];
 
   public settings?: ShinobuSettings;
 

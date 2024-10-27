@@ -24,7 +24,7 @@
 
       <div class="field">
         <label for="form-nyaa-url">Chistmas heme</label>
-        <select (change)="setTheme($event.target)">
+        <select (change)="setChristmasTheme($event.target)">
           <option
             *ngFor="let t of christmasThemes"
             [ngValue]="t"
