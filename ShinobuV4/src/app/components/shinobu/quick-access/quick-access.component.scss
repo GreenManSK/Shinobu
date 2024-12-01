@@ -29,6 +29,11 @@
   align-items: center;
   align-content: center;
   width: 100%;
+  transition: opacity $time;
+  opacity: $opacityInactive;
+  &:hover, &:focus, &:active, &:focus-within {
+    opacity: $opacityActive;
+  }
 }
 
 ::ng-deep {

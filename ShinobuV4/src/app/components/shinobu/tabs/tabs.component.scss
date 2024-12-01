@@ -1,6 +1,12 @@
 @import '~src/styles/variables';
 
 .ts-tabs {
+  transition: opacity $time;
+  opacity: $opacityInactive;
+  &:hover, &:focus, &:active, &:focus-within {
+    opacity: $opacityActive;
+  }
+
   ul, li {
     padding: 0;
     margin: 0;

@@ -3,6 +3,11 @@
 
 .ts-notes {
   @include maximize;
+  transition: opacity $time;
+  opacity: $opacityInactive;
+  &:hover, &:focus, &:active, &:focus-within {
+    opacity: $opacityActive;
+  }
 }
 
 @media (max-width: $shinobuResponsive) {
