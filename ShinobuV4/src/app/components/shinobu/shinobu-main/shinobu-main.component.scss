@@ -62,7 +62,8 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
       display: block;
       position: fixed;
       left: 0;
-      bottom: 0;
+      --top-magrin: calc( -1 * (1080px - 100%) / 2 );
+      top: min(var(--top-magrin), 0);
       min-width: 100%;
       min-height: 100%;
     }
