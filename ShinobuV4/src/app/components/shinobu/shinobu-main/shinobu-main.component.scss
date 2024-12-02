@@ -48,11 +48,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
   }
 
   &.Fauna {
-    background-image: url($imgDir + "fauna.webp");
-
-    &.christmas {
-      background-image: url($imgDir + "fauna-christmas.webp");
-    }
+    background-image: url($imgDir + "fauna.webp") no-repeat fixed center top;
 
     &.hasVideo {
       background-image: none;
@@ -62,10 +58,16 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
       display: block;
       position: fixed;
       left: 0;
-      --top-magrin: calc( -1 * (1080px - 100%) / 2 );
-      top: min(var(--top-magrin), 0);
+      @include alignVideo($width: 1920px, $height: 1080px);
       min-width: 100%;
       min-height: 100%;
+    }
+
+    &.christmas {
+      background-image: url($imgDir + "fauna-christmas.webp");
+      #bg-video {
+        @include alignVideo($width: 1920px, $height: 1080px, $widthPoint: 1/3);
+      }
     }
   }
 
@@ -106,6 +108,10 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     min-height: calc(100% - $mainMenuSize);
     background-size: cover;
     background-position: right;
+
+    &.Fauna {
+      background-position: center;
+    }
 
     quick-access {
       margin: 0 auto;

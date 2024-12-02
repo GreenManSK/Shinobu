@@ -37,7 +37,7 @@ $modalRadius: 15px;
       align-content: center;
       background: fade-out(#000, .3);
       border-radius: ($boxRadius - 1px) ($boxRadius - 1px) 0 0;
-      padding: $modalRadius * 2/3 $modalRadius;
+      padding: calc($modalRadius * 2 / 3) $modalRadius;
 
       a {
         margin: 0 auto;
