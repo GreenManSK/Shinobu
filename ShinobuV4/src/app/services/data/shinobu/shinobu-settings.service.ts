@@ -5,6 +5,7 @@ import { AuthService } from '../../auth.service';
 import { ErrorService } from '../../error.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShinobuSettings } from 'src/app/data/shinobu/ShinobuSettings';
+import { LocalPreferenceService } from '../local-preference.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +17,20 @@ export class ShinobuSettingsService extends DynamicStorageService<ShinobuSetting
   constructor(
     afs: AngularFirestore,
     authService: AuthService,
-    errorService: ErrorService
+    errorService: ErrorService,
+    private localPreferenceService: LocalPreferenceService
   ) {
     super('shinobuSettings', afs, authService, errorService);
+    this.settings = this.getDefault() || this.settings;
     this.readyPromise = this.readyPromise.then(() => {
       return new Promise<void>((resolve) => {
         super.getAll().subscribe((allSettings) => {
           if (allSettings.length > 0) {
             this.settings = allSettings[0];
+            this.localPreferenceService.set(
+              'shinobuSettingsLocal',
+              this.settings
+            );
             this.subject?.next(this.settings);
           }
           resolve();
@@ -50,6 +57,10 @@ export class ShinobuSettingsService extends DynamicStorageService<ShinobuSetting
 
   public get(): ShinobuSettings {
     return this.settings;
+  }
+
+  public getDefault(): ShinobuSettings | undefined {
+    return this.localPreferenceService.get('shinobuSettingsLocal', undefined);
   }
 
   public update(settings: ShinobuSettings) {
