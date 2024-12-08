@@ -4,6 +4,7 @@ import { ShinobuSettings } from 'src/app/data/shinobu/ShinobuSettings';
 import { ShinobuSettingsService } from 'src/app/services/data/shinobu/shinobu-settings.service';
 import { Subscription } from 'rxjs';
 import { ChristmasThemeType, ThemeType } from 'src/app/types/shinobu/ThemeType';
+import { LocalPreferenceService } from 'src/app/services/data/local-preference.service';
 
 @Component({
   selector: 'app-shinobu-main',
@@ -21,16 +22,24 @@ export class ShinobuMainComponent implements OnInit {
     navigator.userAgent
   );
 
-  constructor(private shinobuSettingsService: ShinobuSettingsService) {
+  constructor(
+    private shinobuSettingsService: ShinobuSettingsService,
+    private localPreferenceService: LocalPreferenceService
+  ) {
     this.checkChristmasTime();
   }
 
   ngOnInit(): void {
+    this.settings = this.localPreferenceService.get(
+      'shinobuSettingsLocal',
+      undefined
+    );
     this.shinobuSettingsService.onReady().then(() => {
       this.subscription = this.shinobuSettingsService
         .asObservable()
         .subscribe((settings) => {
           this.settings = settings;
+          this.localPreferenceService.set('shinobuSettingsLocal', settings);
         });
     });
   }
