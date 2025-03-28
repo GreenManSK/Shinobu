@@ -1,8 +1,0 @@
-<ng-container *ngIf="isAuthenticated && hasDataToMigrate">
-  <hr>
-  <p>You have data from before you singed in. Do you want to migrate these data?</p>
-  <div class="buttons">
-    <button (click)="migrateData($event)">Migrate data</button>
-    <button class="second" (click)="deleteData($event)">Delete data</button>
-  </div>
-</ng-container>
