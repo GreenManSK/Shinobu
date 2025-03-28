@@ -5,7 +5,7 @@
     "useTabs": false,
     "trailingComma": "es5",
     "bracketSpacing": false,
-    "plugins": [],
+    "plugins": ["prettier-plugin-tailwindcss"],
     "overrides": [
         {
             "files": "*.json",
