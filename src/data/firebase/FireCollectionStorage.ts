@@ -35,7 +35,7 @@ export class FireCollectionStorage<T extends IStorable>
     public subscribeAll(onNext: (data: T[]) => void): UnsubscribeCallback {
         this.prepareSubscription();
         this.allSubscribers.add(onNext);
-        onNext(this.cacheStorage.getAll());
+        onNext(this.getCached());
         return () => this.unsubscribe(onNext);
     }
 
@@ -43,7 +43,7 @@ export class FireCollectionStorage<T extends IStorable>
         id: string,
         onNext: (data: T | undefined) => void
     ): UnsubscribeCallback {
-        const updateCallback = () => onNext(this.cacheStorage.get(id));
+        const updateCallback = () => onNext(this.getCachedItem(id));
         this.allSubscribers.add(updateCallback);
         updateCallback();
         return () => this.unsubscribe(updateCallback);
