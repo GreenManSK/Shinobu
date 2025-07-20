@@ -49,7 +49,7 @@ export class AnimeFormComponent implements OnInit {
         subscription = this.service.getById(id).subscribe(anime => {
           this.anime = anime;
           this.nyaaSearchText = anime.nyaaSearch?.searchText || '';
-          this.nyaaSearchDigist = anime.nyaaSearch?.digits || 0;
+          this.nyaaSearchDigist = anime.nyaaSearch?.digits || 2;
           subscription.unsubscribe();
         });
       });
