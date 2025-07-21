@@ -1,10 +1,11 @@
 @import '~src/styles/variables';
 
 .ts-tabs {
-  transition: opacity $time;
+  transition: opacity $time, backdrop-filter $time;
   opacity: $opacityInactive;
   &:hover, &:focus, &:active, &:focus-within {
     opacity: $opacityActive;
+    backdrop-filter: blur($bgBlurActive);
   }
 
   ul, li {
