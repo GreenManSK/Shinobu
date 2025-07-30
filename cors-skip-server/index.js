@@ -35,14 +35,14 @@ const proxyServer = cors_proxy.createServer({
 })
 
 const server = http.createServer((req, res) => {
-  if (!req.url.startsWith(`/${base}`)) {
+  if (!req.url.startsWith(`/${base}/`)) {
     res.writeHead(404);
     res.end('Not found~ 🐛');
     return;
   }
 
   // Remove "/proxy" from path
-  req.url = req.url.slice(base.length + 1);
+  req.url = req.url.slice(base.length + 2);
 
   // Delegate to cors-anywhere handler
   proxyServer.emit('request', req, res);
