@@ -1,5 +1,6 @@
 const host = process.argv.length > 3 ? process.argv[3] : "127.0.0.1";
 const port = process.argv.length > 2 ? process.argv[2] : "6446";
+const base = process.argv.length > 3 ? process.argv[3] : "cros";
 
 const allowedUrls = [
     "anison.info/data/song/",
@@ -12,9 +13,10 @@ const allowedUrls = [
     "www.amazon.co.jp/kindle-dbs/productPage/ajax/",
     "api.anidb.net:9001"
 ]
-
+const http = require('http');
 const cors_proxy = require('cors-anywhere');
-cors_proxy.createServer({
+
+const proxyServer = cors_proxy.createServer({
     originWhitelist: [],
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2'],
@@ -30,6 +32,22 @@ cors_proxy.createServer({
         }
         return true;
     }
-}).listen(port, host, () => {
+})
+
+const server = http.createServer((req, res) => {
+  if (!req.url.startsWith(`/${base}`)) {
+    res.writeHead(404);
+    res.end('Not found~ 🐛');
+    return;
+  }
+
+  // Remove "/proxy" from path
+  req.url = req.url.slice(base.length + 1);
+
+  // Delegate to cors-anywhere handler
+  proxyServer.emit('request', req, res);
+});
+
+server.listen(port, host, () => {
     console.log(`Running CORS aAnywhere on ${host}:${port}`);
 });
