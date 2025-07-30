@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Remove "/proxy" from path
-  req.url = req.url.slice(base.length + 2);
+  req.url = req.url.slice(base.length + 1);
 
   // Delegate to cors-anywhere handler
   proxyServer.emit('request', req, res);
