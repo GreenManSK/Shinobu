@@ -47,8 +47,19 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     }
   }
 
-  &.Fauna {
-    background-image: url($imgDir + "fauna.webp") no-repeat fixed center top;
+  &.Fauna, &.Fauna2, &.FaunaNun {
+
+    &.Fauna {
+      background: url($imgDir + "fauna.webp") no-repeat fixed center top;
+    }
+
+    &.Fauna2 {
+      background: url($imgDir + "fauna2.webp") no-repeat fixed left top;
+    }
+
+    &.FaunaNun {
+      background: url($imgDir + "nun.webp") no-repeat fixed center top;
+    }
 
     &.hasVideo {
       background-image: none;
@@ -64,7 +75,7 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     }
 
     &.christmas {
-      background-image: url($imgDir + "fauna-christmas.webp");
+      background: url($imgDir + "fauna-christmas.webp") no-repeat fixed center top;
       #bg-video {
         @include alignVideo($width: 1920px, $height: 1080px, $widthPoint: 1/3);
       }

@@ -76,6 +76,12 @@ export class ShinobuMainComponent implements OnInit {
       if (this.settings?.theme === ThemeType.Fauna) {
         return '/assets/img/fauna.mp4';
       }
+      if (this.settings?.theme === ThemeType.Fauna2) {
+        return '/assets/img/fauna2.mp4';
+      }
+      if (this.settings?.theme === ThemeType.FaunaNun) {
+        return '/assets/img/nun.mp4';
+      }
     }
 
     return undefined;
