@@ -11,7 +11,8 @@ const allowedUrls = [
     "thetvdb.com/series/",
     "www.amazon.co.jp/gp/product/",
     "www.amazon.co.jp/kindle-dbs/productPage/ajax/",
-    "api.anidb.net:9001"
+    "api.anidb.net:9001",
+    "api.track.toggl.com",
 ]
 const http = require('http');
 const cors_proxy = require('cors-anywhere');
