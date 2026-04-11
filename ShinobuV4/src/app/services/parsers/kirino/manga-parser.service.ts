@@ -9,43 +9,59 @@ import { MangaFormComponent } from '../../../components/kirino/manga-form/manga-
 import { KirinoFormComponent } from '../../../components/kirino/kirino-form/kirino-form.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MangaParserService implements ISiteParser<Manga> {
-
   public static readonly PAGE_SIZE = 10;
 
-  private static readonly URL_REGEX = new RegExp(/^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)(\?.*)?/, 'i');
-  private static readonly URL_TEMPLATE = 'https://www.amazon.co.jp/gp/product/(d+)';
+  private static readonly URL_REGEX = new RegExp(
+    /^https?:\/\/(?:www\.)?amazon(?:\.co)?\.jp\/gp\/product\/(.*)(\?.*)?/,
+    'i',
+  );
+  private static readonly URL_TEMPLATE =
+    'https://www.amazon.co.jp/gp/product/(d+)';
 
-  private static readonly API_URL = `https://www.amazon.co.jp/kindle-dbs/productPage/ajax/seriesAsinList?asin=%aid&pageNumber=%apage&pageSize=${MangaParserService.PAGE_SIZE}&ref_=series_dp_batch_load_more`
+  private static readonly API_URL = `https://www.amazon.co.jp/kindle-dbs/productPage/ajax/seriesAsinList?asin=%aid&pageNumber=%apage&pageSize=${MangaParserService.PAGE_SIZE}&ref_=series_dp_batch_load_more`;
 
-  constructor( private http: HttpClientService, private errorService: ErrorService ) {
+  constructor(
+    private http: HttpClientService,
+    private errorService: ErrorService,
+  ) {}
+
+  public getData(url: string): Promise<Manga> {
+    return this.http.getData(url).then((html) => this.parseData(url, html));
   }
 
-  public getData( url: string ): Promise<Manga> {
-    return this.http.getData(url).then(( html ) => this.parseData(url, html));
+  public getFormUrl(manga: Manga): string {
+    return (
+      KirinoFormComponent.getUrl(MangaFormComponent.TYPE) +
+      '?' +
+      MangaFormComponent.TITLE_PARAM +
+      '=' +
+      encodeURIComponent(manga.title) +
+      '&' +
+      MangaFormComponent.AMAZON_ID_PARAM +
+      '=' +
+      encodeURIComponent(manga.amazonId)
+    );
   }
 
-  public getFormUrl( manga: Manga ): string {
-    return KirinoFormComponent.getUrl(MangaFormComponent.TYPE) + '?' +
-      MangaFormComponent.TITLE_PARAM + '=' + encodeURIComponent(manga.title) + '&' +
-      MangaFormComponent.AMAZON_ID_PARAM + '=' + encodeURIComponent(manga.amazonId);
-  }
-
-  public match( url: string ): boolean {
+  public match(url: string): boolean {
     return url.match(MangaParserService.URL_REGEX) !== null;
   }
 
-  public static getUrl( id: string ): string {
+  public static getUrl(id: string): string {
     return MangaParserService.URL_TEMPLATE.replace('(d+)', id.toString());
   }
 
-  public static getApiUrl( id: string, page: number ): string {
-    return MangaParserService.API_URL.replace(/%aid/g, id).replace(/%apage/g, page.toString());
+  public static getApiUrl(id: string, page: number): string {
+    return MangaParserService.API_URL.replace(/%aid/g, id).replace(
+      /%apage/g,
+      page.toString(),
+    );
   }
 
-  private parseData( url: string, html: string ): Manga {
+  private parseData(url: string, html: string): Manga {
     const manga = new Manga();
 
     try {
@@ -59,28 +75,30 @@ export class MangaParserService implements ISiteParser<Manga> {
       } else {
         manga.title = el.querySelector('.itemBookTitle')?.textContent || '';
         const volumes = el.querySelectorAll('.series-childAsin-count');
-        volumes.forEach(volume => {
+        volumes.forEach((volume) => {
           const volumeNumber = volume?.textContent?.trim() || '-1';
           let airDate = 0;
-          const publishingDate = volume.parentElement?.querySelector('.a-color-success.a-text-bold')?.textContent;
+          const publishingDate = volume.parentElement?.querySelector(
+            '.a-color-success.a-text-bold',
+          )?.textContent;
           if (publishingDate) {
             airDate = new Date(publishingDate).getTime();
+          } else {
+            airDate = new Date().getTime();
           }
           manga.episodes.push(new Episode(volumeNumber, airDate));
         });
       }
     } catch (e: any) {
-      this.errorService.sendError(new LogError(
-        this.constructor.name,
-        e?.message || 'Unknown error',
-        e
-      ));
+      this.errorService.sendError(
+        new LogError(this.constructor.name, e?.message || 'Unknown error', e),
+      );
     }
 
     return manga;
   }
 
-  private getId( url: string ): string {
+  private getId(url: string): string {
     const match = url.match(MangaParserService.URL_REGEX);
     return match !== null && match[1] !== null ? match[1] : '';
   }
