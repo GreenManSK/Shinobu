@@ -29,6 +29,10 @@ $contentFont: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
     background-image: url($christmasBgImg);
   }
 
+  &.workMode, &.workMode.hasVideo {
+    background: #fff url($imgDir + "work.jpg") no-repeat fixed center bottom !important;
+  }
+
   &.Gura {
     background: #fff url($imgDir + "gura.webp") no-repeat fixed right top;
     background-attachment: fixed;

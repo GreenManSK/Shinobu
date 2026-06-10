@@ -34,6 +34,16 @@
           </option>
         </select>
       </div>
+
+      <div class="field checkbox work-mode-field">
+        <label for="form-work-mode">Work mode</label>
+        <input
+          id="form-work-mode"
+          type="checkbox"
+          [checked]="workMode"
+          (change)="setWorkMode($event.target)"
+        />
+      </div>
       <div class="buttons">
         <input type="submit" value="Save" (click)="save($event)" />
       </div>

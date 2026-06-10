@@ -4,6 +4,7 @@ import { ShinobuSettings } from 'src/app/data/shinobu/ShinobuSettings';
 import { ShinobuSettingsService } from 'src/app/services/data/shinobu/shinobu-settings.service';
 import { Subscription } from 'rxjs';
 import { ChristmasThemeType, ThemeType } from 'src/app/types/shinobu/ThemeType';
+import { LocalPreferenceService } from 'src/app/services/data/local-preference.service';
 
 @Component({
   selector: 'app-shinobu-main',
@@ -11,23 +12,32 @@ import { ChristmasThemeType, ThemeType } from 'src/app/types/shinobu/ThemeType';
   styleUrls: ['./shinobu-main.component.scss'],
 })
 export class ShinobuMainComponent implements OnInit {
+  private static readonly WORK_MODE_KEY = 'workModeOverride';
+
   public isChristmasTime: boolean = false;
   public tab?: Tab;
   public settings?: ShinobuSettings;
+  public workMode = false;
 
   private subscription?: Subscription;
 
   public readonly isMobile = /iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
+    navigator.userAgent,
   );
 
   constructor(
-    private shinobuSettingsService: ShinobuSettingsService
+    private shinobuSettingsService: ShinobuSettingsService,
+    private localPreferenceService: LocalPreferenceService,
   ) {
     this.checkChristmasTime();
   }
 
   ngOnInit(): void {
+    this.workMode = this.localPreferenceService.get(
+      ShinobuMainComponent.WORK_MODE_KEY,
+      false,
+    );
+
     this.settings = this.shinobuSettingsService.getDefault();
     this.shinobuSettingsService.onReady().then(() => {
       this.subscription = this.shinobuSettingsService
@@ -60,11 +70,16 @@ export class ShinobuMainComponent implements OnInit {
     return {
       christmas: this.isChristmasTime,
       hasVideo: !this.isMobile,
+      workMode: this.workMode,
       [theme ?? '']: true,
     };
   }
 
   public get video() {
+    if (this.workMode) {
+      return undefined;
+    }
+
     if (this.isChristmasTime) {
       if (this.settings?.christmasTheme === ChristmasThemeType.Fauna) {
         return '/assets/img/fauna-christmas.mp4';
