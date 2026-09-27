@@ -4,30 +4,29 @@ import { Subject } from 'rxjs';
 import firebase from 'firebase/compat/app';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private user: firebase.User | null = null;
   private subject: Subject<boolean> = new Subject<boolean>();
 
-  constructor( private auth: AngularFireAuth ) {
-    this.auth.onAuthStateChanged(user => {
+  constructor(private auth: AngularFireAuth) {
+    this.auth.onAuthStateChanged((user) => {
       this.user = user;
       this.subject.next(this.isAuthenticated());
     });
   }
 
-  public subscribe( callback: (isAuthenticated: boolean) => void ) {
+  public subscribe(callback: (isAuthenticated: boolean) => void) {
     const subscription = this.subject.subscribe(callback);
     return () => subscription.unsubscribe();
   }
 
   public isAuthenticatedPromise(): Promise<boolean> {
-    return new Promise<boolean>(resolve => {
-      const unsubscribePromise = this.auth.onAuthStateChanged(user => {
+    return new Promise<boolean>((resolve) => {
+      const unsubscribePromise = this.auth.onAuthStateChanged((user) => {
         resolve(!!user);
-        unsubscribePromise.then(unsubscribe => unsubscribe());
+        unsubscribePromise.then((unsubscribe) => unsubscribe());
       });
     });
   }
@@ -45,14 +44,21 @@ export class AuthService {
   }
 
   public singInGoogle() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(() => location.reload());
+    this.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(() => location.reload());
   }
 
   public singInGithub() {
-    this.auth.signInWithPopup(new firebase.auth.GithubAuthProvider()).then(() => location.reload());
+    this.auth
+      .signInWithPopup(new firebase.auth.GithubAuthProvider())
+      .then(() => location.reload());
   }
 
   public signOut() {
-    this.auth.signOut().then(() => location.reload());
+    this.auth.signOut().then(() => {
+      localStorage.removeItem('cachedTabs');
+      location.reload();
+    });
   }
 }

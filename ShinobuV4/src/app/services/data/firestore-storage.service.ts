@@ -1,18 +1,27 @@
 import { ISavable } from '../../data/ISavable';
 import { IStorageService } from './istorage-service';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 import { AuthService } from '../auth.service';
 import { ErrorService } from '../error.service';
-import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
+import { ReplaySubject, catchError, map, Observable } from 'rxjs';
 import { LogError } from '../../types/LogError';
 import firebase from 'firebase/compat';
 
-export class FirestoreStorageService<T extends ISavable> implements IStorageService<T> {
-
+export class FirestoreStorageService<
+  T extends ISavable,
+> implements IStorageService<T> {
   private collection: AngularFirestoreCollection<T>;
-  private subject?: BehaviorSubject<T[]>;
+  private subject?: ReplaySubject<T[]>;
 
-  constructor( private collectionName: string, afs: AngularFirestore, private authService: AuthService, private errorService: ErrorService ) {
+  constructor(
+    private collectionName: string,
+    afs: AngularFirestore,
+    private authService: AuthService,
+    private errorService: ErrorService,
+  ) {
     this.collection = afs.collection<T>(collectionName);
   }
 
@@ -22,65 +31,98 @@ export class FirestoreStorageService<T extends ISavable> implements IStorageServ
 
   public getAll(): Observable<T[]> {
     if (!this.subject) {
-      this.subject = new BehaviorSubject<T[]>([]);
-      this.collection.ref.where('userId', '==', this.authService.getUserId()).onSnapshot(( {docs} ) => {
-        this.subject?.next(docs.map(this.snaphshotToData));
-      }, error => {
-        this.handleError('getAll', error.message)
-        this.subject?.next([]);
-      });
+      this.subject = new ReplaySubject<T[]>(1);
+      this.collection.ref
+        .where('userId', '==', this.authService.getUserId())
+        .onSnapshot(
+          ({ docs }) => {
+            this.subject?.next(docs.map(this.snaphshotToData));
+          },
+          (error) => {
+            this.handleError('getAll', error.message);
+            this.subject?.next([]);
+          },
+        );
     }
     return this.subject.asObservable();
   }
 
-  public getById( id: string ): Observable<T> {
-    return this.collection.doc(id).get().pipe(
-      catchError(error => {
-        this.handleError(`getById(${id})`, error.message)
-        return [];
-      }),
-      map(doc => this.snaphshotToData(doc)));
+  public getById(id: string): Observable<T> {
+    return this.collection
+      .doc(id)
+      .get()
+      .pipe(
+        catchError((error) => {
+          this.handleError(`getById(${id})`, error.message);
+          return [];
+        }),
+        map((doc) => this.snaphshotToData(doc)),
+      );
   }
 
-  public save( item: T ): Promise<T> {
+  public save(item: T): Promise<T> {
     item.userId = this.authService.getUserId();
     if (item.id) {
-      return this.collection.doc(item.id).update(this.toPlainObject(item) as T).then(() => item, error => {
-        this.handleError(`save(${item.id})`, error);
-        return item;
-      });
+      return this.collection
+        .doc(item.id)
+        .update(this.toPlainObject(item) as T)
+        .then(
+          () => item,
+          (error) => {
+            this.handleError(`save(${item.id})`, error);
+            return item;
+          },
+        );
     }
-    return this.collection.add(this.toPlainObject(item)  as T).then(ref => {
-      item.id = ref.id;
-      return item;
-    }, error => {
-      this.handleError(`save(new)`, error);
-      return item;
-    });
+    return this.collection.add(this.toPlainObject(item) as T).then(
+      (ref) => {
+        item.id = ref.id;
+        return item;
+      },
+      (error) => {
+        this.handleError(`save(new)`, error);
+        return item;
+      },
+    );
   }
 
-  public delete( item: T ): Promise<void> {
-    return this.collection.doc(item.id).delete().then(() => {
-    }, error => {
-      this.handleError(`delete(${item.id})`, error);
-    });
+  public delete(item: T): Promise<void> {
+    return this.collection
+      .doc(item.id)
+      .delete()
+      .then(
+        () => {},
+        (error) => {
+          this.handleError(`delete(${item.id})`, error);
+        },
+      );
   }
 
-  private snaphshotToData( snapshot: firebase.firestore.DocumentSnapshot<T> | firebase.firestore.QueryDocumentSnapshot<T> ): T {
+  private snaphshotToData(
+    snapshot:
+      | firebase.firestore.DocumentSnapshot<T>
+      | firebase.firestore.QueryDocumentSnapshot<T>,
+  ): T {
     return {
       id: snapshot.id,
-      ...snapshot.data()
+      ...snapshot.data(),
     } as T;
   }
 
-  private handleError( method: string, message: string, ex?: Error ) {
-    this.errorService.sendError(new LogError(`${this.constructor.name}(${this.collectionName})`, `${method}: ${message}`, ex));
+  private handleError(method: string, message: string, ex?: Error) {
+    this.errorService.sendError(
+      new LogError(
+        `${this.constructor.name}(${this.collectionName})`,
+        `${method}: ${message}`,
+        ex,
+      ),
+    );
   }
 
-  private toPlainObject( item: T ) {
+  private toPlainObject(item: T) {
     if (item.toPlainObject) {
       return item.toPlainObject();
     }
-    return {...item};
+    return { ...item };
   }
 }

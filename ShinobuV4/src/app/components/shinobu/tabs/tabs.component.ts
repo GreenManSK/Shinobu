@@ -1,20 +1,27 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Tab } from '../../../data/shinobu/Tab';
 import { TabService } from '../../../services/data/shinobu/tab.service';
 import { LocalPreferenceService } from '../../../services/data/local-preference.service';
 import { ShContextMenuClickEvent } from 'ng2-right-click-menu/lib/sh-context-menu.models';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
+  styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent implements OnInit, OnDestroy {
-
   private static readonly ACTIVE_TAB_KEY = 'activeTab';
+  private static readonly CACHED_TABS_KEY = 'cachedTabs';
 
   @Output()
-  public tabChanged = new EventEmitter<Tab>();
+  public tabChanged = new EventEmitter<Tab | undefined>();
 
   public tabs: Tab[] = [];
   public activeTab?: Tab;
@@ -24,7 +31,7 @@ export class TabsComponent implements OnInit, OnDestroy {
 
   public sorting = false;
   public sortableOptions = {
-    onUpdate: () => this.saveOrder()
+    onUpdate: () => this.saveOrder(),
   };
   public sortingTab = new Tab('Stop sorting', 'ri-close-circle-line');
 
@@ -32,41 +39,75 @@ export class TabsComponent implements OnInit, OnDestroy {
 
   private tabsUnsubscribe?: () => void;
 
-  constructor( private tabService: TabService, private localPreferenceService: LocalPreferenceService ) {
-  }
+  constructor(
+    private tabService: TabService,
+    private localPreferenceService: LocalPreferenceService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    this.tabService.onReady().then(() => this.prepareTabs())
+    const cached = this.localPreferenceService.get(
+      TabsComponent.CACHED_TABS_KEY,
+      null,
+    ) as { userId: string; tabs: Tab[] } | null;
+    if (cached?.userId && Array.isArray(cached.tabs)) {
+      Promise.resolve().then(() => this.showTabs(cached.tabs));
+    }
+    this.tabService.onReady().then(() => {
+      const userId = this.authService.getUserId();
+      if (cached?.userId && cached.userId !== userId) {
+        this.localPreferenceService.set(TabsComponent.CACHED_TABS_KEY, null);
+        this.tabs = [];
+        this.activeTab = undefined;
+        this.tabChanged.emit(undefined);
+      }
+      this.prepareTabs(userId);
+    });
   }
 
   ngOnDestroy() {
     this.tabsUnsubscribe && this.tabsUnsubscribe();
   }
 
-  public switchTab( tab: Tab ) {
+  public switchTab(tab: Tab) {
     this.setActiveTab(tab);
   }
 
   public addTab() {
-    this.editedTab = new Tab('', '', [], this.tabs.length + 1)
+    this.editedTab = new Tab('', '', [], this.tabs.length + 1);
     this.showModal = true;
   }
 
-  private prepareTabs() {
-    this.tabsUnsubscribe = this.tabService.getAll().subscribe(tabs => {
-      this.tabs = tabs;
-      this.oldOrder = Object.assign([], tabs);
-      if (this.tabs.length <= 0) {
-        this.tabs = [new Tab('default', 'ri-home-heart-fill', [])];
-        return
+  private prepareTabs(userId?: string) {
+    this.tabsUnsubscribe = this.tabService.getAll().subscribe((tabs) => {
+      if (userId) {
+        this.localPreferenceService.set(TabsComponent.CACHED_TABS_KEY, {
+          userId,
+          tabs,
+        });
       }
-      const activeTabId = this.localPreferenceService.get(TabsComponent.ACTIVE_TAB_KEY, 0);
-      const activeTabCandidates = this.tabs.filter(tab => tab.id === activeTabId);
-      this.setActiveTab(activeTabCandidates.length > 0 ? activeTabCandidates[0] : this.tabs[0]);
+      this.showTabs(tabs);
     }).unsubscribe;
   }
 
-  private setActiveTab( tab: Tab ) {
+  private showTabs(tabs: Tab[]) {
+    this.tabs = tabs.length
+      ? tabs
+      : [new Tab('default', 'ri-home-heart-fill', [])];
+    this.oldOrder = Object.assign([], this.tabs);
+    const activeTabId = this.localPreferenceService.get(
+      TabsComponent.ACTIVE_TAB_KEY,
+      0,
+    );
+    const activeTabCandidates = this.tabs.filter(
+      (tab) => tab.id === activeTabId,
+    );
+    this.setActiveTab(
+      activeTabCandidates.length > 0 ? activeTabCandidates[0] : this.tabs[0],
+    );
+  }
+
+  private setActiveTab(tab: Tab) {
     if (tab.id) {
       this.localPreferenceService.set(TabsComponent.ACTIVE_TAB_KEY, tab.id);
     }
@@ -74,12 +115,12 @@ export class TabsComponent implements OnInit, OnDestroy {
     this.tabChanged.emit(this.activeTab);
   }
 
-  public editTab( event: ShContextMenuClickEvent ) {
+  public editTab(event: ShContextMenuClickEvent) {
     this.editedTab = event.data as Tab;
     this.showModal = true;
   }
 
-  public deleteTab( event: ShContextMenuClickEvent ) {
+  public deleteTab(event: ShContextMenuClickEvent) {
     const tab = event.data as Tab;
     if (confirm(`Do you really want to delete ${tab.title}?`)) {
       this.tabService.delete(tab);
@@ -94,9 +135,9 @@ export class TabsComponent implements OnInit, OnDestroy {
     if (JSON.stringify(this.oldOrder) === JSON.stringify(this.tabs)) {
       return;
     }
-    this.tabs.forEach(( tab, index ) => tab.order = index + 1);
+    this.tabs.forEach((tab, index) => (tab.order = index + 1));
     this.oldOrder = Object.assign([], this.tabs);
-    const tabs = this.oldOrder
-    tabs.forEach(tab => this.tabService.save(tab));
+    const tabs = this.oldOrder;
+    tabs.forEach((tab) => this.tabService.save(tab));
   }
 }

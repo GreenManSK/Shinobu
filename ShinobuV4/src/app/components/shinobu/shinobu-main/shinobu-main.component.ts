@@ -59,7 +59,7 @@ export class ShinobuMainComponent implements OnInit {
       (today.getMonth() === 0 && today.getDate() < 10);
   }
 
-  public onTabChanged(tab: Tab): void {
+  public onTabChanged(tab: Tab | undefined): void {
     this.tab = tab;
   }
 
